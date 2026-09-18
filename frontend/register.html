@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Account — SmartStore</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    * { font-family: 'Inter', sans-serif; box-sizing: border-box; }
+    body { background-color: #f1f5f9; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; margin: 0; }
+    
+    .auth-card { width: 100%; max-width: 980px; background: #ffffff; border-radius: 20px; border: 1px solid #e2e8f0; box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.05); overflow: hidden; }
+    
+    .row-equal { display: flex; flex-wrap: wrap; align-items: stretch; }
+    
+    .visual-panel { background: linear-gradient(135deg, rgba(30, 27, 75, 0.85), rgba(79, 70, 229, 0.75)), url('images/register-bg.jpg'); background-size: cover; background-position: center; padding: 40px; display: flex; flex-direction: column; justify-content: space-between; height: 100%; min-height: 580px; }
+    .brand-logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.25rem; color: #ffffff; text-decoration: none; }
+    .glass-pill { background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.2); color: #ffffff; font-weight: 500; font-size: 0.8rem; }
+    
+    .form-panel { padding: 36px 40px; background: #ffffff; height: 100%; display: flex; flex-direction: column; justify-content: center; }
+    .form-label-custom { font-size: 0.82rem; font-weight: 600; color: #334155; margin-bottom: 4px; display: block; }
+    .custom-input, .custom-select { width: 100%; height: 42px; padding: 8px 12px; font-size: 0.88rem; border: 1.5px solid #cbd5e1; border-radius: 8px; background-color: #ffffff; color: #0f172a; outline: none; transition: border-color 0.2s ease, box-shadow 0.2s ease; }
+    .custom-input:focus, .custom-select:focus { border-color: #4f46e5; box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12); }
+    
+    .btn-action { background: #4f46e5; color: #ffffff; border: none; height: 44px; border-radius: 8px; font-weight: 600; font-size: 0.95rem; transition: all 0.2s ease; }
+    .btn-action:hover { background: #4338ca; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25); }
+  </style>
+</head>
+<body>
+
+  <div class="auth-card">
+    <div class="row g-0 row-equal">
+      <div class="col-lg-5 d-none d-lg-flex visual-panel text-white">
+        <div>
+          <a href="index.html" class="brand-logo">
+            <i class="bi bi-bag-check-fill fs-4"></i>
+            SmartStore
+          </a>
+        </div>
+        <div>
+          <span class="badge glass-pill px-3 py-2 rounded-pill mb-3">User Onboarding</span>
+          <h2 class="fw-bold fs-2 mb-2">Create Account</h2>
+          <p class="text-white-50 small mb-0">Fill in your business and personal details to set up your store dashboard.</p>
+        </div>
+        <div class="text-white-50 small">&copy; 2026 SmartStore Platform</div>
+      </div>
+
+      <div class="col-lg-7 form-panel">
+        <div class="w-100">
+          <div class="mb-3">
+            <h3 class="fw-bold text-dark fs-4 mb-1">Create Account</h3>
+            <p class="text-secondary small mb-0">Fill in details below to register your store.</p>
+          </div>
+
+          <div id="alert-box" class="alert d-none rounded-3 mb-3 py-2 small"></div>
+
+          <form id="registerForm" autocomplete="off">
+            <div class="row g-2">
+              <div class="col-md-6 mb-2">
+                <label for="businessName" class="form-label-custom">Business Name</label>
+                <input type="text" id="businessName" class="custom-input" placeholder="Enter business name" required>
+              </div>
+
+              <div class="col-md-6 mb-2">
+                <label for="brandName" class="form-label-custom">Brand Name</label>
+                <input type="text" id="brandName" class="custom-input" placeholder="Enter brand name" required>
+              </div>
+            </div>
+
+            <div class="mb-2">
+              <label for="category" class="form-label-custom">Category</label>
+              <select id="category" class="custom-select" required>
+                <option value="" disabled selected>Select category</option>
+                <option value="Electronics">Electronics</option>
+                <option value="Fashion">Fashion</option>
+                <option value="Groceries">Groceries</option>
+                <option value="Books">Books</option>
+                <option value="Home & Kitchen">Home & Kitchen</option>
+              </select>
+            </div>
+
+            <div class="row g-2">
+              <div class="col-md-6 mb-2">
+                <label for="email" class="form-label-custom">Gmail</label>
+                <input type="email" id="email" class="custom-input" placeholder="example@gmail.com" required>
+              </div>
+
+              <div class="col-md-6 mb-2">
+                <label for="phone" class="form-label-custom">Phone Number</label>
+                <input type="tel" id="phone" class="custom-input" placeholder="Enter phone number" required>
+              </div>
+            </div>
+
+            <div class="row g-2">
+              <div class="col-md-6 mb-3">
+                <label for="username" class="form-label-custom">Username</label>
+                <input type="text" id="username" class="custom-input" placeholder="Choose username" autocomplete="new-username" required>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="password" class="form-label-custom">Password</label>
+                <input type="password" id="password" class="custom-input" placeholder="Create password" autocomplete="new-password" required>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-action w-100 mb-2">Create Account</button>
+          </form>
+
+          <div class="text-center mt-2">
+            <p class="text-secondary small mb-1">Already have an account? <a href="login.html" class="text-primary fw-semibold text-decoration-none">Sign In here</a></p>
+            <a href="index.html" class="text-muted small text-decoration-none"><i class="bi bi-arrow-left me-1"></i>Return to Home Page</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    window.addEventListener('load', function() {
+    document.getElementById('registerForm').reset();
+  });
+
+  document.getElementById('registerForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const businessName = document.getElementById('businessName').value.trim();
+    const brandName = document.getElementById('brandName').value.trim();
+    const category = document.getElementById('category').value;
+    const email = document.getElementById('email').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value;
+    const alertBox = document.getElementById('alert-box');
+
+    console.log('📝 Register attempt:', username);
+
+    if (!category) {
+      alert("Please select a category!");
+      return;
+    }
+
+    // Load existing users
+    let allUsers = [];
+    const existingUsers = localStorage.getItem('registeredUsers');
+    if (existingUsers) {
+      try { allUsers = JSON.parse(existingUsers); } catch (e) { allUsers = []; }
+    }
+
+    console.log('📋 Existing users count:', allUsers.length);
+
+    // Check duplicate
+    const userExists = allUsers.some(u => 
+      u.username === username || u.email === email
+    );
+    if (userExists) {
+      alertBox.className = 'alert alert-danger rounded-3 mb-3 py-2 small';
+      alertBox.textContent = '❌ User already exists! Try different username/email.';
+      alertBox.classList.remove('d-none');
+      return;
+    }
+
+    // Build user object
+    const userData = {
+      businessName: businessName,
+      brandName: brandName,
+      category: category,
+      email: email,
+      phone: phone,
+      username: username,
+      password: password,
+      registeredAt: new Date().toLocaleString()
+    };
+
+    // Save to registeredUsers
+    allUsers.push(userData);
+    localStorage.setItem('registeredUsers', JSON.stringify(allUsers));
+
+    console.log('✅ Saved! Total users now:', allUsers.length);
+
+    // Save current user
+    localStorage.setItem('user', JSON.stringify(userData));
+    localStorage.setItem('selectedCategory', category);
+    localStorage.setItem('userCategory', category);
+    localStorage.setItem('username', username);
+
+    // Success
+    alertBox.className = 'alert alert-success rounded-3 mb-3 py-2 small';
+    alertBox.textContent = '✅ Account created successfully! Redirecting...';
+    alertBox.classList.remove('d-none');
+
+    setTimeout(() => {
+      window.location.href = 'theme-selection.html';
+    }, 800);
+  });
+  </script>
+</body>
+</html>

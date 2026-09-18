@@ -1,0 +1,1709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Super Admin — E-Commerce</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    * { font-family: 'Inter', sans-serif; box-sizing: border-box; }
+    body { background-color: #f1f5f9; min-height: 100vh; }
+    
+    /* ===== SIDEBAR ===== */
+    .sidebar {
+      min-height: 100vh;
+      background: #0f172a;
+      color: #ffffff;
+      padding: 20px 16px;
+      position: sticky;
+      top: 0;
+      overflow-y: auto;
+      max-height: 100vh;
+    }
+    .sidebar-brand {
+      font-size: 1.3rem;
+      font-weight: 700;
+      padding: 0 12px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .sidebar-brand i {
+      color: #818cf8;
+      font-size: 1.6rem;
+    }
+    .sidebar-brand span {
+      background: linear-gradient(135deg, #818cf8, #c084fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .sidebar-section-title {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #64748b;
+      padding: 16px 12px 8px;
+      font-weight: 600;
+    }
+
+    .sidebar-link {
+      color: #94a3b8;
+      text-decoration: none;
+      padding: 10px 14px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      position: relative;
+    }
+    .sidebar-link:hover, .sidebar-link.active {
+      background: rgba(255, 255, 255, 0.08);
+      color: #ffffff;
+    }
+    .sidebar-link.active {
+      background: rgba(129, 140, 248, 0.15);
+      color: #818cf8;
+    }
+    .sidebar-link i {
+      width: 20px;
+      font-size: 1.1rem;
+    }
+    .sidebar-link .badge-count {
+      margin-left: auto;
+      background: #ef4444;
+      color: white;
+      font-size: 0.6rem;
+      padding: 2px 8px;
+      border-radius: 20px;
+    }
+    .sidebar-link .badge-count.green {
+      background: #22c55e;
+    }
+    .sidebar-link .badge-count.yellow {
+      background: #eab308;
+    }
+
+    .sidebar-sub {
+      padding-left: 46px;
+      font-size: 0.8rem;
+    }
+    .sidebar-sub a {
+      color: #64748b;
+      text-decoration: none;
+      display: block;
+      padding: 5px 0;
+      transition: 0.2s;
+      cursor: pointer;
+    }
+    .sidebar-sub a:hover {
+      color: #ffffff;
+    }
+    .sidebar-sub a.active-sub {
+      color: #818cf8;
+    }
+
+    /* ===== HEADER ===== */
+    .admin-header {
+      padding: 20px 0 16px;
+      border-bottom: 1px solid #e2e8f0;
+      margin-bottom: 28px;
+    }
+    .admin-header h2 {
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: #0f172a;
+    }
+    .admin-header .admin-email {
+      color: #64748b;
+      font-size: 0.85rem;
+    }
+    .admin-header .admin-email i {
+      margin-right: 6px;
+    }
+
+    /* ===== STAT CARDS ===== */
+    .stat-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 20px 24px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+      transition: 0.2s;
+    }
+    .stat-card:hover {
+      border-color: #cbd5e1;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+    }
+    .stat-card .stat-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+    .stat-card .stat-value {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #0f172a;
+      margin-top: 4px;
+    }
+    .stat-card .stat-icon {
+      font-size: 1.8rem;
+      opacity: 0.3;
+    }
+
+    .weather-widget {
+      background: #f1f5f9;
+      border-radius: 60px;
+      padding: 6px 16px 6px 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.85rem;
+      color: #475569;
+      border: 1px solid #e2e8f0;
+    }
+    .weather-widget i {
+      font-size: 1.2rem;
+      color: #f59e0b;
+    }
+
+    /* ===== FOOTER ===== */
+    .admin-footer {
+      border-top: 1px solid #e2e8f0;
+      padding-top: 16px;
+      margin-top: 30px;
+      font-size: 0.8rem;
+      color: #94a3b8;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .admin-footer a {
+      color: #94a3b8;
+      text-decoration: none;
+    }
+    .admin-footer a:hover {
+      color: #4f46e5;
+    }
+
+    /* ===== PAGE CONTENT ===== */
+    .page-content {
+      display: none;
+    }
+    .page-content.active {
+      display: block;
+    }
+
+    .page-title {
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: #0f172a;
+      margin-bottom: 4px;
+    }
+    .page-subtitle {
+      color: #64748b;
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+    }
+
+    /* ===== TABLES ===== */
+    .table-admin th {
+      font-weight: 600;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      color: #64748b;
+      border-bottom: 2px solid #e2e8f0;
+    }
+    .table-admin td {
+      font-size: 0.9rem;
+      vertical-align: middle;
+    }
+
+    .status-badge {
+      padding: 4px 14px;
+      border-radius: 60px;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+    .status-badge.active {
+      background: #dcfce7;
+      color: #166534;
+    }
+    .status-badge.inactive {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+    .status-badge.pending {
+      background: #fef3c7;
+      color: #92400e;
+    }
+    .status-badge.approved {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+    .status-badge.rejected {
+      background: #fecaca;
+      color: #991b1b;
+    }
+    .status-badge.featured {
+      background: #fef08a;
+      color: #854d0e;
+    }
+    .status-badge.out-of-stock {
+      background: #fca5a5;
+      color: #7f1d1d;
+    }
+
+    /* ===== SUBSCRIPTION PLANS SPECIFIC ===== */
+ /* ===== SUBSCRIPTION PLANS SPECIFIC ===== */
+.btn-create-plan {
+  background: #4f46e5;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 24px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: 0.2s;
+}
+.btn-create-plan:hover {
+  background: #4338ca;
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+}
+.btn-create-plan i {
+  margin-right: 6px;
+}
+
+    .subscription-table {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid #e2e8f0;
+    }
+    .subscription-table table {
+      margin: 0;
+    }
+    .subscription-table thead th {
+      background: #f8fafc;
+      font-weight: 600;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      color: #64748b;
+      padding: 14px 20px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .subscription-table tbody td {
+      padding: 16px 20px;
+      font-size: 0.9rem;
+      vertical-align: middle;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .subscription-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+    .subscription-table tbody tr:hover {
+      background: #f8fafc;
+    }
+
+    .slug-text {
+      font-family: 'SF Mono', 'Courier New', monospace;
+      font-size: 0.85rem;
+      color: #475569;
+      background: #f1f5f9;
+      padding: 4px 12px;
+      border-radius: 6px;
+      display: inline-block;
+    }
+
+    .status-active {
+      background: #dcfce7;
+      color: #166534;
+      padding: 4px 16px;
+      border-radius: 60px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      display: inline-block;
+    }
+
+    /* ===== PAGINATION ===== */
+    .pagination-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 20px;
+      background: white;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+      margin-top: 16px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .pagination-bar .rows-per-page {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      color: #64748b;
+    }
+    .pagination-bar select {
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 4px 8px;
+      font-size: 0.85rem;
+      background: white;
+      cursor: pointer;
+    }
+    .pagination-bar .page-info {
+      font-size: 0.85rem;
+      color: #64748b;
+    }
+    .pagination-bar .page-btns {
+      display: flex;
+      gap: 6px;
+    }
+    .pagination-bar .page-btns button {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+      background: white;
+      color: #64748b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .pagination-bar .page-btns button:hover:not(:disabled) {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+    }
+    .pagination-bar .page-btns button:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    /* ===== CREATE PLAN MODAL ===== */
+    .modal-content-custom {
+      border-radius: 20px;
+      border: none;
+      overflow: hidden;
+    }
+    .modal-header-custom {
+      padding: 24px 28px 0;
+      border-bottom: none;
+    }
+    .modal-header-custom h5 {
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: #0f172a;
+    }
+    .modal-header-custom .btn-close {
+      font-size: 1.2rem;
+      opacity: 0.5;
+    }
+    .modal-header-custom .btn-close:hover {
+      opacity: 1;
+    }
+    .modal-body-custom {
+      padding: 20px 28px 28px;
+      max-height: 75vh;
+      overflow-y: auto;
+    }
+
+    .form-section-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #64748b;
+      margin-bottom: 12px;
+      margin-top: 24px;
+    }
+    .form-section-title:first-child {
+      margin-top: 0;
+    }
+
+    .form-label-custom {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: #334155;
+      margin-bottom: 6px;
+      display: block;
+    }
+    .form-control-custom {
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 0.9rem;
+      color: #0f172a;
+      transition: 0.2s;
+      width: 100%;
+      outline: none;
+    }
+.form-control-custom:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+    .form-control-custom::placeholder {
+      color: #94a3b8;
+    }
+
+    .checkbox-custom {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.9rem;
+      color: #334155;
+      cursor: pointer;
+      padding: 6px 0;
+    }
+.checkbox-custom input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  border: 1.5px solid #cbd5e1;
+  cursor: pointer;
+  accent-color: #4f46e5;
+}
+    .checkbox-custom .unlimited-label {
+      color: #94a3b8;
+      font-size: 0.85rem;
+      margin-left: 4px;
+    }
+    .checkbox-custom .unlimited-label.checked {
+      color: #f97316;
+    }
+
+    .feature-toggle-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px 20px;
+    }
+
+    .feature-bullet-input {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .feature-bullet-input input {
+      flex: 1;
+    }
+    .btn-add-bullet {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      border: 1px solid #e2e8f0;
+      background: white;
+      color: #f97316;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: 0.2s;
+      flex-shrink: 0;
+    }
+    .btn-add-bullet:hover {
+      background: #fff7ed;
+      border-color: #f97316;
+    }
+
+   .btn-create-plan-submit {
+  background: #4f46e5;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 14px 24px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  width: 100%;
+  transition: 0.2s;
+  margin-top: 8px;
+}
+.btn-create-plan-submit:hover {
+  background: #4338ca;
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+}
+    .limit-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 0;
+    }
+    .limit-row label {
+      font-size: 0.9rem;
+      color: #334155;
+      font-weight: 500;
+    }
+    .limit-row .limit-input-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .limit-row .limit-input-group input[type="number"] {
+      width: 80px;
+      padding: 6px 10px;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      outline: none;
+    }
+    .limit-row .limit-input-group input[type="number"]:focus {
+      border-color: #f97316;
+    }
+
+    /* ===== TOAST ===== */
+    .toast-container {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 9999;
+    }
+    .toast-custom {
+      background: #0f172a;
+      color: white;
+      padding: 16px 24px;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      margin-bottom: 10px;
+      opacity: 0;
+      transform: translateX(100%);
+      transition: all 0.3s ease;
+      min-width: 280px;
+    }
+    .toast-custom.show {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .toast-custom i {
+      margin-right: 10px;
+      color: #818cf8;
+    }
+
+    /* ===== AI CARDS ===== */
+    .ai-card {
+      background: linear-gradient(135deg, #1e1b4b, #312e81);
+      color: white;
+      border-radius: 16px;
+      padding: 24px;
+      transition: 0.3s;
+    }
+    .ai-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(79, 70, 229, 0.25);
+    }
+    .ai-card .ai-icon {
+      font-size: 2rem;
+      color: #818cf8;
+    }
+    .ai-card h6 {
+      font-weight: 600;
+      margin-top: 12px;
+    }
+    .ai-card p {
+      font-size: 0.85rem;
+      opacity: 0.8;
+      margin-bottom: 0;
+    }
+
+    .btn-primary {
+      background: #4f46e5;
+      border-color: #4f46e5;
+    }
+    .btn-primary:hover {
+      background: #4338ca;
+      border-color: #4338ca;
+    }
+
+    /* ===== SCROLLBAR ===== */
+    .sidebar::-webkit-scrollbar {
+      width: 4px;
+    }
+    .sidebar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .sidebar::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 10px;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .sidebar {
+        min-height: auto;
+        max-height: none;
+        position: relative;
+      }
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .feature-toggle-grid {
+        grid-template-columns: 1fr;
+      }
+      .subscription-table thead th,
+      .subscription-table tbody td {
+        padding: 10px 12px;
+        font-size: 0.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container-fluid">
+    <div class="row">
+      <!-- ===== SIDEBAR ===== -->
+      <div class="col-md-3 col-lg-2 sidebar">
+        <div class="sidebar-brand">
+          <i class="bi bi-bag-check-fill"></i>
+          <span>E-Commerce</span>
+        </div>
+
+        <!-- Dashboard -->
+        <div class="sidebar-link active" onclick="showPage('dashboard')">
+          <i class="bi bi-grid-1x2-fill"></i> Dashboard
+        </div>
+
+        <!-- 🏪 Merchant / Store Management -->
+        <div class="sidebar-section-title">🏪 Store Management</div>
+        <div class="sidebar-link" onclick="showPage('stores')">
+          <i class="bi bi-shop"></i> All Stores
+          <span class="badge-count" id="storeCountBadge">8</span>
+        </div>
+        <div class="sidebar-sub">
+          <a href="#" onclick="showPage('store-approval')" id="subStoreApproval">Pending Approval <span class="badge-count yellow" style="font-size:0.6rem;padding:1px 8px;display:inline-block;margin-left:6px;">3</span></a>
+          <a href="#" onclick="showPage('store-details')">Store Details</a>
+          <a href="#" onclick="showPage('store-admin')">Store Admins</a>
+          <a href="#" onclick="showPage('store-performance')">Store Performance</a>
+        </div>
+
+        <!-- 🛍️ Product Management -->
+        <div class="sidebar-section-title">🛍️ Products</div>
+        <div class="sidebar-link" onclick="showPage('products')">
+          <i class="bi bi-box-seam"></i> All Products
+          <span class="badge-count" id="productCountBadge">156</span>
+        </div>
+        <div class="sidebar-sub">
+          <a href="#" onclick="showPage('categories')">Categories</a>
+          <a href="#" onclick="showPage('sub-categories')">Sub-Categories</a>
+          <a href="#" onclick="showPage('product-approval')">Product Approval <span class="badge-count yellow" style="font-size:0.6rem;padding:1px 8px;display:inline-block;margin-left:6px;">12</span></a>
+          <a href="#" onclick="showPage('out-of-stock')">Out of Stock <span class="badge-count" style="font-size:0.6rem;padding:1px 8px;display:inline-block;margin-left:6px;">8</span></a>
+          <a href="#" onclick="showPage('featured-products')">Featured Products</a>
+          <a href="#" onclick="showPage('product-reports')">Product Reports</a>
+        </div>
+
+        <!-- 💳 SUBSCRIPTION PLANS -->
+        <div class="sidebar-section-title">💳 Subscriptions</div>
+        <div class="sidebar-link" onclick="showPage('subscription-plans')">
+          <i class="bi bi-card-checklist"></i> Subscription Plans
+          <span class="badge-count green" id="planCountBadge">4</span>
+        </div>
+
+        <!-- 🤖 AI Management -->
+        <div class="sidebar-section-title">🤖 AI Management</div>
+        <div class="sidebar-link" onclick="showPage('ai-dashboard')">
+          <i class="bi bi-robot"></i> AI Dashboard
+          <span class="badge-count green" style="font-size:0.6rem;padding:1px 8px;display:inline-block;margin-left:6px;">Live</span>
+        </div>
+        <div class="sidebar-sub">
+          <a href="#" onclick="showPage('ai-chatbot')">AI Chatbot</a>
+          <a href="#" onclick="showPage('ai-recommendations')">Product Recommendations</a>
+          <a href="#" onclick="showPage('ai-insights')">Sales Insights</a>
+          <a href="#" onclick="showPage('ai-descriptions')">AI Descriptions</a>
+          <a href="#" onclick="showPage('ai-support')">AI Customer Support</a>
+          <a href="#" onclick="showPage('ai-stats')">AI Usage Statistics</a>
+        </div>
+
+        <!-- Settings & Logout -->
+        <div style="margin-top: auto; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.06);">
+          <div class="sidebar-link"><i class="bi bi-gear"></i> Settings</div>
+          <a href="#" class="sidebar-link text-danger" onclick="logout()"><i class="bi bi-box-arrow-right"></i> Logout</a>
+        </div>
+      </div>
+
+      <!-- ===== MAIN CONTENT ===== -->
+      <div class="col-md-9 col-lg-10 p-4 p-md-5">
+        
+        <!-- Header -->
+        <div class="admin-header d-flex justify-content-between align-items-center flex-wrap">
+          <div>
+            <h2 id="adminName">Super Admin</h2>
+            <div class="admin-email">
+              <i class="bi bi-envelope"></i> admin@ecommerce.com
+            </div>
+          </div>
+          <div>
+            <div class="weather-widget">
+              <i class="bi bi-cloud-sun"></i>
+              <span>28°C</span>
+              <span class="text-secondary">Partly cloudy</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========================================= -->
+        <!-- ===== DASHBOARD PAGE ===== -->
+        <!-- ========================================= -->
+        <div id="page-dashboard" class="page-content active">
+          <div class="stats-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;margin-bottom:28px;">
+            <div class="stat-card">
+              <div class="stat-label">Total Orders</div>
+              <div class="stat-value" id="totalOrders">1,284</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Revenue</div>
+              <div class="stat-value" id="totalRevenue">Rs. 4,56,789</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Customers</div>
+              <div class="stat-value" id="totalCustomers">3,456</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Active Stores</div>
+              <div class="stat-value" id="totalStores">8</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Total Products</div>
+              <div class="stat-value" id="totalProducts">156</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Pending Approvals</div>
+              <div class="stat-value" style="color:#eab308;" id="pendingApprovals">15</div>
+            </div>
+          </div>
+
+          <div class="row mt-4">
+            <div class="col-md-6">
+              <div class="stat-card">
+                <div class="stat-label">Recent Activity</div>
+                <div class="mt-3">
+                  <div class="d-flex justify-content-between py-2 border-bottom">
+                    <span>🆕 New store registered</span>
+                    <span class="text-secondary small">2 min ago</span>
+                  </div>
+                  <div class="d-flex justify-content-between py-2 border-bottom">
+                    <span>📦 Order #1245 completed</span>
+                    <span class="text-secondary small">15 min ago</span>
+                  </div>
+                  <div class="d-flex justify-content-between py-2 border-bottom">
+                    <span>🛍️ 12 products pending approval</span>
+                    <span class="text-secondary small">1 hour ago</span>
+                  </div>
+                  <div class="d-flex justify-content-between py-2">
+                    <span>🤖 AI generated 45 descriptions</span>
+                    <span class="text-secondary small">3 hours ago</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="stat-card">
+                <div class="stat-label">Quick Actions</div>
+                <div class="mt-3">
+                  <button class="btn btn-outline-primary w-100 mb-2" onclick="showPage('stores')">
+                    <i class="bi bi-plus-circle me-2"></i>Add New Store
+                  </button>
+                  <button class="btn btn-outline-success w-100 mb-2" onclick="showPage('products')">
+                    <i class="bi bi-plus-circle me-2"></i>Add New Product
+                  </button>
+                  <button class="btn btn-outline-warning w-100" onclick="showPage('product-approval')">
+                    <i class="bi bi-check-circle me-2"></i>Review Pending Approvals
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========================================= -->
+        <!-- ===== SUBSCRIPTION PLANS PAGE ===== -->
+        <!-- ========================================= -->
+        <div id="page-subscription-plans" class="page-content">
+          <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+            <div>
+              <div class="page-title" style="font-size: 2rem; font-weight: 800; color: #0f172a;">Subscription Plans</div>
+            </div>
+            <button class="btn-create-plan" data-bs-toggle="modal" data-bs-target="#createPlanModal">
+              <i class="bi bi-plus-lg"></i> Create Plan
+            </button>
+          </div>
+
+          <!-- Subscription Plans Table -->
+          <div class="subscription-table">
+            <table class="table mb-0">
+              <thead>
+                <tr>
+                  <th style="width: 40%;">Slug</th>
+                  <th style="width: 30%;">Monthly Price</th>
+                  <th style="width: 30%;">Status</th>
+                </tr>
+              </thead>
+              <tbody id="subscriptionPlansBody">
+                <!-- Rendered by JS -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Pagination Bar -->
+          <div class="pagination-bar">
+            <div class="rows-per-page">
+              <span>Rows per page:</span>
+              <select id="rowsPerPage" onchange="renderSubscriptionPlans()">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+              </select>
+            </div>
+            <div class="page-info" id="pageInfo">Page 1 of 1 (4 total)</div>
+            <div class="page-btns">
+              <button id="prevPageBtn" disabled onclick="changePlanPage(-1)"><i class="bi bi-chevron-left"></i></button>
+              <button id="nextPageBtn" disabled onclick="changePlanPage(1)"><i class="bi bi-chevron-right"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========================================= -->
+        <!-- ===== STORES - ALL STORES ===== -->
+        <!-- ========================================= -->
+        <div id="page-stores" class="page-content">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+              <div class="page-title">🏪 All Stores</div>
+              <div class="page-subtitle">Manage all stores on the platform</div>
+            </div>
+            <button class="btn btn-primary btn-sm rounded-pill px-3" id="addStoreBtn">
+              <i class="bi bi-plus-lg me-1"></i> Add Store
+            </button>
+          </div>
+          <div class="stat-card p-0 overflow-hidden">
+            <div class="table-responsive">
+              <table class="table table-admin table-hover mb-0">
+                <thead>
+                  <tr><th>#</th><th>Store Name</th><th>Phone</th><th>Type</th><th>Status</th><th>Admin</th><th class="text-end">Actions</th></tr>
+                </thead>
+                <tbody id="storesTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== STORE APPROVAL ===== -->
+        <div id="page-store-approval" class="page-content">
+          <div class="page-title">⏳ Pending Store Approvals</div>
+          <div class="page-subtitle">Review and approve/reject new store registrations</div>
+          <div class="stat-card p-0 overflow-hidden">
+            <div class="table-responsive">
+              <table class="table table-admin table-hover mb-0">
+                <thead><tr><th>#</th><th>Store Name</th><th>Owner</th><th>Type</th><th>Requested</th><th class="text-end">Actions</th></tr></thead>
+                <tbody id="storeApprovalBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== STORE DETAILS ===== -->
+        <div id="page-store-details" class="page-content">
+          <div class="page-title">📋 Store Details</div>
+          <div class="page-subtitle">View detailed information about stores</div>
+          <div class="stat-card p-4">
+            <div class="row">
+              <div class="col-md-6">
+                <label class="text-secondary small text-uppercase fw-bold">Store Name</label>
+                <p class="fw-semibold">FreshMart Grocery</p>
+                <label class="text-secondary small text-uppercase fw-bold mt-3">Type</label>
+                <p>Grocery Store</p>
+                <label class="text-secondary small text-uppercase fw-bold mt-3">Phone</label>
+                <p>+91 98765 43210</p>
+              </div>
+              <div class="col-md-6">
+                <label class="text-secondary small text-uppercase fw-bold">Status</label>
+                <p><span class="status-badge active">Active</span></p>
+                <label class="text-secondary small text-uppercase fw-bold mt-3">Store Admin</label>
+                <p>Rajesh Kumar</p>
+                <label class="text-secondary small text-uppercase fw-bold mt-3">Joined</label>
+                <p>15 Jan 2026</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== STORE ADMIN ===== -->
+        <div id="page-store-admin" class="page-content">
+          <div class="page-title">👤 Store Admins</div>
+          <div class="page-subtitle">Manage store administrators</div>
+          <div class="stat-card p-0 overflow-hidden">
+            <div class="table-responsive">
+              <table class="table table-admin table-hover mb-0">
+                <thead><tr><th>#</th><th>Name</th><th>Email</th><th>Store</th><th>Status</th><th class="text-end">Actions</th></tr></thead>
+                <tbody>
+                  <tr><td>1</td><td>Rajesh Kumar</td><td>rajesh@freshmart.com</td><td>FreshMart</td><td><span class="status-badge active">Active</span></td><td class="text-end"><button class="btn btn-sm btn-outline-secondary"><i class="bi bi-pencil"></i></button> <button class="btn btn-sm btn-outline-danger"><i class="bi bi-ban"></i></button></td></tr>
+                  <tr><td>2</td><td>Priya Sharma</td><td>priya@techzone.com</td><td>TechZone</td><td><span class="status-badge active">Active</span></td><td class="text-end"><button class="btn btn-sm btn-outline-secondary"><i class="bi bi-pencil"></i></button> <button class="btn btn-sm btn-outline-danger"><i class="bi bi-ban"></i></button></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== STORE PERFORMANCE ===== -->
+        <div id="page-store-performance" class="page-content">
+          <div class="page-title">📊 Store Performance</div>
+          <div class="page-subtitle">Track store metrics and performance</div>
+          <div class="row">
+            <div class="col-md-4"><div class="stat-card"><div class="stat-label">Top Store</div><div class="stat-value">FreshMart</div><span class="text-success">↑ 12%</span></div></div>
+            <div class="col-md-4"><div class="stat-card"><div class="stat-label">Total Revenue</div><div class="stat-value">Rs. 4.5L</div></div></div>
+            <div class="col-md-4"><div class="stat-card"><div class="stat-label">Avg. Rating</div><div class="stat-value">4.8 ★</div></div></div>
+          </div>
+        </div>
+
+        <!-- ========================================= -->
+        <!-- ===== PRODUCTS ===== -->
+        <!-- ========================================= -->
+        <div id="page-products" class="page-content">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div><div class="page-title">🛍️ All Products</div><div class="page-subtitle">Manage all products on the platform</div></div>
+            <button class="btn btn-primary btn-sm rounded-pill px-3"><i class="bi bi-plus-lg me-1"></i> Add Product</button>
+          </div>
+          <div class="stat-card p-0 overflow-hidden">
+            <div class="table-responsive">
+              <table class="table table-admin table-hover mb-0">
+                <thead><tr><th>#</th><th>Product</th><th>Category</th><th>Price</th><th>Stock</th><th>Status</th><th class="text-end">Actions</th></tr></thead>
+                <tbody id="productsTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== CATEGORIES ===== -->
+        <div id="page-categories" class="page-content">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div><div class="page-title">📂 Categories</div><div class="page-subtitle">Manage product categories</div></div>
+            <button class="btn btn-primary btn-sm rounded-pill px-3"><i class="bi bi-plus-lg me-1"></i> Add Category</button>
+          </div>
+          <div class="row">
+            <div class="col-md-4"><div class="stat-card"><h6>Electronics</h6><span class="text-secondary">24 products</span></div></div>
+            <div class="col-md-4"><div class="stat-card"><h6>Fashion</h6><span class="text-secondary">32 products</span></div></div>
+            <div class="col-md-4"><div class="stat-card"><h6>Groceries</h6><span class="text-secondary">18 products</span></div></div>
+          </div>
+        </div>
+
+        <!-- ===== SUB-CATEGORIES ===== -->
+        <div id="page-sub-categories" class="page-content">
+          <div class="page-title">📁 Sub-Categories</div>
+          <div class="page-subtitle">Manage sub-categories under main categories</div>
+          <div class="stat-card p-3">
+            <div class="row">
+              <div class="col-md-3"><h6>📱 Smartphones</h6><span class="text-secondary">Electronics</span></div>
+              <div class="col-md-3"><h6>👕 T-Shirts</h6><span class="text-secondary">Fashion</span></div>
+              <div class="col-md-3"><h6>🥬 Vegetables</h6><span class="text-secondary">Groceries</span></div>
+              <div class="col-md-3"><h6>💻 Laptops</h6><span class="text-secondary">Electronics</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== PRODUCT APPROVAL ===== -->
+        <div id="page-product-approval" class="page-content">
+          <div class="page-title">⏳ Product Approval</div>
+          <div class="page-subtitle">Review and approve/reject products</div>
+          <div class="stat-card p-0 overflow-hidden">
+            <div class="table-responsive">
+              <table class="table table-admin table-hover mb-0">
+                <thead><tr><th>#</th><th>Product</th><th>Store</th><th>Price</th><th>Submitted</th><th class="text-end">Actions</th></tr></thead>
+                <tbody id="productApprovalBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== OUT OF STOCK ===== -->
+        <div id="page-out-of-stock" class="page-content">
+          <div class="page-title">⚠️ Out of Stock</div>
+          <div class="page-subtitle">Products that need restocking</div>
+          <div class="stat-card p-0 overflow-hidden">
+            <div class="table-responsive">
+              <table class="table table-admin table-hover mb-0">
+                <thead><tr><th>#</th><th>Product</th><th>Store</th><th>Stock</th><th class="text-end">Actions</th></tr></thead>
+                <tbody id="outOfStockBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== FEATURED PRODUCTS ===== -->
+        <div id="page-featured-products" class="page-content">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div><div class="page-title">⭐ Featured Products</div><div class="page-subtitle">Manage featured products</div></div>
+            <button class="btn btn-primary btn-sm rounded-pill px-3"><i class="bi bi-plus-lg me-1"></i> Add Featured</button>
+          </div>
+          <div class="row">
+            <div class="col-md-3"><div class="stat-card text-center"><img src="https://via.placeholder.com/60" class="rounded mb-2"><h6>iPhone 15</h6><span class="text-secondary">Rs. 79,999</span><br><span class="status-badge featured">Featured</span></div></div>
+            <div class="col-md-3"><div class="stat-card text-center"><img src="https://via.placeholder.com/60" class="rounded mb-2"><h6>MacBook Pro</h6><span class="text-secondary">Rs. 1,89,999</span><br><span class="status-badge featured">Featured</span></div></div>
+          </div>
+        </div>
+
+        <!-- ===== PRODUCT REPORTS ===== -->
+        <div id="page-product-reports" class="page-content">
+          <div class="page-title">📊 Product Reports</div>
+          <div class="page-subtitle">Analytics and reports for products</div>
+          <div class="row">
+            <div class="col-md-6"><div class="stat-card"><div class="stat-label">Top Selling</div><div class="stat-value">iPhone 15</div><span class="text-success">256 units sold</span></div></div>
+            <div class="col-md-6"><div class="stat-card"><div class="stat-label">Most Viewed</div><div class="stat-value">MacBook Pro</div><span class="text-secondary">12,345 views</span></div></div>
+          </div>
+        </div>
+
+        <!-- ========================================= -->
+        <!-- ===== AI MANAGEMENT ===== -->
+        <!-- ========================================= -->
+        <div id="page-ai-dashboard" class="page-content">
+          <div class="page-title">🤖 AI Management Dashboard</div>
+          <div class="page-subtitle">Manage all AI features and monitor usage</div>
+          <div class="row">
+            <div class="col-md-4"><div class="ai-card"><div class="ai-icon"><i class="bi bi-chat-dots"></i></div><h6>AI Chatbot</h6><p>1,284 conversations today</p></div></div>
+            <div class="col-md-4"><div class="ai-card"><div class="ai-icon"><i class="bi bi-lightbulb"></i></div><h6>AI Recommendations</h6><p>4,567 recommendations served</p></div></div>
+            <div class="col-md-4"><div class="ai-card"><div class="ai-icon"><i class="bi bi-graph-up"></i></div><h6>AI Sales Insights</h6><p>23 insights generated</p></div></div>
+            <div class="col-md-4"><div class="ai-card"><div class="ai-icon"><i class="bi bi-pencil-square"></i></div><h6>AI Descriptions</h6><p>156 products generated</p></div></div>
+            <div class="col-md-4"><div class="ai-card"><div class="ai-icon"><i class="bi bi-headset"></i></div><h6>AI Customer Support</h6><p>89 support tickets resolved</p></div></div>
+            <div class="col-md-4"><div class="ai-card"><div class="ai-icon"><i class="bi bi-bar-chart"></i></div><h6>AI Usage Stats</h6><p>98.7% uptime</p></div></div>
+          </div>
+        </div>
+
+        <!-- ===== AI CHATBOT ===== -->
+        <div id="page-ai-chatbot" class="page-content">
+          <div class="page-title">💬 AI Chatbot</div>
+          <div class="page-subtitle">Configure and monitor the AI chatbot</div>
+          <div class="stat-card p-4">
+            <div class="d-flex align-items-center gap-3 mb-3">
+              <div class="bg-success bg-opacity-10 p-3 rounded"><i class="bi bi-chat-dots fs-2 text-success"></i></div>
+              <div><h5 class="mb-0">AI Chatbot Active</h5><span class="text-secondary">Responding to customer queries in real-time</span></div>
+            </div>
+            <div class="row">
+              <div class="col-md-3"><div class="border rounded p-3 text-center"><div class="fw-bold">1,284</div><span class="text-secondary">Today's Chats</span></div></div>
+              <div class="col-md-3"><div class="border rounded p-3 text-center"><div class="fw-bold">92%</div><span class="text-secondary">Resolution Rate</span></div></div>
+              <div class="col-md-3"><div class="border rounded p-3 text-center"><div class="fw-bold">4.8s</div><span class="text-secondary">Avg Response Time</span></div></div>
+              <div class="col-md-3"><div class="border rounded p-3 text-center"><div class="fw-bold">98%</div><span class="text-secondary">Customer Satisfaction</span></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== AI RECOMMENDATIONS ===== -->
+        <div id="page-ai-recommendations" class="page-content">
+          <div class="page-title">🎯 AI Product Recommendations</div>
+          <div class="page-subtitle">AI-powered product recommendations for customers</div>
+          <div class="stat-card p-4">
+            <div class="row">
+              <div class="col-md-6"><h6>📊 Recommendation Stats</h6><p class="text-secondary">4,567 recommendations served today</p><p class="text-secondary">24.3% conversion rate</p></div>
+              <div class="col-md-6"><h6>🔥 Top Recommended Products</h6><p>iPhone 15 — 234 recommendations</p><p>MacBook Pro — 189 recommendations</p></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== AI INSIGHTS ===== -->
+        <div id="page-ai-insights" class="page-content">
+          <div class="page-title">📈 AI Sales Insights</div>
+          <div class="page-subtitle">AI-generated insights to boost sales</div>
+          <div class="row">
+            <div class="col-md-6"><div class="stat-card"><h6>💡 Insight 1</h6><p class="text-secondary">Customers who buy smartphones also purchase screen protectors (78% correlation)</p><span class="text-success">Action: Bundle offer</span></div></div>
+            <div class="col-md-6"><div class="stat-card"><h6>💡 Insight 2</h6><p class="text-secondary">Fashion sales peak on weekends (+45%)</p><span class="text-success">Action: Weekend promotions</span></div></div>
+          </div>
+        </div>
+
+        <!-- ===== AI DESCRIPTIONS ===== -->
+        <div id="page-ai-descriptions" class="page-content">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div><div class="page-title">✍️ AI Product Descriptions</div><div class="page-subtitle">Generate product descriptions using AI</div></div>
+            <button class="btn btn-primary btn-sm rounded-pill px-3"><i class="bi bi-plus-lg me-1"></i> Generate New</button>
+          </div>
+          <div class="stat-card p-4">
+            <div class="row">
+              <div class="col-md-4"><div class="border rounded p-3"><h6>iPhone 15</h6><p class="text-secondary small">Experience the future with iPhone 15. Featuring a stunning display...</p><span class="status-badge approved">Generated</span></div></div>
+              <div class="col-md-4"><div class="border rounded p-3"><h6>MacBook Pro</h6><p class="text-secondary small">Powerful performance meets elegant design. The MacBook Pro...</p><span class="status-badge approved">Generated</span></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== AI SUPPORT ===== -->
+        <div id="page-ai-support" class="page-content">
+          <div class="page-title">🎧 AI Customer Support</div>
+          <div class="page-subtitle">AI-powered customer support tickets</div>
+          <div class="stat-card p-0 overflow-hidden">
+            <div class="table-responsive">
+              <table class="table table-admin table-hover mb-0">
+                <thead><tr><th>#</th><th>Customer</th><th>Issue</th><th>Status</th><th>Resolved By</th></tr></thead>
+                <tbody>
+                  <tr><td>1</td><td>Rahul</td><td>Order not delivered</td><td><span class="status-badge active">Resolved</span></td><td>AI Bot</td></tr>
+                  <tr><td>2</td><td>Sneha</td><td>Product return</td><td><span class="status-badge pending">In Progress</span></td><td>AI Bot</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== AI STATS ===== -->
+        <div id="page-ai-stats" class="page-content">
+          <div class="page-title">📊 AI Usage Statistics</div>
+          <div class="page-subtitle">Monitor AI feature usage and performance</div>
+          <div class="row">
+            <div class="col-md-3"><div class="stat-card"><div class="stat-label">Total AI Calls</div><div class="stat-value">45,678</div></div></div>
+            <div class="col-md-3"><div class="stat-card"><div class="stat-label">Avg Response</div><div class="stat-value">1.2s</div></div></div>
+            <div class="col-md-3"><div class="stat-card"><div class="stat-label">Uptime</div><div class="stat-value">99.8%</div></div></div>
+            <div class="col-md-3"><div class="stat-card"><div class="stat-label">Cost Saved</div><div class="stat-value">Rs. 2.3L</div></div></div>
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="admin-footer">
+          <div>
+            <span>E-Commerce Admin</span>
+            <span class="mx-2">·</span>
+            <a href="mailto:admin@ecommerce.com">admin@ecommerce.com</a>
+          </div>
+          <div>© 2026 E-Commerce Platform</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================= -->
+  <!-- ===== CREATE PLAN MODAL ===== -->
+  <!-- ========================================= -->
+  <div class="modal fade" id="createPlanModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+      <div class="modal-content modal-content-custom">
+        <div class="modal-header modal-header-custom">
+          <h5>Create Plan</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body modal-body-custom">
+          
+          <!-- BASIC INFO -->
+          <div class="form-section-title">Basic Info</div>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label-custom">Name</label>
+              <input type="text" class="form-control-custom" id="planName" placeholder="e.g. Pro">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label-custom">Slug</label>
+              <input type="text" class="form-control-custom" id="planSlug" placeholder="e.g. pro">
+            </div>
+            <div class="col-12">
+              <label class="form-label-custom">Description</label>
+              <input type="text" class="form-control-custom" id="planDescription" placeholder="e.g. For growing businesses">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label-custom">Display Order</label>
+              <input type="number" class="form-control-custom" id="planDisplayOrder" value="0">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label-custom">CTA Text</label>
+              <input type="text" class="form-control-custom" id="planCtaText" value="Get Started">
+            </div>
+          </div>
+
+          <!-- PRICING -->
+          <div class="form-section-title">Pricing</div>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label-custom">Monthly Price (Rs.)</label>
+              <input type="number" class="form-control-custom" id="planMonthlyPrice" value="0">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label-custom">Annual Price (Rs.)</label>
+              <input type="number" class="form-control-custom" id="planAnnualPrice" value="0">
+            </div>
+            <div class="col-12">
+              <label class="checkbox-custom">
+                <input type="checkbox" id="planCustomPricing">
+                <span>Custom pricing (shows "Custom" instead of amount)</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- LIMITS -->
+          <div class="form-section-title">Limits</div>
+          <div class="limit-row">
+            <label>Max Menu Items</label>
+            <div class="limit-input-group">
+              <input type="checkbox" id="limitMenuItemsUnlimited" checked onchange="toggleLimitInput('limitMenuItems', this.checked)">
+              <span class="unlimited-label checked" id="labelMenuItems">Unlimited</span>
+              <input type="number" id="limitMenuItems" value="10" style="display:none;" placeholder="Limit">
+            </div>
+          </div>
+          <div class="limit-row">
+            <label>Max Categories</label>
+            <div class="limit-input-group">
+              <input type="checkbox" id="limitCategoriesUnlimited" checked onchange="toggleLimitInput('limitCategories', this.checked)">
+              <span class="unlimited-label checked" id="labelCategories">Unlimited</span>
+              <input type="number" id="limitCategories" value="10" style="display:none;" placeholder="Limit">
+            </div>
+          </div>
+          <div class="limit-row">
+            <label>Max Orders / Month</label>
+            <div class="limit-input-group">
+              <input type="checkbox" id="limitOrdersUnlimited" checked onchange="toggleLimitInput('limitOrders', this.checked)">
+              <span class="unlimited-label checked" id="labelOrders">Unlimited</span>
+              <input type="number" id="limitOrders" value="100" style="display:none;" placeholder="Limit">
+            </div>
+          </div>
+
+          <!-- FEATURE TOGGLES -->
+          <div class="form-section-title">Feature Toggles</div>
+          <div class="feature-toggle-grid">
+            <label class="checkbox-custom"><input type="checkbox" id="featureBulkImport"> Bulk Import</label>
+            <label class="checkbox-custom"><input type="checkbox" id="featureAnalytics"> Analytics</label>
+            <label class="checkbox-custom"><input type="checkbox" id="featureExportReports"> Export Reports</label>
+            <label class="checkbox-custom"><input type="checkbox" id="featurePrioritySupport"> Priority Support</label>
+            <label class="checkbox-custom"><input type="checkbox" id="featureCustomBranding"> Custom Branding</label>
+            <label class="checkbox-custom"><input type="checkbox" id="featureApiAccess"> API Access</label>
+          </div>
+
+          <!-- DISPLAY -->
+          <div class="form-section-title">Display</div>
+          <div class="feature-toggle-grid">
+            <label class="checkbox-custom"><input type="checkbox" id="planActive" checked> Active</label>
+            <label class="checkbox-custom"><input type="checkbox" id="planHighlighted"> Highlighted (Most Popular)</label>
+          </div>
+
+          <!-- PRICING CARD FEATURES -->
+          <div class="form-section-title">Pricing Card Features</div>
+          <p class="text-secondary small mb-3">These bullet points are displayed on the pricing card.</p>
+          <div id="bulletFeaturesContainer">
+            <div class="feature-bullet-input">
+              <input type="text" class="form-control-custom" placeholder="Add a feature bullet..." value="Unlimited products">
+            </div>
+            <div class="feature-bullet-input">
+              <input type="text" class="form-control-custom" placeholder="Add a feature bullet..." value="Priority support">
+            </div>
+          </div>
+          <button class="btn-add-bullet" onclick="addBulletFeature()" title="Add feature bullet">
+            <i class="bi bi-plus-lg"></i>
+          </button>
+
+          <!-- SUBMIT -->
+          <button class="btn-create-plan-submit mt-4" onclick="createPlan()">
+            Create Plan
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // ===== SUBSCRIPTION PLANS DATA =====
+    let subscriptionPlans = [
+      { id: 1, slug: 'basic', monthlyPrice: 'Rs. 399', status: 'Active' },
+      { id: 2, slug: 'standard', monthlyPrice: 'Rs. 599', status: 'Active' },
+      { id: 3, slug: 'pro', monthlyPrice: 'Rs. 899', status: 'Active' },
+      { id: 4, slug: 'enterprise', monthlyPrice: 'Custom', status: 'Active' }
+    ];
+    let planIdCounter = 5;
+    let currentPlanPage = 1;
+
+    // ===== STORES DATA =====
+    let stores = [
+      { id: 1, name: 'FreshMart Grocery', phone: '+91 98765 43210', type: 'grocery', status: 'active', admin: 'Rajesh Kumar' },
+      { id: 2, name: 'TechZone Electronics', phone: '+91 87654 32109', type: 'electronics', status: 'active', admin: 'Priya Sharma' },
+      { id: 3, name: 'Fashion Hub', phone: '+91 76543 21098', type: 'fashion', status: 'active', admin: 'Amit Singh' },
+      { id: 4, name: 'HomeDecor Plus', phone: '+91 65432 10987', type: 'home_decor', status: 'pending', admin: 'Neha Patel' },
+      { id: 5, name: 'BookWorld', phone: '+91 54321 09876', type: 'books', status: 'active', admin: 'Vikram Rao' },
+      { id: 6, name: 'FitLife Gym', phone: '+91 43210 98765', type: 'fitness', status: 'inactive', admin: 'Suresh Menon' },
+      { id: 7, name: 'Organic Bazaar', phone: '+91 32109 87654', type: 'organic', status: 'active', admin: 'Meera Iyer' },
+      { id: 8, name: 'Pet Paradise', phone: '+91 21098 76543', type: 'pets', status: 'pending', admin: 'Kiran Reddy' }
+    ];
+
+    let pendingStores = [
+      { id: 9, name: 'Green Mart', owner: 'Ravi Kumar', type: 'grocery', requested: '2 hours ago' },
+      { id: 10, name: 'Fashion Trendz', owner: 'Anita Desai', type: 'fashion', requested: '5 hours ago' },
+      { id: 11, name: 'Tech World', owner: 'Suresh Babu', type: 'electronics', requested: '1 day ago' }
+    ];
+
+    let products = [
+      { id: 1, name: 'iPhone 15', category: 'Electronics', price: 'Rs. 79,999', stock: 45, status: 'active' },
+      { id: 2, name: 'MacBook Pro', category: 'Electronics', price: 'Rs. 1,89,999', stock: 12, status: 'active' },
+      { id: 3, name: 'Nike Air Max', category: 'Fashion', price: 'Rs. 12,999', stock: 0, status: 'out-of-stock' },
+      { id: 4, name: 'Organic Apples', category: 'Groceries', price: 'Rs. 120', stock: 0, status: 'out-of-stock' },
+    ];
+
+    let pendingProducts = [
+      { id: 101, name: 'Samsung S24', store: 'TechZone', price: 'Rs. 89,999', submitted: '3 hours ago' },
+      { id: 102, name: 'Levi\'s Jeans', store: 'Fashion Hub', price: 'Rs. 3,499', submitted: '6 hours ago' }
+    ];
+
+    let storeIdCounter = 12;
+    let productIdCounter = 105;
+
+    // ===== TOAST =====
+    function showToast(message, icon = 'bi-check-circle') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = 'toast-custom';
+      toast.innerHTML = `<i class="bi ${icon}"></i> ${message}`;
+      container.appendChild(toast);
+      setTimeout(() => toast.classList.add('show'), 100);
+      setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 300); }, 3000);
+    }
+
+    // ===== PAGE SWITCHING =====
+    function showPage(page) {
+      document.querySelectorAll('.page-content').forEach(el => el.classList.remove('active'));
+      const target = document.getElementById('page-' + page);
+      if (target) target.classList.add('active');
+      
+      document.querySelectorAll('.sidebar-link').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.sidebar-sub a').forEach(el => el.classList.remove('active-sub'));
+      
+      document.querySelectorAll('.sidebar-link, .sidebar-sub a').forEach(link => {
+        const onclick = link.getAttribute('onclick');
+        if (onclick && onclick.includes("'" + page + "'")) {
+          link.classList.add('active');
+        }
+      });
+
+      if (page === 'stores') renderStores();
+      if (page === 'store-approval') renderStoreApproval();
+      if (page === 'products') renderProducts();
+      if (page === 'product-approval') renderProductApproval();
+      if (page === 'out-of-stock') renderOutOfStock();
+      if (page === 'subscription-plans') renderSubscriptionPlans();
+    }
+
+    // ===== SUBSCRIPTION PLANS =====
+    function renderSubscriptionPlans() {
+      const tbody = document.getElementById('subscriptionPlansBody');
+      if (!tbody) return;
+
+      const rowsPerPage = parseInt(document.getElementById('rowsPerPage')?.value || 10);
+      const totalPlans = subscriptionPlans.length;
+      const totalPages = Math.max(1, Math.ceil(totalPlans / rowsPerPage));
+      
+      if (currentPlanPage > totalPages) currentPlanPage = totalPages;
+      
+      const start = (currentPlanPage - 1) * rowsPerPage;
+      const end = Math.min(start + rowsPerPage, totalPlans);
+      const pagePlans = subscriptionPlans.slice(start, end);
+
+      if (pagePlans.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="3" class="text-center py-5 text-secondary">No subscription plans found</td></tr>`;
+      } else {
+        tbody.innerHTML = pagePlans.map(plan => `
+          <tr>
+            <td><span class="slug-text">${plan.slug}</span></td>
+            <td><span class="fw-semibold" style="font-size: 1rem;">${plan.monthlyPrice}</span></td>
+            <td><span class="status-active">${plan.status}</span></td>
+          </tr>
+        `).join('');
+      }
+
+      // Update pagination info
+      document.getElementById('pageInfo').textContent = 
+        `Page ${currentPlanPage} of ${totalPages} (${totalPlans} total)`;
+      
+      document.getElementById('prevPageBtn').disabled = currentPlanPage <= 1;
+      document.getElementById('nextPageBtn').disabled = currentPlanPage >= totalPages;
+      
+      document.getElementById('planCountBadge').textContent = subscriptionPlans.length;
+    }
+
+    function changePlanPage(delta) {
+      currentPlanPage += delta;
+      renderSubscriptionPlans();
+    }
+
+    // ===== TOGGLE LIMIT INPUT =====
+    function toggleLimitInput(inputId, isUnlimited) {
+      const input = document.getElementById(inputId);
+      const label = document.getElementById('label' + inputId.replace('limit', ''));
+      
+      if (isUnlimited) {
+        input.style.display = 'none';
+        label.classList.add('checked');
+      } else {
+        input.style.display = 'inline-block';
+        input.focus();
+        label.classList.remove('checked');
+      }
+    }
+
+    // ===== ADD BULLET FEATURE =====
+    function addBulletFeature() {
+      const container = document.getElementById('bulletFeaturesContainer');
+      const div = document.createElement('div');
+      div.className = 'feature-bullet-input';
+      div.innerHTML = `
+        <input type="text" class="form-control-custom" placeholder="Add a feature bullet...">
+        <button class="btn-add-bullet" onclick="this.parentElement.remove()" style="color: #ef4444;" title="Remove">
+          <i class="bi bi-trash"></i>
+        </button>
+      `;
+      container.appendChild(div);
+      div.querySelector('input').focus();
+    }
+
+    // ===== CREATE PLAN =====
+    function createPlan() {
+      const name = document.getElementById('planName').value.trim();
+      const slug = document.getElementById('planSlug').value.trim();
+      const customPricing = document.getElementById('planCustomPricing').checked;
+      const monthlyPrice = document.getElementById('planMonthlyPrice').value;
+      const isActive = document.getElementById('planActive').checked;
+
+      if (!name || !slug) {
+        alert('Please fill in Plan Name and Slug');
+        return;
+      }
+
+      // Check if slug already exists
+      if (subscriptionPlans.some(p => p.slug === slug)) {
+        alert('A plan with this slug already exists!');
+        return;
+      }
+
+      const priceDisplay = customPricing ? 'Custom' : `Rs. ${monthlyPrice}`;
+      const status = isActive ? 'Active' : 'Inactive';
+
+      subscriptionPlans.push({
+        id: planIdCounter++,
+        slug: slug,
+        monthlyPrice: priceDisplay,
+        status: status
+      });
+
+      // Reset form
+      document.getElementById('planName').value = '';
+      document.getElementById('planSlug').value = '';
+      document.getElementById('planDescription').value = '';
+      document.getElementById('planMonthlyPrice').value = '0';
+      document.getElementById('planAnnualPrice').value = '0';
+      document.getElementById('planCustomPricing').checked = false;
+
+      // Close modal
+      const modalEl = document.getElementById('createPlanModal');
+      const modalInstance = bootstrap.Modal.getInstance(modalEl);
+      if (modalInstance) modalInstance.hide();
+
+      renderSubscriptionPlans();
+      showToast(`✅ Plan "${name}" created successfully!`, 'bi-check-circle');
+    }
+
+    // ===== RENDER STORES =====
+    function renderStores() {
+      const tbody = document.getElementById('storesTableBody');
+      if (!tbody) return;
+      if (stores.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" class="text-center py-4 text-secondary">No stores found</td></tr>`;
+      } else {
+        tbody.innerHTML = stores.map((s, i) => `
+          <tr>
+            <td>${i+1}</td>
+            <td><span class="fw-semibold">${s.name}</span></td>
+            <td>${s.phone}</td>
+            <td><span class="text-capitalize">${s.type.replace('_',' ')}</span></td>
+            <td><span class="status-badge ${s.status}">${s.status.charAt(0).toUpperCase() + s.status.slice(1)}</span></td>
+            <td>${s.admin}</td>
+            <td class="text-end">
+              <button class="btn btn-sm btn-outline-secondary me-1"><i class="bi bi-eye"></i></button>
+              <button class="btn btn-sm btn-outline-secondary me-1"><i class="bi bi-pencil"></i></button>
+              <button class="btn btn-sm ${s.status === 'active' ? 'btn-outline-warning' : 'btn-outline-success'}" onclick="toggleStore(${s.id})">
+                <i class="bi bi-${s.status === 'active' ? 'pause' : 'play'}"></i>
+              </button>
+              <button class="btn btn-sm btn-outline-danger" onclick="deleteStore(${s.id})"><i class="bi bi-trash"></i></button>
+            </td>
+          </tr>
+        `).join('');
+      }
+      document.getElementById('storeCountBadge').textContent = stores.length;
+      updateDashboardStats();
+    }
+
+    function toggleStore(id) {
+      const store = stores.find(s => s.id === id);
+      if (!store) return;
+      store.status = store.status === 'active' ? 'inactive' : 'active';
+      renderStores();
+      showToast(`Store "${store.name}" ${store.status === 'active' ? 'activated' : 'suspended'}`, 'bi-arrow-repeat');
+    }
+
+    function deleteStore(id) {
+      if (!confirm('Delete this store?')) return;
+      const store = stores.find(s => s.id === id);
+      stores = stores.filter(s => s.id !== id);
+      renderStores();
+      showToast(`Store "${store.name}" deleted`, 'bi-trash');
+    }
+
+    // ===== RENDER STORE APPROVAL =====
+    function renderStoreApproval() {
+      const tbody = document.getElementById('storeApprovalBody');
+      if (!tbody) return;
+      if (pendingStores.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="text-center py-4 text-success">✅ No pending approvals</td></tr>`;
+      } else {
+        tbody.innerHTML = pendingStores.map((s, i) => `
+          <tr>
+            <td>${i+1}</td>
+            <td><span class="fw-semibold">${s.name}</span></td>
+            <td>${s.owner}</td>
+            <td><span class="text-capitalize">${s.type}</span></td>
+            <td><span class="text-secondary small">${s.requested}</span></td>
+            <td class="text-end">
+              <button class="btn btn-sm btn-success me-1" onclick="approveStore(${s.id})"><i class="bi bi-check"></i></button>
+              <button class="btn btn-sm btn-danger" onclick="rejectStore(${s.id})"><i class="bi bi-x"></i></button>
+            </td>
+          </tr>
+        `).join('');
+      }
+    }
+
+    function approveStore(id) {
+      const store = pendingStores.find(s => s.id === id);
+      if (!store) return;
+      stores.push({ id: storeIdCounter++, name: store.name, phone: '+91 9999999999', type: store.type, status: 'active', admin: store.owner });
+      pendingStores = pendingStores.filter(s => s.id !== id);
+      renderStoreApproval();
+      renderStores();
+      showToast(`✅ "${store.name}" approved!`, 'bi-check-circle');
+    }
+
+    function rejectStore(id) {
+      const store = pendingStores.find(s => s.id === id);
+      pendingStores = pendingStores.filter(s => s.id !== id);
+      renderStoreApproval();
+      showToast(`❌ "${store.name}" rejected`, 'bi-x-circle');
+    }
+
+    // ===== RENDER PRODUCTS =====
+    function renderProducts() {
+      const tbody = document.getElementById('productsTableBody');
+      if (!tbody) return;
+      if (products.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" class="text-center py-4 text-secondary">No products found</td></tr>`;
+      } else {
+        tbody.innerHTML = products.map((p, i) => `
+          <tr>
+            <td>${i+1}</td>
+            <td><span class="fw-semibold">${p.name}</span></td>
+            <td>${p.category}</td>
+            <td>${p.price}</td>
+            <td>${p.stock}</td>
+            <td><span class="status-badge ${p.status === 'out-of-stock' ? 'out-of-stock' : 'active'}">${p.status === 'out-of-stock' ? 'Out of Stock' : 'Active'}</span></td>
+            <td class="text-end">
+              <button class="btn btn-sm btn-outline-secondary me-1"><i class="bi bi-pencil"></i></button>
+              <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+            </td>
+          </tr>
+        `).join('');
+      }
+      document.getElementById('productCountBadge').textContent = products.length;
+    }
+
+    // ===== RENDER PRODUCT APPROVAL =====
+    function renderProductApproval() {
+      const tbody = document.getElementById('productApprovalBody');
+      if (!tbody) return;
+      if (pendingProducts.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="text-center py-4 text-success">✅ No pending product approvals</td></tr>`;
+      } else {
+        tbody.innerHTML = pendingProducts.map((p, i) => `
+          <tr>
+            <td>${i+1}</td>
+            <td><span class="fw-semibold">${p.name}</span></td>
+            <td>${p.store}</td>
+            <td>${p.price}</td>
+            <td><span class="text-secondary small">${p.submitted}</span></td>
+            <td class="text-end">
+              <button class="btn btn-sm btn-success me-1"><i class="bi bi-check"></i></button>
+              <button class="btn btn-sm btn-danger"><i class="bi bi-x"></i></button>
+            </td>
+          </tr>
+        `).join('');
+      }
+    }
+
+    // ===== RENDER OUT OF STOCK =====
+    function renderOutOfStock() {
+      const tbody = document.getElementById('outOfStockBody');
+      if (!tbody) return;
+      const outOfStock = products.filter(p => p.status === 'out-of-stock');
+      if (outOfStock.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" class="text-center py-4 text-success">✅ All products in stock</td></tr>`;
+      } else {
+        tbody.innerHTML = outOfStock.map((p, i) => `
+          <tr>
+            <td>${i+1}</td>
+            <td><span class="fw-semibold">${p.name}</span></td>
+            <td>${p.category}</td>
+            <td><span class="status-badge out-of-stock">0</span></td>
+            <td class="text-end"><button class="btn btn-sm btn-primary">Restock</button></td>
+          </tr>
+        `).join('');
+      }
+    }
+
+    // ===== UPDATE DASHBOARD =====
+    function updateDashboardStats() {
+      document.getElementById('totalStores').textContent = stores.length;
+      document.getElementById('totalProducts').textContent = products.length;
+      document.getElementById('pendingApprovals').textContent = pendingStores.length + pendingProducts.length;
+    }
+
+    // ===== ADD STORE =====
+    function addStore() {
+      const name = prompt('Enter store name:');
+      if (!name || name.trim() === '') return;
+      const phone = prompt('Enter phone:');
+      if (!phone) return;
+      const type = prompt('Enter type (grocery, electronics, fashion, etc.):');
+      if (!type) return;
+      stores.push({ id: storeIdCounter++, name: name.trim(), phone: phone.trim(), type: type.trim(), status: 'active', admin: 'New Admin' });
+      renderStores();
+      showToast(`✅ Store "${name.trim()}" added!`, 'bi-building-add');
+    }
+
+    // ===== LOGOUT =====
+    function logout() {
+      if (confirm('Logout?')) {
+        localStorage.clear();
+        window.location.href = 'login.html';
+      }
+    }
+
+    // ===== INIT =====
+    window.addEventListener('DOMContentLoaded', function() {
+      document.getElementById('addStoreBtn')?.addEventListener('click', addStore);
+      renderStores();
+      renderStoreApproval();
+      renderProducts();
+      renderProductApproval();
+      renderOutOfStock();
+      renderSubscriptionPlans();
+      updateDashboardStats();
+      showToast('👋 Welcome to Super Admin Panel!', 'bi-emoji-smile');
+    });
+  </script>
+</body>
+</html>

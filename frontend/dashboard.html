@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Merchant Dashboard — SmartStore</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * { font-family: 'Inter', sans-serif; box-sizing: border-box; }
+    body { background-color: #f8fafc; min-height: 100vh; }
+    .sidebar { min-height: 100vh; background: #1e1b4b; }
+    .sidebar-link {
+      color: #94a3b8; text-decoration: none; padding: 10px 14px;
+      border-radius: 10px; display: flex; align-items: center; gap: 12px;
+      font-size: 0.95rem; font-weight: 500; transition: all 0.2s ease; cursor: pointer;
+    }
+    .sidebar-link:hover, .sidebar-link.active { background: rgba(255, 255, 255, 0.12); color: #ffffff; }
+    .sidebar-link .badge-count {
+      margin-left: auto; background: #ef4444; color: white;
+      font-size: 0.65rem; padding: 2px 8px; border-radius: 20px;
+    }
+    .sidebar-link .badge-count.green { background: #22c55e; }
+    .stat-card {
+      border: 1px solid #e2e8f0; border-radius: 16px; background: #ffffff;
+      padding: 24px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+    }
+    .online-toggle {
+      cursor: pointer; padding: 6px 14px; border-radius: 60px;
+      font-size: 0.75rem; font-weight: 600; transition: all 0.3s ease;
+      border: 1px solid; display: flex; align-items: center; gap: 6px;
+    }
+    .online-toggle.online { background: #dcfce7; color: #166534; border-color: #86efac; }
+    .online-toggle.offline { background: #fee2e2; color: #991b1b; border-color: #fca5a5; }
+    .online-toggle .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; background: #22c55e; }
+    .form-control-custom { border-radius: 12px; border: 1px solid #e2e8f0; padding: 10px 14px; }
+    .product-thumb { width: 50px; height: 50px; border-radius: 8px; object-fit: cover; border: 1px solid #e2e8f0; }
+
+    /* ===== PRODUCTS UI ===== */
+    .products-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; flex-wrap: wrap; gap: 16px; }
+    .products-header h2 { font-weight: 800; font-size: 1.5rem; color: #0f172a; margin-bottom: 4px; }
+    .products-header p { font-size: 0.88rem; color: #64748b; margin: 0; }
+    .products-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    .btn-product-action {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 11px 22px; border-radius: 50px; border: none;
+      font-weight: 700; font-size: 0.78rem; text-transform: uppercase;
+      letter-spacing: 0.5px; color: white; cursor: pointer;
+      transition: all 0.25s ease;
+    }
+    .btn-product-action:hover { transform: translateY(-2px); color: white; }
+    .btn-add-category { background: linear-gradient(135deg, #a855f7, #8b5cf6); box-shadow: 0 4px 14px rgba(168, 85, 247, 0.35); }
+    .btn-add-category:hover { box-shadow: 0 8px 22px rgba(168, 85, 247, 0.45); }
+    .btn-add-single { background: linear-gradient(135deg, #6366f1, #4f46e5); box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35); }
+    .btn-add-single:hover { box-shadow: 0 8px 22px rgba(99, 102, 241, 0.45); }
+    .btn-add-bulk { background: linear-gradient(135deg, #0ea5e9, #0284c7); box-shadow: 0 4px 14px rgba(14, 165, 233, 0.35); }
+    .btn-add-bulk:hover { box-shadow: 0 8px 22px rgba(14, 165, 233, 0.45); }
+
+    .product-list-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+    }
+    .product-list-header {
+      display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;
+    }
+    .product-list-header h3 { font-weight: 700; font-size: 1.15rem; color: #0f172a; margin: 0; }
+    .product-list-header .total-count { font-size: 0.85rem; color: #64748b; }
+    .product-table { width: 100%; border-collapse: collapse; }
+    .product-table th {
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.6px; color: #64748b; padding: 14px 16px;
+      border-bottom: 1.5px solid #e2e8f0; text-align: left;
+    }
+    .product-table td {
+      padding: 16px; border-bottom: 1px solid #f1f5f9;
+      font-size: 0.9rem; color: #334155; vertical-align: middle;
+    }
+    .product-table tbody tr:last-child td { border-bottom: none; }
+    .product-table tbody tr:hover { background: #f8fafc; }
+
+    /* Customer avatar */
+    .customer-avatar {
+      width: 38px; height: 38px; border-radius: 50%;
+      background: linear-gradient(135deg, #a78bfa, #8b5cf6);
+      color: white; font-weight: 700; font-size: 0.9rem;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    /* Theme cards */
+    .theme-preview-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
+    .theme-preview-card { border-radius: 16px; overflow: hidden; border: 1px solid #e2e8f0; background: #fff; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.03); transition: all 0.25s ease; }
+    .theme-preview-card:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(0,0,0,0.08); }
+    .theme-preview-image { height: 130px; display: flex; align-items: center; justify-content: center; font-size: 3rem; color: #fff; position: relative; overflow: hidden; }
+    .theme-preview-image img.theme-cover { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
+    .theme-preview-badge { position: absolute; top: 12px; right: 12px; background: rgba(255,255,255,0.95); color: #0f172a; font-size: 0.65rem; font-weight: 700; padding: 4px 12px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px; z-index: 2; }
+    .theme-preview-body { padding: 18px; }
+    .theme-preview-body h6 { font-weight: 700; margin-bottom: 6px; font-size: 1rem; color: #0f172a; }
+    .theme-preview-body p { font-size: 0.82rem; color: #64748b; margin-bottom: 12px; min-height: 42px; line-height: 1.5; }
+    .theme-preview-products { display: flex; gap: 6px; margin-bottom: 14px; }
+    .theme-preview-products img { width: 36px; height: 36px; border-radius: 8px; object-fit: cover; border: 1px solid #e2e8f0; }
+    .theme-preview-products .more-count { width: 36px; height: 36px; border-radius: 8px; background: #f1f5f9; color: #64748b; font-size: 0.7rem; font-weight: 700; display: flex; align-items: center; justify-content: center; border: 1px solid #e2e8f0; }
+    .theme-preview-btn { width: 100%; background: linear-gradient(135deg, #6366f1, #4f46e5); color: #fff; border: none; padding: 11px; border-radius: 50px; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .theme-preview-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(79, 70, 229, 0.35); }
+
+    /* Pages Editor */
+    .page-editor-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 32px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
+    .page-editor-title { font-weight: 700; font-size: 1.25rem; color: #0f172a; margin-bottom: 24px; }
+    .page-editor-label { font-weight: 700; font-size: 0.88rem; color: #0f172a; margin-bottom: 8px; display: block; }
+    .page-editor-label .required { color: #ef4444; margin-left: 2px; }
+    .page-input { width: 100%; padding: 12px 16px; border: 1.5px solid #e2e8f0; border-radius: 10px; font-size: 0.9rem; color: #0f172a; outline: none; background: #ffffff; }
+    .page-input:focus { border-color: #4f46e5; box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1); }
+    .slug-input-group { display: flex; border: 1.5px solid #e2e8f0; border-radius: 10px; overflow: hidden; }
+    .slug-input-group:focus-within { border-color: #4f46e5; box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1); }
+    .slug-prefix { background: #f8fafc; padding: 12px 18px; font-size: 0.9rem; color: #64748b; font-weight: 500; border-right: 1.5px solid #e2e8f0; white-space: nowrap; }
+    .slug-input { flex: 1; padding: 12px 16px; border: none; font-size: 0.9rem; color: #0f172a; outline: none; background: #ffffff; }
+    .content-editor { border: 1.5px solid #e2e8f0; border-radius: 10px; overflow: hidden; }
+    .content-editor:focus-within { border-color: #4f46e5; box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1); }
+    .content-toolbar { background: #f8fafc; padding: 10px 16px; border-bottom: 1.5px solid #e2e8f0; display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+    .content-toolbar button { background: transparent; border: none; padding: 6px 11px; border-radius: 6px; color: #475569; font-weight: 600; cursor: pointer; font-size: 0.85rem; }
+    .content-toolbar button:hover { background: #e2e8f0; color: #0f172a; }
+    .content-toolbar .divider { width: 1px; height: 18px; background: #e2e8f0; margin: 0 4px; }
+    .content-textarea { width: 100%; border: none; padding: 18px; font-size: 0.9rem; outline: none; resize: vertical; min-height: 200px; font-family: 'Inter', sans-serif; color: #0f172a; line-height: 1.6; }
+    [contenteditable="true"]:empty:before { content: attr(data-placeholder); color: #94a3b8; }
+    .toggle-switch { position: relative; display: inline-block; width: 48px; height: 26px; vertical-align: middle; }
+    .toggle-switch input { opacity: 0; width: 0; height: 0; }
+    .toggle-slider { position: absolute; cursor: pointer; inset: 0; background: #cbd5e1; border-radius: 50px; transition: 0.3s; }
+    .toggle-slider:before { content: ''; position: absolute; height: 20px; width: 20px; left: 3px; bottom: 3px; background: white; border-radius: 50%; transition: 0.3s; }
+    .toggle-switch input:checked + .toggle-slider { background: #4f46e5; }
+    .toggle-switch input:checked + .toggle-slider:before { transform: translateX(22px); }
+    .page-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 24px; margin-top: 24px; border-top: 1.5px solid #f1f5f9; }
+    .btn-cancel-page { background: #ffffff; color: #475569; border: 1.5px solid #e2e8f0; padding: 11px 28px; border-radius: 10px; font-weight: 600; font-size: 0.9rem; cursor: pointer; }
+    .btn-cancel-page:hover { background: #f8fafc; }
+    .btn-create-page { background: #4f46e5; color: #ffffff; border: none; padding: 11px 32px; border-radius: 10px; font-weight: 600; font-size: 0.9rem; cursor: pointer; }
+    .btn-create-page:hover { background: #4338ca; }
+    .all-pages-table { width: 100%; border-collapse: collapse; }
+    .all-pages-table th { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: #64748b; padding: 14px 16px; border-bottom: 1.5px solid #e2e8f0; text-align: left; }
+    .all-pages-table td { padding: 18px 16px; border-bottom: 1px solid #f1f5f9; font-size: 0.9rem; color: #334155; }
+
+    .toast-notification {
+      position: fixed; bottom: 20px; right: 20px;
+      background: #10b981; color: white;
+      padding: 14px 28px; border-radius: 12px;
+      z-index: 9999; font-weight: 600;
+      box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4);
+    }
+
+    /* Image upload widget in modal */
+    .img-upload-box {
+      border: 1.5px dashed #cbd5e1; border-radius: 12px; padding: 14px;
+      display: flex; align-items: center; gap: 14px; cursor: pointer;
+      transition: all 0.2s ease; background: #f8fafc;
+    }
+    .img-upload-box:hover { border-color: #6366f1; background: #eef2ff; }
+    .img-upload-preview {
+      width: 64px; height: 64px; border-radius: 10px; object-fit: cover;
+      border: 1px solid #e2e8f0; background: #fff; flex-shrink: 0;
+    }
+    .img-upload-placeholder {
+      width: 64px; height: 64px; border-radius: 10px; background: #e2e8f0;
+      display: flex; align-items: center; justify-content: center;
+      color: #94a3b8; font-size: 1.4rem; flex-shrink: 0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="col-md-3 col-lg-2 sidebar p-3 d-flex flex-column justify-content-between">
+        <div>
+          <a href="#" class="d-flex align-items-center gap-2 text-white text-decoration-none my-3 px-2 fw-bold fs-5">
+            <i class="bi bi-bag-check-fill text-primary fs-4"></i> SmartStore
+          </a>
+          <nav class="d-flex flex-column gap-1">
+            <a href="#" class="sidebar-link active" onclick="switchTab('dashboard', this)"><i class="bi bi-grid-1x2-fill"></i> Dashboard</a>
+            <a href="#" class="sidebar-link" onclick="switchTab('pos', this)"><i class="bi bi-calculator"></i> POS System</a>
+            <a href="#" class="sidebar-link" onclick="switchTab('products', this)"><i class="bi bi-box-seam"></i> Products</a>
+            <a href="#" class="sidebar-link" onclick="switchTab('inventory', this)"><i class="bi bi-boxes"></i> Inventory</a>
+            <a href="#" class="sidebar-link" onclick="switchTab('orders', this)"><i class="bi bi-cart-check"></i> Orders</a>
+            <a href="#" class="sidebar-link" onclick="switchTab('customers', this)">
+              <i class="bi bi-people"></i> Customers
+              <span class="badge-count green" id="userCountBadge">0</span>
+            </a>
+            <a href="#" class="sidebar-link" onclick="switchTab('reports', this)"><i class="bi bi-bar-chart-line"></i> Reports</a>
+            <a href="#" class="sidebar-link" onclick="switchTab('themes', this)"><i class="bi bi-palette-fill text-warning"></i> Themes</a>
+            <a href="#" class="sidebar-link" onclick="switchTab('pages', this)"><i class="bi bi-file-earmark-text"></i> Pages</a>
+            <a href="#" class="sidebar-link" onclick="switchTab('settings', this)"><i class="bi bi-gear"></i> Settings</a>
+          </nav>
+        </div>
+        <div class="pt-3 border-top border-secondary border-opacity-25">
+          <a href="#" class="sidebar-link text-danger" onclick="logout()"><i class="bi bi-box-arrow-right"></i> Logout</a>
+        </div>
+      </div>
+
+      <!-- Main Content Area -->
+      <div class="col-md-9 col-lg-10 p-4 p-md-5">
+
+        <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom">
+          <div>
+            <h2 class="fw-bold text-dark mb-1">Welcome back, <span class="text-primary">Merchant</span>! 👋</h2>
+            <p class="text-secondary small mb-0">Here is your store performance overview.</p>
+          </div>
+          <div class="d-flex align-items-center gap-3">
+            <div class="online-toggle online" id="onlineToggle" onclick="toggleOnlineMode()">
+              <span class="dot"></span>
+              <span id="onlineStatus">Online</span>
+            </div>
+            <span class="badge bg-light text-primary border border-primary-subtle px-3 py-2 rounded-pill fs-6">Category</span>
+          </div>
+        </div>
+
+        <!-- DASHBOARD VIEW -->
+        <div id="view-dashboard" class="tab-content-section">
+          <div class="row g-4 mb-4">
+            <div class="col-md-4">
+              <div class="stat-card">
+                <span class="text-secondary small fw-medium">Total Products</span>
+                <h3 class="fw-bold text-dark mb-0 mt-2" id="dashTotalProducts">0</h3>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="stat-card">
+                <span class="text-secondary small fw-medium">Registered Users</span>
+                <h3 class="fw-bold text-dark mb-0 mt-2" id="dashTotalUsers">0</h3>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="stat-card">
+                <span class="text-secondary small fw-medium">Active Status</span>
+                <h3 class="fw-bold text-success mb-0 mt-2">Active</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- PRODUCTS VIEW -->
+        <!-- ============================================================ -->
+        <div id="view-products" class="tab-content-section d-none">
+          
+          <div class="products-header">
+            <div>
+              <h2>Products Management</h2>
+              <p>Add and manage your store products and categories easily.</p>
+            </div>
+            <div class="products-actions">
+              <button class="btn-product-action btn-add-category" onclick="showToast('Add Category clicked')">
+                <i class="bi bi-folder-plus"></i> Add Category
+              </button>
+              <button class="btn-product-action btn-add-single" data-bs-toggle="modal" data-bs-target="#addProductModal">
+                <i class="bi bi-plus-circle"></i> Add Single
+              </button>
+              <button class="btn-product-action btn-add-bulk" onclick="showToast('Add Bulk clicked')">
+                <i class="bi bi-cloud-upload"></i> Add Bulk
+              </button>
+            </div>
+          </div>
+
+          <div class="product-list-card">
+            <div class="product-list-header">
+              <h3>Product List</h3>
+              <span class="total-count">Total: <span id="productCount">0</span> products</span>
+            </div>
+            <div class="table-responsive">
+              <table class="product-table">
+                <thead>
+                  <tr>
+                    <th>Image</th>
+                    <th>Product</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    <th>Status</th>
+                    <th>Online</th>
+                    <th style="text-align: right;">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="productTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- INVENTORY VIEW -->
+        <div id="view-inventory" class="tab-content-section d-none">
+          <div class="stat-card"><h4>Inventory Stock</h4></div>
+        </div>
+
+        <!-- CUSTOMERS VIEW -->
+        <div id="view-customers" class="tab-content-section d-none">
+          <div class="stat-card">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <div>
+                <h4 class="fw-bold mb-1">Registered Users</h4>
+                <p class="text-secondary small mb-0">All users who registered from the store front</p>
+              </div>
+              <span class="text-secondary small">Total: <span id="totalUserCount">0</span> users</span>
+            </div>
+            <div class="table-responsive">
+              <table class="table align-middle">
+                <thead>
+                  <tr>
+                    <th style="font-size: 0.75rem; text-transform: uppercase; color: #64748b;">#</th>
+                    <th style="font-size: 0.75rem; text-transform: uppercase; color: #64748b;">User</th>
+                    <th style="font-size: 0.75rem; text-transform: uppercase; color: #64748b;">Phone</th>
+                    <th style="font-size: 0.75rem; text-transform: uppercase; color: #64748b;">Category</th>
+                    <th style="font-size: 0.75rem; text-transform: uppercase; color: #64748b;">Registered At</th>
+                  </tr>
+                </thead>
+                <tbody id="registeredUsersTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- THEMES VIEW -->
+        <div id="view-themes" class="tab-content-section d-none">
+          <div class="mb-4">
+            <h4 class="fw-bold text-dark mb-1">🎨 Store Themes</h4>
+            <p class="text-secondary small mb-0">Pick a category below. Each card shows a live cover from your saved products. Click "Live Preview" to open the full storefront in theme-selection.html.</p>
+          </div>
+          <div class="theme-preview-grid" id="themeGrid"></div>
+        </div>
+
+        <!-- PAGES VIEW -->
+        <div id="view-pages" class="tab-content-section d-none">
+          <div class="page-editor-card">
+            <h3 class="page-editor-title">New Page</h3>
+            <div class="mb-4">
+              <label class="page-editor-label">Title <span class="required">*</span></label>
+              <input type="text" id="pageTitle" class="page-input" placeholder="e.g. About Us" oninput="generateSlug()">
+            </div>
+            <div class="mb-4">
+              <label class="page-editor-label">Slug <span class="required">*</span></label>
+              <div class="slug-input-group">
+                <span class="slug-prefix">/page/</span>
+                <input type="text" id="pageSlug" class="slug-input" placeholder="about-us">
+              </div>
+            </div>
+            <div class="mb-4">
+              <label class="page-editor-label">Content <span class="required">*</span></label>
+              <div class="content-editor">
+                <div class="content-toolbar">
+                  <button type="button" onclick="formatText('bold')"><b>B</b></button>
+                  <button type="button" onclick="formatText('italic')"><i>I</i></button>
+                  <button type="button" onclick="formatText('underline')"><u>U</u></button>
+                  <span class="divider"></span>
+                  <button type="button" onclick="formatText('strikeThrough')"><s>S</s></button>
+                  <button type="button" onclick="formatText('formatBlock', 'H1')"><b>H1</b></button>
+                  <button type="button" onclick="formatText('formatBlock', 'H2')"><b>H2</b></button>
+                  <span class="divider"></span>
+                  <button type="button" onclick="formatText('insertUnorderedList')"><i class="bi bi-list-ul"></i></button>
+                  <button type="button" onclick="formatText('insertOrderedList')"><i class="bi bi-list-ol"></i></button>
+                  <button type="button" onclick="insertLink()"><i class="bi bi-link-45deg"></i></button>
+                </div>
+                <div id="pageContent" class="content-textarea" contenteditable="true" data-placeholder="Start writing your page content..."></div>
+              </div>
+            </div>
+            <div class="page-footer">
+              <div class="d-flex align-items-center gap-3">
+                <label class="toggle-switch">
+                  <input type="checkbox" id="pagePublished" checked>
+                  <span class="toggle-slider"></span>
+                </label>
+                <span class="fw-bold" style="font-size: 0.95rem; color: #0f172a;">Published</span>
+              </div>
+              <div class="d-flex gap-3">
+                <button class="btn-cancel-page" onclick="resetPageForm()">Cancel</button>
+                <button class="btn-create-page" onclick="createPage()">Create Page</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="page-editor-card">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h3 class="fw-bold" style="font-size: 1.15rem;">All Pages</h3>
+              <span class="text-secondary small">Total: <span id="totalPagesCount">0</span> pages</span>
+            </div>
+            <div class="table-responsive">
+              <table class="all-pages-table">
+                <thead>
+                  <tr>
+                    <th style="width: 60px;">#</th>
+                    <th>Title</th>
+                    <th>Slug</th>
+                    <th>Status</th>
+                    <th>Created At</th>
+                    <th style="text-align: right;">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="pagesTableBody">
+                  <tr><td colspan="6" class="text-center text-secondary py-5">No pages created yet.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- OTHER VIEWS -->
+        <div id="view-orders" class="tab-content-section d-none"><div class="stat-card"><h4>Orders</h4></div></div>
+        <div id="view-reports" class="tab-content-section d-none"><div class="stat-card"><h4>Reports</h4></div></div>
+        <div id="view-pos" class="tab-content-section d-none"><div class="stat-card"><h4>POS</h4></div></div>
+        <div id="view-settings" class="tab-content-section d-none"><div class="stat-card"><h4>Settings</h4></div></div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ADD PRODUCT MODAL -->
+  <div class="modal fade" id="addProductModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content p-4" style="border-radius: 16px;">
+        <h5 class="fw-bold mb-3">Add Product</h5>
+
+        <div class="mb-3">
+          <label class="form-label small fw-bold">Product Image</label>
+          <div class="img-upload-box" onclick="document.getElementById('prodImageInput').click()">
+            <img id="prodImagePreview" class="img-upload-preview d-none" alt="preview">
+            <div id="prodImagePlaceholder" class="img-upload-placeholder"><i class="bi bi-image"></i></div>
+            <div>
+              <div class="fw-bold small" style="color:#0f172a;">Click to upload image</div>
+              <div class="text-secondary" style="font-size: 0.75rem;">PNG / JPG, saved with this product</div>
+            </div>
+          </div>
+          <input type="file" id="prodImageInput" accept="image/*" class="d-none" onchange="handleProductImageSelect(event)">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label small fw-bold">Name</label>
+          <input type="text" class="form-control form-control-custom" id="prodName" placeholder="Enter product name">
+        </div>
+        <div class="mb-3">
+          <label class="form-label small fw-bold">Category</label>
+          <select class="form-control form-control-custom" id="prodCategory">
+            <option value="electronics">Electronics</option>
+            <option value="books">Books</option>
+            <option value="grocery">Grocery</option>
+            <option value="fashion">Fashion</option>
+            <option value="home">Home & Kitchen</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label class="form-label small fw-bold">Price (₹)</label>
+          <input type="number" class="form-control form-control-custom" id="prodPrice" placeholder="499">
+        </div>
+        <div class="mb-3">
+          <label class="form-label small fw-bold">Stock</label>
+          <input type="number" class="form-control form-control-custom" id="prodStock" value="15">
+        </div>
+        <div class="d-flex justify-content-end gap-2">
+          <button class="btn btn-light px-4" data-bs-dismiss="modal">Cancel</button>
+          <button class="btn btn-primary px-4" onclick="saveProduct()">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // ==========================================
+    // STATE
+    // ==========================================
+    let storeState = {
+      products: [],
+      users: [],
+      pages: []
+    };
+
+    // Holds the base64 data URL of the image picked in the Add Product modal,
+    // until the product is actually saved.
+    let selectedProductImage = null;
+
+    // Fallback image used only when a product has no uploaded image.
+    const DEFAULT_PRODUCT_IMAGE = 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=200&auto=format&fit=crop&q=80';
+
+    // Load from localStorage on start
+    function loadAllData() {
+      // Products
+      const savedProducts = localStorage.getItem('smartstore_products');
+      if (savedProducts) {
+        try { storeState.products = JSON.parse(savedProducts); } catch(e) { storeState.products = []; }
+      }
+      
+      // Users
+      const savedUsers = localStorage.getItem('registeredUsers');
+      if (savedUsers) {
+        try { storeState.users = JSON.parse(savedUsers); } catch(e) { storeState.users = []; }
+      }
+      
+      // Pages
+      const savedPages = localStorage.getItem('smartstore_pages');
+      if (savedPages) {
+        try { storeState.pages = JSON.parse(savedPages); } catch(e) { storeState.pages = []; }
+      }
+    }
+
+    // ==========================================
+    // INIT
+    // ==========================================
+    document.addEventListener('DOMContentLoaded', () => {
+      loadAllData();
+      updateCounts();
+      renderProducts();
+      renderUsers();
+      renderPages();
+
+      // Reset the image picker whenever the Add Product modal is opened/closed
+      const addProductModalEl = document.getElementById('addProductModal');
+      addProductModalEl.addEventListener('hidden.bs.modal', resetProductImagePicker);
+    });
+
+    // ==========================================
+    // TAB SWITCH
+    // ==========================================
+    function switchTab(tabName, element) {
+      document.querySelectorAll('.tab-content-section').forEach(sec => sec.classList.add('d-none'));
+      document.getElementById(`view-${tabName}`).classList.remove('d-none');
+      
+      if (element) {
+        document.querySelectorAll('.sidebar-link').forEach(link => link.classList.remove('active'));
+        element.classList.add('active');
+      }
+
+      // Reload data and render based on tab
+      loadAllData();
+      
+      if (tabName === 'products') renderProducts();
+      if (tabName === 'themes') renderThemeCards();
+      if (tabName === 'pages') renderPages();
+      if (tabName === 'customers') renderUsers();
+      if (tabName === 'dashboard') updateCounts();
+    }
+
+    // ==========================================
+    // PRODUCT IMAGE UPLOAD
+    // ==========================================
+    function handleProductImageSelect(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+
+      if (!file.type.startsWith('image/')) {
+        showToast('⚠️ Please choose an image file');
+        event.target.value = '';
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        selectedProductImage = e.target.result; // base64 data URL
+        const preview = document.getElementById('prodImagePreview');
+        const placeholder = document.getElementById('prodImagePlaceholder');
+        preview.src = selectedProductImage;
+        preview.classList.remove('d-none');
+        placeholder.classList.add('d-none');
+      };
+      reader.onerror = function() {
+        showToast('⚠️ Could not read that image');
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function resetProductImagePicker() {
+      selectedProductImage = null;
+      const preview = document.getElementById('prodImagePreview');
+      const placeholder = document.getElementById('prodImagePlaceholder');
+      const input = document.getElementById('prodImageInput');
+      preview.src = '';
+      preview.classList.add('d-none');
+      placeholder.classList.remove('d-none');
+      if (input) input.value = '';
+    }
+
+    // ==========================================
+    // ✅ SAVE PRODUCT - Fixed
+    // ==========================================
+    function saveProduct() {
+      const nameEl = document.getElementById('prodName');
+      const categoryEl = document.getElementById('prodCategory');
+      const priceEl = document.getElementById('prodPrice');
+      const stockEl = document.getElementById('prodStock');
+
+      const name = nameEl.value.trim();
+      const category = categoryEl.value;
+      const price = parseFloat(priceEl.value);
+      const stock = parseInt(stockEl.value) || 15;
+
+      // Validation
+      if (!name) {
+        showToast('⚠️ Please enter product name');
+        nameEl.focus();
+        return;
+      }
+      if (!price || price <= 0) {
+        showToast('⚠️ Please enter valid price');
+        priceEl.focus();
+        return;
+      }
+
+      // Create product object — uses the uploaded image if one was picked,
+      // otherwise falls back to a placeholder image.
+      const newProduct = {
+        id: Date.now(),
+        name: name,
+        category: category,
+        price: price,
+        stock: stock,
+        image: selectedProductImage || DEFAULT_PRODUCT_IMAGE,
+        createdAt: new Date().toLocaleString()
+      };
+
+      // Add to storeState
+      storeState.products.push(newProduct);
+      
+      // ✅ Save to localStorage (image + all product details together)
+      localStorage.setItem('smartstore_products', JSON.stringify(storeState.products));
+
+      console.log('✅ Product saved:', newProduct.name, newProduct.category, newProduct.price);
+      console.log('✅ Total products:', storeState.products.length);
+
+      // Close modal
+      const modalEl = document.getElementById('addProductModal');
+      const modal = bootstrap.Modal.getInstance(modalEl);
+      if (modal) modal.hide();
+
+      // Reset form
+      nameEl.value = '';
+      priceEl.value = '';
+      stockEl.value = '15';
+      categoryEl.value = 'electronics';
+      resetProductImagePicker();
+
+      // Re-render everywhere the product/image data is shown
+      updateCounts();
+      renderProducts();
+      renderThemeCards();
+      
+      showToast('✅ Product added successfully!');
+    }
+
+    // ==========================================
+    // RENDER PRODUCTS
+    // ==========================================
+    function renderProducts() {
+      const tbody = document.getElementById('productTableBody');
+      if (!tbody) return;
+
+      // Always fetch fresh
+      const savedProducts = localStorage.getItem('smartstore_products');
+      let products = [];
+      if (savedProducts) {
+        try { products = JSON.parse(savedProducts); } catch(e) { products = []; }
+      }
+      storeState.products = products;
+
+      document.getElementById('productCount').textContent = products.length;
+      document.getElementById('dashTotalProducts').textContent = products.length;
+
+      console.log('📦 Rendering products:', products.length);
+
+      if (products.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="8" class="text-center text-secondary py-5">No products added yet. Click "Add Single" to add products.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = products.map(p => `
+        <tr>
+          <td><img src="${p.image || DEFAULT_PRODUCT_IMAGE}" class="product-thumb" alt="${p.name}"></td>
+          <td class="fw-bold" style="color: #0f172a;">${p.name}</td>
+          <td><span class="badge bg-light text-dark border" style="font-size: 0.72rem; padding: 5px 12px;">${p.category}</span></td>
+          <td class="fw-bold">₹${p.price}</td>
+          <td>${p.stock}</td>
+          <td><span class="badge bg-success-subtle text-success border border-success-subtle" style="font-size: 0.7rem; padding: 5px 12px;">In Stock</span></td>
+          <td>
+            <span class="badge bg-success-subtle text-success border border-success-subtle" style="font-size: 0.7rem; padding: 5px 12px;">
+              <span style="display:inline-block; width:6px; height:6px; background:#22c55e; border-radius:50%; margin-right:5px;"></span>Online
+            </span>
+          </td>
+          <td style="text-align: right;">
+            <button class="btn btn-sm btn-outline-danger" onclick="deleteProd(${p.id})"><i class="bi bi-trash"></i></button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function deleteProd(id) {
+      if (!confirm('Delete this product?')) return;
+      storeState.products = storeState.products.filter(p => p.id !== id);
+      localStorage.setItem('smartstore_products', JSON.stringify(storeState.products));
+      updateCounts();
+      renderProducts();
+      renderThemeCards();
+      showToast('🗑️ Product deleted');
+    }
+
+    // ==========================================
+    // THEMES (now shows each category's saved product images too)
+    // ==========================================
+    function renderThemeCards() {
+      const grid = document.getElementById('themeGrid');
+      if (!grid) return;
+
+      const savedProducts = localStorage.getItem('smartstore_products');
+      let products = [];
+      if (savedProducts) { try { products = JSON.parse(savedProducts); } catch(e) { products = []; } }
+
+      const themes = {
+        electronics: { name: 'Electronics', icon: '💻', bg: 'linear-gradient(135deg, #0f172a, #1e293b)', desc: 'Modern tech-focused layout for electronics and gadgets.' },
+        books: { name: 'Books', icon: '📚', bg: 'linear-gradient(135deg, #1A3024, #2D6A4F)', desc: 'Live storefront layout tailored for books & bestsellers.' },
+        grocery: { name: 'Grocery', icon: '🥬', bg: 'linear-gradient(135deg, #2D6A4F, #40916C)', desc: 'Fresh and organic storefront layout for groceries.' },
+        fashion: { name: 'Fashion', icon: '👗', bg: 'linear-gradient(135deg, #212529, #495057)', desc: 'Trendy and stylish layout for fashion & accessories.' },
+        home: { name: 'Home & Kitchen', icon: '🏠', bg: 'linear-gradient(135deg, #7c2d12, #9a3412)', desc: 'Handcrafted home decor and kitchenware.' }
+      };
+
+      grid.innerHTML = Object.keys(themes).map(key => {
+        const t = themes[key];
+        const catProducts = products.filter(p => p.category === key);
+        const coverImage = catProducts.length ? catProducts[catProducts.length - 1].image : null;
+
+        // Small strip of up to 3 product thumbnails saved under this category
+        const thumbHtml = catProducts.slice(0, 3).map(p =>
+          `<img src="${p.image || DEFAULT_PRODUCT_IMAGE}" alt="${p.name}" title="${p.name}">`
+        ).join('');
+        const moreCount = catProducts.length > 3
+          ? `<div class="more-count">+${catProducts.length - 3}</div>`
+          : '';
+        const productsRow = catProducts.length
+          ? `<div class="theme-preview-products">${thumbHtml}${moreCount}</div>`
+          : `<div class="theme-preview-products"><span class="text-secondary" style="font-size:0.75rem;">No products added yet</span></div>`;
+
+        return `
+          <div class="theme-preview-card">
+            <div class="theme-preview-image" style="background: ${t.bg};">
+              ${coverImage ? `<img src="${coverImage}" class="theme-cover" alt="${t.name} cover">` : `<span>${t.icon}</span>`}
+              <span class="theme-preview-badge">Live</span>
+            </div>
+            <div class="theme-preview-body">
+              <h6>${t.icon} ${t.name} Theme</h6>
+              <p>${t.desc}</p>
+              ${productsRow}
+              <button class="theme-preview-btn" onclick="openLivePreview('${key}')">
+                <i class="bi bi-eye"></i> Live Preview
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function openLivePreview(themeKey) {
+      localStorage.setItem('previewCategory', themeKey);
+      localStorage.setItem('selectedCategory', themeKey);
+      localStorage.setItem('userCategory', themeKey);
+      showToast('Opening ' + themeKey + ' theme...');
+      setTimeout(() => {
+        window.location.href = 'theme-selection.html?preview=' + themeKey;
+      }, 400);
+    }
+
+    // ==========================================
+    // USERS
+    // ==========================================
+    function renderUsers() {
+      const tbody = document.getElementById('registeredUsersTableBody');
+      if (!tbody) return;
+
+      const savedUsers = localStorage.getItem('registeredUsers');
+      let users = [];
+      if (savedUsers) { try { users = JSON.parse(savedUsers); } catch (e) { users = []; } }
+      storeState.users = users;
+
+      document.getElementById('totalUserCount').textContent = users.length;
+      document.getElementById('dashTotalUsers').textContent = users.length;
+      document.getElementById('userCountBadge').textContent = users.length;
+
+      if (users.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" class="text-center text-secondary py-5">No registered users yet.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = users.map((u, i) => `
+        <tr>
+          <td class="text-secondary">${i + 1}</td>
+          <td>
+            <div class="d-flex align-items-center gap-3">
+              <div class="customer-avatar">${(u.username || 'U').charAt(0).toUpperCase()}</div>
+              <div>
+                <div class="fw-bold" style="color: #0f172a;">${u.username || 'User'}</div>
+                <small class="text-secondary">${u.email || u.businessName || ''}</small>
+              </div>
+            </div>
+          </td>
+          <td>${u.phone || 'N/A'}</td>
+          <td><span class="badge bg-light text-dark border">${u.category || 'Books'}</span></td>
+          <td class="text-secondary" style="font-size: 0.85rem;">${u.registeredAt || 'Recent'}</td>
+        </tr>
+      `).join('');
+    }
+
+    // ==========================================
+    // PAGES
+    // ==========================================
+    function generateSlug() {
+      const title = document.getElementById('pageTitle').value;
+      const slug = title.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-').trim();
+      document.getElementById('pageSlug').value = slug;
+    }
+
+    function formatText(command, value = null) {
+      document.execCommand(command, false, value);
+      document.getElementById('pageContent').focus();
+    }
+
+    function insertLink() {
+      const url = prompt('Enter URL:');
+      if (url) document.execCommand('createLink', false, url);
+    }
+
+    function createPage() {
+      const title = document.getElementById('pageTitle').value.trim();
+      const slug = document.getElementById('pageSlug').value.trim();
+      const content = document.getElementById('pageContent').innerHTML.trim();
+      const published = document.getElementById('pagePublished').checked;
+
+      if (!title) { showToast('⚠️ Please enter page title'); return; }
+      if (!slug) { showToast('⚠️ Please enter page slug'); return; }
+      if (!content) { showToast('⚠️ Please enter page content'); return; }
+
+      storeState.pages.push({
+        id: Date.now(), title, slug, content,
+        status: published ? 'Published' : 'Draft',
+        createdAt: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
+      });
+      localStorage.setItem('smartstore_pages', JSON.stringify(storeState.pages));
+
+      renderPages();
+      resetPageForm();
+      showToast('✅ Page created successfully!');
+    }
+
+    function resetPageForm() {
+      document.getElementById('pageTitle').value = '';
+      document.getElementById('pageSlug').value = '';
+      document.getElementById('pageContent').innerHTML = '';
+      document.getElementById('pagePublished').checked = true;
+    }
+
+    function renderPages() {
+      const tbody = document.getElementById('pagesTableBody');
+      if (!tbody) return;
+
+      document.getElementById('totalPagesCount').textContent = storeState.pages.length;
+
+      if (storeState.pages.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="text-center text-secondary py-5">No pages created yet.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = storeState.pages.map((pg, i) => `
+        <tr>
+          <td>${i + 1}</td>
+          <td class="fw-bold" style="color: #0f172a;">${pg.title}</td>
+          <td><code style="background: #f1f5f9; padding: 4px 10px; border-radius: 6px; color: #4f46e5; font-size: 0.82rem;">/page/${pg.slug}</code></td>
+          <td><span class="badge ${pg.status === 'Published' ? 'bg-success' : 'bg-warning text-dark'}" style="font-size: 0.7rem; padding: 5px 12px;">${pg.status}</span></td>
+          <td class="text-secondary" style="font-size: 0.85rem;">${pg.createdAt}</td>
+          <td style="text-align: right;">
+            <button class="btn btn-sm btn-outline-danger" onclick="deletePage(${pg.id})"><i class="bi bi-trash"></i></button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function deletePage(id) {
+      if (!confirm('Delete this page?')) return;
+      storeState.pages = storeState.pages.filter(pg => pg.id !== id);
+      localStorage.setItem('smartstore_pages', JSON.stringify(storeState.pages));
+      renderPages();
+      showToast('🗑️ Page deleted');
+    }
+
+    // ==========================================
+    // UTILS
+    // ==========================================
+    function toggleOnlineMode() {
+      const t = document.getElementById('onlineToggle');
+      t.classList.toggle('online'); t.classList.toggle('offline');
+      document.getElementById('onlineStatus').textContent = t.classList.contains('online') ? 'Online' : 'Offline';
+    }
+
+    function updateCounts() {
+      const savedProducts = localStorage.getItem('smartstore_products');
+      let products = [];
+      if (savedProducts) { try { products = JSON.parse(savedProducts); } catch(e) { products = []; } }
+      storeState.products = products;
+      document.getElementById('dashTotalProducts').textContent = products.length;
+      document.getElementById('productCount').textContent = products.length;
+
+      const savedUsers = localStorage.getItem('registeredUsers');
+      let users = [];
+      if (savedUsers) { try { users = JSON.parse(savedUsers); } catch(e) { users = []; } }
+      storeState.users = users;
+      document.getElementById('dashTotalUsers').textContent = users.length;
+      document.getElementById('userCountBadge').textContent = users.length;
+    }
+
+    function showToast(message) {
+      const existing = document.querySelector('.toast-notification');
+      if (existing) existing.remove();
+      const toast = document.createElement('div');
+      toast.className = 'toast-notification';
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 2000);
+    }
+
+    function logout() { if(confirm('Logout?')) location.reload(); }
+  </script>
+</body>
+</html>

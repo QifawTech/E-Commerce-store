@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In — SmartStore</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    * { font-family: 'Inter', sans-serif; box-sizing: border-box; }
+    body { background-color: #f1f5f9; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px 16px; margin: 0; }
+    .auth-card { width: 100%; max-width: 920px; background: #ffffff; border-radius: 20px; border: 1px solid #e2e8f0; box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.05); overflow: hidden; }
+    .visual-panel { background: linear-gradient(135deg, rgba(30, 27, 75, 0.85), rgba(79, 70, 229, 0.75)), url('images/login-bg.jpg'); background-size: cover; background-position: center; padding: 48px; display: flex; flex-direction: column; justify-content: space-between; }
+    .brand-logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.25rem; color: #ffffff; text-decoration: none; }
+    .glass-pill { background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.2); color: #ffffff; font-weight: 500; font-size: 0.8rem; }
+    .form-panel { padding: 48px; background: #ffffff; }
+    .form-label-custom { font-size: 0.875rem; font-weight: 600; color: #334155; margin-bottom: 8px; display: block; }
+    .custom-input { width: 100%; height: 48px; padding: 10px 16px; font-size: 0.95rem; border: 1.5px solid #cbd5e1; border-radius: 10px; background-color: #ffffff; color: #0f172a; outline: none; transition: border-color 0.2s ease, box-shadow 0.2s ease; }
+    .custom-input:focus { border-color: #4f46e5; box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12); }
+    .btn-action { background: #4f46e5; color: #ffffff; border: none; height: 48px; border-radius: 10px; font-weight: 600; font-size: 1rem; transition: all 0.2s ease; }
+    .btn-action:hover { background: #4338ca; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25); }
+  </style>
+</head>
+<body>
+
+  <div class="auth-card">
+    <div class="row g-0">
+      <div class="col-lg-6 d-none d-lg-flex visual-panel text-white">
+        <div>
+          <a href="index.html" class="brand-logo">
+            <i class="bi bi-bag-check-fill fs-4"></i>
+            SmartStore
+          </a>
+        </div>
+        <div>
+          <span class="badge glass-pill px-3 py-2 rounded-pill mb-3">Enterprise Portal</span>
+          <h2 class="fw-bold fs-2 mb-2">Sign In to Account</h2>
+          <p class="text-white-50 small">Manage your dynamic catalog and profile preferences effortlessly.</p>
+        </div>
+        <div class="text-white-50 small">&copy; 2026 SmartStore Platform</div>
+      </div>
+
+      <div class="col-lg-6 form-panel d-flex align-items-center">
+        <div class="w-100">
+          <div class="mb-4">
+            <h3 class="fw-bold text-dark fs-3 mb-1">Sign In</h3>
+            <p class="text-secondary small">Enter your account username and password.</p>
+          </div>
+
+          <div id="alert-box" class="alert d-none rounded-3 mb-3"></div>
+
+          <form id="loginForm" novalidate>
+            <div class="mb-3">
+              <label for="username" class="form-label-custom">Username</label>
+              <input type="text" id="username" class="custom-input" placeholder="Enter username">
+            </div>
+
+            <div class="mb-4">
+              <label for="password" class="form-label-custom">Password</label>
+              <input type="password" id="password" class="custom-input" placeholder="Enter password">
+            </div>
+
+            <button type="submit" class="btn btn-action w-100 mb-3">Sign In</button>
+          </form>
+
+          <div class="text-center">
+            <p class="text-secondary small mb-2">Don't have an account? <a href="register.html" class="text-primary fw-semibold text-decoration-none">Register here</a></p>
+            <a href="index.html" class="text-muted small text-decoration-none"><i class="bi bi-arrow-left me-1"></i>Return to Home Page</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ✅ Type செய்யும்போது error message-ஐ hide செய்
+    document.getElementById('username').addEventListener('input', function() {
+      document.getElementById('alert-box').classList.add('d-none');
+    });
+    document.getElementById('password').addEventListener('input', function() {
+      document.getElementById('alert-box').classList.add('d-none');
+    });
+
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const alertBox = document.getElementById('alert-box');
+
+      // ✅ Custom validation
+      if (!username) {
+        alertBox.className = 'alert alert-danger rounded-3 mb-3';
+        alertBox.textContent = '❌ Please enter username!';
+        alertBox.classList.remove('d-none');
+        return;
+      }
+
+      if (!password) {
+        alertBox.className = 'alert alert-danger rounded-3 mb-3';
+        alertBox.textContent = '❌ Please enter password!';
+        alertBox.classList.remove('d-none');
+        return;
+      }
+
+      // ✅ Super Admin
+      const SUPER_ADMIN_USER = 'superadmin';
+      const SUPER_ADMIN_PASS = 'admin123';
+
+      if (username === SUPER_ADMIN_USER && password === SUPER_ADMIN_PASS) {
+        localStorage.setItem('username', username);
+        localStorage.setItem('role', 'superadmin');
+        localStorage.setItem('loggedInUser', username);
+
+        alertBox.className = 'alert alert-success rounded-3 mb-3';
+        alertBox.textContent = '✅ Super Admin login successful! Redirecting...';
+        alertBox.classList.remove('d-none');
+
+        setTimeout(() => {
+          window.location.href = 'superadmin.html';
+        }, 1000);
+        return;
+      }
+
+      // ✅ Check registered users
+      const savedUsers = localStorage.getItem('registeredUsers');
+      let users = [];
+      if (savedUsers) {
+        try { users = JSON.parse(savedUsers); } catch (e) { users = []; }
+      }
+
+      const foundUser = users.find(u => 
+        u.username === username && u.password === password
+      );
+
+      if (!foundUser) {
+        alertBox.className = 'alert alert-danger rounded-3 mb-3';
+        alertBox.textContent = '❌ Invalid username or password! Please register first.';
+        alertBox.classList.remove('d-none');
+        return;
+      }
+
+      // ✅ Valid login
+      localStorage.setItem('username', foundUser.username);
+      localStorage.setItem('role', 'merchant');
+      localStorage.setItem('loggedInUser', foundUser.username);
+      localStorage.setItem('user', JSON.stringify(foundUser));
+      localStorage.setItem('selectedCategory', foundUser.category || 'Books');
+      localStorage.setItem('userCategory', foundUser.category || 'Books');
+
+      alertBox.className = 'alert alert-success rounded-3 mb-3';
+      alertBox.textContent = '✅ Login successful! Welcome ' + foundUser.username + '. Redirecting...';
+      alertBox.classList.remove('d-none');
+
+      setTimeout(() => {
+        window.location.href = 'dashboard.html';
+      }, 1000);
+    });
+  </script>
+</body>
+</html>

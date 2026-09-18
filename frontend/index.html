@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SmartStore — Personalized Shopping Platform</title>
+  <!-- Bootstrap 5 + Icons + Inter Font -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    * {
+      font-family: 'Inter', sans-serif;
+      box-sizing: border-box;
+    }
+
+    /* ----- GLASS NAVBAR (same structure, refined) ----- */
+    .glass-nav {
+      background: rgba(15, 23, 42, 0.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      transition: all 0.3s ease;
+    }
+    .navbar-brand {
+      letter-spacing: -0.4px;
+      font-weight: 700;
+    }
+    .navbar-nav .nav-link {
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.75) !important;
+      transition: color 0.2s ease;
+      padding: 0.5rem 1rem;
+    }
+    .navbar-nav .nav-link:hover,
+    .navbar-nav .nav-link.active {
+      color: #ffffff !important;
+    }
+    .btn-login-nav {
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #fff;
+      border-radius: 50px;
+      padding: 8px 24px;
+      font-weight: 500;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+    .btn-login-nav:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+    }
+    .btn-primary-gradient {
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      border: none;
+      color: #fff;
+      border-radius: 50px;
+      padding: 10px 28px;
+      font-weight: 600;
+      box-shadow: 0 4px 15px rgba(79, 70, 229, 0.35);
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+    .btn-primary-gradient:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 22px rgba(79, 70, 229, 0.5);
+      color: #fff;
+
+    }
+
+    
+
+    /* ----- HERO with e‑commerce background image ----- */
+    .hero-bg {
+      background: linear-gradient(145deg, rgba(11, 17, 32, 0.85) 0%, rgba(26, 38, 57, 0.92) 100%),
+                  url('https://images.unsplash.com/photo-1556742049-0a67568d0490?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+      padding: 160px 0 120px 0;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      right: -10%;
+      top: -20%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(79,70,229,0.20) 0%, transparent 70%);
+      border-radius: 50%;
+      z-index: 0;
+    }
+    .hero-bg .container {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* ----- FEATURE CARDS (elevated) ----- */
+    .feature-card {
+      border: 1px solid #e9edf4;
+      border-radius: 20px;
+      background: #ffffff;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 20px -8px rgba(0,0,0,0.04);
+      padding: 2rem 1.5rem;
+    }
+    .feature-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 24px 36px -12px rgba(0, 0, 0, 0.12);
+      border-color: #cbd5e1;
+    }
+    .icon-circle {
+      width: 64px;
+      height: 64px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 60px;
+    }
+
+    /* ----- section spacing ----- */
+    section {
+      padding: 100px 0;
+    }
+
+    /* helpers */
+    .tracking-wide { letter-spacing: 0.02em; }
+    .text-secondary-light { color: #94a3b8; }
+
+    /* image radius */
+    .img-soft-rounded {
+      border-radius: 24px;
+      box-shadow: 0 12px 30px -12px rgba(0,0,0,0.15);
+    }
+  </style>
+</head>
+<body class="bg-light">
+
+  <!-- ========== GLASS NAVBAR ========== -->
+  <nav class="navbar navbar-expand-lg fixed-top glass-nav py-3">
+    <div class="container">
+      <a class="navbar-brand text-white fs-4 d-flex align-items-center gap-2" href="#">
+        <i class="bi bi-bag-check-fill text-primary"></i> SmartStore
+      </a>
+
+      <button class="navbar-toggler border-0 text-white shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navContent">
+        <i class="bi bi-list fs-2"></i>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navContent">
+        <ul class="navbar-nav mx-auto text-center gap-lg-2 my-3 my-lg-0">
+          <li class="nav-item"><a class="nav-link px-3 active" href="#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link px-3" href="#about">About</a></li>
+          <li class="nav-item"><a class="nav-link px-3" href="#features">Features</a></li>
+          <li class="nav-item"><a class="nav-link px-3" href="#why-us">Why Choose Us</a></li>
+        </ul>
+
+        <div class="d-flex justify-content-center align-items-center gap-3">
+          <a href="login.html" class="btn-login-nav">Login</a>
+          <a href="register.html" class="btn btn-primary-gradient">Register</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ========== HERO (background image changed to e‑commerce scene) ========== -->
+  <section id="home" class="hero-bg text-center">
+    <div class="container">
+      <span class="badge bg-primary bg-opacity-20 text-primary px-4 py-2 rounded-pill mb-4 fw-semibold tracking-wide">
+        <i class="bi bi-tag me-1"></i> Next‑Gen E‑Commerce
+      </span>
+      <h1 class="display-3 fw-bold mb-4 tracking-wide">Curated for You.<br/>Zero Clutter.</h1>
+      <p class="text-white-50 fs-5 mb-5 col-lg-8 mx-auto lh-base">
+        Instantly access products that match your chosen category — right after secure login. 
+        Personalized shopping, simplified.
+      </p>
+      <div class="d-flex justify-content-center gap-3 flex-wrap">
+        <a href="register.html" class="btn btn-primary-gradient btn-lg px-5">Start Shopping</a>
+        <a href="#about" class="btn btn-outline-light btn-lg rounded-pill px-5 fw-medium">Explore</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== ABOUT (new e‑commerce image) ========== -->
+  <section id="about" class="bg-white">
+    <div class="container">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-6 order-lg-1">
+
+          <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?auto=format&fit=crop&w=800&q=80" 
+               alt="Online shopping interface" 
+               class="img-fluid img-soft-rounded" />
+        </div>
+        <div class="col-lg-6">
+          <h6 class="text-primary fw-bold text-uppercase tracking-wide mb-2"><i class="bi bi-info-circle me-1"></i> About</h6>
+          <h2 class="fw-bold display-6 mb-4 text-dark">Smart Filtering,<br/>Instant Results</h2>
+          <p class="text-secondary fs-6 lh-lg">
+            SmartStore binds your preferred product categories directly to your dashboard during registration. 
+            No more endless scrolling — see what matters, right when you log in.
+          </p>
+          <div class="mt-4 d-flex gap-3 align-items-center">
+            <span class="badge bg-primary bg-opacity-10 text-primary px-4 py-2 rounded-pill fw-normal">
+              <i class="bi bi-check-circle-fill me-1"></i> Personalized feed
+            </span>
+            <span class="badge bg-primary bg-opacity-10 text-primary px-4 py-2 rounded-pill fw-normal">
+              <i class="bi bi-lightning-fill me-1"></i> Zero latency
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FEATURES ========== -->
+  <section id="features" class="bg-light">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h6 class="text-primary fw-bold text-uppercase tracking-wide mb-2"><i class="bi bi-grid-3x3-gap-fill me-1"></i> Capabilities</h6>
+        <h2 class="fw-bold display-6 text-dark">Built for Modern Commerce</h2>
+      </div>
+      <div class="row g-4 text-center">
+        <div class="col-md-4">
+          <div class="feature-card h-100">
+            <div class="icon-circle bg-primary bg-opacity-10 text-primary mb-3">
+              <i class="bi bi-funnel-fill fs-3"></i>
+            </div>
+            <h4 class="fw-bold mb-3 text-dark">Dynamic Category Filter</h4>
+            <p class="text-secondary mb-0">Your dashboard adapts instantly to your registered preference — no manual filtering.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="feature-card h-100">
+            <div class="icon-circle bg-success bg-opacity-10 text-success mb-3">
+              <i class="bi bi-shield-lock-fill fs-3"></i>
+            </div>
+            <h4 class="fw-bold mb-3 text-dark">Secure Authentication</h4>
+            <p class="text-secondary mb-0">Bcrypt hashing + JWT verification keep your account safe and sessions protected.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="feature-card h-100">
+            <div class="icon-circle bg-warning bg-opacity-10 text-warning mb-3">
+              <i class="bi bi-cloud-check-fill fs-3"></i>
+            </div>
+            <h4 class="fw-bold mb-3 text-dark">Cloud Sync</h4>
+            <p class="text-secondary mb-0">MongoDB Atlas ensures zero data loss, fast retrieval, and always‑on availability.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== WHY CHOOSE US (new e‑commerce image) ========== -->
+  <section id="why-us" class="bg-white">
+
+
+
+    
+    <div class="container">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-6">
+          <h6 class="text-primary fw-bold text-uppercase tracking-wide mb-2"><i class="bi bi-star-fill me-1"></i> Why SmartStore</h6>
+          <h2 class="fw-bold display-6 mb-4 text-dark">Speed, Security &amp; Simplicity</h2>
+          <div class="d-flex gap-3 mb-4 align-items-start">
+            <i class="bi bi-check-circle-fill text-primary fs-4 mt-1"></i>
+            <p class="fs-6 text-secondary mb-0">Ad‑free, clean interface — focus on products, not distractions.</p>
+          </div>
+          <div class="d-flex gap-3 mb-4 align-items-start">
+            <i class="bi bi-check-circle-fill text-primary fs-4 mt-1"></i>
+            <p class="fs-6 text-secondary mb-0">Lightning‑fast login with persistent preferences across devices.</p>
+          </div>
+          <div class="d-flex gap-3 align-items-start">
+            <i class="bi bi-check-circle-fill text-primary fs-4 mt-1"></i>
+            <p class="fs-6 text-secondary mb-0">SmartStore learns your taste — every visit feels tailor‑made.</p>
+          </div>
+          <div class="mt-4">
+            <a href="register.html" class="btn btn-primary-gradient px-5">Join Now</a>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <img src="https://images.unsplash.com/photo-1556742049-0a67568d0490?auto=format&fit=crop&w=800&q=80" 
+               alt="E-commerce shopping cart and mobile" 
+               class="img-fluid img-soft-rounded" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="bg-dark text-white py-5">
+    <div class="container">
+      <div class="row g-4 align-items-center">
+        <div class="col-md-6">
+          <h4 class="fw-bold mb-2"><i class="bi bi-bag-check-fill text-primary me-2"></i>SmartStore</h4>
+          <p class="text-white-50 mb-0">Modern e‑commerce platform with dynamic user filtering — powered by MERN.</p>
+        </div>
+        <div class="col-md-6 text-md-end">
+          <h5 class="fw-bold mb-2">Contact Support</h5>
+          <p class="text-white-50 mb-1"><i class="bi bi-telephone-fill me-2 text-primary"></i> +91 98765 43210</p>
+          <p class="text-white-50 mb-0"><i class="bi bi-envelope-fill me-2 text-primary"></i> support@smartstore.com</p>
+        </div>
+      </div>
+      <hr class="my-4 border-secondary opacity-25" />
+      <p class="text-center text-white-50 mb-0 small">&copy; 2026 SmartStore. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
