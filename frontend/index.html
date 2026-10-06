@@ -1,151 +1,244 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SmartStore — Personalized Shopping Platform</title>
-  <!-- Bootstrap 5 + Icons + Inter Font -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    * {
-      font-family: 'Inter', sans-serif;
-      box-sizing: border-box;
-    }
+    * { font-family: 'Inter', sans-serif; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    section { padding: 90px 0; }
 
-    /* ----- GLASS NAVBAR (same structure, refined) ----- */
-    .glass-nav {
-      background: rgba(15, 23, 42, 0.88);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      transition: all 0.3s ease;
-    }
-    .navbar-brand {
-      letter-spacing: -0.4px;
-      font-weight: 700;
-    }
-    .navbar-nav .nav-link {
-      font-weight: 500;
-      color: rgba(255, 255, 255, 0.75) !important;
-      transition: color 0.2s ease;
-      padding: 0.5rem 1rem;
-    }
-    .navbar-nav .nav-link:hover,
-    .navbar-nav .nav-link.active {
-      color: #ffffff !important;
-    }
-    .btn-login-nav {
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      color: #fff;
-      border-radius: 50px;
-      padding: 8px 24px;
-      font-weight: 500;
-      transition: all 0.2s;
-      text-decoration: none;
-    }
-    .btn-login-nav:hover {
-      background: rgba(255, 255, 255, 0.12);
-      color: #fff;
-    }
-    .btn-primary-gradient {
-      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
-      border: none;
-      color: #fff;
-      border-radius: 50px;
-      padding: 10px 28px;
-      font-weight: 600;
-      box-shadow: 0 4px 15px rgba(79, 70, 229, 0.35);
-      transition: all 0.3s ease;
-      text-decoration: none;
-    }
-    .btn-primary-gradient:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 22px rgba(79, 70, 229, 0.5);
-      color: #fff;
+    /* Navbar */
+    .glass-nav { background: rgba(15,23,42,.88); backdrop-filter: blur(14px); border-bottom: 1px solid rgba(255,255,255,.08); }
+    .navbar-brand { letter-spacing: -.4px; font-weight: 700; }
+    .navbar-nav .nav-link { font-weight: 500; color: rgba(255,255,255,.75) !important; padding: .5rem 1rem; }
+    .navbar-nav .nav-link:hover, .navbar-nav .nav-link.active { color: #fff !important; }
+    .btn-login-nav { border: 1px solid rgba(255,255,255,.3); color: #fff; border-radius: 50px; padding: 8px 24px; font-weight: 500; text-decoration: none; }
+    .btn-login-nav:hover { background: rgba(255,255,255,.12); color: #fff; }
+    .btn-primary-gradient { background: linear-gradient(135deg,#4f46e5,#7c3aed); border: none; color: #fff; border-radius: 50px; padding: 10px 28px; font-weight: 600; box-shadow: 0 4px 15px rgba(79,70,229,.35); transition: all .3s ease; text-decoration: none; }
+    .btn-primary-gradient:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(79,70,229,.5); color: #fff; }
 
-    }
+    /* Hero */
+    .hero-bg { background: linear-gradient(145deg,rgba(11,17,32,.85),rgba(26,38,57,.92)), url('https://images.unsplash.com/photo-1556742049-0a67568d0490?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat; padding: 160px 0 120px; color: #fff; }
 
-    
+    /* Cards + images */
+    .img-soft-rounded { border-radius: 24px; box-shadow: 0 20px 40px -12px rgba(0,0,0,.18); }
+    .feature-card { border: 1px solid #e9edf4; border-radius: 20px; background: #fff; transition: all .3s ease; box-shadow: 0 8px 20px -8px rgba(0,0,0,.04); padding: 2rem 1.5rem; }
+    .feature-card:hover { transform: translateY(-8px); box-shadow: 0 24px 36px -12px rgba(0,0,0,.12); border-color: #cbd5e1; }
+    .icon-circle { width: 64px; height: 64px; display: inline-flex; align-items: center; justify-content: center; border-radius: 60px; }
 
-    /* ----- HERO with e‑commerce background image ----- */
-    .hero-bg {
-      background: linear-gradient(145deg, rgba(11, 17, 32, 0.85) 0%, rgba(26, 38, 57, 0.92) 100%),
-                  url('https://images.unsplash.com/photo-1556742049-0a67568d0490?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
-      padding: 160px 0 120px 0;
-      color: white;
-      position: relative;
-      overflow: hidden;
-    }
-    .hero-bg::after {
-      content: '';
-      position: absolute;
-      right: -10%;
-      top: -20%;
-      width: 500px;
-      height: 500px;
-      background: radial-gradient(circle, rgba(79,70,229,0.20) 0%, transparent 70%);
-      border-radius: 50%;
-      z-index: 0;
-    }
-    .hero-bg .container {
-      position: relative;
-      z-index: 2;
-    }
+    /* Dynamic page cards */
+    .page-card { background: #fff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 20px; text-align: center; transition: all .25s ease; height: 100%; }
+    .page-card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,.08); border-color: #c7d2fe; }
+    .page-icon { width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg,#818cf8,#6366f1); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin: 0 auto 12px; }
+    .page-card h4 { font-weight: 700; font-size: .95rem; color: #0f172a; margin-bottom: 4px; }
+    .page-card p { font-size: .78rem; color: #64748b; margin: 0; }
 
-    /* ----- FEATURE CARDS (elevated) ----- */
-    .feature-card {
-      border: 1px solid #e9edf4;
-      border-radius: 20px;
-      background: #ffffff;
-      transition: all 0.3s ease;
-      box-shadow: 0 8px 20px -8px rgba(0,0,0,0.04);
-      padding: 2rem 1.5rem;
-    }
-    .feature-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 24px 36px -12px rgba(0, 0, 0, 0.12);
-      border-color: #cbd5e1;
-    }
-    .icon-circle {
-      width: 64px;
-      height: 64px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 60px;
-    }
-
-    /* ----- section spacing ----- */
-    section {
-      padding: 100px 0;
-    }
-
-    /* helpers */
-    .tracking-wide { letter-spacing: 0.02em; }
-    .text-secondary-light { color: #94a3b8; }
-
-    /* image radius */
-    .img-soft-rounded {
-      border-radius: 24px;
-      box-shadow: 0 12px 30px -12px rgba(0,0,0,0.15);
-    }
+    .footer-link { color: #adb5bd; font-size: .9rem; text-decoration: none; }
+    .footer-link:hover { color: #fff; }
+    .page-body { color: #334155; line-height: 1.7; }
+    .page-body h1 { font-size: 1.5rem; font-weight: 800; }
+    .page-body h2 { font-size: 1.25rem; font-weight: 700; }
+    .page-body ul { list-style: disc; padding-left: 1.5rem; }
+    .page-body ol { list-style: decimal; padding-left: 1.5rem; }
+    .page-body a { color: #4f46e5; text-decoration: underline; }
   </style>
+<style id="sj-styles">
+#ss-journey{--b:#2563eb;--b2:#4f46e5;--ink:#0f172a;--mut:#64748b;--line:#e3ebf8;--soft:#eef4ff;background:#f7faff;color:var(--ink);overflow-x:clip}
+#ss-journey *{font-family:'Inter',sans-serif}
+#ss-journey section.sj-sec{padding:84px 0;position:relative}
+#ss-journey section.sj-hero{padding:130px 0 70px;background:radial-gradient(900px 420px at 85% 10%,#dbe8ff,transparent 62%),#fff}
+#ss-journey section.sj-alt{background:#fff}
+.sj-kick{display:inline-flex;align-items:center;gap:8px;font-size:.74rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--b);background:var(--soft);padding:7px 14px;border-radius:50px;margin-bottom:16px}
+.sj-kick b{background:var(--b);color:#fff;border-radius:50px;padding:1px 8px}
+.sj-h{font-weight:800;letter-spacing:-.02em;line-height:1.12}
+.sj-sub{color:var(--mut);line-height:1.7}
+.sj-btn{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:50px;padding:13px 30px;font-weight:600;text-decoration:none;color:#fff;background:linear-gradient(135deg,var(--b),var(--b2));box-shadow:0 6px 18px rgba(37,99,235,.3);transition:transform .25s,box-shadow .25s}
+.sj-btn:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(37,99,235,.38);color:#fff}
+.sj-btn.sj-ghost{background:#fff;color:var(--ink);border:1px solid var(--line);box-shadow:none}
+.sj-btn.sj-ghost:hover{border-color:#b9cdfa;color:var(--b)}
+.sj-btn.sm{padding:9px 16px;font-size:.84rem}
+/* reveal (hidden only while JS is active) */
+.sj-js .sj-reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0s);will-change:opacity,transform}
+.sj-js .sj-reveal.sj-l{transform:translateX(-32px)}.sj-js .sj-reveal.sj-r{transform:translateX(32px)}.sj-js .sj-reveal.sj-s{transform:scale(.94)}
+.sj-js .sj-reveal.sj-in{opacity:1;transform:none}.sj-js .sj-reveal.sj-done{will-change:auto}
+.sj-card{background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:0 10px 26px -14px rgba(15,23,42,.12);transition:transform .3s,box-shadow .3s,border-color .3s;height:100%}
+.sj-card:hover{transform:translateY(-6px);box-shadow:0 22px 38px -16px rgba(37,99,235,.25);border-color:#c5d6fb}
+.sj-tile{display:flex;align-items:center;justify-content:center;border-radius:18px;transition:transform .4s}
+.sj-card:hover .sj-tile{transform:scale(1.05)}
+.sj-art{width:100%;height:auto;display:block}
+.sj-px{will-change:transform}
+/* hero */
+.sj-stage{position:relative;max-width:560px;margin:0 auto}
+.sj-chip{position:absolute;background:#fff;border-radius:16px;padding:9px 14px;font-size:.8rem;font-weight:600;box-shadow:0 14px 28px -10px rgba(15,23,42,.25);display:flex;align-items:center;gap:10px;animation:sjFloat 5s ease-in-out infinite}
+.sj-chip i{color:var(--b);font-size:1.15rem}
+@keyframes sjFloat{50%{transform:translateY(-8px)}}
+.sj-mini{display:flex;gap:10px;flex-wrap:wrap}
+.sj-mini div{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:.72rem;font-weight:600;color:var(--mut);width:84px;text-align:center}
+.sj-mini i{width:44px;height:44px;border-radius:50%;background:var(--soft);color:var(--b);display:flex;align-items:center;justify-content:center;font-size:1.2rem}
+.sj-stats{background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:0 14px 30px -18px rgba(15,23,42,.2);padding:18px 10px;margin-top:46px}
+.sj-stats .c{display:flex;align-items:center;gap:12px;justify-content:center;padding:6px 8px}
+.sj-stats .c i{width:42px;height:42px;border-radius:50%;background:var(--soft);color:var(--b);display:flex;align-items:center;justify-content:center;font-size:1.15rem;flex:none}
+.sj-stats b{display:block;font-size:1.05rem;line-height:1.1}.sj-stats small{color:var(--mut)}
+/* category */
+.sj-cat{padding:24px 14px;text-align:center;display:block;text-decoration:none;color:var(--ink)}
+.sj-cat .sj-tile{width:76px;height:76px;margin:0 auto 14px;font-size:2rem;color:#fff;background:linear-gradient(135deg,#60a5fa,var(--b))}
+.sj-cat h5{font-size:.98rem;font-weight:700;margin:0 0 2px}.sj-cat small{color:var(--mut)}
+/* product */
+.sj-prod{padding:14px;display:flex;flex-direction:column;position:relative}
+.sj-prod .sj-tile{height:170px;margin-bottom:14px;background:linear-gradient(135deg,#e6f0ff,#f3f6ff)}
+.sj-prod .sj-tile svg{width:62%;height:auto;transition:transform .4s}.sj-prod:hover .sj-tile svg{transform:scale(1.08) rotate(-3deg)}
+.sj-off{position:absolute;top:22px;left:22px;background:#ef4444;color:#fff;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:50px;z-index:1}
+.sj-stars{color:#f59e0b;font-size:.78rem;letter-spacing:1px}
+.sj-price{font-size:1.1rem;font-weight:800}.sj-price s{font-size:.82rem;color:#94a3b8;font-weight:500;margin-left:6px}
+/* why */
+.sj-why{padding:26px 22px}
+.sj-why .ic{width:56px;height:56px;border-radius:16px;background:var(--soft);color:var(--b);display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:14px;transition:all .3s}
+.sj-why:hover .ic{background:var(--b);color:#fff;transform:rotate(-6deg)}
+.sj-why h5{font-size:1.02rem;font-weight:700}.sj-why p{color:var(--mut);font-size:.9rem;margin:0}
+/* cart art */
+.sj-drop{opacity:0;transform:translateY(-70px)}
+.sj-in .sj-drop{animation:sjDrop .8s cubic-bezier(.3,1.3,.5,1) forwards;animation-delay:var(--dd,.4s)}
+@keyframes sjDrop{to{opacity:1;transform:none}}
+.sj-added{position:absolute;background:#fff;border-radius:14px;padding:8px 12px;font-size:.78rem;font-weight:600;box-shadow:0 12px 24px -10px rgba(15,23,42,.25);display:flex;gap:8px;align-items:center;opacity:0;transform:translateY(10px);transition:all .5s var(--dd,.8s)}
+.sj-added i{color:#16a34a}.sj-in .sj-added{opacity:1;transform:none}
+/* checkout */
+.sj-sum div{display:flex;justify-content:space-between;padding:6px 0;color:var(--mut);font-size:.92rem}
+.sj-sum .tot{border-top:1px solid var(--line);margin-top:6px;padding-top:12px;color:var(--ink);font-weight:800;font-size:1.1rem}
+.sj-cc{border-radius:20px;padding:22px;color:#fff;background:linear-gradient(135deg,#1e40af,#3b82f6 60%,#60a5fa);box-shadow:0 22px 36px -16px rgba(37,99,235,.55);position:relative;overflow:hidden;min-height:170px}
+.sj-cc:after{content:"";position:absolute;right:-40px;top:-40px;width:150px;height:150px;border-radius:50%;background:rgba(255,255,255,.14)}
+.sj-cc .chip{width:42px;height:30px;border-radius:7px;background:linear-gradient(135deg,#fde68a,#f59e0b)}
+.sj-pay{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:11px 14px;margin-bottom:10px;font-weight:600;font-size:.9rem;transition:all .25s}
+.sj-pay i{color:var(--b);font-size:1.15rem}.sj-pay:hover{border-color:#b9cdfa}
+.sj-pay.on{border-color:var(--b);background:#f1f6ff;box-shadow:0 0 0 3px rgba(37,99,235,.12)}
+.sj-lock{display:flex;align-items:center;gap:8px;color:#16a34a;font-size:.82rem;font-weight:600;margin-top:12px}
+/* delivery */
+.sj-road{position:relative;height:96px;margin:0 4% 6px}
+.sj-road:after{content:"";position:absolute;left:0;right:0;bottom:6px;height:6px;border-radius:6px;background:repeating-linear-gradient(90deg,#cbd5e1 0 18px,transparent 18px 30px)}
+.sj-scoot{position:absolute;bottom:10px;left:0;width:120px;transition:left 2.4s .5s cubic-bezier(.4,0,.2,1)}
+.sj-in .sj-scoot{left:calc(62% - 60px)}
+.sj-track{position:relative;display:flex;justify-content:space-between}
+.sj-track:before,.sj-track .f{content:"";position:absolute;top:21px;left:10%;right:10%;height:4px;border-radius:4px;background:#e3ebf8}
+.sj-track .f{background:linear-gradient(90deg,var(--b),var(--b2));right:auto;width:60%;transform-origin:left;transform:scaleX(0);transition:transform 2.4s .5s ease}
+.sj-in .sj-track .f{transform:scaleX(1)}
+.sj-track .s{position:relative;flex:1;text-align:center;font-size:.8rem;font-weight:600;color:var(--mut)}
+.sj-track .s i{display:flex;width:46px;height:46px;margin:0 auto 8px;border-radius:50%;background:#fff;border:2px solid var(--line);align-items:center;justify-content:center;font-size:1.1rem;position:relative;z-index:1}
+.sj-track .s.on{color:var(--ink)}.sj-track .s.on i{background:var(--b);border-color:var(--b);color:#fff}
+.sj-track .s.now i{animation:sjPulse 1.8s infinite}
+@keyframes sjPulse{0%{box-shadow:0 0 0 0 rgba(37,99,235,.45)}100%{box-shadow:0 0 0 14px rgba(37,99,235,0)}}
+/* success */
+.sj-okc{width:110px;height:110px;margin:0 auto 16px}
+.sj-okc circle,.sj-okc path{fill:none;stroke:#16a34a;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:300;stroke-dashoffset:300;transition:stroke-dashoffset 1s ease .2s}
+.sj-okc path{stroke-dasharray:60;stroke-dashoffset:60;transition-delay:.8s}
+.sj-in .sj-okc circle,.sj-in .sj-okc path{stroke-dashoffset:0}
+.sj-flow{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:22px 0}
+.sj-flow span{background:var(--soft);color:var(--b);font-weight:700;border-radius:50px;padding:8px 18px;font-size:.9rem}
+/* progress pill */
+.sj-prog{position:fixed;left:50%;bottom:18px;z-index:1030;transform:translate(-50%,24px);opacity:0;pointer-events:none;transition:all .4s;background:rgba(15,23,42,.92);backdrop-filter:blur(10px);color:#fff;border-radius:50px;padding:10px 18px;display:flex;align-items:center;gap:14px;font-size:.8rem;font-weight:600;max-width:calc(100vw - 20px)}
+.sj-prog.show{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+.sj-prog .d{display:flex;gap:5px}
+.sj-prog .d button{width:24px;height:24px;border-radius:50%;border:0;background:rgba(255,255,255,.15);color:#fff;font-size:.68rem;font-weight:700;transition:all .3s}
+.sj-prog .d button.on{background:var(--b);transform:scale(1.15)}.sj-prog .d button.past{background:rgba(37,99,235,.55)}
+.sj-prog .l{white-space:nowrap}
+@media(max-width:575px){.sj-prog{gap:8px;padding:9px 12px}.sj-prog .d button{width:18px;height:18px;font-size:.56rem}.sj-prog .l{font-size:.72rem}.sj-track .s{font-size:.66rem}.sj-track .s i{width:38px;height:38px}.sj-track:before,.sj-track .f{top:17px}.sj-chip{font-size:.7rem;padding:7px 10px}.sj-scoot{width:84px}.sj-in .sj-scoot{left:calc(62% - 42px)}}
+@media(prefers-reduced-motion:reduce){.sj-js .sj-reveal,.sj-js .sj-reveal.sj-l,.sj-js .sj-reveal.sj-r,.sj-js .sj-reveal.sj-s{transform:none}.sj-chip{animation:none}.sj-px{transform:none!important}}
+.sj-ph{position:relative;height:118px;border-radius:16px;overflow:hidden;background:linear-gradient(135deg,#60a5fa,#2563eb);display:flex;align-items:center;justify-content:center;color:#fff;font-size:2.2rem;margin-bottom:12px}
+.sj-ph img,.sj-tile img.sj-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.sj-card:hover .sj-ph img,.sj-card:hover .sj-tile img.sj-photo{transform:scale(1.07)}
+.sj-prod .sj-tile{position:relative;overflow:hidden}
+.sj-real{width:100%;height:auto;display:block;border-radius:24px}
+</style>
+<style id="hw-styles">
+#hw-wrap{--p1:#4f46e5;--p2:#7c3aed;--ink:#0f172a;--mut:#64748b;--line:#e6eaf5;--soft:#eef0ff;overflow-x:clip;color:var(--ink)}
+#hw-wrap *{font-family:'Inter',sans-serif}
+#hw-wrap section{padding:80px 0;position:relative}
+#hw-wrap .hw-alt{background:#fff}#hw-wrap .hw-bg{background:#f7f8ff}
+.hw-kick{display:inline-flex;align-items:center;gap:8px;font-size:.74rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--p1);background:var(--soft);padding:7px 14px;border-radius:50px;margin-bottom:14px}
+.hw-h{font-weight:800;letter-spacing:-.02em;line-height:1.15}.hw-sub{color:var(--mut);line-height:1.75}
+.hw-js .hw-r{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0s)}
+.hw-js .hw-r.hw-l{transform:translateX(-30px)}.hw-js .hw-r.hw-rt{transform:translateX(30px)}
+.hw-js .hw-r.hw-in{opacity:1;transform:none}
+.hw-card{background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:0 10px 26px -16px rgba(15,23,42,.14);transition:transform .3s,box-shadow .3s,border-color .3s}
+.hw-card:hover{transform:translateY(-6px);box-shadow:0 22px 38px -18px rgba(79,70,229,.3);border-color:#c9ccf7}
+.hw-ic{width:48px;height:48px;border-radius:14px;background:var(--soft);color:var(--p1);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex:none;transition:all .3s}
+.hw-card:hover .hw-ic{background:linear-gradient(135deg,var(--p1),var(--p2));color:#fff}
+/* section 1 */
+.hw-pt{display:flex;align-items:center;gap:12px;font-weight:600;padding:10px 14px;background:#fff;border:1px solid var(--line);border-radius:14px;transition:transform .25s,border-color .25s}
+.hw-pt:hover{transform:translateX(5px);border-color:#c9ccf7}
+.hw-pt i{color:#16a34a;font-size:1.2rem}
+.hw-pic{position:relative;border-radius:26px;overflow:hidden;box-shadow:0 30px 50px -22px rgba(15,23,42,.35);aspect-ratio:4/3.2;background:linear-gradient(135deg,#c7d2fe,#e0e7ff)}
+.hw-pic img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .8s}
+.hw-pic:hover img{transform:scale(1.06)}
+.hw-pic>i.fb{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:6rem;color:#fff;opacity:.85}
+.hw-float{position:absolute;background:#fff;border-radius:14px;padding:9px 14px;font-size:.78rem;font-weight:600;display:flex;gap:9px;align-items:center;box-shadow:0 14px 26px -10px rgba(15,23,42,.3);animation:hwF 5s ease-in-out infinite}
+.hw-float i{color:var(--p1);font-size:1.1rem}
+@keyframes hwF{50%{transform:translateY(-7px)}}
+/* flow */
+.hw-flow{display:grid;grid-template-columns:repeat(4,1fr);gap:46px 38px;counter-reset:s}
+.hw-step{position:relative;padding:22px 18px 20px;text-align:center;counter-increment:s}
+.hw-step .hw-ic{margin:0 auto 12px}
+.hw-step:before{content:counter(s);position:absolute;top:-12px;left:50%;transform:translateX(-50%);width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,var(--p1),var(--p2));color:#fff;font-size:.75rem;font-weight:700;display:flex;align-items:center;justify-content:center}
+.hw-step h6{font-weight:700;margin-bottom:4px;font-size:.96rem}.hw-step p{font-size:.82rem;color:var(--mut);margin:0}
+.hw-step:after{content:"\F138";font-family:"bootstrap-icons";position:absolute;right:-30px;top:50%;margin-top:-12px;color:var(--p1);font-size:1.3rem;animation:hwA 1.8s ease-in-out infinite}
+.hw-step:nth-child(4n):after{content:"\F128";right:auto;left:50%;top:auto;bottom:-38px;margin:0 0 0 -10px;animation:none}
+.hw-step:last-child:after{display:none}
+@keyframes hwA{50%{transform:translateX(5px)}}
+/* dashboard */
+.hw-dash{background:#fff;border:1px solid var(--line);border-radius:24px;box-shadow:0 30px 50px -24px rgba(15,23,42,.35);padding:16px;position:relative}
+.hw-dtop{display:flex;align-items:center;gap:10px;margin-bottom:14px;font-size:.85rem}
+.hw-dtop .dots i{display:inline-block;width:9px;height:9px;border-radius:50%;background:#e2e8f0;margin-right:5px}.hw-dtop .dots i:first-child{background:#fca5a5}.hw-dtop .dots i:nth-child(2){background:#fde68a}.hw-dtop .dots i:nth-child(3){background:#86efac}
+.hw-bell{margin-left:auto;position:relative;color:var(--p1)}.hw-bell em{position:absolute;top:-7px;right:-9px;background:#ef4444;color:#fff;font-style:normal;font-size:.6rem;border-radius:50px;padding:1px 5px;animation:hwP 2s infinite}
+@keyframes hwP{50%{transform:scale(1.2)}}
+.hw-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}
+.hw-kpi{background:#f7f8ff;border-radius:12px;padding:9px 10px}.hw-kpi small{display:block;font-size:.62rem;color:var(--mut)}.hw-kpi b{font-size:.92rem}.hw-kpi i{color:var(--p1);font-size:.8rem;margin-right:3px}
+.hw-dg{display:grid;grid-template-columns:1.1fr 1fr;gap:10px}
+.hw-box{border:1px solid var(--line);border-radius:14px;padding:10px 12px}.hw-box h6{font-size:.72rem;font-weight:700;margin-bottom:8px}
+.hw-bars{display:flex;align-items:flex-end;gap:7px;height:96px}
+.hw-bars i{flex:1;background:linear-gradient(180deg,#818cf8,var(--p1));border-radius:6px 6px 2px 2px;height:var(--h);transform-origin:bottom;transform:scaleY(0);transition:transform .9s cubic-bezier(.2,.8,.2,1);transition-delay:calc(var(--k)*.08s + .3s)}
+.hw-in .hw-bars i,.hw-in.hw-dash .hw-bars i{transform:scaleY(1)}
+.hw-ord{display:flex;justify-content:space-between;align-items:center;font-size:.7rem;padding:5px 0;border-bottom:1px dashed var(--line)}.hw-ord:last-child{border:0}
+.hw-pill{font-size:.6rem;font-weight:700;padding:2px 8px;border-radius:50px}.hw-pill.n{background:#e0e7ff;color:#4338ca}.hw-pill.p{background:#fef3c7;color:#b45309}.hw-pill.s{background:#dcfce7;color:#15803d}
+.hw-inv{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;font-size:.68rem}
+.hw-inv span{background:#f7f8ff;border-radius:50px;padding:4px 10px;font-weight:600}.hw-inv .low{background:#fee2e2;color:#b91c1c}
+.hw-toast{position:absolute;right:-14px;top:62px;background:#0f172a;color:#fff;font-size:.72rem;padding:9px 13px;border-radius:12px;display:flex;gap:8px;align-items:center;box-shadow:0 14px 26px -10px rgba(15,23,42,.5);opacity:0;transform:translateX(18px);transition:all .6s 1.2s}
+.hw-in .hw-toast{opacity:1;transform:none}.hw-toast i{color:#4ade80}
+.hw-fc{padding:18px;display:flex;gap:14px;align-items:flex-start;height:100%}.hw-fc h6{font-weight:700;margin:0 0 3px}.hw-fc p{margin:0;font-size:.85rem;color:var(--mut)}
+/* plans */
+.hw-plan{padding:32px 26px;height:100%;display:flex;flex-direction:column;position:relative}
+.hw-plan.pop{border:2px solid var(--p1);box-shadow:0 30px 50px -22px rgba(79,70,229,.45);transform:scale(1.03)}
+.hw-plan.pop:hover{transform:scale(1.03) translateY(-6px)}
+.hw-badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--p1),var(--p2));color:#fff;font-size:.72rem;font-weight:700;padding:5px 16px;border-radius:50px;white-space:nowrap}
+.hw-price{font-size:2.3rem;font-weight:800;letter-spacing:-.02em}.hw-price small{font-size:.9rem;color:var(--mut);font-weight:500}
+.hw-plan ul{list-style:none;padding:0;margin:18px 0 24px;flex:1}.hw-plan li{display:flex;gap:10px;padding:6px 0;font-size:.92rem;color:#334155}.hw-plan li i{color:#16a34a}
+.hw-plan .btn{border-radius:50px;font-weight:600;padding:11px 20px}
+.hw-outline{border:1.5px solid var(--p1);color:var(--p1);background:#fff}.hw-outline:hover{background:var(--p1);color:#fff}
+/* responsive */
+@media(max-width:991px){.hw-flow{grid-template-columns:repeat(2,1fr)}.hw-step:nth-child(4n):after{content:"\F138";right:-30px;left:auto;top:50%;bottom:auto;margin-top:-12px;animation:hwA 1.8s ease-in-out infinite}.hw-step:nth-child(2n):after{content:"\F128";right:auto;left:50%;top:auto;bottom:-38px;margin:0 0 0 -10px;animation:none}.hw-toast{right:6px}}
+@media(max-width:575px){
+.hw-flow{grid-template-columns:1fr;gap:18px;padding-left:34px;position:relative}
+.hw-flow:before{content:"";position:absolute;left:13px;top:10px;bottom:10px;width:3px;border-radius:3px;background:linear-gradient(180deg,var(--p1),var(--p2));opacity:.35}
+.hw-step{text-align:left;display:flex;gap:14px;align-items:flex-start;padding:16px}.hw-step .hw-ic{margin:0}
+.hw-step:before{top:18px;left:-34px;transform:none}
+.hw-step:after,.hw-step:nth-child(4n):after,.hw-step:nth-child(2n):after{display:none}
+.hw-kpis{grid-template-columns:repeat(2,1fr)}.hw-dg{grid-template-columns:1fr}.hw-plan.pop{transform:none}.hw-plan.pop:hover{transform:translateY(-6px)}.hw-toast{display:none}}
+@media(prefers-reduced-motion:reduce){.hw-js .hw-r,.hw-js .hw-r.hw-l,.hw-js .hw-r.hw-rt{transform:none}.hw-float,.hw-step:after,.hw-bell em{animation:none}}
+</style>
 </head>
 <body class="bg-light">
 
-  <!-- ========== GLASS NAVBAR ========== -->
+  <!-- NAVBAR -->
   <nav class="navbar navbar-expand-lg fixed-top glass-nav py-3">
     <div class="container">
-      <a class="navbar-brand text-white fs-4 d-flex align-items-center gap-2" href="#">
+      <a class="navbar-brand text-white fs-4 d-flex align-items-center gap-2" href="#home">
         <i class="bi bi-bag-check-fill text-primary"></i> SmartStore
       </a>
-
       <button class="navbar-toggler border-0 text-white shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navContent">
         <i class="bi bi-list fs-2"></i>
       </button>
-
       <div class="collapse navbar-collapse" id="navContent">
         <ul class="navbar-nav mx-auto text-center gap-lg-2 my-3 my-lg-0">
           <li class="nav-item"><a class="nav-link px-3 active" href="#home">Home</a></li>
@@ -153,7 +246,6 @@
           <li class="nav-item"><a class="nav-link px-3" href="#features">Features</a></li>
           <li class="nav-item"><a class="nav-link px-3" href="#why-us">Why Choose Us</a></li>
         </ul>
-
         <div class="d-flex justify-content-center align-items-center gap-3">
           <a href="login.html" class="btn-login-nav">Login</a>
           <a href="register.html" class="btn btn-primary-gradient">Register</a>
@@ -162,15 +254,195 @@
     </div>
   </nav>
 
-  <!-- ========== HERO (background image changed to e‑commerce scene) ========== -->
+<main id="ss-journey">
+
+  <!-- STEP 1 · DISCOVER -->
+  <section id="sj-s1" class="sj-sec sj-hero" data-label="Discover">
+    <div class="container">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-6">
+          <div class="sj-reveal sj-l"><span class="sj-kick"><b>1</b> Your online shopping destination</span></div>
+          <h1 class="sj-h display-4 mb-3 sj-reveal" style="--d:.1s">Shop More.<br><span style="color:var(--b)">Discover More.</span></h1>
+          <p class="sj-sub fs-5 mb-4 sj-reveal" style="--d:.2s">Find the best products, great deals and fast delivery right at your doorstep, all in one place.</p>
+          <div class="sj-mini mb-4 sj-reveal" style="--d:.28s">
+            <div><i class="bi bi-patch-check"></i>Best Quality</div><div><i class="bi bi-tag"></i>Best Price</div><div><i class="bi bi-shield-lock"></i>Secure Payment</div><div><i class="bi bi-truck"></i>Fast Delivery</div>
+          </div>
+          <div class="d-flex flex-wrap gap-3 sj-reveal" style="--d:.36s">
+            <a href="register.html" class="sj-btn">Shop Now <i class="bi bi-arrow-right"></i></a>
+            <a href="#sj-s4" class="sj-btn sj-ghost">Explore Products</a>
+          </div>
+        </div>
+        <div class="col-lg-6 sj-reveal sj-r" style="--d:.2s">
+          <div class="sj-stage"><div class="sj-px" data-px=".05" data-real="images/hero.png">
+            <svg class="sj-art" viewBox="0 0 560 470" role="img" aria-label="Phone shopping app, cart, bag and delivery scooter">
+              <defs><linearGradient id="hg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#dbeafe"/><stop offset="1" stop-color="#eff6ff"/></linearGradient>
+              <filter id="hsh" x="-20%" y="-20%" width="145%" height="150%"><feDropShadow dx="0" dy="12" stdDeviation="9" flood-color="#1e3a8a" flood-opacity=".3"/></filter><linearGradient id="hg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3b82f6"/><stop offset="1" stop-color="#1d4ed8"/></linearGradient></defs>
+              <circle cx="300" cy="215" r="190" fill="url(#hg1)"/>
+              <ellipse cx="290" cy="440" rx="250" ry="14" fill="#c7d7f5" opacity=".6"/>
+              <!-- phone -->
+              <rect x="215" y="24" width="170" height="350" rx="28" fill="#0f2a5c" filter="url(#hsh)"/><rect x="223" y="32" width="154" height="334" rx="22" fill="#fff"/>
+              <rect x="262" y="38" width="76" height="9" rx="5" fill="#0f2a5c"/>
+              <rect x="234" y="62" width="70" height="10" rx="5" fill="#cbd5e1"/><circle cx="360" cy="67" r="7" fill="#bfdbfe"/>
+              <g fill="#e6f0ff"><rect x="234" y="86" width="30" height="30" rx="9"/><rect x="270" y="86" width="30" height="30" rx="9"/><rect x="306" y="86" width="30" height="30" rx="9"/><rect x="342" y="86" width="26" height="30" rx="9"/></g>
+              <rect x="234" y="128" width="134" height="76" rx="14" fill="url(#hg2)"/><rect x="246" y="142" width="58" height="9" rx="4" fill="#fff"/><rect x="246" y="158" width="40" height="7" rx="3" fill="#bfdbfe"/><rect x="246" y="178" width="38" height="14" rx="7" fill="#fff"/><circle cx="342" cy="166" r="22" fill="#fbbf24"/>
+              <rect x="234" y="218" width="40" height="8" rx="4" fill="#94a3b8"/>
+              <rect x="234" y="234" width="62" height="64" rx="12" fill="#f1f5f9"/><rect x="304" y="234" width="64" height="64" rx="12" fill="#f1f5f9"/>
+              <circle cx="265" cy="262" r="14" fill="#1e3a8a"/><rect x="326" y="252" width="22" height="26" rx="8" fill="#2563eb"/>
+              <rect x="234" y="312" width="134" height="40" rx="12" fill="#2563eb"/><rect x="262" y="328" width="78" height="8" rx="4" fill="#fff" opacity=".85"/>
+              <!-- pin -->
+              <path d="M455 70c-24 0-42 18-42 41 0 30 42 71 42 71s42-41 42-71c0-23-18-41-42-41z" fill="#2563eb"/><circle cx="455" cy="110" r="14" fill="#fff"/>
+              <!-- cart -->
+              <g filter="url(#hsh)"><path d="M30 230h38l30 130h128" fill="none" stroke="#475569" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M78 262h160l-22 92H100z" fill="#e2e8f0" stroke="#64748b" stroke-width="5" stroke-linejoin="round"/><path d="M92 300h134M104 330h110M126 262l8 92M160 262v92M194 262l-8 92" stroke="#94a3b8" stroke-width="3"/>
+              <circle cx="116" cy="386" r="14" fill="#1e293b"/><circle cx="206" cy="386" r="14" fill="#1e293b"/>
+              <rect x="96" y="214" width="62" height="50" rx="4" fill="#d9a566"/><rect x="96" y="214" width="62" height="12" fill="#c68f4e"/><rect x="152" y="186" width="58" height="76" rx="4" fill="#e0b27a"/><rect x="152" y="186" width="58" height="12" fill="#c68f4e"/>
+              <path d="M104 214c4-34 40-46 64-34l-6 24z" fill="#2563eb"/><rect x="104" y="204" width="30" height="8" rx="4" fill="#fff"/></g>
+              <!-- bag -->
+              <g filter="url(#hsh)"><path d="M222 316c0-22 38-22 38 0" fill="none" stroke="#1d4ed8" stroke-width="6"/><rect x="200" y="312" width="82" height="108" rx="10" fill="url(#hg2)"/><circle cx="241" cy="366" r="20" fill="#fff" opacity=".95"/><path d="M231 360h4l5 12h12l4-9h-21" fill="none" stroke="#2563eb" stroke-width="3" stroke-linecap="round"/></g>
+              <!-- scooter -->
+              <g filter="url(#hsh)"><rect x="430" y="270" width="92" height="70" rx="5" fill="#d9a566"/><rect x="430" y="270" width="92" height="14" fill="#c68f4e"/><rect x="452" y="296" width="48" height="10" rx="3" fill="#fff" opacity=".8"/>
+              <path d="M392 392c-6-30 6-52 26-62l30-6c14 0 20 14 16 30l-6 22z" fill="#2563eb"/><path d="M398 324l-14-28h30" fill="none" stroke="#1e3a8a" stroke-width="7" stroke-linecap="round"/><path d="M418 330l20 10" stroke="#1e3a8a" stroke-width="6"/>
+              <circle cx="406" cy="408" r="28" fill="#1e293b"/><circle cx="406" cy="408" r="12" fill="#cbd5e1"/><circle cx="506" cy="408" r="28" fill="#1e293b"/><circle cx="506" cy="408" r="12" fill="#cbd5e1"/><rect x="420" y="384" width="78" height="14" rx="7" fill="#1d4ed8"/></g>
+            </svg>
+            <div class="sj-chip" style="top:5%;right:0"><i class="bi bi-truck"></i>Fast Delivery</div>
+            <div class="sj-chip" style="top:46%;left:-2%;animation-delay:-2s"><i class="bi bi-star-fill" style="color:#f59e0b"></i>4.9 · 12k reviews</div>
+          </div></div>
+        </div>
+      </div>
+      <div class="sj-stats row g-2 text-start sj-reveal" style="--d:.2s">
+        <div class="col-6 col-md-3"><div class="c"><i class="bi bi-people"></i><div><b>10K+</b><small>Happy Customers</small></div></div></div>
+        <div class="col-6 col-md-3"><div class="c"><i class="bi bi-shield-check"></i><div><b>100%</b><small>Secure Payments</small></div></div></div>
+        <div class="col-6 col-md-3"><div class="c"><i class="bi bi-headset"></i><div><b>24/7</b><small>Customer Support</small></div></div></div>
+        <div class="col-6 col-md-3"><div class="c"><i class="bi bi-arrow-repeat"></i><div><b>7 Days</b><small>Easy Returns</small></div></div></div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- STEP 4 · WHY CHOOSE -->
+  <section id="sj-s4" class="sj-sec sj-alt" data-label="Why us">
+    <div class="container">
+      <div class="text-center mb-5">
+        <div class="sj-reveal"><span class="sj-kick"><b>2</b> Choose the Right Product</span></div>
+        <h2 class="sj-h display-6 sj-reveal" style="--d:.1s">Why shoppers choose SmartStore</h2>
+        <p class="sj-sub col-md-7 mx-auto sj-reveal" style="--d:.2s">Everything you need to buy with confidence.</p>
+      </div>
+      <div class="row g-3 g-md-4" id="sjWhy"></div>
+    </div>
+  </section>
+
+  <!-- STEP 5 · ADD TO CART -->
+  <section id="sj-s5" class="sj-sec" data-label="Cart">
+    <div class="container">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-6 order-lg-2 sj-reveal sj-r">
+          <div class="sj-stage" style="max-width:480px"><div class="sj-px" data-px=".04" data-real="images/cart.png">
+            <svg class="sj-art" viewBox="0 0 480 360" role="img" aria-label="Products being added to a shopping cart">
+              <defs><linearGradient id="cg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#dbeafe"/><stop offset="1" stop-color="#eff6ff"/></linearGradient></defs>
+              <circle cx="240" cy="180" r="165" fill="url(#cg1)"/><ellipse cx="240" cy="338" rx="190" ry="11" fill="#c7d7f5" opacity=".6"/>
+              <path d="M40 120h50l36 150h210" fill="none" stroke="#475569" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M100 150h290l-30 118H132z" fill="#e2e8f0" stroke="#64748b" stroke-width="6" stroke-linejoin="round"/><path d="M118 192h260M130 230h236M160 150l10 118M210 150v118M262 150l-6 118M314 150l-18 118" stroke="#94a3b8" stroke-width="3"/>
+              <circle cx="160" cy="304" r="18" fill="#1e293b"/><circle cx="330" cy="304" r="18" fill="#1e293b"/>
+              <g class="sj-drop" style="--dd:.4s"><rect x="150" y="96" width="76" height="60" rx="5" fill="#d9a566"/><rect x="150" y="96" width="76" height="14" fill="#c68f4e"/></g>
+              <g class="sj-drop" style="--dd:.7s"><rect x="236" y="70" width="64" height="86" rx="18" fill="#2563eb"/><rect x="246" y="112" width="44" height="30" rx="10" fill="#1d4ed8"/></g>
+              <g class="sj-drop" style="--dd:1s"><path d="M310 150c0-20 10-28 28-26l22 4c14 2 20 12 20 22z" fill="#3b82f6"/><rect x="306" y="146" width="80" height="9" rx="4" fill="#fff"/></g>
+            </svg>
+            <div class="sj-added" style="top:6%;left:0;--dd:1.1s"><i class="bi bi-check-circle-fill"></i>Headphones added</div>
+            <div class="sj-added" style="top:22%;right:-2%;--dd:1.4s"><i class="bi bi-check-circle-fill"></i>Backpack added</div>
+            <div class="sj-chip" style="bottom:8%;right:2%"><i class="bi bi-cart3"></i>3 items</div>
+          </div></div>
+        </div>
+        <div class="col-lg-6 order-lg-1">
+          <div class="sj-reveal sj-l"><span class="sj-kick"><b>3</b> Add to Cart</span></div>
+          <h2 class="sj-h display-6 mb-3 sj-reveal" style="--d:.1s">Found What You Love?</h2>
+          <p class="sj-sub fs-5 mb-4 sj-reveal" style="--d:.2s">Add your favourites to the cart and continue shopping.</p>
+          <div class="sj-reveal" style="--d:.3s"><a href="theme-selection.html" class="sj-btn">View Cart <i class="bi bi-cart3"></i></a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 6 · CHECKOUT -->
+  <section id="sj-s6" class="sj-sec sj-alt" data-label="Checkout">
+    <div class="container">
+      <div class="text-center mb-5">
+        <div class="sj-reveal"><span class="sj-kick"><b>4</b> Checkout &amp; Secure Payment</span></div>
+        <h2 class="sj-h display-6 sj-reveal" style="--d:.1s">Checkout Made Simple</h2>
+        <p class="sj-sub col-md-7 mx-auto sj-reveal" style="--d:.2s">Secure payments and a smooth checkout experience.</p>
+      </div>
+      <div class="row g-4">
+        <div class="col-lg-4 sj-reveal" style="--d:.05s"><div class="sj-card p-4">
+          <h5 class="fw-bold mb-3"><i class="bi bi-cart-check text-primary me-2"></i>Cart summary</h5>
+          <div class="d-flex align-items-center gap-3 mb-3"><div class="sj-tile" style="width:54px;height:54px;background:var(--soft);color:var(--b);font-size:1.5rem"><i class="bi bi-headphones"></i></div><div class="flex-grow-1"><strong class="d-block small">Aero Wireless Headphones</strong><small class="text-secondary">Qty 1</small></div><strong>₹3,999</strong></div>
+          <div class="d-flex align-items-center gap-3"><div class="sj-tile" style="width:54px;height:54px;background:var(--soft);color:var(--b);font-size:1.5rem"><i class="bi bi-handbag"></i></div><div class="flex-grow-1"><strong class="d-block small">Metro Everyday Backpack</strong><small class="text-secondary">Qty 1</small></div><strong>₹1,799</strong></div>
+          <hr><h6 class="fw-bold mb-2"><i class="bi bi-geo-alt text-primary me-2"></i>Delivery</h6>
+          <div class="small text-secondary">12, Gandhi Nagar, Tiruchirappalli<br>Estimated delivery in 2–3 days</div>
+        </div></div>
+        <div class="col-lg-4 sj-reveal" style="--d:.15s"><div class="sj-card p-4">
+          <h5 class="fw-bold mb-3"><i class="bi bi-credit-card text-primary me-2"></i>Secure payment</h5>
+          <div class="sj-cc mb-3"><div class="chip"></div><div class="mt-4 fw-semibold" style="letter-spacing:.18em">•••• •••• •••• 4242</div><div class="d-flex justify-content-between small mt-3 opacity-75"><span>SMARTSTORE USER</span><span>12/28</span></div></div>
+          <button class="sj-pay on" data-pay><i class="bi bi-phone"></i>UPI</button><button class="sj-pay" data-pay><i class="bi bi-credit-card-2-front"></i>Debit / Credit Card</button><button class="sj-pay mb-0" data-pay><i class="bi bi-cash-coin"></i>Cash on Delivery</button>
+          <div class="sj-lock"><i class="bi bi-shield-lock-fill"></i>256-bit encrypted payments</div>
+        </div></div>
+        <div class="col-lg-4 sj-reveal" style="--d:.25s"><div class="sj-card p-4 sj-sum">
+          <h5 class="fw-bold mb-3"><i class="bi bi-receipt text-primary me-2"></i>Order summary</h5>
+          <div><span>Subtotal (2 items)</span><span>₹5,798</span></div><div><span>Offer SMART10</span><span class="text-success">-₹580</span></div><div><span>Delivery</span><span>Free</span></div>
+          <div class="tot"><span>Total</span><span>₹5,218</span></div>
+          <a href="theme-selection.html" class="sj-btn justify-content-center w-100 mt-3">Proceed to Checkout</a>
+        </div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 7 · DELIVERY -->
+  <section id="sj-s7" class="sj-sec" data-label="Delivery">
+    <div class="container">
+      <div class="text-center mb-4">
+        <div class="sj-reveal"><span class="sj-kick"><b>5</b> Delivery &amp; Order Tracking</span></div>
+        <h2 class="sj-h display-6 sj-reveal" style="--d:.1s">Your Order Is on Its Way</h2>
+        <p class="sj-sub col-md-7 mx-auto sj-reveal" style="--d:.2s">Track every step from our warehouse to your doorstep.</p>
+      </div>
+      <div class="sj-card p-4 p-md-5 sj-reveal sj-s" style="--d:.1s">
+        <div class="sj-road">
+          <svg class="sj-scoot" viewBox="0 0 140 100" aria-hidden="true"><rect x="8" y="14" width="56" height="42" rx="4" fill="#d9a566"/><rect x="8" y="14" width="56" height="9" fill="#c68f4e"/><path d="M52 90c-4-18 4-32 16-38l18-4c9 0 12 8 10 18l-4 14z" fill="#2563eb"/><path d="M58 50l-8-18h18" fill="none" stroke="#1e3a8a" stroke-width="5" stroke-linecap="round"/><circle cx="56" cy="82" r="14" fill="#1e293b"/><circle cx="56" cy="82" r="6" fill="#cbd5e1"/><circle cx="116" cy="82" r="14" fill="#1e293b"/><circle cx="116" cy="82" r="6" fill="#cbd5e1"/></svg>
+        </div>
+        <div class="sj-track"><div class="f"></div>
+          <div class="s on"><i class="bi bi-check2"></i>Order Confirmed</div><div class="s on"><i class="bi bi-box-seam"></i>Packed</div><div class="s on"><i class="bi bi-truck"></i>Shipped</div><div class="s on now"><i class="bi bi-bicycle"></i>Out for Delivery</div><div class="s"><i class="bi bi-house-door"></i>Delivered</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 8 · SUCCESS -->
+  <section id="sj-s8" class="sj-sec sj-alt" data-label="Success">
+    <div class="container">
+      <div class="sj-card p-4 p-md-5 text-center col-lg-9 mx-auto sj-reveal sj-s" style="background:linear-gradient(180deg,#f3f8ff,#fff)">
+        <span class="sj-kick mx-auto"><b>6</b> Order Success</span>
+        <svg class="sj-okc" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="44"/><path d="M30 52l14 14 27-30"/></svg>
+        <h2 class="sj-h display-6 mb-2">Your Shopping Journey, Simplified.</h2>
+        <div class="sj-flow"><span>Discover.</span><span>Choose.</span><span>Order.</span><span>Receive.</span></div>
+        <div class="d-flex flex-wrap justify-content-center gap-4 mb-4 text-secondary small">
+          <span><i class="bi bi-box2-heart text-primary me-1"></i>Delivered safely to your door</span>
+          <span><span class="sj-stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></span> Loved by 10K+ customers</span>
+        </div>
+        <div><a href="register.html" class="sj-btn">Continue Shopping <i class="bi bi-arrow-right"></i></a></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="sj-prog" id="sjProg" role="navigation" aria-label="Shopping journey progress"><div class="d"></div><span class="l"></span></div>
+</main>
+
+  <!-- HERO -->
   <section id="home" class="hero-bg text-center">
     <div class="container">
-      <span class="badge bg-primary bg-opacity-20 text-primary px-4 py-2 rounded-pill mb-4 fw-semibold tracking-wide">
-        <i class="bi bi-tag me-1"></i> Next‑Gen E‑Commerce
+      <span class="badge bg-primary bg-opacity-25 text-white px-4 py-2 rounded-pill mb-4 fw-semibold">
+        <i class="bi bi-tag me-1"></i> Next-Gen E-Commerce
       </span>
-      <h1 class="display-3 fw-bold mb-4 tracking-wide">Curated for You.<br/>Zero Clutter.</h1>
+      <h1 class="display-3 fw-bold mb-4">Curated for You.<br>Zero Clutter.</h1>
       <p class="text-white-50 fs-5 mb-5 col-lg-8 mx-auto lh-base">
-        Instantly access products that match your chosen category — right after secure login. 
+        Instantly access products that match your chosen category, right after secure login.
         Personalized shopping, simplified.
       </p>
       <div class="d-flex justify-content-center gap-3 flex-wrap">
@@ -180,131 +452,373 @@
     </div>
   </section>
 
-  <!-- ========== ABOUT (new e‑commerce image) ========== -->
+  <!-- ABOUT -->
   <section id="about" class="bg-white">
     <div class="container">
       <div class="row align-items-center g-5">
-        <div class="col-lg-6 order-lg-1">
-
-          <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?auto=format&fit=crop&w=800&q=80" 
-               alt="Online shopping interface" 
-               class="img-fluid img-soft-rounded" />
+        <div class="col-lg-6">
+          <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?auto=format&fit=crop&w=800&q=80"
+               alt="Online shopping interface" class="img-fluid img-soft-rounded">
         </div>
         <div class="col-lg-6">
-          <h6 class="text-primary fw-bold text-uppercase tracking-wide mb-2"><i class="bi bi-info-circle me-1"></i> About</h6>
-          <h2 class="fw-bold display-6 mb-4 text-dark">Smart Filtering,<br/>Instant Results</h2>
+          <h6 class="text-primary fw-bold text-uppercase mb-2"><i class="bi bi-info-circle me-1"></i> About</h6>
+          <h2 class="fw-bold display-6 mb-4 text-dark">Smart Filtering,<br>Instant Results</h2>
           <p class="text-secondary fs-6 lh-lg">
-            SmartStore binds your preferred product categories directly to your dashboard during registration. 
-            No more endless scrolling — see what matters, right when you log in.
+            SmartStore binds your preferred product categories directly to your dashboard during registration.
+            No more endless scrolling. See what matters, right when you log in.
           </p>
-          <div class="mt-4 d-flex gap-3 align-items-center">
-            <span class="badge bg-primary bg-opacity-10 text-primary px-4 py-2 rounded-pill fw-normal">
-              <i class="bi bi-check-circle-fill me-1"></i> Personalized feed
-            </span>
-            <span class="badge bg-primary bg-opacity-10 text-primary px-4 py-2 rounded-pill fw-normal">
-              <i class="bi bi-lightning-fill me-1"></i> Zero latency
-            </span>
+          <div class="mt-4 d-flex flex-wrap gap-3 align-items-center">
+            <span class="badge bg-primary bg-opacity-10 text-primary px-4 py-2 rounded-pill fw-normal"><i class="bi bi-check-circle-fill me-1"></i> Personalized feed</span>
+            <span class="badge bg-primary bg-opacity-10 text-primary px-4 py-2 rounded-pill fw-normal"><i class="bi bi-lightning-fill me-1"></i> Zero latency</span>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ========== FEATURES ========== -->
+  <!-- FEATURES -->
   <section id="features" class="bg-light">
     <div class="container">
       <div class="text-center mb-5">
-        <h6 class="text-primary fw-bold text-uppercase tracking-wide mb-2"><i class="bi bi-grid-3x3-gap-fill me-1"></i> Capabilities</h6>
+        <h6 class="text-primary fw-bold text-uppercase mb-2"><i class="bi bi-grid-3x3-gap-fill me-1"></i> Capabilities</h6>
         <h2 class="fw-bold display-6 text-dark">Built for Modern Commerce</h2>
       </div>
       <div class="row g-4 text-center">
         <div class="col-md-4">
           <div class="feature-card h-100">
-            <div class="icon-circle bg-primary bg-opacity-10 text-primary mb-3">
-              <i class="bi bi-funnel-fill fs-3"></i>
-            </div>
+            <div class="icon-circle bg-primary bg-opacity-10 text-primary mb-3"><i class="bi bi-funnel-fill fs-3"></i></div>
             <h4 class="fw-bold mb-3 text-dark">Dynamic Category Filter</h4>
-            <p class="text-secondary mb-0">Your dashboard adapts instantly to your registered preference — no manual filtering.</p>
+            <p class="text-secondary mb-0">Your dashboard adapts instantly to your registered preference. No manual filtering.</p>
           </div>
         </div>
         <div class="col-md-4">
           <div class="feature-card h-100">
-            <div class="icon-circle bg-success bg-opacity-10 text-success mb-3">
-              <i class="bi bi-shield-lock-fill fs-3"></i>
-            </div>
+            <div class="icon-circle bg-success bg-opacity-10 text-success mb-3"><i class="bi bi-shield-lock-fill fs-3"></i></div>
             <h4 class="fw-bold mb-3 text-dark">Secure Authentication</h4>
-            <p class="text-secondary mb-0">Bcrypt hashing + JWT verification keep your account safe and sessions protected.</p>
+            <p class="text-secondary mb-0">Bcrypt hashing and JWT verification keep your account safe and sessions protected.</p>
           </div>
         </div>
         <div class="col-md-4">
           <div class="feature-card h-100">
-            <div class="icon-circle bg-warning bg-opacity-10 text-warning mb-3">
-              <i class="bi bi-cloud-check-fill fs-3"></i>
-            </div>
+            <div class="icon-circle bg-warning bg-opacity-10 text-warning mb-3"><i class="bi bi-cloud-check-fill fs-3"></i></div>
             <h4 class="fw-bold mb-3 text-dark">Cloud Sync</h4>
-            <p class="text-secondary mb-0">MongoDB Atlas ensures zero data loss, fast retrieval, and always‑on availability.</p>
+            <p class="text-secondary mb-0">MongoDB Atlas ensures zero data loss, fast retrieval, and always-on availability.</p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ========== WHY CHOOSE US (new e‑commerce image) ========== -->
+  <!-- WHY CHOOSE US -->
   <section id="why-us" class="bg-white">
-
-
-
-    
     <div class="container">
       <div class="row align-items-center g-5">
         <div class="col-lg-6">
-          <h6 class="text-primary fw-bold text-uppercase tracking-wide mb-2"><i class="bi bi-star-fill me-1"></i> Why SmartStore</h6>
+          <h6 class="text-primary fw-bold text-uppercase mb-2"><i class="bi bi-star-fill me-1"></i> Why SmartStore</h6>
           <h2 class="fw-bold display-6 mb-4 text-dark">Speed, Security &amp; Simplicity</h2>
           <div class="d-flex gap-3 mb-4 align-items-start">
             <i class="bi bi-check-circle-fill text-primary fs-4 mt-1"></i>
-            <p class="fs-6 text-secondary mb-0">Ad‑free, clean interface — focus on products, not distractions.</p>
+            <p class="fs-6 text-secondary mb-0">Ad-free, clean interface. Focus on products, not distractions.</p>
           </div>
           <div class="d-flex gap-3 mb-4 align-items-start">
             <i class="bi bi-check-circle-fill text-primary fs-4 mt-1"></i>
-            <p class="fs-6 text-secondary mb-0">Lightning‑fast login with persistent preferences across devices.</p>
+            <p class="fs-6 text-secondary mb-0">Lightning-fast login with persistent preferences across devices.</p>
           </div>
           <div class="d-flex gap-3 align-items-start">
             <i class="bi bi-check-circle-fill text-primary fs-4 mt-1"></i>
-            <p class="fs-6 text-secondary mb-0">SmartStore learns your taste — every visit feels tailor‑made.</p>
+            <p class="fs-6 text-secondary mb-0">SmartStore learns your taste, so every visit feels tailor-made.</p>
           </div>
-          <div class="mt-4">
-            <a href="register.html" class="btn btn-primary-gradient px-5">Join Now</a>
-          </div>
+          <div class="mt-4"><a href="register.html" class="btn btn-primary-gradient px-5">Join Now</a></div>
         </div>
         <div class="col-lg-6">
-          <img src="https://images.unsplash.com/photo-1556742049-0a67568d0490?auto=format&fit=crop&w=800&q=80" 
-               alt="E-commerce shopping cart and mobile" 
-               class="img-fluid img-soft-rounded" />
+          <img src="https://images.unsplash.com/photo-1556742049-0a67568d0490?auto=format&fit=crop&w=800&q=80"
+               alt="E-commerce shopping cart and mobile" class="img-fluid img-soft-rounded">
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ========== FOOTER ========== -->
+<div id="hw-wrap">
+
+  <!-- 1. HOW OUR ECOMMERCE WORKS -->
+  <section id="hw-how" class="hw-alt">
+    <div class="container">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-6">
+          <div class="hw-r hw-l"><span class="hw-kick"><i class="bi bi-diagram-3"></i> Platform overview</span></div>
+          <h2 class="hw-h display-6 mb-3 hw-r" style="--d:.1s">How Our Ecommerce Works</h2>
+          <p class="hw-sub mb-4 hw-r" style="--d:.2s">Our platform connects merchants and customers through a simple, secure and powerful ecommerce workflow. Merchants can manage products, inventory and orders while customers can browse, purchase and track their orders easily.</p>
+          <div class="row g-3">
+            <div class="col-sm-6 hw-r" style="--d:.28s"><div class="hw-pt"><i class="bi bi-check-circle-fill"></i>Easy Product Management</div></div>
+            <div class="col-sm-6 hw-r" style="--d:.36s"><div class="hw-pt"><i class="bi bi-check-circle-fill"></i>Secure Online Shopping</div></div>
+            <div class="col-sm-6 hw-r" style="--d:.44s"><div class="hw-pt"><i class="bi bi-check-circle-fill"></i>Real-Time Order Updates</div></div>
+            <div class="col-sm-6 hw-r" style="--d:.52s"><div class="hw-pt"><i class="bi bi-check-circle-fill"></i>Simple Merchant Dashboard</div></div>
+          </div>
+        </div>
+        <div class="col-lg-6 hw-r hw-rt" style="--d:.15s">
+          <div class="position-relative">
+            <div class="hw-pic"><i class="bi bi-bag-heart-fill fb"></i><img src="https://images.unsplash.com/photo-1556742049-0a67568d0490?auto=format&fit=crop&w=900&q=80" alt="Customer shopping online with laptop and card" loading="lazy" onerror="this.remove()"></div>
+            <div class="hw-float" style="top:8%;left:-14px"><i class="bi bi-bag-check-fill"></i>Order placed online</div>
+            <div class="hw-float" style="bottom:10%;right:-10px;animation-delay:-2s"><i class="bi bi-shop"></i>Merchant store updated</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. PROCESS FLOW -->
+  <section id="hw-flow" class="hw-bg">
+    <div class="container">
+      <div class="text-center mb-5">
+        <div class="hw-r"><span class="hw-kick"><i class="bi bi-signpost-split"></i> Step by step</span></div>
+        <h2 class="hw-h display-6 hw-r" style="--d:.1s">How the Ecommerce Process Works</h2>
+        <p class="hw-sub col-md-7 mx-auto hw-r" style="--d:.2s">From the first visit to doorstep delivery, here is the complete journey.</p>
+      </div>
+      <div class="hw-flow" id="hwFlow"></div>
+    </div>
+  </section>
+
+  <!-- 3. REAL TIME -->
+  <section id="hw-rt" class="hw-alt">
+    <div class="container">
+      <div class="text-center mb-5">
+        <div class="hw-r"><span class="hw-kick"><i class="bi bi-lightning-charge-fill"></i> Live updates</span></div>
+        <h2 class="hw-h display-6 hw-r" style="--d:.1s">Everything in Real Time</h2>
+      </div>
+      <div class="row align-items-center g-5">
+        <div class="col-lg-6 hw-r hw-l">
+          <div class="hw-dash" id="hwDash">
+            <div class="hw-dtop"><span class="dots"><i></i><i></i><i></i></span><b>Merchant Dashboard</b><span class="hw-bell"><i class="bi bi-bell-fill"></i><em>3</em></span></div>
+            <div class="hw-kpis">
+              <div class="hw-kpi"><small>Orders</small><b><i class="bi bi-bag-check"></i>128</b></div>
+              <div class="hw-kpi"><small>Sales</small><b><i class="bi bi-graph-up-arrow"></i>₹82,450</b></div>
+              <div class="hw-kpi"><small>Products</small><b><i class="bi bi-box-seam"></i>312</b></div>
+              <div class="hw-kpi"><small>Customers</small><b><i class="bi bi-people"></i>1,208</b></div>
+            </div>
+            <div class="hw-dg">
+              <div class="hw-box"><h6>Sales this week</h6><div class="hw-bars"><i style="--h:42%;--k:0"></i><i style="--h:60%;--k:1"></i><i style="--h:48%;--k:2"></i><i style="--h:78%;--k:3"></i><i style="--h:66%;--k:4"></i><i style="--h:92%;--k:5"></i><i style="--h:74%;--k:6"></i></div></div>
+              <div class="hw-box"><h6>Order status</h6>
+                <div class="hw-ord"><span>#1048 · Aarav</span><span class="hw-pill n">New</span></div>
+                <div class="hw-ord"><span>#1047 · Meena</span><span class="hw-pill p">Processing</span></div>
+                <div class="hw-ord"><span>#1046 · Karthik</span><span class="hw-pill s">Shipped</span></div></div>
+            </div>
+            <div class="hw-inv"><span><i class="bi bi-boxes"></i> Inventory: 1,940 units</span><span class="low"><i class="bi bi-exclamation-triangle-fill"></i> Low stock: 4 items</span></div>
+            <div class="hw-toast"><i class="bi bi-bell-fill"></i>New order #1048 · ₹2,499</div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <h3 class="hw-h fs-2 mb-3 hw-r" style="--d:.1s">Manage Your Business in Real Time</h3>
+          <p class="hw-sub mb-4 hw-r" style="--d:.2s">Monitor your ecommerce business from one place. Track orders, inventory, sales and customers in real time so you can make faster business decisions.</p>
+          <div class="row g-3" id="hwFeat"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. PLANS -->
+  <section id="hw-plans" class="hw-bg">
+    <div class="container">
+      <div class="text-center mb-5">
+        <div class="hw-r"><span class="hw-kick"><i class="bi bi-stars"></i> Pricing</span></div>
+        <h2 class="hw-h display-6 hw-r" style="--d:.1s">Simple Plans for Every Business</h2>
+        <p class="hw-sub col-md-7 mx-auto hw-r" style="--d:.2s">Choose a plan that fits your business and scale as you grow.</p>
+      </div>
+      <div class="row g-4 justify-content-center" id="hwPlans"></div>
+    </div>
+  </section>
+</div>
+
+  <!-- PAGES MODAL (opens from footer "Pages") -->
+  <div class="modal fade" id="pagesModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+      <div class="modal-content" style="border-radius:16px;">
+        <div class="modal-header">
+          <h5 class="modal-title fw-bold"><i class="bi bi-file-earmark-text me-2"></i>Pages</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div id="pagesAccordion"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
   <footer class="bg-dark text-white py-5">
     <div class="container">
-      <div class="row g-4 align-items-center">
-        <div class="col-md-6">
+      <div class="row g-4">
+        <div class="col-md-5">
           <h4 class="fw-bold mb-2"><i class="bi bi-bag-check-fill text-primary me-2"></i>SmartStore</h4>
-          <p class="text-white-50 mb-0">Modern e‑commerce platform with dynamic user filtering — powered by MERN.</p>
+          <p class="text-white-50 mb-0">Modern e-commerce platform with dynamic user filtering, powered by MERN.</p>
         </div>
-        <div class="col-md-6 text-md-end">
+        <div class="col-md-3">
+          <a href="#" id="footerPagesLink" class="footer-link fw-bold fs-6">Pages</a>
+        </div>
+        <div class="col-md-4 text-md-end">
           <h5 class="fw-bold mb-2">Contact Support</h5>
           <p class="text-white-50 mb-1"><i class="bi bi-telephone-fill me-2 text-primary"></i> +91 98765 43210</p>
           <p class="text-white-50 mb-0"><i class="bi bi-envelope-fill me-2 text-primary"></i> support@smartstore.com</p>
         </div>
       </div>
-      <hr class="my-4 border-secondary opacity-25" />
+      <hr class="my-4 border-secondary opacity-25">
       <p class="text-center text-white-50 mb-0 small">&copy; 2026 SmartStore. All rights reserved.</p>
     </div>
   </footer>
 
-  <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      function esc(s) {
+        return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+          return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+        });
+      }
+
+      document.getElementById('footerPagesLink').addEventListener('click', function (e) {
+        e.preventDefault();
+
+        var pages = [];
+        try { pages = JSON.parse(localStorage.getItem('smartstore_pages') || '[]'); } catch (err) {}
+        var list = pages.filter(function (p) { return p.status === 'Published' && p.title && p.content; });
+
+        var acc = document.getElementById('pagesAccordion');
+        if (!list.length) {
+          acc.innerHTML = '<p class="text-secondary text-center py-4 mb-0">No pages yet.</p>';
+        } else {
+          acc.innerHTML = list.map(function (p) {
+            return '<div class="border rounded-4 p-4 mb-3 bg-white">' +
+              '<h4 class="fw-bold text-dark mb-2">' + esc(p.title) + '</h4>' +
+              '<span class="badge bg-primary bg-opacity-10 text-primary fw-normal px-3 py-2 mb-3">/page/' + esc(p.slug) + '</span>' +
+              '<hr class="my-3">' +
+              '<div class="page-body">' + p.content + '</div>' +
+            '</div>';
+          }).join('');
+        }
+
+        bootstrap.Modal.getOrCreateInstance(document.getElementById('pagesModal')).show();
+      });
+    });
+  </script>
+<script id="sj-script">
+(function () {
+  var root = document.getElementById('ss-journey');
+  root.classList.add('sj-js');
+  var $ = function (s) { return document.querySelector(s); };
+  var STORE = 'theme-selection.html'; /* existing storefront/cart page: change if your path differs */
+  var U = 'https://images.unsplash.com/photo-';
+  var img = function (id, alt, cls) { return '<img class="' + (cls || '') + '" src="' + U + id + '?auto=format&fit=crop&w=600&q=75" alt="' + alt + '" loading="lazy" onerror="this.remove()">'; };
+  var CATS = [['Electronics','laptop','180+ items','1496181133206-80ce9b88a853'],['Fashion','handbag','240+ styles','1483985988355-763728e1935b'],['Home & Living','house-heart','320+ items','1586023492125-27b2c045efd7'],['Beauty','flower1','150+ items','1522335789203-aabd1fc54bc9'],['Accessories','smartwatch','210+ items','1572635196237-14b3f281503f'],['Grocery & Lifestyle','basket3','500+ items','1542838132-92c53300491e']];
+  var ART = {
+    h: '<svg viewBox="0 0 120 120"><path d="M26 72A34 34 0 0 1 94 72" fill="none" stroke="#1e3a8a" stroke-width="8" stroke-linecap="round"/><rect x="16" y="64" width="22" height="38" rx="11" fill="#2563eb"/><rect x="82" y="64" width="22" height="38" rx="11" fill="#2563eb"/><rect x="21" y="72" width="8" height="22" rx="4" fill="#93c5fd"/><rect x="91" y="72" width="8" height="22" rx="4" fill="#93c5fd"/></svg>',
+    w: '<svg viewBox="0 0 120 120"><rect x="46" y="6" width="28" height="108" rx="9" fill="#93c5fd"/><rect x="32" y="32" width="56" height="56" rx="16" fill="#1e3a8a"/><rect x="38" y="38" width="44" height="44" rx="12" fill="#dbeafe"/><path d="M60 50v12l8 6" fill="none" stroke="#2563eb" stroke-width="4" stroke-linecap="round"/></svg>',
+    s: '<svg viewBox="0 0 120 120"><path d="M8 80C8 62 28 64 40 52l10 6c10 4 28 2 42 12 12 4 20 8 20 18v6H8z" fill="#2563eb"/><rect x="8" y="92" width="104" height="11" rx="5.5" fill="#fff" stroke="#bfdbfe" stroke-width="2"/><path d="M44 62l6 8M54 66l6 8M64 68l6 8" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg>',
+    b: '<svg viewBox="0 0 120 120"><path d="M48 28C48 8 72 8 72 28" fill="none" stroke="#1e3a8a" stroke-width="6"/><rect x="28" y="24" width="64" height="82" rx="24" fill="#2563eb"/><rect x="40" y="64" width="40" height="30" rx="11" fill="#1d4ed8"/><rect x="50" y="42" width="20" height="8" rx="4" fill="#93c5fd"/></svg>'
+  };
+  var PRODUCTS = [['Aero Wireless Headphones','h',3999,4999,4.8,1240,'1505740420928-5e560c06d30e'],['Pulse Smart Watch','w',5999,7499,4.6,860,'1523275335684-37898b6baf30'],['Stride Running Shoes','s',2599,3299,4.7,530,'1542291026-7eec264c27ff'],['Metro Everyday Backpack','b',1799,2199,4.5,410,'1553062407-98eeb64c6a62']];
+  var WHY = [['patch-check','Quality Products','Every listing is checked for quality.'],['tag','Best Prices','Great deals and regular offers.'],['shield-lock','Secure Payments','Encrypted, trusted payment options.'],['truck','Fast Delivery','Quick dispatch, doorstep delivery.'],['arrow-repeat','Easy Returns','7-day hassle-free returns.'],['headset','Customer Support','Friendly help, 24/7.']];
+  var inr = function (n) { return '₹' + n.toLocaleString('en-IN'); };
+  var stars = function (r) { var h = ''; for (var k = 1; k <= 5; k++) h += '<i class="bi bi-star' + (r >= k ? '-fill' : r >= k - .5 ? '-half' : '') + '"></i>'; return h; };
+
+  $('#sjWhy').innerHTML = WHY.map(function (w, k) {
+    return '<div class="col-md-6 col-lg-4 sj-reveal" style="--d:' + (k * .08) + 's"><div class="sj-card sj-why"><div class="ic"><i class="bi bi-' + w[0] + '"></i></div><h5>' + w[1] + '</h5><p>' + w[2] + '</p></div></div>';
+  }).join('');
+
+  document.addEventListener('click', function (e) {
+    var p = e.target.closest('[data-pay]');
+    if (p) { document.querySelectorAll('[data-pay]').forEach(function (b) { b.classList.remove('on'); }); p.classList.add('on'); }
+  });
+
+  /* scroll reveal */
+  var els = root.querySelectorAll('.sj-reveal');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (en) {
+      en.forEach(function (x) {
+        if (!x.isIntersecting) return;
+        x.target.classList.add('sj-in'); io.unobserve(x.target);
+        setTimeout(function () { x.target.classList.add('sj-done'); }, 1600);
+      });
+    }, { threshold: .12, rootMargin: '0px 0px -6% 0px' });
+    els.forEach(function (el) { io.observe(el); });
+  } else els.forEach(function (el) { el.classList.add('sj-in'); });
+
+  /* progress pill + subtle parallax */
+  var secs = [].slice.call(root.querySelectorAll('section[id^="sj-s"]')), box = $('#sjProg'), dots = box.querySelector('.d'), lab = box.querySelector('.l'), px = [].slice.call(root.querySelectorAll('.sj-px')), tick = false;
+  var still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  dots.innerHTML = secs.map(function (s, k) { return '<button data-go="' + s.id + '" aria-label="Step ' + (k + 1) + '">' + (k + 1) + '</button>'; }).join('');
+  dots.addEventListener('click', function (e) { var b = e.target.closest('[data-go]'); if (b) document.getElementById(b.getAttribute('data-go')).scrollIntoView({ behavior: 'smooth' }); });
+  function upd() {
+    tick = false; var mid = innerHeight * .5, cur = 0;
+    secs.forEach(function (s, k) { if (s.getBoundingClientRect().top < mid) cur = k; });
+    var r = root.getBoundingClientRect();
+    box.classList.toggle('show', r.top < -60 && r.bottom > innerHeight * .6);
+    [].forEach.call(dots.children, function (b, k) { b.className = k === cur ? 'on' : k < cur ? 'past' : ''; });
+    lab.textContent = 'Step ' + (cur + 1) + ' of ' + secs.length + ' · ' + secs[cur].getAttribute('data-label');
+    if (!still && innerWidth > 767) px.forEach(function (el) {
+      var b = el.getBoundingClientRect();
+      if (b.bottom < -100 || b.top > innerHeight + 100) return;
+      el.style.transform = 'translateY(' + ((b.top + b.height / 2 - innerHeight / 2) * -parseFloat(el.getAttribute('data-px'))).toFixed(1) + 'px)';
+    });
+  }
+  addEventListener('scroll', function () { if (!tick) { tick = true; requestAnimationFrame(upd); } }, { passive: true });
+  addEventListener('resize', upd); upd();
+  /* optional real renders: put images/hero.png and images/cart.png next to this page and they replace the drawings automatically */
+  document.querySelectorAll('[data-real]').forEach(function (w) {
+    var i = new Image();
+    i.onload = function () { i.className = 'sj-real'; i.alt = ''; var v = w.querySelector('svg.sj-art'); if (v) v.style.display = 'none'; w.insertBefore(i, w.firstChild); };
+    i.src = w.getAttribute('data-real');
+  });
+})();
+</script>
+<script id="hw-script">
+(function () {
+  var wrap = document.getElementById('hw-wrap');
+  wrap.classList.add('hw-js');
+  /* ===== EDIT HERE: plan prices, names, features and button links ===== */
+  var PLANS = [
+    { name: 'Starter', tag: 'For small businesses starting online.', price: '₹499', btn: 'Get Started', link: 'register.html',
+      feat: ['Product Management', 'Basic Store', 'Order Management', 'Basic Dashboard', 'Customer Management'] },
+    { name: 'Business', tag: 'For growing businesses.', price: '₹999', btn: 'Choose Business', link: 'register.html', popular: true,
+      feat: ['Everything in Starter', 'Advanced Dashboard', 'Inventory Management', 'Online Orders', 'Sales Reports', 'Customer Management', 'Store Customization'] },
+    { name: 'Professional', tag: 'For growing and established businesses.', price: '₹1,999', btn: 'Choose Professional', link: 'register.html',
+      feat: ['Everything in Business', 'Advanced Reports', 'Advanced Inventory', 'Multiple Staff Accounts', 'Role-Based Access', 'Advanced Store Management', 'Priority Support'] }
+  ];
+  var FLOW = [
+    ['shop', 'Customer Visits Store', 'Opens the online store on any device.'],
+    ['grid', 'Browse Products', 'Explore products, categories and offers.'],
+    ['hand-index-thumb', 'Select Product', 'Pick the item that fits your need.'],
+    ['cart-plus', 'Add to Cart', 'Select quantity and add products to your cart.'],
+    ['person-lock', 'Login / Register', 'Sign in or create an account securely.'],
+    ['card-checklist', 'Checkout', 'Enter delivery details and confirm your order.'],
+    ['credit-card', 'Online Payment', 'Complete the order using secure online payment.'],
+    ['patch-check', 'Order Confirmed', 'Instant confirmation sent to the customer.'],
+    ['bell', 'Merchant Receives Order', 'The merchant is notified in real time.'],
+    ['gear', 'Order Processing', 'Merchant receives and processes the order.'],
+    ['box-seam', 'Packing & Shipping', 'The order is packed and handed to delivery.'],
+    ['house-heart', 'Customer Receives Order', 'Track the order until it reaches the customer.']
+  ];
+  var FEAT = [['bag-check', 'Real-Time Orders', 'View new online orders instantly.'], ['boxes', 'Live Inventory', 'Know your available stock at any time.'], ['graph-up-arrow', 'Sales Tracking', 'Monitor sales and business performance.'], ['people', 'Customer Management', 'Manage customer information and orders.']];
+
+  document.getElementById('hwFlow').innerHTML = FLOW.map(function (s, k) {
+    return '<div class="hw-step hw-card hw-r" style="--d:' + ((k % 4) * .08) + 's"><div class="hw-ic"><i class="bi bi-' + s[0] + '"></i></div><div><h6>' + s[1] + '</h6><p>' + s[2] + '</p></div></div>';
+  }).join('');
+  document.getElementById('hwFeat').innerHTML = FEAT.map(function (f, k) {
+    return '<div class="col-sm-6 hw-r" style="--d:' + (.3 + k * .08) + 's"><div class="hw-card hw-fc"><div class="hw-ic"><i class="bi bi-' + f[0] + '"></i></div><div><h6>' + f[1] + '</h6><p>' + f[2] + '</p></div></div></div>';
+  }).join('');
+  document.getElementById('hwPlans').innerHTML = PLANS.map(function (p, k) {
+    return '<div class="col-md-6 col-lg-4 hw-r" style="--d:' + (k * .12) + 's"><div class="hw-card hw-plan' + (p.popular ? ' pop' : '') + '">' + (p.popular ? '<span class="hw-badge">Most Popular</span>' : '') +
+      '<h4 class="fw-bold mb-1">' + p.name + '</h4><p class="text-secondary small mb-3">' + p.tag + '</p><div class="hw-price">' + p.price + ' <small>/ month</small></div><ul>' +
+      p.feat.map(function (x) { return '<li><i class="bi bi-check-circle-fill"></i>' + x + '</li>'; }).join('') + '</ul>' +
+      '<a href="' + p.link + '" class="btn ' + (p.popular ? 'btn-primary-gradient' : 'hw-outline') + ' w-100">' + p.btn + '</a></div></div>';
+  }).join('');
+
+  var els = wrap.querySelectorAll('.hw-r');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (en) {
+      en.forEach(function (x) { if (x.isIntersecting) { x.target.classList.add('hw-in'); io.unobserve(x.target); } });
+    }, { threshold: .12, rootMargin: '0px 0px -6% 0px' });
+    els.forEach(function (el) { io.observe(el); });
+  } else els.forEach(function (el) { el.classList.add('hw-in'); });
+})();
+</script>
 </body>
 </html>

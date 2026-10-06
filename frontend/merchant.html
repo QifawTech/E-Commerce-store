@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Merchant Dashboard — SmartStore</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{font-family:'Inter',sans-serif;box-sizing:border-box}
+:root{--brand:#4a6cf7;--brand-dark:#3b5bea;--bg:#eef1f6;--ink:#0f172a}
+body{background:var(--bg);min-height:100vh}
+.shell{padding:18px}
+.sidebar{min-height:calc(100vh - 36px);background:#fff;border-radius:24px;box-shadow:0 1px 2px rgba(15,23,42,.04),0 12px 28px rgba(15,23,42,.06);position:sticky;top:18px}
+.brand-logo{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--brand),#8b93ff);display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.05rem}
+.menu-label{font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#94a3b8;padding:0 10px;margin:18px 0 8px}
+.sidebar-link{color:#475569;text-decoration:none;padding:11px 14px;border-radius:14px;display:flex;align-items:center;gap:12px;font-size:.9rem;font-weight:600;cursor:pointer}
+.sidebar-link i{font-size:1rem;width:20px;text-align:center;color:#94a3b8}
+.sidebar-link:hover{background:#f1f4fb;color:var(--ink)}
+.sidebar-link.active{background:var(--brand);color:#fff;box-shadow:0 8px 18px rgba(74,108,247,.35)}
+.sidebar-link.active i{color:#fff}
+.badge-count{margin-left:auto;background:#22c55e;color:#fff;font-size:.65rem;padding:2px 8px;border-radius:20px}
+.sidebar-link.active .badge-count{background:rgba(255,255,255,.25)}
+.logout-link{color:#94a3b8;text-decoration:none;display:flex;align-items:center;gap:10px;font-size:.85rem;font-weight:600;padding:10px 14px;border-radius:14px;cursor:pointer}
+.logout-link:hover{background:#fef2f2;color:#dc2626}
+.topbar{background:#fff;border-radius:22px;box-shadow:0 1px 2px rgba(15,23,42,.04),0 12px 28px rgba(15,23,42,.05);padding:18px 24px}
+.stat-card,.card-box{border:none;border-radius:20px;background:#fff;padding:24px;box-shadow:0 1px 2px rgba(15,23,42,.04),0 10px 24px rgba(15,23,42,.05)}
+.card-box{padding:28px;margin-bottom:24px}
+.stat-card.hero{background:linear-gradient(135deg,var(--brand),#6a7cf7);color:#fff;box-shadow:0 12px 26px rgba(74,108,247,.35)}
+.stat-card.hero .text-secondary{color:rgba(255,255,255,.75)!important}
+.stat-card.hero h3{color:#fff}
+.stat-card.hero .dash-ic{background:rgba(255,255,255,.2)!important}
+.thumb{width:50px;height:50px;border-radius:10px;object-fit:cover;border:1px solid #eef1f6}
+.tbl{width:100%;border-collapse:collapse}
+.tbl th{font-size:.7rem;font-weight:700;text-transform:uppercase;color:#94a3b8;padding:14px 16px;border-bottom:1.5px solid #eef1f6;text-align:left}
+.tbl td{padding:14px 16px;border-bottom:1px solid #f4f6fb;font-size:.9rem;color:#334155;vertical-align:middle}
+.tbl tbody tr:hover{background:#f8f9fd}
+.btn-act{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border-radius:50px;border:none;font-weight:700;font-size:.78rem;color:#fff;cursor:pointer;background:linear-gradient(135deg,var(--brand),var(--brand-dark))}
+.avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--brand),#8b93ff);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center}
+.dash-ic{width:52px;height:52px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0}
+.switch{position:relative;display:inline-block;width:48px;height:26px;vertical-align:middle}
+.switch input{opacity:0;width:0;height:0}
+.slider{position:absolute;cursor:pointer;inset:0;background:#cbd5e1;border-radius:50px;transition:.3s}
+.slider:before{content:'';position:absolute;height:20px;width:20px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s}
+.switch input:checked+.slider{background:var(--brand)}
+.switch input:checked+.slider:before{transform:translateX(22px)}
+.toast-x{position:fixed;bottom:20px;right:20px;background:#10b981;color:#fff;padding:14px 28px;border-radius:12px;z-index:9999;font-weight:600}
+</style>
+</head>
+<body>
+<div class="container-fluid shell">
+  <div class="row gx-3">
+    <!-- SIDEBAR -->
+    <div class="col-md-3 col-lg-2 sidebar p-3 d-flex flex-column justify-content-between">
+      <div>
+        <a href="#" class="d-flex align-items-center gap-2 text-decoration-none my-2 px-2 fw-bold fs-5 text-dark">
+          <span class="brand-logo"><i class="bi bi-bag-check-fill"></i></span> SmartStore
+        </a>
+        <div class="menu-label">Menu</div>
+        <nav class="d-flex flex-column gap-1" id="sideNav">
+          <a class="sidebar-link active" data-tab="dashboard"><i class="bi bi-grid-1x2-fill"></i> Dashboard</a>
+          <a class="sidebar-link" data-tab="products"><i class="bi bi-box-seam"></i> Products</a>
+          <a class="sidebar-link" data-tab="inventory"><i class="bi bi-boxes"></i> Inventory</a>
+          <a class="sidebar-link" data-tab="orders"><i class="bi bi-cart-check"></i> Orders</a>
+          <a class="sidebar-link" data-tab="customers"><i class="bi bi-people"></i> Customers <span class="badge-count" id="userCountBadge">0</span></a>
+          <a class="sidebar-link" data-tab="reports"><i class="bi bi-bar-chart-line"></i> Reports</a>
+          <a class="sidebar-link" data-tab="staff"><i class="bi bi-person-plus"></i> Staff & Roles</a>
+        </nav>
+      </div>
+      <div class="pt-3 border-top">
+        <a class="logout-link" onclick="logout()"><i class="bi bi-box-arrow-right"></i> Log out</a>
+      </div>
+    </div>
+
+    <!-- MAIN -->
+    <div class="col-md-9 col-lg-10 ps-md-3 pe-0">
+      <div class="topbar mb-3">
+        <h4 class="fw-bold mb-1 text-dark">Welcome back, <span id="merchantName">Merchant</span>! 👋</h4>
+        <p class="text-secondary small mb-0">Merchant Management Console</p>
+      </div>
+
+      <!-- DASHBOARD TAB -->
+      <div id="view-dashboard" class="view">
+        <div class="row g-3 mb-4">
+          <div class="col-md-6 col-lg-4"><div class="stat-card hero d-flex align-items-center gap-3"><div class="dash-ic">💰</div><div><span class="text-secondary small">Total Sales</span><h3 class="fw-bold mb-0" id="dSales">₹0</h3></div></div></div>
+          <div class="col-md-6 col-lg-4"><div class="stat-card d-flex align-items-center gap-3"><div class="dash-ic" style="background:#dbeafe">🛒</div><div><span class="text-secondary small">Total Orders</span><h3 class="fw-bold mb-0" id="dOrders">0</h3></div></div></div>
+          <div class="col-md-6 col-lg-4"><div class="stat-card d-flex align-items-center gap-3"><div class="dash-ic" style="background:#ede9fe">📦</div><div><span class="text-secondary small">Total Products</span><h3 class="fw-bold mb-0" id="dashProducts">0</h3></div></div></div>
+        </div>
+        <div class="row g-3">
+          <div class="col-lg-7"><div class="card-box mb-0"><h6 class="fw-bold mb-3">Store Overview</h6><div style="height:280px"><canvas id="barChart"></canvas></div></div></div>
+          <div class="col-lg-5"><div class="card-box mb-0"><h6 class="fw-bold mb-3">Products by Category</h6><div style="height:280px"><canvas id="pieChart"></canvas></div></div></div>
+        </div>
+      </div>
+
+      <!-- PRODUCTS TAB -->
+      <div id="view-products" class="view d-none">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <div><h4 class="fw-bold mb-0">Products</h4><small class="text-secondary">Manage products catalogue</small></div>
+          <button class="btn-act" data-bs-toggle="modal" data-bs-target="#addProductModal"><i class="bi bi-plus-circle"></i> Add Single</button>
+        </div>
+        <div class="card-box">
+          <div class="table-responsive">
+            <table class="tbl">
+              <thead><tr><th>Image</th><th>Product</th><th>Category</th><th>Price</th><th>Stock</th><th style="text-align:right">Action</th></tr></thead>
+              <tbody id="productBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- INVENTORY TAB -->
+      <div id="view-inventory" class="view d-none">
+        <div class="card-box">
+          <h4 class="fw-bold mb-3">Inventory Status</h4>
+          <div class="table-responsive">
+            <table class="tbl">
+              <thead><tr><th>Product</th><th>Price</th><th>Stock</th><th>Status</th></tr></thead>
+              <tbody id="inventoryBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ORDERS TAB -->
+      <div id="view-orders" class="view d-none">
+        <div class="card-box">
+          <h4 class="fw-bold mb-3">Customer & POS Orders</h4>
+          <div class="table-responsive">
+            <table class="tbl">
+              <thead><tr><th>Order ID</th><th>Customer</th><th>Total</th><th>Status</th></tr></thead>
+              <tbody id="orderBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- CUSTOMERS TAB -->
+      <div id="view-customers" class="view d-none">
+        <div class="card-box">
+          <h4 class="fw-bold mb-3">Registered Customers</h4>
+          <div class="table-responsive">
+            <table class="tbl">
+              <thead><tr><th>#</th><th>Name</th><th>Phone</th></tr></thead>
+              <tbody id="userBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- REPORTS TAB -->
+      <div id="view-reports" class="view d-none">
+        <div class="card-box">
+          <h4 class="fw-bold mb-2">Revenue Summary</h4>
+          <h2 class="fw-bold text-primary" id="repRevenue">₹0</h2>
+        </div>
+      </div>
+
+      <!-- STAFF TAB -->
+      <div id="view-staff" class="view d-none">
+        <div class="card-box" style="max-width:560px">
+          <h5 class="fw-bold mb-3">Add Role-Based Staff</h5>
+          <div class="mb-3">
+            <label class="form-label small fw-bold">Select Role</label>
+            <select class="form-control" id="staffRole">
+              <option value="POS System">POS System (Direct to POS UI)</option>
+              <option value="Merchant Dashboard">Merchant Dashboard</option>
+            </select>
+        <!-- Add Staff Form -->
+<div class="mb-3">
+  <label class="form-label small fw-bold">Role <span class="text-danger">*</span></label>
+  <select class="form-control" id="staffRole">
+    <option value="pos">POS System</option>
+    <option value="merchant">Merchant Dashboard</option>
+  </select>
+</div>
+<div class="mb-3">
+  <label class="form-label small fw-bold">Username <span class="text-danger">*</span></label>
+  <input type="text" class="form-control" id="staffUsername" placeholder="Enter username">
+</div>
+<div class="mb-3">
+  <label class="form-label small fw-bold">Password <span class="text-danger">*</span></label>
+  <input type="password" class="form-control" id="staffPassword" placeholder="Enter password">
+</div>
+<button class="btn btn-primary" onclick="saveStaff()">Save Staff</button>
+          <div class="mb-3">
+            <label class="form-label small fw-bold">Password</label>
+            <input type="password" class="form-control" id="staffPassword" placeholder="e.g. pass123">
+          </div>
+          <button class="btn btn-primary" onclick="saveStaff()"><i class="bi bi-plus-circle me-1"></i> Save Account</button>
+        </div>
+
+        <div class="card-box mt-3">
+          <h5 class="fw-bold mb-3">Current Staff Members</h5>
+          <div class="table-responsive">
+            <table class="tbl">
+              <thead><tr><th>Username</th><th>Assigned Role</th><th>Password</th><th style="text-align:right">Action</th></tr></thead>
+              <tbody id="staffBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ADD PRODUCT MODAL -->
+<div class="modal fade" id="addProductModal" tabindex="-1">
+  <div class="modal-dialog"><div class="modal-content p-4" style="border-radius:16px">
+    <h5 class="fw-bold mb-3">Add Product</h5>
+    <div class="mb-3"><label class="form-label small fw-bold">Name</label><input class="form-control" id="prodName"></div>
+    <div class="mb-3"><label class="form-label small fw-bold">Category</label>
+      <select class="form-control" id="prodCategory">
+        <option value="Electronics">Electronics</option>
+        <option value="Grocery">Grocery</option>
+        <option value="Fashion">Fashion</option>
+      </select>
+    </div>
+    <div class="mb-3"><label class="form-label small fw-bold">Price (₹)</label><input type="number" class="form-control" id="prodPrice"></div>
+    <div class="mb-3"><label class="form-label small fw-bold">Stock</label><input type="number" class="form-control" id="prodStock" value="10"></div>
+    <button class="btn btn-primary w-100" onclick="saveProduct()">Save Product</button>
+  </div></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+const DEFAULT_IMG = 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=200&auto=format&fit=crop&q=80';
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const getMe = () => JSON.parse(localStorage.getItem('user') || '{}');
+const getList = k => JSON.parse(localStorage.getItem(k) || '[]');
+const setList = (k, v) => localStorage.setItem(k, JSON.stringify(v));
+
+function toast(msg) {
+  const old = document.querySelector('.toast-x'); if (old) old.remove();
+  const t = document.createElement('div'); t.className = 'toast-x'; t.textContent = msg;
+  document.body.appendChild(t); setTimeout(() => t.remove(), 2000);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const loggedIn = localStorage.getItem('loggedInUser');
+  const me = getMe();
+  if (!loggedIn) { location.href = 'login.html'; return; }
+  if (me.role === 'POS System') { location.href = 'pos.html'; return; }
+
+  document.getElementById('merchantName').textContent = me.username || 'Merchant';
+  document.querySelectorAll('#sideNav .sidebar-link').forEach(a => {
+    a.addEventListener('click', () => switchTab(a.dataset.tab, a));
+  });
+
+  renderProducts(); renderStaff(); renderOrders(); renderDashboard(); renderInventory();
+});
+
+function switchTab(tab, el) {
+  document.querySelectorAll('.view').forEach(v => v.classList.add('d-none'));
+  document.getElementById('view-' + tab).classList.remove('d-none');
+  document.querySelectorAll('#sideNav .sidebar-link').forEach(l => l.classList.remove('active'));
+  if (el) el.classList.add('active');
+}
+
+function saveProduct() {
+  const name = document.getElementById('prodName').value.trim();
+  const price = parseFloat(document.getElementById('prodPrice').value);
+  const stock = parseInt(document.getElementById('prodStock').value) || 0;
+  const category = document.getElementById('prodCategory').value;
+  if (!name || !price) { toast('⚠️ Fill all fields'); return; }
+
+  const list = getList('smartstore_products');
+  list.push({ id: Date.now(), name, price, stock, category, image: DEFAULT_IMG });
+  setList('smartstore_products', list);
+
+  bootstrap.Modal.getInstance(document.getElementById('addProductModal')).hide();
+  renderProducts(); renderInventory(); renderDashboard();
+  toast('✅ Product saved!');
+}
+
+function renderProducts() {
+  const list = getList('smartstore_products');
+  document.getElementById('dashProducts').textContent = list.length;
+  document.getElementById('productBody').innerHTML = list.length ? list.map(p => `
+    <tr>
+      <td><img src="${p.image || DEFAULT_IMG}" class="thumb"></td>
+      <td class="fw-bold">${esc(p.name)}</td>
+      <td><span class="badge bg-light text-dark border">${esc(p.category)}</span></td>
+      <td>₹${p.price}</td>
+      <td>${p.stock}</td>
+      <td style="text-align:right"><button class="btn btn-sm btn-outline-danger" onclick="deleteProduct(${p.id})"><i class="bi bi-trash"></i></button></td>
+    </tr>`).join('') : '<tr><td colspan="6" class="text-center py-4">No products yet.</td></tr>';
+}
+
+function deleteProduct(id) {
+  setList('smartstore_products', getList('smartstore_products').filter(p => p.id !== id));
+  renderProducts(); renderInventory(); renderDashboard();
+}
+
+function renderInventory() {
+  const list = getList('smartstore_products');
+  document.getElementById('inventoryBody').innerHTML = list.map(p => `
+    <tr>
+      <td class="fw-bold">${esc(p.name)}</td>
+      <td>₹${p.price}</td>
+      <td>${p.stock}</td>
+      <td><span class="badge ${p.stock > 5 ? 'bg-success' : 'bg-warning'}">${p.stock > 0 ? 'In Stock' : 'Out of Stock'}</span></td>
+    </tr>`).join('');
+}
+
+function renderOrders() {
+  const orders = getList('smartstore_orders');
+  document.getElementById('dOrders').textContent = orders.length;
+  document.getElementById('orderBody').innerHTML = orders.map(o => `
+    <tr>
+      <td>#ORD-${String(o.id).slice(-4)}</td>
+      <td>${esc(o.customerName || 'Walk-in')}</td>
+      <td>₹${o.total}</td>
+      <td><span class="badge bg-success">${o.status}</span></td>
+    </tr>`).join('');
+}
+
+f// Save Staff Function
+function saveStaff() {
+  const role = document.getElementById('staffRole').value; // 'pos' அல்லது 'merchant'
+  const username = document.getElementById('staffUsername').value.trim();
+  const password = document.getElementById('staffPassword').value.trim();
+
+  if (!username || !password) {
+    alert('Username மற்றும் Password இரண்டையும் நிரப்பவும்!');
+    return;
+  }
+
+  // எல்லா staff விவரங்களையும் 'smartstore_staff' என்ற ஒரே key-ல் சேமிக்கிறோம்
+  const staffList = JSON.parse(localStorage.getItem('smartstore_staff') || '[]');
+
+  // ஒரே username திரும்ப வராமல் தடுக்க
+  if (staffList.some(s => s.username.toLowerCase() === username.toLowerCase())) {
+    alert('இந்த Username ஏற்கனவே உள்ளது!');
+    return;
+  }
+
+  staffList.push({
+    id: Date.now(),
+    username: username,
+    password: password,
+    role: role, // 'pos' அல்லது 'merchant'
+    createdAt: new Date().toLocaleString()
+  });
+
+  localStorage.setItem('smartstore_staff', JSON.stringify(staffList));
+
+  // Input fields clear செய்ய
+  document.getElementById('staffUsername').value = '';
+  document.getElementById('staffPassword').value = '';
+
+  renderStaff();
+  alert('Staff வெற்றிகரமாக சேர்க்கப்பட்டார்!');
+}
+
+// Staff List Table Render
+function renderStaff() {
+  const staffList = JSON.parse(localStorage.getItem('smartstore_staff') || '[]');
+  const tbody = document.getElementById('staffBody');
+  if (!tbody) return;
+
+  if (staffList.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="5" class="text-center py-4 text-secondary">No staff members found.</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = staffList.map((u, i) => `
+    <tr>
+      <td>${i + 1}</td>
+      <td class="fw-bold">${u.username}</td>
+      <td><span class="badge bg-light text-dark border">${u.role.toUpperCase()}</span></td>
+      <td><code>${u.password}</code></td>
+      <td style="text-align:right">
+        <button class="btn btn-sm btn-outline-danger" onclick="deleteStaff(${u.id})">Delete</button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function deleteStaff(id) {
+  if (!confirm('இந்த staff-ஐ நீக்க வேண்டுமா?')) return;
+  let staffList = JSON.parse(localStorage.getItem('smartstore_staff') || '[]');
+  staffList = staffList.filter(s => s.id !== id);
+  localStorage.setItem('smartstore_staff', JSON.stringify(staffList));
+  renderStaff();
+}
+
+// பக்கத்தை reload செய்யும்போது list தெரிய
+document.addEventListener('DOMContentLoaded', renderStaff);
+</script>
+</body>
+</html>

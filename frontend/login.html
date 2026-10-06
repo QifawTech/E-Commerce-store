@@ -1,163 +1,313 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sign In — SmartStore</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
-  <style>
-    * { font-family: 'Inter', sans-serif; box-sizing: border-box; }
-    body { background-color: #f1f5f9; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px 16px; margin: 0; }
-    .auth-card { width: 100%; max-width: 920px; background: #ffffff; border-radius: 20px; border: 1px solid #e2e8f0; box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.05); overflow: hidden; }
-    .visual-panel { background: linear-gradient(135deg, rgba(30, 27, 75, 0.85), rgba(79, 70, 229, 0.75)), url('images/login-bg.jpg'); background-size: cover; background-position: center; padding: 48px; display: flex; flex-direction: column; justify-content: space-between; }
-    .brand-logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.25rem; color: #ffffff; text-decoration: none; }
-    .glass-pill { background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.2); color: #ffffff; font-weight: 500; font-size: 0.8rem; }
-    .form-panel { padding: 48px; background: #ffffff; }
-    .form-label-custom { font-size: 0.875rem; font-weight: 600; color: #334155; margin-bottom: 8px; display: block; }
-    .custom-input { width: 100%; height: 48px; padding: 10px 16px; font-size: 0.95rem; border: 1.5px solid #cbd5e1; border-radius: 10px; background-color: #ffffff; color: #0f172a; outline: none; transition: border-color 0.2s ease, box-shadow 0.2s ease; }
-    .custom-input:focus { border-color: #4f46e5; box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12); }
-    .btn-action { background: #4f46e5; color: #ffffff; border: none; height: 48px; border-radius: 10px; font-weight: 600; font-size: 1rem; transition: all 0.2s ease; }
-    .btn-action:hover { background: #4338ca; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25); }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login — SmartStore</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{font-family:'Inter',sans-serif;box-sizing:border-box}
+body{background:linear-gradient(135deg,#eef1f6 0%,#e0e7ff 100%);min-height:100vh;display:flex;align-items:center;justify-content:center;margin:0;padding:20px}
+.login-card{width:100%;max-width:440px;background:#fff;border-radius:24px;padding:40px 36px;box-shadow:0 24px 60px rgba(15,23,42,.12)}
+.brand-logo{width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,#4a6cf7,#8b93ff);display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.5rem;margin:0 auto 18px}
+.login-card h2{font-weight:800;font-size:1.6rem;color:#0f172a;text-align:center;margin-bottom:6px}
+.login-card p.sub{text-align:center;color:#64748b;font-size:.88rem;margin-bottom:28px}
+.field-label{font-weight:700;font-size:.85rem;color:#0f172a;margin-bottom:8px;display:block}
+.field{width:100%;padding:13px 18px;border:1.5px solid #e2e8f0;border-radius:12px;font-size:.95rem;outline:none;background:#fff;color:#0f172a;margin-bottom:18px}
+.field:focus{border-color:#4a6cf7;box-shadow:0 0 0 3px rgba(74,108,247,.12)}
+.field::placeholder{color:#94a3b8}
+.pwd-wrap{position:relative}
+.pwd-wrap .field{padding-right:48px}
+.pwd-toggle{position:absolute;right:16px;top:16px;color:#94a3b8;cursor:pointer;font-size:.95rem}
+.btn-login{width:100%;background:linear-gradient(135deg,#4a6cf7,#3b5bea);color:#fff;border:none;padding:14px 0;border-radius:12px;font-weight:700;font-size:.95rem;cursor:pointer;transition:.15s;margin-top:6px}
+.btn-login:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.btn-login:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.err{background:#fef2f2;color:#dc2626;padding:11px 16px;border-radius:10px;font-size:.83rem;font-weight:600;margin-bottom:16px;display:none;border:1px solid #fecaca}
+.err.show{display:block}
+.link-row{text-align:center;font-size:.85rem;color:#64748b;margin-top:22px}
+.link-row a{color:#4a6cf7;font-weight:700;text-decoration:none}
+.link-row a:hover{text-decoration:underline}
+.role-hint{margin-top:14px;text-align:center;font-size:.72rem;color:#94a3b8;line-height:1.6}
+</style>
 </head>
 <body>
 
-  <div class="auth-card">
-    <div class="row g-0">
-      <div class="col-lg-6 d-none d-lg-flex visual-panel text-white">
-        <div>
-          <a href="index.html" class="brand-logo">
-            <i class="bi bi-bag-check-fill fs-4"></i>
-            SmartStore
-          </a>
-        </div>
-        <div>
-          <span class="badge glass-pill px-3 py-2 rounded-pill mb-3">Enterprise Portal</span>
-          <h2 class="fw-bold fs-2 mb-2">Sign In to Account</h2>
-          <p class="text-white-50 small">Manage your dynamic catalog and profile preferences effortlessly.</p>
-        </div>
-        <div class="text-white-50 small">&copy; 2026 SmartStore Platform</div>
-      </div>
+<div class="login-card">
+  <div class="brand-logo"><i class="bi bi-bag-check-fill"></i></div>
+  <h2>Welcome Back</h2>
+  <p class="sub">Sign in to your SmartStore account</p>
 
-      <div class="col-lg-6 form-panel d-flex align-items-center">
-        <div class="w-100">
-          <div class="mb-4">
-            <h3 class="fw-bold text-dark fs-3 mb-1">Sign In</h3>
-            <p class="text-secondary small">Enter your account username and password.</p>
-          </div>
+  <div class="err" id="errBox"></div>
 
-          <div id="alert-box" class="alert d-none rounded-3 mb-3"></div>
+  <form id="loginForm" onsubmit="handleLogin(event)" autocomplete="off">
+    <label class="field-label">Username or Email</label>
+    <input type="text" class="field" id="loginUser" placeholder="Enter username or email" required autofocus>
 
-          <form id="loginForm" novalidate>
-            <div class="mb-3">
-              <label for="username" class="form-label-custom">Username</label>
-              <input type="text" id="username" class="custom-input" placeholder="Enter username">
-            </div>
-
-            <div class="mb-4">
-              <label for="password" class="form-label-custom">Password</label>
-              <input type="password" id="password" class="custom-input" placeholder="Enter password">
-            </div>
-
-            <button type="submit" class="btn btn-action w-100 mb-3">Sign In</button>
-          </form>
-
-          <div class="text-center">
-            <p class="text-secondary small mb-2">Don't have an account? <a href="register.html" class="text-primary fw-semibold text-decoration-none">Register here</a></p>
-            <a href="index.html" class="text-muted small text-decoration-none"><i class="bi bi-arrow-left me-1"></i>Return to Home Page</a>
-          </div>
-        </div>
-      </div>
+    <label class="field-label">Password</label>
+    <div class="pwd-wrap">
+      <input type="password" class="field" id="loginPass" placeholder="Enter password" required>
+      <i class="bi bi-eye pwd-toggle" id="pwdToggle" onclick="togglePwd()"></i>
     </div>
+
+    <button type="submit" class="btn-login" id="loginBtn">
+      <i class="bi bi-box-arrow-in-right me-2"></i> Sign In
+    </button>
+  </form>
+
+  <div class="link-row">New merchant? <a href="register.html">Create an account</a></div>
+
+  <div class="role-hint">
+    Merchant · Manager · Sales Man supported<br>
+    Staff credentials are created by the Merchant
   </div>
+</div>
 
-  <script>
-    // ✅ Type செய்யும்போது error message-ஐ hide செய்
-    document.getElementById('username').addEventListener('input', function() {
-      document.getElementById('alert-box').classList.add('d-none');
+<script>
+/* ============================================================
+   Helpers
+   ============================================================ */
+const $ = id => document.getElementById(id);
+const readLS  = (k, fb) => { try { const v = JSON.parse(localStorage.getItem(k) || 'null'); return v == null ? fb : v; } catch (e) { return fb; } };
+const writeLS = (k, v)  => { try { localStorage.setItem(k, JSON.stringify(v)); return true; } catch (e) { return false; } };
+const rmLS    = (k)     => { try { localStorage.removeItem(k); } catch (e) {} };
+
+function showErr(msg) { const e = $('errBox'); e.textContent = msg; e.classList.add('show'); }
+function hideErr()    { $('errBox').classList.remove('show'); }
+function togglePwd() {
+  const f = $('loginPass');
+  const t = $('pwdToggle');
+  if (f.type === 'password') { f.type = 'text';   t.classList.replace('bi-eye','bi-eye-slash'); }
+  else                       { f.type = 'password'; t.classList.replace('bi-eye-slash','bi-eye'); }
+}
+
+/* ============================================================
+   SAFE REDIRECT — handles iframe + sandbox environments
+   ============================================================ */
+function safeRedirect(url) {
+  const btn = $('loginBtn');
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = '<i class="bi bi-arrow-repeat me-2"></i> Signing in…';
+  }
+  console.log('[Login] Redirecting to:', url);
+
+  setTimeout(() => {
+    try {
+      if (window.top && window.top !== window.self) {
+        window.top.location.replace(url);
+      } else {
+        window.location.replace(url);
+      }
+    } catch (e1) {
+      console.warn('[Login] Top-level blocked, trying same-window', e1);
+      try { window.location.replace(url); } catch (e2) {}
+    }
+
+    // If still here after 900ms → redirect was blocked by sandbox
+    setTimeout(() => {
+      if (document.visibilityState === 'visible' && !document.hidden) {
+        const errBox = $('errBox');
+        if (errBox) {
+          errBox.innerHTML =
+            '⚠️ Redirect blocked by preview sandbox.<br>' +
+            '<a href="' + url + '" style="color:#dc2626;text-decoration:underline;font-weight:700">' +
+            '→ Click here to open Dashboard manually</a>';
+          errBox.classList.add('show');
+        }
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = '<i class="bi bi-box-arrow-in-right me-2"></i> Sign In';
+        }
+      }
+    }, 900);
+  }, 200);
+}
+
+/* ============================================================
+   🔐 SUPER ADMIN CREDENTIALS
+   ------------------------------------------------------------
+   These must match the SUPER_ADMIN const inside superadmin.html.
+   ============================================================ */
+const SUPER_ADMIN = {
+  username: 'superadmin',
+  password: 'admin123',
+  name: 'SmartStore Admin',
+  email: 'admin@smartstore.com'
+};
+
+/* ============================================================
+   AUTHENTICATION — MERCHANT
+   ============================================================ */
+function findMerchant(username, password) {
+  const uLower = String(username).toLowerCase();
+  for (const key of ['registeredUsers', 'smartstore_users']) {
+    const list = readLS(key, []);
+    if (!Array.isArray(list)) continue;
+    const found = list.find(u => {
+      const role = String(u.role || 'merchant').toLowerCase();
+      if (role !== 'merchant') return false;
+      const uName  = String(u.username || '').toLowerCase();
+      const uEmail = String(u.email    || '').toLowerCase();
+      const matchesUser = (uName === uLower) || (uEmail === uLower);
+      const matchesPass = (u.password === password);
+      return matchesUser && matchesPass;
     });
-    document.getElementById('password').addEventListener('input', function() {
-      document.getElementById('alert-box').classList.add('d-none');
+    if (found) return found;
+  }
+  return null;
+}
+
+/* ============================================================
+   AUTHENTICATION — STAFF / SALES MAN
+   ============================================================ */
+function findStaff(username, password) {
+  const uLower = String(username).toLowerCase();
+  const list = readLS('smartstore_staff', []);
+  if (!Array.isArray(list)) return null;
+  return list.find(s =>
+    String(s.username || '').toLowerCase() === uLower &&
+    s.password === password
+  ) || null;
+}
+
+/* ============================================================
+   LOGIN — SUPER ADMIN
+   ------------------------------------------------------------
+   Saves the exact keys that superadmin.html's guard checks:
+     - loggedInUser  = SUPER_ADMIN.username
+     - role          = 'superadmin'
+     - user          = { username, role, name, email }
+   Then redirects to superadmin.html
+   ============================================================ */
+function loginAsSuperAdmin() {
+  rmLS('smartstore_staff_session');
+
+  localStorage.setItem('loggedInUser', SUPER_ADMIN.username);
+  localStorage.setItem('role', 'superadmin');
+  writeLS('user', {
+    username: SUPER_ADMIN.username,
+    role:     'superadmin',
+    name:     SUPER_ADMIN.name,
+    email:    SUPER_ADMIN.email
+  });
+  localStorage.setItem('token', 'mock-superadmin-token-' + Date.now());
+
+  safeRedirect('superadmin.html');
+}
+
+/* ============================================================
+   LOGIN — MERCHANT
+   ============================================================ */
+function loginAsMerchant(merchant) {
+  const usernameForUrl = merchant.username || merchant.email || '';
+  if (!usernameForUrl) { showErr('Merchant account is missing a username.'); return; }
+
+  rmLS('smartstore_staff_session');
+
+  writeLS('user', merchant);
+  writeLS('smartstore_current_user', merchant);
+  localStorage.setItem('loggedInUser', usernameForUrl);
+  localStorage.setItem('token', merchant.token || ('mock-merchant-token-' + Date.now()));
+
+  // Clear any leftover superadmin role so dashboard guard doesn't misfire
+  localStorage.removeItem('role');
+
+  safeRedirect('dashboard.html?merchant=' + encodeURIComponent(usernameForUrl));
+}
+
+/* ============================================================
+   LOGIN — STAFF
+   ============================================================ */
+function loginAsStaff(staff) {
+  const role = staff.role || 'Sales Man';
+
+  let brandName = '';
+  for (const k of ['registeredUsers', 'smartstore_users']) {
+    const list = readLS(k, []);
+    if (!Array.isArray(list)) continue;
+    const m = list.find(u => {
+      const r = String(u.role || 'merchant').toLowerCase();
+      return r === 'merchant' &&
+        String(u.storeSlug || '').toLowerCase() === String(staff.storeSlug || '').toLowerCase();
     });
+    if (m) { brandName = m.brandName || m.username || ''; break; }
+  }
 
-    document.getElementById('loginForm').addEventListener('submit', function(e) {
-      e.preventDefault();
+  const staffSession = {
+    staffId:    staff.id,
+    username:   staff.username,
+    role:       role,
+    storeSlug:  staff.storeSlug || '',
+    merchantId: staff.merchantId || staff.storeSlug || '',
+    userType:   'staff',
+    loggedInAt: new Date().toISOString()
+  };
+  writeLS('smartstore_staff_session', staffSession);
+  writeLS('user', {
+    username:  staff.username,
+    role:      role,
+    storeSlug: staff.storeSlug || '',
+    userType:  'staff',
+    brandName: brandName
+  });
+  localStorage.setItem('loggedInUser', staff.username);
+  localStorage.setItem('token', 'mock-staff-token-' + Date.now());
+  rmLS('smartstore_current_user');
 
-      const username = document.getElementById('username').value.trim();
-      const password = document.getElementById('password').value.trim();
-      const alertBox = document.getElementById('alert-box');
+  // Clear any leftover superadmin role
+  localStorage.removeItem('role');
 
-      // ✅ Custom validation
-      if (!username) {
-        alertBox.className = 'alert alert-danger rounded-3 mb-3';
-        alertBox.textContent = '❌ Please enter username!';
-        alertBox.classList.remove('d-none');
-        return;
-      }
+  safeRedirect('dashboard.html?merchant=' + encodeURIComponent(staff.username));
+}
 
-      if (!password) {
-        alertBox.className = 'alert alert-danger rounded-3 mb-3';
-        alertBox.textContent = '❌ Please enter password!';
-        alertBox.classList.remove('d-none');
-        return;
-      }
+/* ============================================================
+   MAIN LOGIN HANDLER
+   ------------------------------------------------------------
+   PRIORITY 1: Super Admin  (superadmin / admin123)  → superadmin.html
+   PRIORITY 2: Staff with explicit non-merchant role → dashboard.html
+   PRIORITY 3: Merchant                              → dashboard.html
+   PRIORITY 4: Staff with role = Merchant Dashboard  → dashboard.html
+   ============================================================ */
+function handleLogin(e) {
+  e.preventDefault();
+  hideErr();
 
-      // ✅ Super Admin
-      const SUPER_ADMIN_USER = 'superadmin';
-      const SUPER_ADMIN_PASS = 'admin123';
+  const username = $('loginUser').value.trim();
+  const password = $('loginPass').value;
 
-      if (username === SUPER_ADMIN_USER && password === SUPER_ADMIN_PASS) {
-        localStorage.setItem('username', username);
-        localStorage.setItem('role', 'superadmin');
-        localStorage.setItem('loggedInUser', username);
+  if (!username || !password) { showErr('Please enter username and password.'); return; }
 
-        alertBox.className = 'alert alert-success rounded-3 mb-3';
-        alertBox.textContent = '✅ Super Admin login successful! Redirecting...';
-        alertBox.classList.remove('d-none');
+  /* ---------- PRIORITY 1: SUPER ADMIN ---------- */
+  if (username === SUPER_ADMIN.username && password === SUPER_ADMIN.password) {
+    console.log('✅ Super Admin credentials detected → superadmin.html');
+    loginAsSuperAdmin();
+    return;
+  }
 
-        setTimeout(() => {
-          window.location.href = 'superadmin.html';
-        }, 1000);
-        return;
-      }
+  /* ---------- PRIORITY 2: Staff with explicit non-merchant role ---------- */
+  const staff = findStaff(username, password);
+  if (staff) {
+    const role = String(staff.role || '').toLowerCase().trim();
+    if (role === 'sales man' || role === 'manager') {
+      loginAsStaff(staff);
+      return;
+    }
+  }
 
-      // ✅ Check registered users
-      const savedUsers = localStorage.getItem('registeredUsers');
-      let users = [];
-      if (savedUsers) {
-        try { users = JSON.parse(savedUsers); } catch (e) { users = []; }
-      }
+  /* ---------- PRIORITY 3: Merchant ---------- */
+  const merchant = findMerchant(username, password);
+  if (merchant) { loginAsMerchant(merchant); return; }
 
-      const foundUser = users.find(u => 
-        u.username === username && u.password === password
-      );
+  /* ---------- PRIORITY 4: Staff with role = Merchant Dashboard ---------- */
+  if (staff) { loginAsStaff(staff); return; }
 
-      if (!foundUser) {
-        alertBox.className = 'alert alert-danger rounded-3 mb-3';
-        alertBox.textContent = '❌ Invalid username or password! Please register first.';
-        alertBox.classList.remove('d-none');
-        return;
-      }
-
-      // ✅ Valid login
-      localStorage.setItem('username', foundUser.username);
-      localStorage.setItem('role', 'merchant');
-      localStorage.setItem('loggedInUser', foundUser.username);
-      localStorage.setItem('user', JSON.stringify(foundUser));
-      localStorage.setItem('selectedCategory', foundUser.category || 'Books');
-      localStorage.setItem('userCategory', foundUser.category || 'Books');
-
-      alertBox.className = 'alert alert-success rounded-3 mb-3';
-      alertBox.textContent = '✅ Login successful! Welcome ' + foundUser.username + '. Redirecting...';
-      alertBox.classList.remove('d-none');
-
-      setTimeout(() => {
-        window.location.href = 'dashboard.html';
-      }, 1000);
-    });
-  </script>
+  /* ---------- None matched → invalid credentials ---------- */
+  showErr('Invalid username or password.');
+  $('loginPass').value = '';
+  $('loginPass').focus();
+}
+</script>
 </body>
 </html>

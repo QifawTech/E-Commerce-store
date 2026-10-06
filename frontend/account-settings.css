@@ -1,0 +1,36 @@
+/* Settings cards */
+.set-card{display:flex;align-items:center;gap:16px;background:#fff;border-radius:20px;padding:22px;cursor:pointer;box-shadow:0 1px 2px rgba(15,23,42,.04),0 10px 24px rgba(15,23,42,.05);transition:.2s;height:100%}
+.set-card:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(15,23,42,.1)}
+.set-ic{width:54px;height:54px;border-radius:16px;background:var(--g);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0}
+
+/* Account header */
+.acc-head{display:flex;align-items:center;gap:10px;margin-bottom:16px;font-size:.85rem;color:#475569}
+.crumb-back{width:34px;height:34px;border-radius:50%;background:#fff;border:1px solid #eef1f6;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.crumb-back:hover{background:#f1f4fb}
+.acc-tab i{margin-right:6px}
+
+/* Buttons + inputs */
+.btn-orange{background:#f97316;color:#fff;border:none;padding:10px 22px;border-radius:10px;font-weight:600;font-size:.88rem;cursor:pointer}
+.btn-orange:hover{background:#ea580c}
+.btn-orange:disabled{opacity:.5;cursor:not-allowed}
+.btn-outline-soft{background:#fff;color:#475569;border:1.5px solid #e5e7eb;padding:10px 20px;border-radius:10px;font-weight:600;font-size:.85rem;cursor:pointer}
+.btn-outline-soft:hover{background:#f8f9fd}
+.btn-outline-soft:disabled{opacity:.5;cursor:not-allowed}
+.eye-wrap{position:relative}
+.eye-wrap button{position:absolute;right:12px;top:50%;transform:translateY(-50%);border:0;background:none;color:#64748b;cursor:pointer}
+.eye-wrap .field{padding-right:42px}
+
+/* Printer */
+.mode-card{border:1.5px solid #e5e7eb;border-radius:12px;padding:12px 16px;cursor:pointer;background:#fff;font-size:.88rem;font-weight:600;transition:.15s}
+.mode-card small{display:block;font-weight:500;font-size:.72rem;opacity:.7;margin-top:2px}
+.mode-card.on{background:#262626;color:#fff;border-color:#262626}
+.mode-card.center{text-align:center}
+.info-box{border:1.5px solid #eef1f6;border-radius:12px;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.opt-box{border:1.5px solid #eef1f6;border-radius:12px;padding:6px 18px}
+
+/* WhatsApp */
+.wa-pill{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:50px;font-size:.75rem;font-weight:700}
+.wa-pill.off{background:#f1f5f9;color:#64748b}
+.wa-pill.mid{background:#fef3c7;color:#92400e}
+.wa-pill.on{background:#dcfce7;color:#166534}
+.wa-pill:before{content:'';width:8px;height:8px;border-radius:50%;background:currentColor}

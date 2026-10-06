@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page — SmartStore</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { font-family: 'Inter', sans-serif; }
+    body { background: #f8fafc; }
+    .btn-back { background: linear-gradient(135deg,#4f46e5,#7c3aed); color: #fff; border: none; border-radius: 50px; padding: 8px 20px; font-weight: 600; font-size: .85rem; text-decoration: none; }
+    .btn-back:hover { color: #fff; opacity: .92; }
+    .page-body { color: #334155; line-height: 1.8; }
+    .page-body h1 { font-size: 1.8rem; font-weight: 800; margin: 1rem 0 .5rem; }
+    .page-body h2 { font-size: 1.4rem; font-weight: 700; margin: 1rem 0 .5rem; }
+    .page-body ul { list-style: disc; padding-left: 1.5rem; }
+    .page-body ol { list-style: decimal; padding-left: 1.5rem; }
+    .page-body a { color: #4f46e5; text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <header class="bg-white border-bottom">
+    <div class="container d-flex justify-content-between align-items-center py-3">
+      <a id="homeLink" href="index.html" class="d-flex align-items-center gap-2 fw-bold fs-5 text-dark text-decoration-none">
+        <i class="bi bi-bag-check-fill text-primary"></i> <span id="brandName">SmartStore</span>
+      </a>
+      <a id="backLink" href="index.html" class="btn-back"><i class="bi bi-arrow-left me-1"></i> Back to Store</a>
+    </div>
+  </header>
+
+  <main class="container py-5" style="max-width: 860px;">
+    <article class="bg-white border rounded-4 p-4 p-md-5 shadow-sm">
+      <h1 id="pageTitle" class="fw-bold text-dark mb-4">Loading...</h1>
+      <div id="pageContent" class="page-body"></div>
+    </article>
+  </main>
+
+  <footer class="text-center text-secondary small py-4">&copy; 2026 SmartStore. All rights reserved.</footer>
+
+  <script>
+    (function () {
+      var params = new URLSearchParams(location.search);
+      // ?page=slug and ?slug=slug rendu-um work aagum
+      var slug = params.get('page') || params.get('slug') || '';
+      var store = params.get('store') || '';
+
+      var pages = [];
+      try { pages = JSON.parse(localStorage.getItem('smartstore_pages') || '[]'); } catch (e) {}
+
+      var page = pages.find(function (p) {
+        return p.slug === slug && p.status === 'Published' && (!store || (p.storeSlug || '') === store);
+      });
+
+      // Back link: store irundha andha store-ku, illana home-ku
+      var back = store ? 'theme-selection.html?store=' + encodeURIComponent(store) : 'index.html';
+      document.getElementById('backLink').href = back;
+
+      var titleEl = document.getElementById('pageTitle');
+      var contentEl = document.getElementById('pageContent');
+
+      if (!slug) {
+        titleEl.textContent = 'No page specified';
+        contentEl.textContent = 'Please open a page from the footer links.';
+      } else if (!page) {
+        titleEl.textContent = 'Page not found';
+        contentEl.textContent = 'This page does not exist or is not published.';
+      } else {
+        document.title = page.title + ' — SmartStore';
+        titleEl.textContent = page.title;
+        contentEl.innerHTML = page.content;
+      }
+    })();
+  </script>
+</body>
+</html>s

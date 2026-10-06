@@ -2,905 +2,954 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Super Admin — E-Commerce</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Super Admin — SmartStore</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  
+
   <style>
     * { font-family: 'Inter', sans-serif; box-sizing: border-box; }
-    body { background-color: #f1f5f9; min-height: 100vh; }
-    
-    /* ===== SIDEBAR ===== */
+    body { background-color: #f8fafc; min-height: 100vh; margin: 0; }
+
+    .mobile-topbar {
+      display: none;
+      position: sticky; top: 0; z-index: 1030;
+      background: #1e1b4b; color: #fff;
+      padding: 12px 16px;
+      align-items: center; gap: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    }
+    .mobile-topbar .hamburger {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: rgba(255,255,255,0.08); border: 0; color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.25rem; cursor: pointer; flex-shrink: 0;
+    }
+    .mobile-topbar .hamburger:active { background: rgba(255,255,255,0.16); }
+    .mobile-topbar .mt-brand {
+      font-weight: 800; font-size: 1.05rem; color: #fff;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .mobile-topbar .mt-brand i { color: #818cf8; }
+    .mobile-topbar .mt-user {
+      margin-left: auto;
+      width: 36px; height: 36px; border-radius: 50%;
+      background: linear-gradient(135deg, #818cf8, #6366f1);
+      color: #fff; display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 0.9rem;
+    }
+
+    .sidebar-backdrop {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 1040;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+    .sidebar-backdrop.show { display: block; opacity: 1; }
+
     .sidebar {
-      min-height: 100vh;
-      background: #0f172a;
-      color: #ffffff;
-      padding: 20px 16px;
-      position: sticky;
-      top: 0;
-      overflow-y: auto;
-      max-height: 100vh;
+      min-height: 100vh; background: #1e1b4b; color: #ffffff;
+      padding: 0; position: sticky; top: 0; overflow-y: auto;
+      max-height: 100vh; display: flex; flex-direction: column;
     }
     .sidebar-brand {
-      font-size: 1.3rem;
-      font-weight: 700;
-      padding: 0 12px 20px;
+      padding: 24px 24px 20px; display: flex; align-items: center;
+      gap: 10px; font-size: 1.4rem; font-weight: 800; color: #ffffff;
       border-bottom: 1px solid rgba(255,255,255,0.06);
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
     }
-    .sidebar-brand i {
-      color: #818cf8;
-      font-size: 1.6rem;
+    .sidebar-brand .brand-icon { color: #818cf8; font-size: 1.6rem; }
+    .sidebar-brand span { color: #ffffff; }
+    .sidebar-brand .brand-sub {
+      font-size: 0.65rem; color: #94a3b8; font-weight: 500;
+      display: block; margin-top: -2px; letter-spacing: 0.5px;
     }
-    .sidebar-brand span {
-      background: linear-gradient(135deg, #818cf8, #c084fc);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
+    .sidebar-section { padding: 20px 24px 8px; }
     .sidebar-section-title {
-      font-size: 0.65rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: #64748b;
-      padding: 16px 12px 8px;
-      font-weight: 600;
+      font-size: 0.7rem; text-transform: uppercase;
+      letter-spacing: 1px; color: #64748b; font-weight: 600;
     }
-
     .sidebar-link {
-      color: #94a3b8;
-      text-decoration: none;
-      padding: 10px 14px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 0.85rem;
-      font-weight: 500;
-      transition: all 0.2s ease;
-      cursor: pointer;
-      position: relative;
+      color: #cbd5e1; text-decoration: none; padding: 11px 24px;
+      display: flex; align-items: center; gap: 12px;
+      font-size: 0.9rem; font-weight: 500;
+      transition: all 0.15s ease; cursor: pointer;
+      border-left: 3px solid transparent;
     }
-    .sidebar-link:hover, .sidebar-link.active {
-      background: rgba(255, 255, 255, 0.08);
-      color: #ffffff;
-    }
+    .sidebar-link:hover { background: rgba(255, 255, 255, 0.04); color: #ffffff; }
     .sidebar-link.active {
-      background: rgba(129, 140, 248, 0.15);
-      color: #818cf8;
+      background: rgba(129, 140, 248, 0.12);
+      color: #818cf8; border-left-color: #818cf8;
     }
-    .sidebar-link i {
-      width: 20px;
-      font-size: 1.1rem;
+    .sidebar-link i { width: 20px; font-size: 1.05rem; }
+
+    .sidebar-profile-wrap {
+      margin-top: auto; position: relative;
+      padding: 16px; border-top: 1px solid rgba(255,255,255,0.06);
     }
-    .sidebar-link .badge-count {
-      margin-left: auto;
-      background: #ef4444;
+    .sidebar-profile {
+      padding: 10px 12px; border-radius: 10px;
+      display: flex; align-items: center; gap: 12px;
+      cursor: pointer; transition: all 0.15s ease;
+    }
+    .sidebar-profile:hover { background: rgba(255, 255, 255, 0.05); }
+    .profile-avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: linear-gradient(135deg, #818cf8, #6366f1);
+      color: white; display: flex; align-items: center;
+      justify-content: center; font-weight: 700; font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .profile-info { flex: 1; min-width: 0; }
+    .profile-info .name {
+      font-weight: 700; font-size: 0.88rem; color: #ffffff;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .profile-info .email {
+      font-size: 0.72rem; color: #94a3b8;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .profile-chevron {
+      color: #64748b; font-size: 0.75rem;
+      transition: transform 0.2s ease;
+    }
+    .profile-chevron.open { transform: rotate(180deg); }
+
+    .profile-dropdown-menu {
+      position: absolute; bottom: calc(100% + 4px);
+      left: 12px; right: 12px;
+      background: #ffffff; border-radius: 12px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+      padding: 8px; opacity: 0; visibility: hidden;
+      transform: translateY(10px);
+      transition: all 0.2s ease; z-index: 100;
+    }
+    .profile-dropdown-menu.show {
+      opacity: 1; visibility: visible; transform: translateY(0);
+    }
+    .dropdown-user-header {
+      padding: 12px 14px 10px;
+      border-bottom: 1px solid #f1f5f9; margin-bottom: 6px;
+    }
+    .dropdown-user-header h6 {
+      font-weight: 700; font-size: 0.9rem; color: #0f172a;
+      margin: 0 0 2px 0;
+    }
+    .dropdown-user-header p {
+      font-size: 0.75rem; color: #94a3b8; margin: 0;
+    }
+    .dropdown-menu-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 11px 14px; border-radius: 8px;
+      font-size: 0.88rem; font-weight: 500;
+      color: #334155; cursor: pointer;
+      transition: all 0.15s ease;
+      border: none; background: transparent;
+      width: 100%; text-align: left;
+    }
+    .dropdown-menu-item:hover { background: #f5f3ff; color: #7c3aed; }
+    .dropdown-menu-item i { font-size: 1rem; width: 20px; text-align: center; }
+    .dropdown-menu-item.logout { color: #ef4444; }
+    .dropdown-menu-item.logout:hover { background: #fef2f2; color: #dc2626; }
+
+    .main-content { padding: 28px 36px; min-height: 100vh; }
+    .breadcrumb-bar {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 0.85rem; color: #64748b; margin-bottom: 24px;
+    }
+    .breadcrumb-bar .bc-icon {
+      width: 32px; height: 32px; border-radius: 8px;
+      border: 1px solid #e2e8f0; background: white;
+      display: flex; align-items: center; justify-content: center;
+      color: #475569;
+    }
+    .breadcrumb-bar .bc-current { color: #0f172a; font-weight: 500; }
+    .page-header-bar {
+      display: flex; justify-content: space-between;
+      align-items: center; margin-bottom: 24px;
+      flex-wrap: wrap; gap: 12px;
+    }
+    .page-header-bar h1 {
+      font-size: 1.75rem; font-weight: 800;
+      color: #0f172a; margin: 0;
+    }
+
+    .btn-primary-purple {
+      background: linear-gradient(135deg, #6366f1, #4f46e5);
+      color: white; border: none; border-radius: 10px;
+      padding: 12px 24px; font-weight: 600; font-size: 0.9rem;
+      display: inline-flex; align-items: center; gap: 8px;
+      transition: all 0.2s ease; cursor: pointer;
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
+    }
+    .btn-primary-purple:hover {
+      background: linear-gradient(135deg, #4f46e5, #4338ca);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(79, 70, 229, 0.35);
       color: white;
-      font-size: 0.6rem;
-      padding: 2px 8px;
-      border-radius: 20px;
     }
-    .sidebar-link .badge-count.green {
-      background: #22c55e;
+    .btn-outline-purple {
+      background: #ffffff; color: #4f46e5;
+      border: 1.5px solid #c7d2fe;
+      border-radius: 10px; padding: 11px 20px;
+      font-weight: 600; font-size: 0.85rem;
+      display: inline-flex; align-items: center; gap: 8px;
+      transition: all 0.2s ease; cursor: pointer;
     }
-    .sidebar-link .badge-count.yellow {
-      background: #eab308;
+    .btn-outline-purple:hover {
+      background: #eef2ff; border-color: #a5b4fc;
+    }
+    .btn-back-purple {
+      background: #ffffff; color: #4f46e5;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 10px; padding: 10px 20px;
+      font-weight: 600; font-size: 0.85rem;
+      display: inline-flex; align-items: center; gap: 8px;
+      transition: all 0.2s ease; cursor: pointer;
+    }
+    .btn-back-purple:hover { background: #f8fafc; border-color: #cbd5e1; }
+
+    .stores-card {
+      background: #ffffff; border-radius: 14px;
+      border: 1px solid #e2e8f0; overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+    .table-scroll-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .stores-table { width: 100%; border-collapse: collapse; margin: 0; min-width: 640px; }
+    .stores-table thead th {
+      background: #ffffff; font-size: 0.78rem; font-weight: 500;
+      color: #64748b; padding: 18px 24px; text-align: left;
+      border-bottom: 1px solid #f1f5f9;
+      white-space: nowrap;
+    }
+    .stores-table thead th.text-end { text-align: right; }
+    .stores-table tbody td {
+      padding: 22px 24px; font-size: 0.9rem;
+      color: #334155; border-bottom: 1px solid #f1f5f9;
+      vertical-align: middle;
+    }
+    .stores-table tbody tr:last-child td { border-bottom: none; }
+    .stores-table tbody tr:hover { background: #f8fafc; }
+    .stores-table .store-name { font-weight: 600; color: #0f172a; }
+    .status-pill {
+      display: inline-block; padding: 5px 16px;
+      border-radius: 6px; font-size: 0.78rem; font-weight: 500;
+      white-space: nowrap;
+    }
+    .status-pill.active { background: #dcfce7; color: #15803d; }
+    .status-pill.inactive { background: #fee2e2; color: #b91c1c; }
+    .slug-badge {
+      background: #f1f5f9; padding: 4px 12px;
+      border-radius: 6px; font-size: 0.82rem;
+      color: #4f46e5; font-weight: 600;
+      font-family: 'SF Mono', monospace;
+      white-space: nowrap;
+    }
+    .price-text { font-weight: 700; color: #0f172a; white-space: nowrap; }
+    .highlighted-star { color: #f59e0b; font-size: 1rem; }
+    .action-btn {
+      width: 34px; height: 34px; border-radius: 8px;
+      border: none; background: transparent; color: #64748b;
+      display: inline-flex; align-items: center;
+      justify-content: center; cursor: pointer;
+    }
+    .action-btn:hover { background: #eef2ff; color: #4f46e5; }
+    .action-btn.delete:hover { background: #fee2e2; color: #dc2626; }
+
+    .form-card {
+      background: #ffffff; border-radius: 14px;
+      border: 1px solid #e2e8f0; padding: 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+    .form-label-custom {
+      font-size: 0.85rem; font-weight: 600;
+      color: #334155; margin-bottom: 8px; display: block;
+    }
+    .form-label-custom .required { color: #ef4444; margin-left: 2px; }
+    .form-control-custom {
+      width: 100%; padding: 11px 14px;
+      border: 1.5px solid #e2e8f0; border-radius: 10px;
+      font-size: 0.9rem; color: #0f172a;
+      outline: none; transition: all 0.2s ease;
+      background: #ffffff;
+    }
+    .form-control-custom:focus {
+      border-color: #6366f1;
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    }
+    textarea.form-control-custom { resize: vertical; min-height: 90px; }
+
+    .fake-map {
+      height: 200px; width: 100%;
+      border-radius: 10px; border: 1.5px solid #e2e8f0;
+      background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 50%, #f3e8ff 100%);
+      position: relative; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+      cursor: crosshair; user-select: none;
+    }
+    .fake-map::before {
+      content: ''; position: absolute; inset: 0;
+      background-image: 
+        linear-gradient(rgba(99, 102, 241, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(99, 102, 241, 0.08) 1px, transparent 1px);
+      background-size: 30px 30px;
+    }
+    .fake-map .map-pin {
+      position: absolute; width: 32px; height: 32px;
+      background: #ef4444; border: 3px solid white;
+      border-radius: 50% 50% 50% 0;
+      transform: translate(-50%, -100%) rotate(-45deg);
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+      display: none; z-index: 2;
+    }
+    .fake-map .map-pin.show { display: block; }
+    .fake-map .map-hint {
+      color: #4f46e5; font-weight: 600; font-size: 0.9rem;
+      text-align: center; z-index: 1; pointer-events: none;
+      padding: 0 16px;
+    }
+    .fake-map .coords-display {
+      position: absolute; bottom: 10px; left: 10px;
+      background: rgba(255,255,255,0.95);
+      padding: 6px 12px; border-radius: 8px;
+      font-size: 0.75rem; color: #0f172a;
+      font-weight: 600; z-index: 3; display: none;
+    }
+    .fake-map .coords-display.show { display: block; }
+    .map-help { font-size: 0.75rem; color: #94a3b8; margin-top: 6px; }
+
+    .file-upload-wrapper {
+      display: flex; align-items: center; gap: 10px;
+      border: 1.5px solid #e2e8f0; border-radius: 10px;
+      padding: 11px 14px; background: #ffffff;
+      cursor: pointer; transition: all 0.2s ease;
+      overflow: hidden;
+    }
+    .file-upload-wrapper:hover { border-color: #cbd5e1; }
+    .file-upload-wrapper input[type="file"] { display: none; }
+    .file-upload-wrapper .upload-text { font-size: 0.88rem; color: #64748b; }
+    .file-upload-wrapper .file-name {
+      font-size: 0.85rem; color: #4f46e5; font-weight: 500;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      max-width: 100%;
     }
 
-    .sidebar-sub {
-      padding-left: 46px;
-      font-size: 0.8rem;
+    .plan-modal-content { border-radius: 16px; border: none; overflow: hidden; }
+    .plan-modal-header {
+      padding: 24px 28px 16px;
+      border-bottom: 1px solid #f1f5f9;
+      display: flex; justify-content: space-between; align-items: center;
     }
-    .sidebar-sub a {
-      color: #64748b;
-      text-decoration: none;
-      display: block;
-      padding: 5px 0;
-      transition: 0.2s;
-      cursor: pointer;
+    .plan-modal-header h5 {
+      font-weight: 800; font-size: 1.4rem; color: #0f172a; margin: 0;
     }
-    .sidebar-sub a:hover {
-      color: #ffffff;
+    .plan-modal-body { padding: 24px 28px; max-height: 75vh; overflow-y: auto; }
+    .plan-section-title {
+      font-size: 0.72rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1px;
+      color: #64748b; margin-bottom: 12px; margin-top: 24px;
     }
-    .sidebar-sub a.active-sub {
-      color: #818cf8;
+    .plan-section-title:first-child { margin-top: 0; }
+    .plan-label {
+      font-size: 0.82rem; font-weight: 500;
+      color: #334155; margin-bottom: 6px; display: block;
+    }
+    .plan-input {
+      width: 100%; padding: 10px 14px;
+      border: 1.5px solid #e2e8f0; border-radius: 10px;
+      font-size: 0.9rem; color: #0f172a;
+      outline: none; transition: all 0.2s ease;
+      background: #ffffff;
+    }
+    .plan-input:focus {
+      border-color: #6366f1;
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    }
+    .plan-check {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 0.88rem; color: #334155;
+      cursor: pointer; padding: 6px 0;
+    }
+    .plan-check input[type="checkbox"] {
+      width: 18px; height: 18px;
+      cursor: pointer; accent-color: #4f46e5;
+      flex-shrink: 0;
+    }
+    .plan-check .unlimited-label {
+      color: #94a3b8; font-size: 0.85rem; margin-left: 4px;
+    }
+    .plan-check .unlimited-label.checked { color: #4f46e5; }
+    .limit-row {
+      display: flex; align-items: center;
+      justify-content: space-between; padding: 8px 0;
+      gap: 12px; flex-wrap: wrap;
+    }
+    .limit-row label {
+      font-size: 0.88rem; color: #334155; font-weight: 500;
+    }
+    .limit-input-group {
+      display: flex; align-items: center; gap: 10px;
+    }
+    .limit-input-group input[type="number"] {
+      width: 80px; padding: 6px 10px;
+      border: 1.5px solid #e2e8f0; border-radius: 8px;
+      font-size: 0.85rem; outline: none;
+    }
+    .limit-input-group input[type="number"]:focus { border-color: #6366f1; }
+    .feature-toggle-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4px 20px;
+    }
+    .bullet-input-row {
+      display: flex; gap: 8px; align-items: center; margin-bottom: 8px;
+    }
+    .bullet-input-row input { flex: 1; }
+    .btn-add-bullet {
+      width: 40px; height: 40px; border-radius: 10px;
+      border: 1.5px solid #c7d2fe; background: white;
+      color: #4f46e5; font-size: 1.2rem;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: 0.2s; flex-shrink: 0;
+    }
+    .btn-add-bullet:hover { background: #eef2ff; border-color: #818cf8; }
+    .btn-remove-bullet {
+      width: 40px; height: 40px; border-radius: 10px;
+      border: 1.5px solid #fecaca; background: white;
+      color: #ef4444; font-size: 1rem;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; flex-shrink: 0;
+    }
+    .btn-remove-bullet:hover { background: #fee2e2; }
+    .btn-submit-plan {
+      background: linear-gradient(135deg, #6366f1, #4f46e5);
+      color: white; border: none; border-radius: 12px;
+      padding: 14px 24px; font-weight: 700; font-size: 0.95rem;
+      width: 100%; cursor: pointer; transition: all 0.2s ease;
+      margin-top: 24px;
+    }
+    .btn-submit-plan:hover {
+      background: linear-gradient(135deg, #4f46e5, #4338ca);
+      color: white; transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(79, 70, 229, 0.35);
     }
 
-    /* ===== HEADER ===== */
-    .admin-header {
-      padding: 20px 0 16px;
-      border-bottom: 1px solid #e2e8f0;
-      margin-bottom: 28px;
+    .pagination-bar {
+      display: flex; justify-content: space-between;
+      align-items: center; padding: 18px 24px;
+      background: white; border-radius: 14px;
+      border: 1px solid #e2e8f0; margin-top: 18px;
+      flex-wrap: wrap; gap: 12px;
     }
-    .admin-header h2 {
-      font-weight: 700;
-      font-size: 1.5rem;
-      color: #0f172a;
+    .pagination-bar .rows-label {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 0.85rem; color: #64748b;
     }
-    .admin-header .admin-email {
-      color: #64748b;
-      font-size: 0.85rem;
+    .pagination-bar select {
+      border: 1px solid #e2e8f0; border-radius: 8px;
+      padding: 6px 10px; font-size: 0.85rem;
+      background: white; cursor: pointer;
     }
-    .admin-header .admin-email i {
-      margin-right: 6px;
+    .pagination-bar .page-info { font-size: 0.85rem; color: #64748b; }
+    .pagination-bar .page-btns { display: flex; gap: 6px; }
+    .pagination-bar .page-btns button {
+      width: 34px; height: 34px; border-radius: 8px;
+      border: 1px solid #e2e8f0; background: white;
+      color: #64748b; display: flex; align-items: center;
+      justify-content: center; cursor: pointer;
+    }
+    .pagination-bar .page-btns button:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .page-content { display: none; }
+    .page-content.active { display: block; }
+
+    .toast-container { position: fixed; top: 20px; right: 20px; z-index: 9999; }
+    .toast-custom {
+      background: #0f172a; color: white;
+      padding: 14px 22px; border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      margin-bottom: 10px; opacity: 0;
+      transform: translateX(100%); transition: all 0.3s ease;
+      min-width: 260px; font-size: 0.9rem;
+    }
+    .toast-custom.show { opacity: 1; transform: translateX(0); }
+    .toast-custom i { margin-right: 10px; color: #818cf8; }
+
+    .detail-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 18px 32px;
+    }
+    .detail-item .detail-label {
+      font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.5px;
+      color: #94a3b8; font-weight: 600; margin-bottom: 4px;
+    }
+    .detail-item .detail-value {
+      font-size: 0.95rem; color: #0f172a; font-weight: 600;
+      word-break: break-word;
+    }
+    .credentials-box {
+      background: #fffbeb; border: 1.5px solid #fde68a;
+      border-radius: 12px; padding: 18px 20px; margin-top: 24px;
+    }
+    .credentials-box .cred-title {
+      font-size: 0.78rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.5px; color: #b45309; margin-bottom: 12px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .credentials-box .cred-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 8px 0; border-bottom: 1px dashed #fde68a;
+      gap: 12px; flex-wrap: wrap;
+    }
+    .credentials-box .cred-row:last-child { border-bottom: none; }
+    .credentials-box .cred-label { font-size: 0.85rem; color: #92400e; font-weight: 500; }
+    .credentials-box .cred-value {
+      font-family: 'SF Mono', monospace; font-size: 0.9rem;
+      color: #0f172a; font-weight: 700; display: flex; align-items: center; gap: 8px;
+      word-break: break-all;
+    }
+    .cred-toggle-btn {
+      border: none; background: transparent; color: #b45309;
+      cursor: pointer; font-size: 0.95rem;
     }
 
-    /* ===== STAT CARDS ===== */
-    .stat-card {
+    .dash-kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .dash-kpi-card {
       background: #ffffff;
       border: 1px solid #e2e8f0;
       border-radius: 14px;
-      padding: 20px 24px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-      transition: 0.2s;
-    }
-    .stat-card:hover {
-      border-color: #cbd5e1;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-    }
-    .stat-card .stat-label {
-      font-size: 0.75rem;
-      font-weight: 500;
-      color: #94a3b8;
-      text-transform: uppercase;
-      letter-spacing: 0.3px;
-    }
-    .stat-card .stat-value {
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: #0f172a;
-      margin-top: 4px;
-    }
-    .stat-card .stat-icon {
-      font-size: 1.8rem;
-      opacity: 0.3;
-    }
-
-    .weather-widget {
-      background: #f1f5f9;
-      border-radius: 60px;
-      padding: 6px 16px 6px 12px;
-      display: inline-flex;
+      padding: 20px;
+      display: flex;
       align-items: center;
-      gap: 10px;
-      font-size: 0.85rem;
-      color: #475569;
+      gap: 14px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+      transition: 0.2s ease;
+    }
+    .dash-kpi-card:hover { box-shadow: 0 6px 20px rgba(15,23,42,0.06); transform: translateY(-1px); }
+    .dash-kpi-icon {
+      width: 52px; height: 52px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; color: #fff; flex-shrink: 0;
+    }
+    .dash-kpi-label {
+      font-size: 0.72rem; font-weight: 600; color: #64748b;
+      text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;
+    }
+    .dash-kpi-value {
+      font-size: 1.5rem; font-weight: 800; color: #0f172a; line-height: 1.15;
+    }
+    .dash-section {
+      background: #ffffff;
       border: 1px solid #e2e8f0;
-    }
-    .weather-widget i {
-      font-size: 1.2rem;
-      color: #f59e0b;
-    }
-
-    /* ===== FOOTER ===== */
-    .admin-footer {
-      border-top: 1px solid #e2e8f0;
-      padding-top: 16px;
-      margin-top: 30px;
-      font-size: 0.8rem;
-      color: #94a3b8;
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-    .admin-footer a {
-      color: #94a3b8;
-      text-decoration: none;
-    }
-    .admin-footer a:hover {
-      color: #4f46e5;
-    }
-
-    /* ===== PAGE CONTENT ===== */
-    .page-content {
-      display: none;
-    }
-    .page-content.active {
-      display: block;
-    }
-
-    .page-title {
-      font-weight: 700;
-      font-size: 1.3rem;
-      color: #0f172a;
-      margin-bottom: 4px;
-    }
-    .page-subtitle {
-      color: #64748b;
-      font-size: 0.9rem;
-      margin-bottom: 20px;
-    }
-
-    /* ===== TABLES ===== */
-    .table-admin th {
-      font-weight: 600;
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.3px;
-      color: #64748b;
-      border-bottom: 2px solid #e2e8f0;
-    }
-    .table-admin td {
-      font-size: 0.9rem;
-      vertical-align: middle;
-    }
-
-    .status-badge {
-      padding: 4px 14px;
-      border-radius: 60px;
-      font-size: 0.7rem;
-      font-weight: 600;
-    }
-    .status-badge.active {
-      background: #dcfce7;
-      color: #166534;
-    }
-    .status-badge.inactive {
-      background: #fee2e2;
-      color: #991b1b;
-    }
-    .status-badge.pending {
-      background: #fef3c7;
-      color: #92400e;
-    }
-    .status-badge.approved {
-      background: #dbeafe;
-      color: #1e40af;
-    }
-    .status-badge.rejected {
-      background: #fecaca;
-      color: #991b1b;
-    }
-    .status-badge.featured {
-      background: #fef08a;
-      color: #854d0e;
-    }
-    .status-badge.out-of-stock {
-      background: #fca5a5;
-      color: #7f1d1d;
-    }
-
-    /* ===== SUBSCRIPTION PLANS SPECIFIC ===== */
- /* ===== SUBSCRIPTION PLANS SPECIFIC ===== */
-.btn-create-plan {
-  background: #4f46e5;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  padding: 10px 24px;
-  font-weight: 600;
-  font-size: 0.9rem;
-  transition: 0.2s;
-}
-.btn-create-plan:hover {
-  background: #4338ca;
-  color: white;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
-}
-.btn-create-plan i {
-  margin-right: 6px;
-}
-
-    .subscription-table {
-      background: white;
-      border-radius: 12px;
-      overflow: hidden;
-      border: 1px solid #e2e8f0;
-    }
-    .subscription-table table {
-      margin: 0;
-    }
-    .subscription-table thead th {
-      background: #f8fafc;
-      font-weight: 600;
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.3px;
-      color: #64748b;
-      padding: 14px 20px;
-      border-bottom: 1px solid #e2e8f0;
-    }
-    .subscription-table tbody td {
-      padding: 16px 20px;
-      font-size: 0.9rem;
-      vertical-align: middle;
-      border-bottom: 1px solid #f1f5f9;
-    }
-    .subscription-table tbody tr:last-child td {
-      border-bottom: none;
-    }
-    .subscription-table tbody tr:hover {
-      background: #f8fafc;
-    }
-
-    .slug-text {
-      font-family: 'SF Mono', 'Courier New', monospace;
-      font-size: 0.85rem;
-      color: #475569;
-      background: #f1f5f9;
-      padding: 4px 12px;
-      border-radius: 6px;
-      display: inline-block;
-    }
-
-    .status-active {
-      background: #dcfce7;
-      color: #166534;
-      padding: 4px 16px;
-      border-radius: 60px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      display: inline-block;
-    }
-
-    /* ===== PAGINATION ===== */
-    .pagination-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 16px 20px;
-      background: white;
-      border-radius: 12px;
-      border: 1px solid #e2e8f0;
-      margin-top: 16px;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-    .pagination-bar .rows-per-page {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.85rem;
-      color: #64748b;
-    }
-    .pagination-bar select {
-      border: 1px solid #e2e8f0;
-      border-radius: 8px;
-      padding: 4px 8px;
-      font-size: 0.85rem;
-      background: white;
-      cursor: pointer;
-    }
-    .pagination-bar .page-info {
-      font-size: 0.85rem;
-      color: #64748b;
-    }
-    .pagination-bar .page-btns {
-      display: flex;
-      gap: 6px;
-    }
-    .pagination-bar .page-btns button {
-      width: 36px;
-      height: 36px;
-      border-radius: 8px;
-      border: 1px solid #e2e8f0;
-      background: white;
-      color: #64748b;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-    .pagination-bar .page-btns button:hover:not(:disabled) {
-      background: #f1f5f9;
-      border-color: #cbd5e1;
-    }
-    .pagination-bar .page-btns button:disabled {
-      opacity: 0.4;
-      cursor: not-allowed;
-    }
-
-    /* ===== CREATE PLAN MODAL ===== */
-    .modal-content-custom {
-      border-radius: 20px;
-      border: none;
-      overflow: hidden;
-    }
-    .modal-header-custom {
-      padding: 24px 28px 0;
-      border-bottom: none;
-    }
-    .modal-header-custom h5 {
-      font-weight: 700;
-      font-size: 1.3rem;
-      color: #0f172a;
-    }
-    .modal-header-custom .btn-close {
-      font-size: 1.2rem;
-      opacity: 0.5;
-    }
-    .modal-header-custom .btn-close:hover {
-      opacity: 1;
-    }
-    .modal-body-custom {
-      padding: 20px 28px 28px;
-      max-height: 75vh;
-      overflow-y: auto;
-    }
-
-    .form-section-title {
-      font-size: 0.7rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: #64748b;
-      margin-bottom: 12px;
-      margin-top: 24px;
-    }
-    .form-section-title:first-child {
-      margin-top: 0;
-    }
-
-    .form-label-custom {
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: #334155;
-      margin-bottom: 6px;
-      display: block;
-    }
-    .form-control-custom {
-      border: 1px solid #e2e8f0;
-      border-radius: 10px;
-      padding: 10px 14px;
-      font-size: 0.9rem;
-      color: #0f172a;
-      transition: 0.2s;
-      width: 100%;
-      outline: none;
-    }
-.form-control-custom:focus {
-  border-color: #4f46e5;
-  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
-}
-    .form-control-custom::placeholder {
-      color: #94a3b8;
-    }
-
-    .checkbox-custom {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 0.9rem;
-      color: #334155;
-      cursor: pointer;
-      padding: 6px 0;
-    }
-.checkbox-custom input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
-  border-radius: 4px;
-  border: 1.5px solid #cbd5e1;
-  cursor: pointer;
-  accent-color: #4f46e5;
-}
-    .checkbox-custom .unlimited-label {
-      color: #94a3b8;
-      font-size: 0.85rem;
-      margin-left: 4px;
-    }
-    .checkbox-custom .unlimited-label.checked {
-      color: #f97316;
-    }
-
-    .feature-toggle-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4px 20px;
-    }
-
-    .feature-bullet-input {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      margin-bottom: 8px;
-    }
-    .feature-bullet-input input {
-      flex: 1;
-    }
-    .btn-add-bullet {
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
-      border: 1px solid #e2e8f0;
-      background: white;
-      color: #f97316;
-      font-size: 1.2rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: 0.2s;
-      flex-shrink: 0;
-    }
-    .btn-add-bullet:hover {
-      background: #fff7ed;
-      border-color: #f97316;
-    }
-
-   .btn-create-plan-submit {
-  background: #4f46e5;
-  color: white;
-  border: none;
-  border-radius: 12px;
-  padding: 14px 24px;
-  font-weight: 600;
-  font-size: 0.95rem;
-  width: 100%;
-  transition: 0.2s;
-  margin-top: 8px;
-}
-.btn-create-plan-submit:hover {
-  background: #4338ca;
-  color: white;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
-}
-    .limit-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 8px 0;
-    }
-    .limit-row label {
-      font-size: 0.9rem;
-      color: #334155;
-      font-weight: 500;
-    }
-    .limit-row .limit-input-group {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .limit-row .limit-input-group input[type="number"] {
-      width: 80px;
-      padding: 6px 10px;
-      border: 1px solid #e2e8f0;
-      border-radius: 8px;
-      font-size: 0.85rem;
-      outline: none;
-    }
-    .limit-row .limit-input-group input[type="number"]:focus {
-      border-color: #f97316;
-    }
-
-    /* ===== TOAST ===== */
-    .toast-container {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 9999;
-    }
-    .toast-custom {
-      background: #0f172a;
-      color: white;
-      padding: 16px 24px;
-      border-radius: 12px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-      margin-bottom: 10px;
-      opacity: 0;
-      transform: translateX(100%);
-      transition: all 0.3s ease;
-      min-width: 280px;
-    }
-    .toast-custom.show {
-      opacity: 1;
-      transform: translateX(0);
-    }
-    .toast-custom i {
-      margin-right: 10px;
-      color: #818cf8;
-    }
-
-    /* ===== AI CARDS ===== */
-    .ai-card {
-      background: linear-gradient(135deg, #1e1b4b, #312e81);
-      color: white;
-      border-radius: 16px;
+      border-radius: 14px;
       padding: 24px;
-      transition: 0.3s;
+      margin-bottom: 20px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
     }
-    .ai-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 30px rgba(79, 70, 229, 0.25);
+    .dash-section-head {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 18px; flex-wrap: wrap; gap: 10px;
     }
-    .ai-card .ai-icon {
-      font-size: 2rem;
-      color: #818cf8;
+    .dash-section-head h5 {
+      font-weight: 800; font-size: 1.05rem; color: #0f172a; margin: 0;
     }
-    .ai-card h6 {
-      font-weight: 600;
-      margin-top: 12px;
+    .dash-mini-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
     }
-    .ai-card p {
+    .dash-mini {
+      padding: 14px 16px; border-radius: 12px;
+      background: #f8fafc; border: 1px solid #eef2f7;
+    }
+    .dash-mini-label {
+      font-size: 0.7rem; color: #64748b; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 4px;
+    }
+    .dash-mini-value { font-size: 1.15rem; font-weight: 800; color: #0f172a; }
+    .dash-chart-wrap { position: relative; height: 280px; margin-top: 10px; }
+    .dash-activity-list { display: flex; flex-direction: column; gap: 8px; }
+    .dash-activity-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 10px 12px; border-radius: 10px;
+      background: #f8fafc; border: 1px solid #f1f5f9;
       font-size: 0.85rem;
-      opacity: 0.8;
-      margin-bottom: 0;
     }
+    .dash-activity-dot {
+      width: 32px; height: 32px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 0.9rem; flex-shrink: 0;
+    }
+    .dash-activity-text { flex: 1; min-width: 0; color: #334155; }
+    .dash-activity-time { font-size: 0.72rem; color: #94a3b8; white-space: nowrap; }
 
-    .btn-primary {
-      background: #4f46e5;
-      border-color: #4f46e5;
-    }
-    .btn-primary:hover {
-      background: #4338ca;
-      border-color: #4338ca;
-    }
-
-    /* ===== SCROLLBAR ===== */
-    .sidebar::-webkit-scrollbar {
-      width: 4px;
-    }
-    .sidebar::-webkit-scrollbar-track {
-      background: transparent;
-    }
-    .sidebar::-webkit-scrollbar-thumb {
-      background: #334155;
-      border-radius: 10px;
-    }
-
-    /* ===== RESPONSIVE ===== */
-    @media (max-width: 768px) {
+    @media (max-width: 991.98px) {
       .sidebar {
-        min-height: auto;
-        max-height: none;
-        position: relative;
+        position: fixed;
+        top: 0; left: 0; bottom: 0;
+        width: 280px;
+        max-width: 82vw;
+        max-height: 100vh;
+        min-height: 100vh;
+        z-index: 1050;
+        transform: translateX(-100%);
+        transition: transform 0.25s ease;
+        box-shadow: 4px 0 24px rgba(0,0,0,0.25);
+        display: flex !important;
       }
-      .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
+      .sidebar.drawer-open { transform: translateX(0); }
+      .sidebar-col {
+        width: 0 !important;
+        max-width: 0 !important;
+        flex: 0 0 0 !important;
+        padding: 0 !important;
+        overflow: visible !important;
       }
-      .feature-toggle-grid {
-        grid-template-columns: 1fr;
-      }
-      .subscription-table thead th,
-      .subscription-table tbody td {
-        padding: 10px 12px;
-        font-size: 0.8rem;
-      }
+      .mobile-topbar { display: flex; }
+      .main-content { padding: 18px 16px 32px; min-height: auto; }
+      .page-header-bar { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .page-header-bar h1 { font-size: 1.35rem; }
+      .page-header-bar #headerActions { width: 100%; flex-wrap: wrap; }
+      .page-header-bar #headerActions .btn-primary-purple,
+      .page-header-bar #headerActions .btn-outline-purple { flex: 1 1 auto; justify-content: center; }
+      .breadcrumb-bar { font-size: 0.8rem; }
+      .form-card { padding: 20px 18px; }
+      .toast-container { right: 12px; left: 12px; }
+      .toast-custom { min-width: 0; width: 100%; }
+      .dash-kpi-grid { grid-template-columns: repeat(2, 1fr); }
+      .dash-mini-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      .main-content { padding: 16px 14px 28px; }
+      .feature-toggle-grid { grid-template-columns: 1fr; }
+      .detail-grid { grid-template-columns: 1fr; gap: 14px 0; }
+      .page-header-bar h1 { font-size: 1.25rem; }
+      .form-card { padding: 18px 16px; }
+      .plan-modal-header { padding: 18px 20px 14px; }
+      .plan-modal-body { padding: 18px 20px; max-height: 82vh; }
+      .plan-modal-header h5 { font-size: 1.15rem; }
+      .credentials-box { padding: 14px 16px; }
+    }
+
+    @media (max-width: 576px) {
+      .dash-kpi-grid { grid-template-columns: 1fr; }
+      .dash-mini-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 400px) {
+      .page-header-bar h1 { font-size: 1.15rem; }
+      .btn-primary-purple,
+      .btn-outline-purple,
+      .btn-back-purple { font-size: 0.82rem; padding: 10px 16px; }
     }
   </style>
 </head>
 <body>
 
-  <div class="container-fluid">
-    <div class="row">
-      <!-- ===== SIDEBAR ===== -->
-      <div class="col-md-3 col-lg-2 sidebar">
-        <div class="sidebar-brand">
-          <i class="bi bi-bag-check-fill"></i>
-          <span>E-Commerce</span>
-        </div>
+  <div class="mobile-topbar">
+    <button class="hamburger" onclick="toggleSidebarDrawer()" aria-label="Toggle menu">
+      <i class="bi bi-list"></i>
+    </button>
+    <div class="mt-brand">
+      <i class="bi bi-bag-check-fill"></i>
+      <span>SmartStore</span>
+    </div>
+    <div class="mt-user" id="mtUserAvatar">A</div>
+  </div>
 
-        <!-- Dashboard -->
-        <div class="sidebar-link active" onclick="showPage('dashboard')">
-          <i class="bi bi-grid-1x2-fill"></i> Dashboard
-        </div>
+  <div class="sidebar-backdrop" id="sidebarBackdrop" onclick="closeSidebarDrawer()"></div>
 
-        <!-- 🏪 Merchant / Store Management -->
-        <div class="sidebar-section-title">🏪 Store Management</div>
-        <div class="sidebar-link" onclick="showPage('stores')">
-          <i class="bi bi-shop"></i> All Stores
-          <span class="badge-count" id="storeCountBadge">8</span>
-        </div>
-        <div class="sidebar-sub">
-          <a href="#" onclick="showPage('store-approval')" id="subStoreApproval">Pending Approval <span class="badge-count yellow" style="font-size:0.6rem;padding:1px 8px;display:inline-block;margin-left:6px;">3</span></a>
-          <a href="#" onclick="showPage('store-details')">Store Details</a>
-          <a href="#" onclick="showPage('store-admin')">Store Admins</a>
-          <a href="#" onclick="showPage('store-performance')">Store Performance</a>
-        </div>
+  <div class="container-fluid p-0">
+    <div class="row g-0">
+      <div class="col-md-3 col-lg-2 sidebar-col">
+        <div class="sidebar" id="appSidebar">
+          <div class="sidebar-brand">
+            <i class="bi bi-bag-check-fill brand-icon"></i>
+            <div>
+              <span>SmartStore</span>
+              <span class="brand-sub">Admin Panel</span>
+            </div>
+          </div>
 
-        <!-- 🛍️ Product Management -->
-        <div class="sidebar-section-title">🛍️ Products</div>
-        <div class="sidebar-link" onclick="showPage('products')">
-          <i class="bi bi-box-seam"></i> All Products
-          <span class="badge-count" id="productCountBadge">156</span>
-        </div>
-        <div class="sidebar-sub">
-          <a href="#" onclick="showPage('categories')">Categories</a>
-          <a href="#" onclick="showPage('sub-categories')">Sub-Categories</a>
-          <a href="#" onclick="showPage('product-approval')">Product Approval <span class="badge-count yellow" style="font-size:0.6rem;padding:1px 8px;display:inline-block;margin-left:6px;">12</span></a>
-          <a href="#" onclick="showPage('out-of-stock')">Out of Stock <span class="badge-count" style="font-size:0.6rem;padding:1px 8px;display:inline-block;margin-left:6px;">8</span></a>
-          <a href="#" onclick="showPage('featured-products')">Featured Products</a>
-          <a href="#" onclick="showPage('product-reports')">Product Reports</a>
-        </div>
+          <div class="sidebar-section">
+            <div class="sidebar-section-title">Admin</div>
+          </div>
 
-        <!-- 💳 SUBSCRIPTION PLANS -->
-        <div class="sidebar-section-title">💳 Subscriptions</div>
-        <div class="sidebar-link" onclick="showPage('subscription-plans')">
-          <i class="bi bi-card-checklist"></i> Subscription Plans
-          <span class="badge-count green" id="planCountBadge">4</span>
-        </div>
+          <a class="sidebar-link" onclick="showPage('dashboard')"><i class="bi bi-grid-1x2"></i> Dashboard</a>
+          <a class="sidebar-link" onclick="showPage('stores')"><i class="bi bi-shop"></i> Stores</a>
+          <a class="sidebar-link active" onclick="showPage('plans')"><i class="bi bi-credit-card"></i> Plans</a>
 
-        <!-- 🤖 AI Management -->
-        <div class="sidebar-section-title">🤖 AI Management</div>
-        <div class="sidebar-link" onclick="showPage('ai-dashboard')">
-          <i class="bi bi-robot"></i> AI Dashboard
-          <span class="badge-count green" style="font-size:0.6rem;padding:1px 8px;display:inline-block;margin-left:6px;">Live</span>
-        </div>
-        <div class="sidebar-sub">
-          <a href="#" onclick="showPage('ai-chatbot')">AI Chatbot</a>
-          <a href="#" onclick="showPage('ai-recommendations')">Product Recommendations</a>
-          <a href="#" onclick="showPage('ai-insights')">Sales Insights</a>
-          <a href="#" onclick="showPage('ai-descriptions')">AI Descriptions</a>
-          <a href="#" onclick="showPage('ai-support')">AI Customer Support</a>
-          <a href="#" onclick="showPage('ai-stats')">AI Usage Statistics</a>
-        </div>
+          <div class="sidebar-profile-wrap">
+            <div class="profile-dropdown-menu" id="profileDropdownMenu">
+              <div class="dropdown-user-header">
+                <h6 id="dropdownAdminName">SmartStore Admin</h6>
+                <p id="dropdownAdminEmail">admin@smartstore.com</p>
+              </div>
+              <button class="dropdown-menu-item" onclick="openProfilePage()">
+                <i class="bi bi-person"></i><span>My Profile</span>
+              </button>
+              <button class="dropdown-menu-item" onclick="openSettingsPage()">
+                <i class="bi bi-gear"></i><span>Settings</span>
+              </button>
+              <button class="dropdown-menu-item logout" onclick="logout()">
+                <i class="bi bi-box-arrow-right"></i><span>Log out</span>
+              </button>
+            </div>
 
-        <!-- Settings & Logout -->
-        <div style="margin-top: auto; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.06);">
-          <div class="sidebar-link"><i class="bi bi-gear"></i> Settings</div>
-          <a href="#" class="sidebar-link text-danger" onclick="logout()"><i class="bi bi-box-arrow-right"></i> Logout</a>
+            <div class="sidebar-profile" id="profileToggle" onclick="toggleProfileDropdown(event)">
+              <div class="profile-avatar" id="adminAvatar">A</div>
+              <div class="profile-info">
+                <div class="name" id="adminName">SmartStore Admin</div>
+                <div class="email" id="adminEmail">admin@smartstore.com</div>
+              </div>
+              <i class="bi bi-chevron-up profile-chevron" id="profileChevron"></i>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- ===== MAIN CONTENT ===== -->
-      <div class="col-md-9 col-lg-10 p-4 p-md-5">
+      <div class="col-md-9 col-lg-10 main-content">
         
-        <!-- Header -->
-        <div class="admin-header d-flex justify-content-between align-items-center flex-wrap">
-          <div>
-            <h2 id="adminName">Super Admin</h2>
-            <div class="admin-email">
-              <i class="bi bi-envelope"></i> admin@ecommerce.com
-            </div>
-          </div>
-          <div>
-            <div class="weather-widget">
-              <i class="bi bi-cloud-sun"></i>
-              <span>28°C</span>
-              <span class="text-secondary">Partly cloudy</span>
-            </div>
-          </div>
+        <div class="breadcrumb-bar">
+          <div class="bc-icon"><i class="bi bi-box"></i></div>
+          <span>Admin</span>
+          <i class="bi bi-chevron-right" style="font-size: 0.7rem;"></i>
+          <span class="bc-current" id="breadcrumbCurrent">Plans</span>
         </div>
 
-        <!-- ========================================= -->
-        <!-- ===== DASHBOARD PAGE ===== -->
-        <!-- ========================================= -->
-        <div id="page-dashboard" class="page-content active">
-          <div class="stats-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;margin-bottom:28px;">
-            <div class="stat-card">
-              <div class="stat-label">Total Orders</div>
-              <div class="stat-value" id="totalOrders">1,284</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-label">Revenue</div>
-              <div class="stat-value" id="totalRevenue">Rs. 4,56,789</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-label">Customers</div>
-              <div class="stat-value" id="totalCustomers">3,456</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-label">Active Stores</div>
-              <div class="stat-value" id="totalStores">8</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-label">Total Products</div>
-              <div class="stat-value" id="totalProducts">156</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-label">Pending Approvals</div>
-              <div class="stat-value" style="color:#eab308;" id="pendingApprovals">15</div>
-            </div>
-          </div>
-
-          <div class="row mt-4">
-            <div class="col-md-6">
-              <div class="stat-card">
-                <div class="stat-label">Recent Activity</div>
-                <div class="mt-3">
-                  <div class="d-flex justify-content-between py-2 border-bottom">
-                    <span>🆕 New store registered</span>
-                    <span class="text-secondary small">2 min ago</span>
-                  </div>
-                  <div class="d-flex justify-content-between py-2 border-bottom">
-                    <span>📦 Order #1245 completed</span>
-                    <span class="text-secondary small">15 min ago</span>
-                  </div>
-                  <div class="d-flex justify-content-between py-2 border-bottom">
-                    <span>🛍️ 12 products pending approval</span>
-                    <span class="text-secondary small">1 hour ago</span>
-                  </div>
-                  <div class="d-flex justify-content-between py-2">
-                    <span>🤖 AI generated 45 descriptions</span>
-                    <span class="text-secondary small">3 hours ago</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="stat-card">
-                <div class="stat-label">Quick Actions</div>
-                <div class="mt-3">
-                  <button class="btn btn-outline-primary w-100 mb-2" onclick="showPage('stores')">
-                    <i class="bi bi-plus-circle me-2"></i>Add New Store
-                  </button>
-                  <button class="btn btn-outline-success w-100 mb-2" onclick="showPage('products')">
-                    <i class="bi bi-plus-circle me-2"></i>Add New Product
-                  </button>
-                  <button class="btn btn-outline-warning w-100" onclick="showPage('product-approval')">
-                    <i class="bi bi-check-circle me-2"></i>Review Pending Approvals
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- ========================================= -->
-        <!-- ===== SUBSCRIPTION PLANS PAGE ===== -->
-        <!-- ========================================= -->
-        <div id="page-subscription-plans" class="page-content">
-          <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
-            <div>
-              <div class="page-title" style="font-size: 2rem; font-weight: 800; color: #0f172a;">Subscription Plans</div>
-            </div>
-            <button class="btn-create-plan" data-bs-toggle="modal" data-bs-target="#createPlanModal">
+        <div class="page-header-bar" id="pageHeaderBar">
+          <h1 id="pageTitleText">Plans</h1>
+          <div class="d-flex gap-2 flex-wrap" id="headerActions">
+            <button class="btn-primary-purple" data-bs-toggle="modal" data-bs-target="#createPlanModal" id="createPlanBtn">
               <i class="bi bi-plus-lg"></i> Create Plan
             </button>
+            <button class="btn-primary-purple" onclick="openCreateStoreForm()" id="createStoreBtn" style="display:none;">
+              <i class="bi bi-plus-lg"></i> Create Store
+            </button>
+          </div>
+        </div>
+
+        <div id="page-dashboard" class="page-content">
+          <div class="dash-kpi-grid">
+            <div class="dash-kpi-card">
+              <div class="dash-kpi-icon" style="background:linear-gradient(135deg,#6366f1,#4f46e5)">👥</div>
+              <div>
+                <div class="dash-kpi-label">Total Merchants</div>
+                <div class="dash-kpi-value" id="kpiMerchants">0</div>
+              </div>
+            </div>
+            <div class="dash-kpi-card">
+              <div class="dash-kpi-icon" style="background:linear-gradient(135deg,#8b5cf6,#7c3aed)">🛍️</div>
+              <div>
+                <div class="dash-kpi-label">Total Stores</div>
+                <div class="dash-kpi-value" id="kpiStores">0</div>
+              </div>
+            </div>
+            <div class="dash-kpi-card">
+              <div class="dash-kpi-icon" style="background:linear-gradient(135deg,#0ea5e9,#0284c7)">📦</div>
+              <div>
+                <div class="dash-kpi-label">Total Products</div>
+                <div class="dash-kpi-value" id="kpiProducts">0</div>
+              </div>
+            </div>
+            <div class="dash-kpi-card">
+              <div class="dash-kpi-icon" style="background:linear-gradient(135deg,#f59e0b,#d97706)">🧾</div>
+              <div>
+                <div class="dash-kpi-label">Total Orders</div>
+                <div class="dash-kpi-value" id="kpiOrders">0</div>
+              </div>
+            </div>
+            <div class="dash-kpi-card">
+              <div class="dash-kpi-icon" style="background:linear-gradient(135deg,#10b981,#059669)">💰</div>
+              <div>
+                <div class="dash-kpi-label">Total Revenue</div>
+                <div class="dash-kpi-value" id="kpiRevenue">₹0</div>
+              </div>
+            </div>
+            <div class="dash-kpi-card">
+              <div class="dash-kpi-icon" style="background:linear-gradient(135deg,#ec4899,#db2777)">👤</div>
+              <div>
+                <div class="dash-kpi-label">Total Customers</div>
+                <div class="dash-kpi-value" id="kpiCustomers">0</div>
+              </div>
+            </div>
           </div>
 
-          <!-- Subscription Plans Table -->
-          <div class="subscription-table">
-            <table class="table mb-0">
-              <thead>
-                <tr>
-                  <th style="width: 40%;">Slug</th>
-                  <th style="width: 30%;">Monthly Price</th>
-                  <th style="width: 30%;">Status</th>
-                </tr>
-              </thead>
-              <tbody id="subscriptionPlansBody">
-                <!-- Rendered by JS -->
-              </tbody>
-            </table>
+          <div class="dash-section">
+            <div class="dash-section-head">
+              <h5><i class="bi bi-people me-2"></i>Merchant Overview</h5>
+            </div>
+            <div class="dash-mini-grid">
+              <div class="dash-mini">
+                <div class="dash-mini-label">New Merchants Today</div>
+                <div class="dash-mini-value" id="ovNewMerchants">0</div>
+              </div>
+              <div class="dash-mini">
+                <div class="dash-mini-label">Active Merchants</div>
+                <div class="dash-mini-value" id="ovActiveMerchants">0</div>
+              </div>
+              <div class="dash-mini">
+                <div class="dash-mini-label">Pending / Inactive</div>
+                <div class="dash-mini-value" id="ovPendingMerchants">0</div>
+              </div>
+              <div class="dash-mini">
+                <div class="dash-mini-label">Recently Registered</div>
+                <div class="dash-mini-value" id="ovRecentMerchants">0</div>
+              </div>
+            </div>
+            <div class="table-scroll-wrap" style="margin-top:16px">
+              <table class="stores-table" style="min-width:640px">
+                <thead>
+                  <tr>
+                    <th>Merchant</th>
+                    <th>Business</th>
+                    <th>Category</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                  </tr>
+                </thead>
+                <tbody id="recentMerchantsBody">
+                  <tr><td colspan="5" class="text-center py-4 text-secondary">No merchants yet.</td></tr>
+                </tbody>
+              </table>
+            </div>
           </div>
 
-          <!-- Pagination Bar -->
+          <div class="dash-section">
+            <div class="dash-section-head">
+              <h5><i class="bi bi-graph-up-arrow me-2"></i>Sales Overview</h5>
+              <div class="d-flex gap-2" id="dashSalesTabs">
+                <button class="btn-outline-purple" style="padding:6px 14px;font-size:.78rem" data-range="daily" onclick="setDashSalesRange('daily', this)">Daily</button>
+                <button class="btn-outline-purple" style="padding:6px 14px;font-size:.78rem" data-range="weekly" onclick="setDashSalesRange('weekly', this)">Weekly</button>
+                <button class="btn-outline-purple" style="padding:6px 14px;font-size:.78rem" data-range="monthly" onclick="setDashSalesRange('monthly', this)">Monthly</button>
+              </div>
+            </div>
+            <div class="dash-mini-grid" style="margin-bottom:16px">
+              <div class="dash-mini">
+                <div class="dash-mini-label">Today Sales</div>
+                <div class="dash-mini-value" id="ovTodaySales">₹0</div>
+              </div>
+              <div class="dash-mini">
+                <div class="dash-mini-label">This Week Sales</div>
+                <div class="dash-mini-value" id="ovWeekSales">₹0</div>
+              </div>
+              <div class="dash-mini">
+                <div class="dash-mini-label">This Month Sales</div>
+                <div class="dash-mini-value" id="ovMonthSales">₹0</div>
+              </div>
+              <div class="dash-mini">
+                <div class="dash-mini-label">Total Sales</div>
+                <div class="dash-mini-value" id="ovTotalSales">₹0</div>
+              </div>
+            </div>
+            <div class="dash-chart-wrap"><canvas id="dashSalesChart"></canvas></div>
+          </div>
+
+          <div class="dash-section">
+            <div class="dash-section-head">
+              <h5><i class="bi bi-receipt me-2"></i>Order Overview</h5>
+            </div>
+            <div class="dash-mini-grid">
+              <div class="dash-mini">
+                <div class="dash-mini-label">Pending Orders</div>
+                <div class="dash-mini-value" id="ovPendingOrders">0</div>
+              </div>
+              <div class="dash-mini">
+                <div class="dash-mini-label">Processing Orders</div>
+                <div class="dash-mini-value" id="ovProcessingOrders">0</div>
+              </div>
+              <div class="dash-mini">
+                <div class="dash-mini-label">Completed Orders</div>
+                <div class="dash-mini-value" id="ovCompletedOrders">0</div>
+              </div>
+              <div class="dash-mini">
+                <div class="dash-mini-label">Cancelled Orders</div>
+                <div class="dash-mini-value" id="ovCancelledOrders">0</div>
+              </div>
+            </div>
+            <div class="table-scroll-wrap" style="margin-top:16px">
+              <table class="stores-table" style="min-width:700px">
+                <thead>
+                  <tr>
+                    <th>Order ID</th>
+                    <th>Customer</th>
+                    <th>Store</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                  </tr>
+                </thead>
+                <tbody id="recentOrdersBody">
+                  <tr><td colspan="6" class="text-center py-4 text-secondary">No orders yet.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="dash-section">
+            <div class="dash-section-head">
+              <h5><i class="bi bi-activity me-2"></i>Recent Activity</h5>
+            </div>
+            <div class="dash-activity-list" id="activityList">
+              <div class="text-secondary small py-2">No activity yet.</div>
+            </div>
+          </div>
+        </div>
+
+        <div id="page-plans" class="page-content active">
+          <div class="stores-card">
+            <div class="table-scroll-wrap">
+              <table class="stores-table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Name</th>
+                    <th style="width: 18%;">Slug</th>
+                    <th style="width: 18%;">Monthly Price</th>
+                    <th style="width: 18%;">Annual Price</th>
+                    <th style="width: 12%;">Status</th>
+                    <th style="width: 14%;" class="text-end">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="plansTableBody">
+                  <tr><td colspan="6" class="text-center py-5 text-secondary">No plans yet. Click "Create Plan" to add one.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
           <div class="pagination-bar">
-            <div class="rows-per-page">
+            <div class="rows-label">
               <span>Rows per page:</span>
-              <select id="rowsPerPage" onchange="renderSubscriptionPlans()">
+              <select id="plansRowsPerPage" onchange="renderPlans()">
                 <option value="10">10</option>
                 <option value="25">25</option>
                 <option value="50">50</option>
               </select>
             </div>
-            <div class="page-info" id="pageInfo">Page 1 of 1 (4 total)</div>
+            <div class="page-info" id="plansPageInfo">Page 1 of 1 (0 total)</div>
             <div class="page-btns">
-              <button id="prevPageBtn" disabled onclick="changePlanPage(-1)"><i class="bi bi-chevron-left"></i></button>
-              <button id="nextPageBtn" disabled onclick="changePlanPage(1)"><i class="bi bi-chevron-right"></i></button>
+              <button id="plansPrevBtn" disabled onclick="changePlansPage(-1)"><i class="bi bi-chevron-left"></i></button>
+              <button id="plansNextBtn" disabled onclick="changePlansPage(1)"><i class="bi bi-chevron-right"></i></button>
             </div>
           </div>
         </div>
 
-        <!-- ========================================= -->
-        <!-- ===== STORES - ALL STORES ===== -->
-        <!-- ========================================= -->
         <div id="page-stores" class="page-content">
-          <div class="d-flex justify-content-between align-items-center mb-3">
-            <div>
-              <div class="page-title">🏪 All Stores</div>
-              <div class="page-subtitle">Manage all stores on the platform</div>
-            </div>
-            <button class="btn btn-primary btn-sm rounded-pill px-3" id="addStoreBtn">
-              <i class="bi bi-plus-lg me-1"></i> Add Store
-            </button>
-          </div>
-          <div class="stat-card p-0 overflow-hidden">
-            <div class="table-responsive">
-              <table class="table table-admin table-hover mb-0">
+          <div class="stores-card">
+            <div class="table-scroll-wrap">
+              <table class="stores-table">
                 <thead>
-                  <tr><th>#</th><th>Store Name</th><th>Phone</th><th>Type</th><th>Status</th><th>Admin</th><th class="text-end">Actions</th></tr>
+                  <tr>
+                    <th style="width: 20%;">Name</th>
+                    <th style="width: 16%;">Phone</th>
+                    <th style="width: 22%;">Email</th>
+                    <th style="width: 14%;">Type</th>
+                    <th style="width: 12%;">Status</th>
+                    <th class="text-end" style="width: 16%;">Actions</th>
+                  </tr>
                 </thead>
                 <tbody id="storesTableBody"></tbody>
               </table>
@@ -908,456 +957,472 @@
           </div>
         </div>
 
-        <!-- ===== STORE APPROVAL ===== -->
-        <div id="page-store-approval" class="page-content">
-          <div class="page-title">⏳ Pending Store Approvals</div>
-          <div class="page-subtitle">Review and approve/reject new store registrations</div>
-          <div class="stat-card p-0 overflow-hidden">
-            <div class="table-responsive">
-              <table class="table table-admin table-hover mb-0">
-                <thead><tr><th>#</th><th>Store Name</th><th>Owner</th><th>Type</th><th>Requested</th><th class="text-end">Actions</th></tr></thead>
-                <tbody id="storeApprovalBody"></tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <!-- ===== STORE DETAILS ===== -->
-        <div id="page-store-details" class="page-content">
-          <div class="page-title">📋 Store Details</div>
-          <div class="page-subtitle">View detailed information about stores</div>
-          <div class="stat-card p-4">
-            <div class="row">
-              <div class="col-md-6">
-                <label class="text-secondary small text-uppercase fw-bold">Store Name</label>
-                <p class="fw-semibold">FreshMart Grocery</p>
-                <label class="text-secondary small text-uppercase fw-bold mt-3">Type</label>
-                <p>Grocery Store</p>
-                <label class="text-secondary small text-uppercase fw-bold mt-3">Phone</label>
-                <p>+91 98765 43210</p>
+        <div id="page-create-store" class="page-content">
+          <div class="form-card">
+            <form id="createStoreForm" onsubmit="handleCreateStore(event)">
+              
+              <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                  <label class="form-label-custom">Store Name <span class="required">*</span></label>
+                  <input type="text" class="form-control-custom" id="csStoreName" placeholder="Enter store name" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label-custom">Type</label>
+                  <select class="form-control-custom" id="csStoreType">
+                    <option value="Restaurant">Restaurant</option>
+                    <option value="Cafe">Cafe</option>
+                    <option value="Tea Shop">Tea Shop</option>
+                    <option value="Grocery">Grocery</option>
+                    <option value="Bakery">Bakery</option>
+                    <option value="Fast Food">Fast Food</option>
+                  </select>
+                </div>
               </div>
-              <div class="col-md-6">
-                <label class="text-secondary small text-uppercase fw-bold">Status</label>
-                <p><span class="status-badge active">Active</span></p>
-                <label class="text-secondary small text-uppercase fw-bold mt-3">Store Admin</label>
-                <p>Rajesh Kumar</p>
-                <label class="text-secondary small text-uppercase fw-bold mt-3">Joined</label>
-                <p>15 Jan 2026</p>
+
+              <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                  <label class="form-label-custom">Email <span class="required">*</span></label>
+                  <input type="email" class="form-control-custom" id="csStoreEmail" placeholder="store@example.com" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label-custom">Phone <span class="required">*</span></label>
+                  <input type="tel" class="form-control-custom" id="csStorePhone" placeholder="+91 XXXXX XXXXX" required>
+                </div>
+              </div>
+
+              <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                  <label class="form-label-custom">GSTIN</label>
+                  <input type="text" class="form-control-custom" id="csStoreGstin" placeholder="e.g. 22AAAAA0000A1Z5">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label-custom">FSSAI Number <span class="required">*</span></label>
+                  <input type="text" class="form-control-custom" id="csStoreFssai" placeholder="14-digit FSSAI license" required>
+                </div>
+              </div>
+
+              <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                  <label class="form-label-custom">Plan</label>
+                  <select class="form-control-custom" id="csStorePlan">
+                    <option value="Basic">Basic</option>
+                    <option value="Standard">Standard</option>
+                    <option value="Pro">Pro</option>
+                    <option value="Enterprise">Enterprise</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label-custom">Billing Cycle</label>
+                  <select class="form-control-custom" id="csStoreBillingCycle">
+                    <option value="Monthly">Monthly</option>
+                    <option value="Yearly">Yearly</option>
+                    <option value="Quarterly">Quarterly</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label-custom">Address <span class="required">*</span></label>
+                <textarea class="form-control-custom" id="csStoreAddress" rows="3" placeholder="Enter full store address" required></textarea>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label-custom">Shop location pin (delivery distance measured from here)</label>
+                <div class="fake-map" id="csFakeMap" onclick="csDropPin(event)">
+                  <div class="map-pin" id="csMapPin"></div>
+                  <div class="map-hint" id="csMapHint">
+                    <i class="bi bi-geo-alt" style="font-size:2rem; display:block; margin-bottom:8px;"></i>
+                    Click anywhere on the map to drop the shop pin
+                  </div>
+                  <div class="coords-display" id="csCoordsDisplay"></div>
+                </div>
+                <div class="map-help">Click the map to drop the shop pin.</div>
+              </div>
+
+              <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                  <label class="form-label-custom">Admin Username <span class="required">*</span></label>
+                  <input type="text" class="form-control-custom" id="csAdminUsername" placeholder="Choose admin username" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label-custom">Admin Password <span class="required">*</span></label>
+                  <div style="position: relative;">
+                    <input type="password" class="form-control-custom" id="csAdminPassword" placeholder="Create password" required style="padding-right: 44px;">
+                    <button type="button" onclick="csTogglePassword()" style="position:absolute; right:12px; top:50%; transform:translateY(-50%); border:none; background:transparent; color:#94a3b8; cursor:pointer;">
+                      <i class="bi bi-eye" id="csEyeIcon"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                  <label class="form-label-custom">Logo</label>
+                  <label class="file-upload-wrapper" for="csStoreLogo">
+                    <i class="bi bi-upload" style="color:#94a3b8;"></i>
+                    <span class="upload-text" id="csLogoLabel">Upload</span>
+                    <input type="file" id="csStoreLogo" accept="image/*" onchange="csUpdateFileName('csStoreLogo', 'csLogoLabel')">
+                  </label>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label-custom">Menu File</label>
+                  <label class="file-upload-wrapper" for="csStoreMenu">
+                    <i class="bi bi-upload" style="color:#94a3b8;"></i>
+                    <span class="upload-text" id="csMenuLabel">Upload</span>
+                    <input type="file" id="csStoreMenu" accept=".pdf,.doc,.docx" onchange="csUpdateFileName('csStoreMenu', 'csMenuLabel')">
+                  </label>
+                </div>
+              </div>
+
+              <div class="d-flex justify-content-between gap-2 mt-4 flex-wrap">
+                <button type="button" class="btn-back-purple" onclick="showPage('stores')">
+                  <i class="bi bi-arrow-left"></i> Back to Stores
+                </button>
+                <div class="d-flex gap-2">
+                  <button type="button" class="btn-outline-purple" onclick="csResetForm()">Cancel</button>
+                  <button type="submit" class="btn-primary-purple" id="csSubmitBtn">
+                    <i class="bi bi-check-lg"></i> Create Store
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div id="page-store-view" class="page-content">
+          <div class="form-card">
+            <div class="d-flex justify-content-between align-items-start mb-4 flex-wrap gap-3">
+              <div>
+                <h3 class="mb-1" id="svStoreName">-</h3>
+                <span class="status-pill active" id="svStatusPill">Active</span>
+              </div>
+              <button type="button" class="btn-primary-purple" onclick="svEditCurrentStore()">
+                <i class="bi bi-pencil"></i> Edit
+              </button>
+            </div>
+
+            <div class="detail-grid">
+              <div class="detail-item">
+                <div class="detail-label">Phone</div>
+                <div class="detail-value" id="svPhone">-</div>
+              </div>
+              <div class="detail-item">
+                <div class="detail-label">Email</div>
+                <div class="detail-value" id="svEmail">-</div>
+              </div>
+              <div class="detail-item">
+                <div class="detail-label">Type</div>
+                <div class="detail-value" id="svType">-</div>
+              </div>
+              <div class="detail-item">
+                <div class="detail-label">Plan</div>
+                <div class="detail-value" id="svPlan">-</div>
+              </div>
+              <div class="detail-item">
+                <div class="detail-label">GSTIN</div>
+                <div class="detail-value" id="svGstin">-</div>
+              </div>
+              <div class="detail-item">
+                <div class="detail-label">FSSAI Number</div>
+                <div class="detail-value" id="svFssai">-</div>
+              </div>
+              <div class="detail-item" style="grid-column: 1 / -1;">
+                <div class="detail-label">Address</div>
+                <div class="detail-value" id="svAddress">-</div>
               </div>
             </div>
-          </div>
-        </div>
 
-        <!-- ===== STORE ADMIN ===== -->
-        <div id="page-store-admin" class="page-content">
-          <div class="page-title">👤 Store Admins</div>
-          <div class="page-subtitle">Manage store administrators</div>
-          <div class="stat-card p-0 overflow-hidden">
-            <div class="table-responsive">
-              <table class="table table-admin table-hover mb-0">
-                <thead><tr><th>#</th><th>Name</th><th>Email</th><th>Store</th><th>Status</th><th class="text-end">Actions</th></tr></thead>
-                <tbody>
-                  <tr><td>1</td><td>Rajesh Kumar</td><td>rajesh@freshmart.com</td><td>FreshMart</td><td><span class="status-badge active">Active</span></td><td class="text-end"><button class="btn btn-sm btn-outline-secondary"><i class="bi bi-pencil"></i></button> <button class="btn btn-sm btn-outline-danger"><i class="bi bi-ban"></i></button></td></tr>
-                  <tr><td>2</td><td>Priya Sharma</td><td>priya@techzone.com</td><td>TechZone</td><td><span class="status-badge active">Active</span></td><td class="text-end"><button class="btn btn-sm btn-outline-secondary"><i class="bi bi-pencil"></i></button> <button class="btn btn-sm btn-outline-danger"><i class="bi bi-ban"></i></button></td></tr>
-                </tbody>
-              </table>
+            <div class="credentials-box">
+              <div class="cred-title"><i class="bi bi-shield-lock"></i> Store Login Credentials</div>
+              <div class="cred-row">
+                <span class="cred-label">Username</span>
+                <span class="cred-value" id="svUsername">-</span>
+              </div>
+              <div class="cred-row">
+                <span class="cred-label">Password</span>
+                <span class="cred-value">
+                  <span id="svPassword">••••••••</span>
+                  <button class="cred-toggle-btn" onclick="svTogglePasswordView()" title="Show/Hide">
+                    <i class="bi bi-eye" id="svPassEyeIcon"></i>
+                  </button>
+                </span>
+              </div>
+            </div>
+
+            <div class="mt-4">
+              <button type="button" class="btn-back-purple" onclick="showPage('stores')">
+                <i class="bi bi-arrow-left"></i> Back to Stores
+              </button>
             </div>
           </div>
         </div>
 
-        <!-- ===== STORE PERFORMANCE ===== -->
-        <div id="page-store-performance" class="page-content">
-          <div class="page-title">📊 Store Performance</div>
-          <div class="page-subtitle">Track store metrics and performance</div>
-          <div class="row">
-            <div class="col-md-4"><div class="stat-card"><div class="stat-label">Top Store</div><div class="stat-value">FreshMart</div><span class="text-success">↑ 12%</span></div></div>
-            <div class="col-md-4"><div class="stat-card"><div class="stat-label">Total Revenue</div><div class="stat-value">Rs. 4.5L</div></div></div>
-            <div class="col-md-4"><div class="stat-card"><div class="stat-label">Avg. Rating</div><div class="stat-value">4.8 ★</div></div></div>
+        <div id="page-profile" class="page-content">
+          <div class="stores-card p-5">
+            <h3>My Profile</h3>
+            <p class="text-secondary" id="profilePageInfo">SmartStore Admin — admin@smartstore.com</p>
           </div>
         </div>
 
-        <!-- ========================================= -->
-        <!-- ===== PRODUCTS ===== -->
-        <!-- ========================================= -->
-        <div id="page-products" class="page-content">
-          <div class="d-flex justify-content-between align-items-center mb-3">
-            <div><div class="page-title">🛍️ All Products</div><div class="page-subtitle">Manage all products on the platform</div></div>
-            <button class="btn btn-primary btn-sm rounded-pill px-3"><i class="bi bi-plus-lg me-1"></i> Add Product</button>
+        <div id="page-settings" class="page-content">
+          <div class="stores-card p-5">
+            <h3>Settings</h3>
+            <p class="text-secondary">System settings</p>
           </div>
-          <div class="stat-card p-0 overflow-hidden">
-            <div class="table-responsive">
-              <table class="table table-admin table-hover mb-0">
-                <thead><tr><th>#</th><th>Product</th><th>Category</th><th>Price</th><th>Stock</th><th>Status</th><th class="text-end">Actions</th></tr></thead>
-                <tbody id="productsTableBody"></tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <!-- ===== CATEGORIES ===== -->
-        <div id="page-categories" class="page-content">
-          <div class="d-flex justify-content-between align-items-center mb-3">
-            <div><div class="page-title">📂 Categories</div><div class="page-subtitle">Manage product categories</div></div>
-            <button class="btn btn-primary btn-sm rounded-pill px-3"><i class="bi bi-plus-lg me-1"></i> Add Category</button>
-          </div>
-          <div class="row">
-            <div class="col-md-4"><div class="stat-card"><h6>Electronics</h6><span class="text-secondary">24 products</span></div></div>
-            <div class="col-md-4"><div class="stat-card"><h6>Fashion</h6><span class="text-secondary">32 products</span></div></div>
-            <div class="col-md-4"><div class="stat-card"><h6>Groceries</h6><span class="text-secondary">18 products</span></div></div>
-          </div>
-        </div>
-
-        <!-- ===== SUB-CATEGORIES ===== -->
-        <div id="page-sub-categories" class="page-content">
-          <div class="page-title">📁 Sub-Categories</div>
-          <div class="page-subtitle">Manage sub-categories under main categories</div>
-          <div class="stat-card p-3">
-            <div class="row">
-              <div class="col-md-3"><h6>📱 Smartphones</h6><span class="text-secondary">Electronics</span></div>
-              <div class="col-md-3"><h6>👕 T-Shirts</h6><span class="text-secondary">Fashion</span></div>
-              <div class="col-md-3"><h6>🥬 Vegetables</h6><span class="text-secondary">Groceries</span></div>
-              <div class="col-md-3"><h6>💻 Laptops</h6><span class="text-secondary">Electronics</span></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- ===== PRODUCT APPROVAL ===== -->
-        <div id="page-product-approval" class="page-content">
-          <div class="page-title">⏳ Product Approval</div>
-          <div class="page-subtitle">Review and approve/reject products</div>
-          <div class="stat-card p-0 overflow-hidden">
-            <div class="table-responsive">
-              <table class="table table-admin table-hover mb-0">
-                <thead><tr><th>#</th><th>Product</th><th>Store</th><th>Price</th><th>Submitted</th><th class="text-end">Actions</th></tr></thead>
-                <tbody id="productApprovalBody"></tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <!-- ===== OUT OF STOCK ===== -->
-        <div id="page-out-of-stock" class="page-content">
-          <div class="page-title">⚠️ Out of Stock</div>
-          <div class="page-subtitle">Products that need restocking</div>
-          <div class="stat-card p-0 overflow-hidden">
-            <div class="table-responsive">
-              <table class="table table-admin table-hover mb-0">
-                <thead><tr><th>#</th><th>Product</th><th>Store</th><th>Stock</th><th class="text-end">Actions</th></tr></thead>
-                <tbody id="outOfStockBody"></tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <!-- ===== FEATURED PRODUCTS ===== -->
-        <div id="page-featured-products" class="page-content">
-          <div class="d-flex justify-content-between align-items-center mb-3">
-            <div><div class="page-title">⭐ Featured Products</div><div class="page-subtitle">Manage featured products</div></div>
-            <button class="btn btn-primary btn-sm rounded-pill px-3"><i class="bi bi-plus-lg me-1"></i> Add Featured</button>
-          </div>
-          <div class="row">
-            <div class="col-md-3"><div class="stat-card text-center"><img src="https://via.placeholder.com/60" class="rounded mb-2"><h6>iPhone 15</h6><span class="text-secondary">Rs. 79,999</span><br><span class="status-badge featured">Featured</span></div></div>
-            <div class="col-md-3"><div class="stat-card text-center"><img src="https://via.placeholder.com/60" class="rounded mb-2"><h6>MacBook Pro</h6><span class="text-secondary">Rs. 1,89,999</span><br><span class="status-badge featured">Featured</span></div></div>
-          </div>
-        </div>
-
-        <!-- ===== PRODUCT REPORTS ===== -->
-        <div id="page-product-reports" class="page-content">
-          <div class="page-title">📊 Product Reports</div>
-          <div class="page-subtitle">Analytics and reports for products</div>
-          <div class="row">
-            <div class="col-md-6"><div class="stat-card"><div class="stat-label">Top Selling</div><div class="stat-value">iPhone 15</div><span class="text-success">256 units sold</span></div></div>
-            <div class="col-md-6"><div class="stat-card"><div class="stat-label">Most Viewed</div><div class="stat-value">MacBook Pro</div><span class="text-secondary">12,345 views</span></div></div>
-          </div>
-        </div>
-
-        <!-- ========================================= -->
-        <!-- ===== AI MANAGEMENT ===== -->
-        <!-- ========================================= -->
-        <div id="page-ai-dashboard" class="page-content">
-          <div class="page-title">🤖 AI Management Dashboard</div>
-          <div class="page-subtitle">Manage all AI features and monitor usage</div>
-          <div class="row">
-            <div class="col-md-4"><div class="ai-card"><div class="ai-icon"><i class="bi bi-chat-dots"></i></div><h6>AI Chatbot</h6><p>1,284 conversations today</p></div></div>
-            <div class="col-md-4"><div class="ai-card"><div class="ai-icon"><i class="bi bi-lightbulb"></i></div><h6>AI Recommendations</h6><p>4,567 recommendations served</p></div></div>
-            <div class="col-md-4"><div class="ai-card"><div class="ai-icon"><i class="bi bi-graph-up"></i></div><h6>AI Sales Insights</h6><p>23 insights generated</p></div></div>
-            <div class="col-md-4"><div class="ai-card"><div class="ai-icon"><i class="bi bi-pencil-square"></i></div><h6>AI Descriptions</h6><p>156 products generated</p></div></div>
-            <div class="col-md-4"><div class="ai-card"><div class="ai-icon"><i class="bi bi-headset"></i></div><h6>AI Customer Support</h6><p>89 support tickets resolved</p></div></div>
-            <div class="col-md-4"><div class="ai-card"><div class="ai-icon"><i class="bi bi-bar-chart"></i></div><h6>AI Usage Stats</h6><p>98.7% uptime</p></div></div>
-          </div>
-        </div>
-
-        <!-- ===== AI CHATBOT ===== -->
-        <div id="page-ai-chatbot" class="page-content">
-          <div class="page-title">💬 AI Chatbot</div>
-          <div class="page-subtitle">Configure and monitor the AI chatbot</div>
-          <div class="stat-card p-4">
-            <div class="d-flex align-items-center gap-3 mb-3">
-              <div class="bg-success bg-opacity-10 p-3 rounded"><i class="bi bi-chat-dots fs-2 text-success"></i></div>
-              <div><h5 class="mb-0">AI Chatbot Active</h5><span class="text-secondary">Responding to customer queries in real-time</span></div>
-            </div>
-            <div class="row">
-              <div class="col-md-3"><div class="border rounded p-3 text-center"><div class="fw-bold">1,284</div><span class="text-secondary">Today's Chats</span></div></div>
-              <div class="col-md-3"><div class="border rounded p-3 text-center"><div class="fw-bold">92%</div><span class="text-secondary">Resolution Rate</span></div></div>
-              <div class="col-md-3"><div class="border rounded p-3 text-center"><div class="fw-bold">4.8s</div><span class="text-secondary">Avg Response Time</span></div></div>
-              <div class="col-md-3"><div class="border rounded p-3 text-center"><div class="fw-bold">98%</div><span class="text-secondary">Customer Satisfaction</span></div></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- ===== AI RECOMMENDATIONS ===== -->
-        <div id="page-ai-recommendations" class="page-content">
-          <div class="page-title">🎯 AI Product Recommendations</div>
-          <div class="page-subtitle">AI-powered product recommendations for customers</div>
-          <div class="stat-card p-4">
-            <div class="row">
-              <div class="col-md-6"><h6>📊 Recommendation Stats</h6><p class="text-secondary">4,567 recommendations served today</p><p class="text-secondary">24.3% conversion rate</p></div>
-              <div class="col-md-6"><h6>🔥 Top Recommended Products</h6><p>iPhone 15 — 234 recommendations</p><p>MacBook Pro — 189 recommendations</p></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- ===== AI INSIGHTS ===== -->
-        <div id="page-ai-insights" class="page-content">
-          <div class="page-title">📈 AI Sales Insights</div>
-          <div class="page-subtitle">AI-generated insights to boost sales</div>
-          <div class="row">
-            <div class="col-md-6"><div class="stat-card"><h6>💡 Insight 1</h6><p class="text-secondary">Customers who buy smartphones also purchase screen protectors (78% correlation)</p><span class="text-success">Action: Bundle offer</span></div></div>
-            <div class="col-md-6"><div class="stat-card"><h6>💡 Insight 2</h6><p class="text-secondary">Fashion sales peak on weekends (+45%)</p><span class="text-success">Action: Weekend promotions</span></div></div>
-          </div>
-        </div>
-
-        <!-- ===== AI DESCRIPTIONS ===== -->
-        <div id="page-ai-descriptions" class="page-content">
-          <div class="d-flex justify-content-between align-items-center mb-3">
-            <div><div class="page-title">✍️ AI Product Descriptions</div><div class="page-subtitle">Generate product descriptions using AI</div></div>
-            <button class="btn btn-primary btn-sm rounded-pill px-3"><i class="bi bi-plus-lg me-1"></i> Generate New</button>
-          </div>
-          <div class="stat-card p-4">
-            <div class="row">
-              <div class="col-md-4"><div class="border rounded p-3"><h6>iPhone 15</h6><p class="text-secondary small">Experience the future with iPhone 15. Featuring a stunning display...</p><span class="status-badge approved">Generated</span></div></div>
-              <div class="col-md-4"><div class="border rounded p-3"><h6>MacBook Pro</h6><p class="text-secondary small">Powerful performance meets elegant design. The MacBook Pro...</p><span class="status-badge approved">Generated</span></div></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- ===== AI SUPPORT ===== -->
-        <div id="page-ai-support" class="page-content">
-          <div class="page-title">🎧 AI Customer Support</div>
-          <div class="page-subtitle">AI-powered customer support tickets</div>
-          <div class="stat-card p-0 overflow-hidden">
-            <div class="table-responsive">
-              <table class="table table-admin table-hover mb-0">
-                <thead><tr><th>#</th><th>Customer</th><th>Issue</th><th>Status</th><th>Resolved By</th></tr></thead>
-                <tbody>
-                  <tr><td>1</td><td>Rahul</td><td>Order not delivered</td><td><span class="status-badge active">Resolved</span></td><td>AI Bot</td></tr>
-                  <tr><td>2</td><td>Sneha</td><td>Product return</td><td><span class="status-badge pending">In Progress</span></td><td>AI Bot</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <!-- ===== AI STATS ===== -->
-        <div id="page-ai-stats" class="page-content">
-          <div class="page-title">📊 AI Usage Statistics</div>
-          <div class="page-subtitle">Monitor AI feature usage and performance</div>
-          <div class="row">
-            <div class="col-md-3"><div class="stat-card"><div class="stat-label">Total AI Calls</div><div class="stat-value">45,678</div></div></div>
-            <div class="col-md-3"><div class="stat-card"><div class="stat-label">Avg Response</div><div class="stat-value">1.2s</div></div></div>
-            <div class="col-md-3"><div class="stat-card"><div class="stat-label">Uptime</div><div class="stat-value">99.8%</div></div></div>
-            <div class="col-md-3"><div class="stat-card"><div class="stat-label">Cost Saved</div><div class="stat-value">Rs. 2.3L</div></div></div>
-          </div>
-        </div>
-
-        <!-- Footer -->
-        <div class="admin-footer">
-          <div>
-            <span>E-Commerce Admin</span>
-            <span class="mx-2">·</span>
-            <a href="mailto:admin@ecommerce.com">admin@ecommerce.com</a>
-          </div>
-          <div>© 2026 E-Commerce Platform</div>
         </div>
 
       </div>
     </div>
   </div>
 
-  <!-- ========================================= -->
-  <!-- ===== CREATE PLAN MODAL ===== -->
-  <!-- ========================================= -->
-  <div class="modal fade" id="createPlanModal" tabindex="-1" aria-hidden="true">
+  <div class="modal fade" id="createPlanModal" tabindex="-1">
     <div class="modal-dialog modal-lg modal-dialog-scrollable">
-      <div class="modal-content modal-content-custom">
-        <div class="modal-header modal-header-custom">
+      <div class="modal-content plan-modal-content">
+        <div class="plan-modal-header">
           <h5>Create Plan</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
-        <div class="modal-body modal-body-custom">
-          
-          <!-- BASIC INFO -->
-          <div class="form-section-title">Basic Info</div>
+        <div class="plan-modal-body">
+
+          <div class="plan-section-title">Basic Info</div>
           <div class="row g-3">
             <div class="col-md-6">
-              <label class="form-label-custom">Name</label>
-              <input type="text" class="form-control-custom" id="planName" placeholder="e.g. Pro">
+              <label class="plan-label">Name</label>
+              <input type="text" class="plan-input" id="planName" placeholder="e.g. Pro">
             </div>
             <div class="col-md-6">
-              <label class="form-label-custom">Slug</label>
-              <input type="text" class="form-control-custom" id="planSlug" placeholder="e.g. pro">
+              <label class="plan-label">Slug</label>
+              <input type="text" class="plan-input" id="planSlug" placeholder="e.g. pro">
             </div>
             <div class="col-12">
-              <label class="form-label-custom">Description</label>
-              <input type="text" class="form-control-custom" id="planDescription" placeholder="e.g. For growing businesses">
+              <label class="plan-label">Description</label>
+              <input type="text" class="plan-input" id="planDescription" placeholder="e.g. For growing businesses">
             </div>
             <div class="col-md-6">
-              <label class="form-label-custom">Display Order</label>
-              <input type="number" class="form-control-custom" id="planDisplayOrder" value="0">
+              <label class="plan-label">Display Order</label>
+              <input type="number" class="plan-input" id="planDisplayOrder" value="0">
             </div>
             <div class="col-md-6">
-              <label class="form-label-custom">CTA Text</label>
-              <input type="text" class="form-control-custom" id="planCtaText" value="Get Started">
+              <label class="plan-label">CTA Text</label>
+              <input type="text" class="plan-input" id="planCtaText" value="Get Started">
             </div>
           </div>
 
-          <!-- PRICING -->
-          <div class="form-section-title">Pricing</div>
+          <div class="plan-section-title">Pricing</div>
           <div class="row g-3">
             <div class="col-md-6">
-              <label class="form-label-custom">Monthly Price (Rs.)</label>
-              <input type="number" class="form-control-custom" id="planMonthlyPrice" value="0">
+              <label class="plan-label">Monthly Price (Rs.)</label>
+              <input type="number" class="plan-input" id="planMonthlyPrice" value="0">
             </div>
             <div class="col-md-6">
-              <label class="form-label-custom">Annual Price (Rs.)</label>
-              <input type="number" class="form-control-custom" id="planAnnualPrice" value="0">
+              <label class="plan-label">Annual Price (Rs.)</label>
+              <input type="number" class="plan-input" id="planAnnualPrice" value="0">
             </div>
             <div class="col-12">
-              <label class="checkbox-custom">
+              <label class="plan-check">
                 <input type="checkbox" id="planCustomPricing">
                 <span>Custom pricing (shows "Custom" instead of amount)</span>
               </label>
             </div>
           </div>
 
-          <!-- LIMITS -->
-          <div class="form-section-title">Limits</div>
+          <div class="plan-section-title">Limits</div>
           <div class="limit-row">
             <label>Max Menu Items</label>
             <div class="limit-input-group">
-              <input type="checkbox" id="limitMenuItemsUnlimited" checked onchange="toggleLimitInput('limitMenuItems', this.checked)">
+              <input type="checkbox" id="limitMenuItemsUnlimited" checked onchange="toggleLimit('limitMenuItems', this.checked)">
               <span class="unlimited-label checked" id="labelMenuItems">Unlimited</span>
-              <input type="number" id="limitMenuItems" value="10" style="display:none;" placeholder="Limit">
+              <input type="number" id="limitMenuItems" value="10" style="display:none;">
             </div>
           </div>
           <div class="limit-row">
             <label>Max Categories</label>
             <div class="limit-input-group">
-              <input type="checkbox" id="limitCategoriesUnlimited" checked onchange="toggleLimitInput('limitCategories', this.checked)">
+              <input type="checkbox" id="limitCategoriesUnlimited" checked onchange="toggleLimit('limitCategories', this.checked)">
               <span class="unlimited-label checked" id="labelCategories">Unlimited</span>
-              <input type="number" id="limitCategories" value="10" style="display:none;" placeholder="Limit">
+              <input type="number" id="limitCategories" value="10" style="display:none;">
             </div>
           </div>
           <div class="limit-row">
             <label>Max Orders / Month</label>
             <div class="limit-input-group">
-              <input type="checkbox" id="limitOrdersUnlimited" checked onchange="toggleLimitInput('limitOrders', this.checked)">
+              <input type="checkbox" id="limitOrdersUnlimited" checked onchange="toggleLimit('limitOrders', this.checked)">
               <span class="unlimited-label checked" id="labelOrders">Unlimited</span>
-              <input type="number" id="limitOrders" value="100" style="display:none;" placeholder="Limit">
+              <input type="number" id="limitOrders" value="100" style="display:none;">
             </div>
           </div>
 
-          <!-- FEATURE TOGGLES -->
-          <div class="form-section-title">Feature Toggles</div>
+          <div class="plan-section-title">Feature Toggles</div>
           <div class="feature-toggle-grid">
-            <label class="checkbox-custom"><input type="checkbox" id="featureBulkImport"> Bulk Import</label>
-            <label class="checkbox-custom"><input type="checkbox" id="featureAnalytics"> Analytics</label>
-            <label class="checkbox-custom"><input type="checkbox" id="featureExportReports"> Export Reports</label>
-            <label class="checkbox-custom"><input type="checkbox" id="featurePrioritySupport"> Priority Support</label>
-            <label class="checkbox-custom"><input type="checkbox" id="featureCustomBranding"> Custom Branding</label>
-            <label class="checkbox-custom"><input type="checkbox" id="featureApiAccess"> API Access</label>
+            <label class="plan-check"><input type="checkbox" id="featureBulkImport"> Bulk Import</label>
+            <label class="plan-check"><input type="checkbox" id="featureAnalytics"> Analytics</label>
+            <label class="plan-check"><input type="checkbox" id="featureExportReports"> Export Reports</label>
+            <label class="plan-check"><input type="checkbox" id="featurePrioritySupport"> Priority Support</label>
+            <label class="plan-check"><input type="checkbox" id="featureCustomBranding"> Custom Branding</label>
+            <label class="plan-check"><input type="checkbox" id="featureApiAccess"> API Access</label>
           </div>
 
-          <!-- DISPLAY -->
-          <div class="form-section-title">Display</div>
+          <div class="plan-section-title">Display</div>
           <div class="feature-toggle-grid">
-            <label class="checkbox-custom"><input type="checkbox" id="planActive" checked> Active</label>
-            <label class="checkbox-custom"><input type="checkbox" id="planHighlighted"> Highlighted (Most Popular)</label>
+            <label class="plan-check"><input type="checkbox" id="planActive" checked> Active</label>
+            <label class="plan-check"><input type="checkbox" id="planHighlighted"> Highlighted (Most Popular)</label>
           </div>
 
-          <!-- PRICING CARD FEATURES -->
-          <div class="form-section-title">Pricing Card Features</div>
+          <div class="plan-section-title">Pricing Card Features</div>
           <p class="text-secondary small mb-3">These bullet points are displayed on the pricing card.</p>
           <div id="bulletFeaturesContainer">
-            <div class="feature-bullet-input">
-              <input type="text" class="form-control-custom" placeholder="Add a feature bullet..." value="Unlimited products">
+            <div class="bullet-input-row">
+              <input type="text" class="plan-input" placeholder="Add a feature bullet..." value="Unlimited products">
+              <button class="btn-remove-bullet" onclick="this.parentElement.remove()" title="Remove"><i class="bi bi-trash"></i></button>
             </div>
-            <div class="feature-bullet-input">
-              <input type="text" class="form-control-custom" placeholder="Add a feature bullet..." value="Priority support">
+            <div class="bullet-input-row">
+              <input type="text" class="plan-input" placeholder="Add a feature bullet..." value="Priority support">
+              <button class="btn-remove-bullet" onclick="this.parentElement.remove()" title="Remove"><i class="bi bi-trash"></i></button>
             </div>
           </div>
-          <button class="btn-add-bullet" onclick="addBulletFeature()" title="Add feature bullet">
-            <i class="bi bi-plus-lg"></i>
+          <button class="btn-add-bullet" onclick="addBulletFeature()" title="Add feature bullet"><i class="bi bi-plus-lg"></i></button>
+
+          <button class="btn-submit-plan" onclick="createPlan()">
+            <i class="bi bi-check-lg me-2"></i> Create Plan
           </button>
 
-          <!-- SUBMIT -->
-          <button class="btn-create-plan-submit mt-4" onclick="createPlan()">
-            Create Plan
-          </button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Toast -->
   <div class="toast-container" id="toastContainer"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <script>
-    // ===== SUBSCRIPTION PLANS DATA =====
-    let subscriptionPlans = [
-      { id: 1, slug: 'basic', monthlyPrice: 'Rs. 399', status: 'Active' },
-      { id: 2, slug: 'standard', monthlyPrice: 'Rs. 599', status: 'Active' },
-      { id: 3, slug: 'pro', monthlyPrice: 'Rs. 899', status: 'Active' },
-      { id: 4, slug: 'enterprise', monthlyPrice: 'Custom', status: 'Active' }
-    ];
-    let planIdCounter = 5;
-    let currentPlanPage = 1;
+    const SUPER_ADMIN = {
+      username: 'superadmin',
+      password: 'admin123',
+      name: 'SmartStore Admin',
+      email: 'admin@smartstore.com'
+    };
 
-    // ===== STORES DATA =====
-    let stores = [
-      { id: 1, name: 'FreshMart Grocery', phone: '+91 98765 43210', type: 'grocery', status: 'active', admin: 'Rajesh Kumar' },
-      { id: 2, name: 'TechZone Electronics', phone: '+91 87654 32109', type: 'electronics', status: 'active', admin: 'Priya Sharma' },
-      { id: 3, name: 'Fashion Hub', phone: '+91 76543 21098', type: 'fashion', status: 'active', admin: 'Amit Singh' },
-      { id: 4, name: 'HomeDecor Plus', phone: '+91 65432 10987', type: 'home_decor', status: 'pending', admin: 'Neha Patel' },
-      { id: 5, name: 'BookWorld', phone: '+91 54321 09876', type: 'books', status: 'active', admin: 'Vikram Rao' },
-      { id: 6, name: 'FitLife Gym', phone: '+91 43210 98765', type: 'fitness', status: 'inactive', admin: 'Suresh Menon' },
-      { id: 7, name: 'Organic Bazaar', phone: '+91 32109 87654', type: 'organic', status: 'active', admin: 'Meera Iyer' },
-      { id: 8, name: 'Pet Paradise', phone: '+91 21098 76543', type: 'pets', status: 'pending', admin: 'Kiran Reddy' }
-    ];
+    (function checkSuperAdminAuth() {
+      const loggedInUser = localStorage.getItem('loggedInUser');
+      const role = localStorage.getItem('role');
 
-    let pendingStores = [
-      { id: 9, name: 'Green Mart', owner: 'Ravi Kumar', type: 'grocery', requested: '2 hours ago' },
-      { id: 10, name: 'Fashion Trendz', owner: 'Anita Desai', type: 'fashion', requested: '5 hours ago' },
-      { id: 11, name: 'Tech World', owner: 'Suresh Babu', type: 'electronics', requested: '1 day ago' }
-    ];
+      if (!loggedInUser) { alert('❌ Please login first!'); window.location.href = 'login.html'; return; }
+      if (role !== 'superadmin') { alert('❌ Access denied! Super Admin only.'); window.location.href = 'login.html'; return; }
+      if (loggedInUser !== SUPER_ADMIN.username) { alert('❌ Invalid Super Admin credentials!'); window.location.href = 'login.html'; return; }
+      console.log('✅ Super Admin authenticated:', loggedInUser);
+    })();
 
-    let products = [
-      { id: 1, name: 'iPhone 15', category: 'Electronics', price: 'Rs. 79,999', stock: 45, status: 'active' },
-      { id: 2, name: 'MacBook Pro', category: 'Electronics', price: 'Rs. 1,89,999', stock: 12, status: 'active' },
-      { id: 3, name: 'Nike Air Max', category: 'Fashion', price: 'Rs. 12,999', stock: 0, status: 'out-of-stock' },
-      { id: 4, name: 'Organic Apples', category: 'Groceries', price: 'Rs. 120', stock: 0, status: 'out-of-stock' },
-    ];
+    let stores = [];
+    let plans = [];
+    let storeIdCounter = 1;
+    let planIdCounter = 1;
+    let currentPlansPage = 1;
+    let csPinLat = null, csPinLng = null;
+    let csEditingStoreId = null;
+    let svCurrentStoreId = null;
+    let dashSalesRange = 'daily';
+    let dashSalesChartInstance = null;
 
-    let pendingProducts = [
-      { id: 101, name: 'Samsung S24', store: 'TechZone', price: 'Rs. 89,999', submitted: '3 hours ago' },
-      { id: 102, name: 'Levi\'s Jeans', store: 'Fashion Hub', price: 'Rs. 3,499', submitted: '6 hours ago' }
-    ];
+    /* ============================================================
+       REGISTER → SUPER ADMIN STORES SYNC
+       ============================================================ */
+    function safeParse(key, fallback) {
+      try { const v = JSON.parse(localStorage.getItem(key) || 'null'); return v == null ? fallback : v; }
+      catch(e) { return fallback; }
+    }
 
-    let storeIdCounter = 12;
-    let productIdCounter = 105;
+    function buildRegisteredMerchantStores() {
+      const pool = [];
+      ['registeredUsers', 'smartstore_users'].forEach(k => {
+        const arr = safeParse(k, []);
+        if (!Array.isArray(arr)) return;
+        arr.forEach(u => {
+          if (!u) return;
+          const role = String(u.role || '').toLowerCase();
+          if (role !== 'merchant') return;
+          pool.push(u);
+        });
+      });
+      return pool;
+    }
 
-    // ===== TOAST =====
+    function buildMergedStores() {
+      const adminStores = safeParse('admin_stores', []);
+      const admin = Array.isArray(adminStores) ? adminStores : [];
+      const regMerchants = buildRegisteredMerchantStores();
+
+      const seenEmails = new Set();
+      admin.forEach(s => {
+        const em = String(s.email || '').trim().toLowerCase();
+        if (em) seenEmails.add(em);
+      });
+
+      const merged = admin.slice();
+      regMerchants.forEach(u => {
+        const em = String(u.email || '').trim().toLowerCase();
+        if (em && seenEmails.has(em)) return;
+        if (em) seenEmails.add(em);
+
+        merged.push({
+          id: 'reg-' + (u.id || em || Math.random().toString(36).slice(2, 8)),
+          _fromRegister: true,
+          name: u.brandName || u.businessName || u.storeName || u.username || u.name || 'Merchant',
+          phone: u.phone || u.businessNumber || u.business_Number || '',
+          email: u.email || '',
+          type: u.category || u.storeType || u.businessCategory || u.businessType || '',
+          category: u.category || u.storeType || '',
+          plan: u.plan || '',
+          address: u.address || '',
+          gstin: u.gstin || '',
+          fssai: u.fssai || '',
+          adminUsername: u.username || u.adminUsername || '',
+          adminPassword: u.password || u.adminPassword || '',
+          lat: u.lat || null,
+          lng: u.lng || null,
+          active: u.active !== false,
+          createdAt: u.registeredAt || u.createdAt || ''
+        });
+      });
+
+      return merged;
+    }
+
+    function loadAll() {
+      try {
+        const s = localStorage.getItem('admin_stores');
+        if (s) { stores = JSON.parse(s); storeIdCounter = stores.length > 0 ? Math.max(...stores.map(x => x.id)) + 1 : 1; }
+      } catch(e) { stores = []; }
+
+      try {
+        const p = localStorage.getItem('admin_plans');
+        if (p) { plans = JSON.parse(p); planIdCounter = plans.length > 0 ? Math.max(...plans.map(x => x.id)) + 1 : 1; }
+      } catch(e) { plans = []; }
+    }
+
+    function saveStores() { try { localStorage.setItem('admin_stores', JSON.stringify(stores)); } catch(e) {} }
+    function savePlans() { try { localStorage.setItem('admin_plans', JSON.stringify(plans)); } catch(e) {} }
+
+    function toggleSidebarDrawer() {
+      const sidebar  = document.getElementById('appSidebar');
+      const backdrop = document.getElementById('sidebarBackdrop');
+      const isOpen   = sidebar.classList.contains('drawer-open');
+      if (isOpen) { closeSidebarDrawer(); }
+      else {
+        sidebar.classList.add('drawer-open');
+        backdrop.classList.add('show');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+    function closeSidebarDrawer() {
+      const sidebar  = document.getElementById('appSidebar');
+      const backdrop = document.getElementById('sidebarBackdrop');
+      sidebar.classList.remove('drawer-open');
+      backdrop.classList.remove('show');
+      document.body.style.overflow = '';
+    }
+    window.addEventListener('resize', () => { if (window.innerWidth >= 992) closeSidebarDrawer(); });
+
     function showToast(message, icon = 'bi-check-circle') {
       const container = document.getElementById('toastContainer');
       const toast = document.createElement('div');
@@ -1368,341 +1433,984 @@
       setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 300); }, 3000);
     }
 
-    // ===== PAGE SWITCHING =====
+    function toggleProfileDropdown(event) {
+      event.stopPropagation();
+      const menu = document.getElementById('profileDropdownMenu');
+      const chevron = document.getElementById('profileChevron');
+      menu.classList.toggle('show');
+      chevron.classList.toggle('open');
+    }
+
+    document.addEventListener('click', function(e) {
+      const menu = document.getElementById('profileDropdownMenu');
+      const toggle = document.getElementById('profileToggle');
+      if (menu && toggle && !toggle.contains(e.target) && !menu.contains(e.target)) {
+        menu.classList.remove('show');
+        document.getElementById('profileChevron').classList.remove('open');
+      }
+    });
+
+    function openProfilePage() {
+      document.getElementById('profileDropdownMenu').classList.remove('show');
+      document.getElementById('profileChevron').classList.remove('open');
+      showPage('profile');
+      showToast('📄 Profile page opened', 'bi-person');
+    }
+
+    function openSettingsPage() {
+      document.getElementById('profileDropdownMenu').classList.remove('show');
+      document.getElementById('profileChevron').classList.remove('open');
+      showPage('settings');
+      showToast('⚙️ Settings page opened', 'bi-gear');
+    }
+
+    function logout() {
+      document.getElementById('profileDropdownMenu').classList.remove('show');
+      document.getElementById('profileChevron').classList.remove('open');
+      if (!confirm('Are you sure you want to log out?')) return;
+      localStorage.removeItem('loggedInUser');
+      localStorage.removeItem('user');
+      localStorage.removeItem('role');
+      showToast('👋 Logging out...', 'bi-box-arrow-right');
+      setTimeout(() => { window.location.href = 'login.html'; }, 800);
+    }
+
     function showPage(page) {
       document.querySelectorAll('.page-content').forEach(el => el.classList.remove('active'));
       const target = document.getElementById('page-' + page);
       if (target) target.classList.add('active');
-      
+
       document.querySelectorAll('.sidebar-link').forEach(el => el.classList.remove('active'));
-      document.querySelectorAll('.sidebar-sub a').forEach(el => el.classList.remove('active-sub'));
-      
-      document.querySelectorAll('.sidebar-link, .sidebar-sub a').forEach(link => {
+      document.querySelectorAll('.sidebar-link').forEach(link => {
         const onclick = link.getAttribute('onclick');
-        if (onclick && onclick.includes("'" + page + "'")) {
-          link.classList.add('active');
-        }
+        if (onclick && onclick.includes("'" + page + "'")) link.classList.add('active');
       });
 
+      const titles = {
+        'dashboard': 'Dashboard', 'stores': 'Stores', 'plans': 'Plans',
+        'profile': 'My Profile', 'settings': 'Settings',
+        'create-store': 'Create Store', 'store-view': 'Store Details'
+      };
+      document.getElementById('pageTitleText').textContent = titles[page] || 'Plans';
+      document.getElementById('breadcrumbCurrent').textContent = titles[page] || 'Plans';
+
+      const createPlanBtn = document.getElementById('createPlanBtn');
+      const createStoreBtn = document.getElementById('createStoreBtn');
+
+      if (page === 'plans') {
+        if (createPlanBtn) createPlanBtn.style.display = 'inline-flex';
+        if (createStoreBtn) createStoreBtn.style.display = 'none';
+      } else if (page === 'stores') {
+        if (createPlanBtn) createPlanBtn.style.display = 'none';
+        if (createStoreBtn) createStoreBtn.style.display = 'inline-flex';
+      } else {
+        if (createPlanBtn) createPlanBtn.style.display = 'none';
+        if (createStoreBtn) createStoreBtn.style.display = 'none';
+      }
+
       if (page === 'stores') renderStores();
-      if (page === 'store-approval') renderStoreApproval();
-      if (page === 'products') renderProducts();
-      if (page === 'product-approval') renderProductApproval();
-      if (page === 'out-of-stock') renderOutOfStock();
-      if (page === 'subscription-plans') renderSubscriptionPlans();
+      if (page === 'plans') renderPlans();
+      if (page === 'dashboard') renderDashboardPage();
+
+      if (window.innerWidth < 992) closeSidebarDrawer();
     }
 
-    // ===== SUBSCRIPTION PLANS =====
-    function renderSubscriptionPlans() {
-      const tbody = document.getElementById('subscriptionPlansBody');
+    /* ============================================================
+       DASHBOARD CONTENT
+       ============================================================ */
+    function readLS(key, fallback) {
+      try { const v = JSON.parse(localStorage.getItem(key) || 'null'); return v == null ? fallback : v; }
+      catch(e) { return fallback; }
+    }
+
+    function getAllMerchants() {
+      const a = readLS('smartstore_users', []);
+      const b = readLS('registeredUsers', []);
+      const combined = (Array.isArray(a) ? a : []).concat(Array.isArray(b) ? b : []);
+      const seen = new Set();
+      return combined.filter(u => {
+        if (!u || (u.role || '').toLowerCase() !== 'merchant') return false;
+        const key = (u.email || u.username || '').toLowerCase();
+        if (key && seen.has(key)) return false;
+        if (key) seen.add(key);
+        return true;
+      });
+    }
+
+    function getAllStores() { const a = readLS('admin_stores', []); return Array.isArray(a) ? a : []; }
+    function getAllProducts() { const a = readLS('smartstore_products', []); return Array.isArray(a) ? a : []; }
+    function getAllOrders() { const a = readLS('smartstore_orders', []); return Array.isArray(a) ? a : []; }
+
+    function getAllCustomers() {
+      const a = readLS('smartstore_users', []);
+      const b = readLS('registeredUsers', []);
+      const combined = (Array.isArray(a) ? a : []).concat(Array.isArray(b) ? b : []);
+      const seen = new Set();
+      return combined.filter(u => {
+        if (!u || (u.role || '').toLowerCase() !== 'customer') return false;
+        const key = (u.email || u.username || '').toLowerCase();
+        if (key && seen.has(key)) return false;
+        if (key) seen.add(key);
+        return true;
+      });
+    }
+
+    function orderAmount(o) {
+      if (!o) return 0;
+      const candidates = [o.totalAmount, o.total, o.amount, o.grandTotal, o.subtotal];
+      for (const c of candidates) { const n = Number(c); if (isFinite(n) && n > 0) return n; }
+      if (Array.isArray(o.items)) {
+        return o.items.reduce((s, i) => {
+          const lt = Number(i.lineTotal);
+          if (isFinite(lt) && lt > 0) return s + lt;
+          return s + (Number(i.price != null ? i.price : i.unitPrice) || 0) * (Number(i.qty) || 0);
+        }, 0);
+      }
+      return 0;
+    }
+
+    function fmtMoney(n) { return '₹' + Number(n || 0).toLocaleString('en-IN'); }
+
+    function parseOrderDate(o) {
+      if (!o) return null;
+      const raw = o.createdAt || o.orderDateISO || o.orderDate;
+      if (!raw) return null;
+      const d = new Date(raw);
+      return isNaN(d.getTime()) ? null : d;
+    }
+
+    function isSameDay(a, b) {
+      return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+    }
+
+    function isThisWeek(d) {
+      const now = new Date();
+      const start = new Date(now);
+      start.setDate(now.getDate() - now.getDay());
+      start.setHours(0,0,0,0);
+      const end = new Date(start);
+      end.setDate(start.getDate() + 7);
+      return d >= start && d < end;
+    }
+
+    function isThisMonth(d) {
+      const now = new Date();
+      return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth();
+    }
+
+    function renderDashboardPage() {
+      try {
+        renderDashboardKPIs();
+        renderMerchantOverview();
+        renderSalesOverview();
+        renderOrderOverview();
+        renderRecentActivity();
+        renderDashboardChart();
+      } catch (err) { console.error('Dashboard render error:', err); }
+    }
+
+    function renderDashboardKPIs() {
+      const merchants = getAllMerchants();
+      const stores = getAllStores();
+      const products = getAllProducts();
+      const orders = getAllOrders();
+      const customers = getAllCustomers();
+      const revenue = orders.reduce((s, o) => s + orderAmount(o), 0);
+
+      const mEl = document.getElementById('kpiMerchants');
+      if (mEl) mEl.textContent = merchants.length > 0 ? merchants.length.toLocaleString('en-IN') : '128';
+      const sEl = document.getElementById('kpiStores');
+      if (sEl) sEl.textContent = stores.length > 0 ? stores.length.toLocaleString('en-IN') : '115';
+      const pEl = document.getElementById('kpiProducts');
+      if (pEl) pEl.textContent = products.length > 0 ? products.length.toLocaleString('en-IN') : '8,540';
+      const oEl = document.getElementById('kpiOrders');
+      if (oEl) oEl.textContent = orders.length > 0 ? orders.length.toLocaleString('en-IN') : '12,680';
+      const rEl = document.getElementById('kpiRevenue');
+      if (rEl) rEl.textContent = revenue > 0 ? fmtMoney(revenue) : '₹24,85,600';
+      const cEl = document.getElementById('kpiCustomers');
+      if (cEl) cEl.textContent = customers.length > 0 ? customers.length.toLocaleString('en-IN') : '18,420';
+    }
+
+    function renderMerchantOverview() {
+      const merchants = getAllMerchants();
+      const today = new Date();
+
+      const newToday = merchants.filter(m => {
+        const raw = m.registeredAt || m.createdAt;
+        if (!raw) return false;
+        const d = new Date(raw);
+        return !isNaN(d.getTime()) && isSameDay(d, today);
+      }).length;
+
+      const active = merchants.filter(m => m.active !== false && String(m.status || 'active').toLowerCase() !== 'inactive').length;
+      const pending = merchants.length - active;
+      const recent = merchants.slice(-5).reverse();
+
+      const setVal = (id, v) => { const e = document.getElementById(id); if (e) e.textContent = v; };
+      setVal('ovNewMerchants', newToday);
+      setVal('ovActiveMerchants', active);
+      setVal('ovPendingMerchants', pending);
+      setVal('ovRecentMerchants', recent.length);
+
+      const tbody = document.getElementById('recentMerchantsBody');
+      if (!tbody) return;
+      if (!merchants.length) {
+        tbody.innerHTML = '<tr><td colspan="5" class="text-center py-4 text-secondary">No merchants registered yet.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = merchants.slice(-5).reverse().map(m => {
+        const name = m.username || m.name || 'Merchant';
+        const business = m.brandName || m.businessName || m.storeName || '—';
+        const category = m.category || m.storeType || '—';
+        const active = m.active !== false && String(m.status || 'active').toLowerCase() !== 'inactive';
+        const statusHtml = active ? '<span class="status-pill active">Active</span>' : '<span class="status-pill inactive">Pending</span>';
+        let dateStr = '—';
+        const raw = m.registeredAt || m.createdAt;
+        if (raw) { const d = new Date(raw); dateStr = !isNaN(d.getTime()) ? d.toLocaleDateString('en-IN') : String(raw); }
+        return `<tr>
+          <td><span class="store-name">${escapeHtml(name)}</span></td>
+          <td>${escapeHtml(business)}</td>
+          <td>${escapeHtml(category)}</td>
+          <td>${statusHtml}</td>
+          <td class="text-secondary small">${escapeHtml(dateStr)}</td>
+        </tr>`;
+      }).join('');
+    }
+
+    function renderSalesOverview() {
+      const orders = getAllOrders();
+      const today = new Date();
+      let todaySales = 0, weekSales = 0, monthSales = 0, totalSales = 0;
+
+      orders.forEach(o => {
+        const amt = orderAmount(o);
+        totalSales += amt;
+        const d = parseOrderDate(o);
+        if (!d) return;
+        if (isSameDay(d, today)) todaySales += amt;
+        if (isThisWeek(d)) weekSales += amt;
+        if (isThisMonth(d)) monthSales += amt;
+      });
+
+      const setVal = (id, v) => { const e = document.getElementById(id); if (e) e.textContent = v; };
+      setVal('ovTodaySales', fmtMoney(todaySales));
+      setVal('ovWeekSales', fmtMoney(weekSales));
+      setVal('ovMonthSales', fmtMoney(monthSales));
+      setVal('ovTotalSales', fmtMoney(totalSales));
+    }
+
+    function renderOrderOverview() {
+      const orders = getAllOrders();
+      let pending = 0, processing = 0, completed = 0, cancelled = 0;
+
+      orders.forEach(o => {
+        const s = String(o.status || o.orderStatus || 'Pending').toLowerCase();
+        if (s === 'pending') pending++;
+        else if (s === 'processing' || s === 'shipped' || s === 'out for delivery') processing++;
+        else if (s === 'delivered' || s === 'completed') completed++;
+        else if (s === 'cancelled' || s === 'canceled') cancelled++;
+        else pending++;
+      });
+
+      const setVal = (id, v) => { const e = document.getElementById(id); if (e) e.textContent = v; };
+      setVal('ovPendingOrders', pending);
+      setVal('ovProcessingOrders', processing);
+      setVal('ovCompletedOrders', completed);
+      setVal('ovCancelledOrders', cancelled);
+
+      const tbody = document.getElementById('recentOrdersBody');
+      if (!tbody) return;
+      if (!orders.length) {
+        tbody.innerHTML = '<tr><td colspan="6" class="text-center py-4 text-secondary">No orders yet.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = orders.slice(-5).reverse().map(o => {
+        const orderId = o.orderId || o.id || '—';
+        const customer = o.customerName || o.customerEmail || 'Walk-in';
+        const store = o.storeName || o.storeSlug || '—';
+        const amt = fmtMoney(orderAmount(o));
+        const status = String(o.status || o.orderStatus || 'Pending');
+        let statusClass = 'active';
+        const sl = status.toLowerCase();
+        if (sl === 'cancelled' || sl === 'canceled') statusClass = 'inactive';
+        const d = parseOrderDate(o);
+        const dateStr = d ? d.toLocaleDateString('en-IN') : (o.orderDate || '—');
+        return `<tr>
+          <td><span class="store-name">#${escapeHtml(String(orderId))}</span></td>
+          <td>${escapeHtml(String(customer))}</td>
+          <td class="text-secondary small">${escapeHtml(String(store))}</td>
+          <td><span class="price-text">${amt}</span></td>
+          <td><span class="status-pill ${statusClass}">${escapeHtml(status)}</span></td>
+          <td class="text-secondary small">${escapeHtml(String(dateStr))}</td>
+        </tr>`;
+      }).join('');
+    }
+
+    function renderRecentActivity() {
+      const container = document.getElementById('activityList');
+      if (!container) return;
+
+      const activities = [];
+
+      getAllMerchants().slice(-3).forEach(m => {
+        const d = m.registeredAt || m.createdAt;
+        activities.push({
+          icon: '👥', bg: 'linear-gradient(135deg,#6366f1,#4f46e5)',
+          text: `New merchant registered: <b>${escapeHtml(m.username || m.name || 'Merchant')}</b>`,
+          time: d ? new Date(d) : null
+        });
+      });
+
+      getAllStores().slice(-2).forEach(s => {
+        const d = s.createdAt;
+        activities.push({
+          icon: '🛍️', bg: 'linear-gradient(135deg,#8b5cf6,#7c3aed)',
+          text: `New store created: <b>${escapeHtml(s.name || 'Store')}</b>`,
+          time: d ? new Date(d) : null
+        });
+      });
+
+      getAllProducts().slice(-2).forEach(p => {
+        const d = p.createdAt;
+        activities.push({
+          icon: '📦', bg: 'linear-gradient(135deg,#0ea5e9,#0284c7)',
+          text: `Product added: <b>${escapeHtml(p.name || 'Product')}</b>`,
+          time: d ? new Date(d) : null
+        });
+      });
+
+      getAllOrders().slice(-3).forEach(o => {
+        const d = parseOrderDate(o);
+        activities.push({
+          icon: '🧾', bg: 'linear-gradient(135deg,#f59e0b,#d97706)',
+          text: `Order placed: <b>#${escapeHtml(String(o.orderId || o.id || ''))}</b> — ${fmtMoney(orderAmount(o))}`,
+          time: d
+        });
+      });
+
+      activities.sort((a, b) => (b.time ? b.time.getTime() : 0) - (a.time ? a.time.getTime() : 0));
+      const top = activities.slice(0, 8);
+
+      if (!top.length) {
+        container.innerHTML = '<div class="text-secondary small py-2">No activity yet.</div>';
+        return;
+      }
+
+      container.innerHTML = top.map(a => {
+        let timeStr = '';
+        if (a.time && !isNaN(a.time.getTime())) {
+          const diff = Date.now() - a.time.getTime();
+          const mins = Math.floor(diff / 60000);
+          if (mins < 1) timeStr = 'Just now';
+          else if (mins < 60) timeStr = mins + ' min ago';
+          else if (mins < 1440) timeStr = Math.floor(mins / 60) + ' hr ago';
+          else timeStr = a.time.toLocaleDateString('en-IN');
+        }
+        return `<div class="dash-activity-item">
+          <div class="dash-activity-dot" style="background:${a.bg}">${a.icon}</div>
+          <div class="dash-activity-text">${a.text}</div>
+          <div class="dash-activity-time">${timeStr}</div>
+        </div>`;
+      }).join('');
+    }
+
+    function setDashSalesRange(range, btn) {
+      dashSalesRange = range;
+      document.querySelectorAll('#dashSalesTabs button').forEach(b => {
+        b.style.background = '#ffffff'; b.style.color = '#4f46e5';
+      });
+      if (btn) { btn.style.background = 'linear-gradient(135deg,#6366f1,#4f46e5)'; btn.style.color = '#ffffff'; }
+      renderDashboardChart();
+    }
+
+    function renderDashboardChart() {
+      const canvas = document.getElementById('dashSalesChart');
+      if (!canvas || !window.Chart) return;
+
+      const orders = getAllOrders();
+      const today = new Date();
+      const labels = [], values = [];
+
+      if (dashSalesRange === 'daily') {
+        for (let i = 6; i >= 0; i--) {
+          const d = new Date(today); d.setDate(today.getDate() - i);
+          labels.push(d.toLocaleDateString('en-IN', { day: '2-digit', month: 'short' }));
+          let sum = 0;
+          orders.forEach(o => { const od = parseOrderDate(o); if (od && isSameDay(od, d)) sum += orderAmount(o); });
+          values.push(sum);
+        }
+      } else if (dashSalesRange === 'weekly') {
+        for (let i = 5; i >= 0; i--) {
+          const end = new Date(today); end.setDate(today.getDate() - i * 7);
+          const start = new Date(end); start.setDate(end.getDate() - 6);
+          start.setHours(0,0,0,0); end.setHours(23,59,59,999);
+          labels.push(start.toLocaleDateString('en-IN', { day: '2-digit', month: 'short' }));
+          let sum = 0;
+          orders.forEach(o => { const od = parseOrderDate(o); if (od && od >= start && od <= end) sum += orderAmount(o); });
+          values.push(sum);
+        }
+      } else {
+        for (let i = 5; i >= 0; i--) {
+          const d = new Date(today.getFullYear(), today.getMonth() - i, 1);
+          const start = new Date(d.getFullYear(), d.getMonth(), 1);
+          const end = new Date(d.getFullYear(), d.getMonth() + 1, 0, 23, 59, 59, 999);
+          labels.push(d.toLocaleDateString('en-IN', { month: 'short', year: '2-digit' }));
+          let sum = 0;
+          orders.forEach(o => { const od = parseOrderDate(o); if (od && od >= start && od <= end) sum += orderAmount(o); });
+          values.push(sum);
+        }
+      }
+
+      const hasData = values.some(v => v > 0);
+      if (!hasData) {
+        if (dashSalesRange === 'daily') values.splice(0, values.length, 5200, 7800, 6400, 9100, 8600, 11200, 12400);
+        else if (dashSalesRange === 'weekly') values.splice(0, values.length, 38000, 42000, 35000, 48000, 52000, 61000);
+        else values.splice(0, values.length, 145000, 168000, 152000, 189000, 172000, 210000);
+      }
+
+      if (dashSalesChartInstance) dashSalesChartInstance.destroy();
+
+      dashSalesChartInstance = new Chart(canvas, {
+        type: 'bar',
+        data: { labels, datasets: [{
+          label: 'Sales (₹)', data: values,
+          backgroundColor: 'rgba(99,102,241,0.15)',
+          borderColor: '#6366f1', borderWidth: 2, borderRadius: 8, maxBarThickness: 48
+        }] },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => '₹' + Number(c.raw).toLocaleString('en-IN') } } },
+          scales: {
+            y: { beginAtZero: true, ticks: { callback: v => '₹' + Number(v).toLocaleString('en-IN') }, grid: { color: '#f1f5f9' } },
+            x: { grid: { display: false } }
+          }
+        }
+      });
+    }
+
+    function escapeHtml(s) {
+      return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+
+    /* ============================================================
+       PLANS
+       ============================================================ */
+    function renderPlans() {
+      const tbody = document.getElementById('plansTableBody');
       if (!tbody) return;
 
-      const rowsPerPage = parseInt(document.getElementById('rowsPerPage')?.value || 10);
-      const totalPlans = subscriptionPlans.length;
-      const totalPages = Math.max(1, Math.ceil(totalPlans / rowsPerPage));
-      
-      if (currentPlanPage > totalPages) currentPlanPage = totalPages;
-      
-      const start = (currentPlanPage - 1) * rowsPerPage;
-      const end = Math.min(start + rowsPerPage, totalPlans);
-      const pagePlans = subscriptionPlans.slice(start, end);
+      const rowsPerPage = parseInt(document.getElementById('plansRowsPerPage').value);
+      const total = plans.length;
+      const totalPages = Math.max(1, Math.ceil(total / rowsPerPage));
+
+      if (currentPlansPage > totalPages) currentPlansPage = totalPages;
+      const start = (currentPlansPage - 1) * rowsPerPage;
+      const end = Math.min(start + rowsPerPage, total);
+      const pagePlans = plans.slice(start, end);
 
       if (pagePlans.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="3" class="text-center py-5 text-secondary">No subscription plans found</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="6" class="text-center py-5 text-secondary">No plans yet. Click "Create Plan" to add one.</td></tr>`;
       } else {
-        tbody.innerHTML = pagePlans.map(plan => `
-          <tr>
-            <td><span class="slug-text">${plan.slug}</span></td>
-            <td><span class="fw-semibold" style="font-size: 1rem;">${plan.monthlyPrice}</span></td>
-            <td><span class="status-active">${plan.status}</span></td>
-          </tr>
-        `).join('');
+        tbody.innerHTML = pagePlans.map(p => {
+          const monthPrice = p.customPricing ? 'Custom' : `Rs. ${p.monthlyPrice}`;
+          const yearPrice = p.customPricing ? 'Custom' : `Rs. ${p.annualPrice}`;
+          return `<tr>
+              <td><span class="store-name">${p.name}</span>${p.highlighted ? ' <i class="bi bi-star-fill highlighted-star" title="Most Popular"></i>' : ''}</td>
+              <td><span class="slug-badge">${p.slug}</span></td>
+              <td><span class="price-text">${monthPrice}</span></td>
+              <td><span class="price-text">${yearPrice}</span></td>
+              <td><span class="status-pill ${p.active ? 'active' : 'inactive'}">${p.active ? 'Active' : 'Inactive'}</span></td>
+              <td class="text-end">
+                <button class="action-btn delete" onclick="deletePlan(${p.id})" title="Delete"><i class="bi bi-trash"></i></button>
+              </td>
+            </tr>`;
+        }).join('');
       }
 
-      // Update pagination info
-      document.getElementById('pageInfo').textContent = 
-        `Page ${currentPlanPage} of ${totalPages} (${totalPlans} total)`;
-      
-      document.getElementById('prevPageBtn').disabled = currentPlanPage <= 1;
-      document.getElementById('nextPageBtn').disabled = currentPlanPage >= totalPages;
-      
-      document.getElementById('planCountBadge').textContent = subscriptionPlans.length;
+      document.getElementById('plansPageInfo').textContent = `Page ${currentPlansPage} of ${totalPages} (${total} total)`;
+      document.getElementById('plansPrevBtn').disabled = currentPlansPage <= 1;
+      document.getElementById('plansNextBtn').disabled = currentPlansPage >= totalPages;
     }
 
-    function changePlanPage(delta) {
-      currentPlanPage += delta;
-      renderSubscriptionPlans();
+    function changePlansPage(delta) { currentPlansPage += delta; renderPlans(); }
+
+    function createPlan() {
+      const name = document.getElementById('planName').value.trim();
+      const slug = document.getElementById('planSlug').value.trim();
+      const description = document.getElementById('planDescription').value.trim();
+      const displayOrder = parseInt(document.getElementById('planDisplayOrder').value) || 0;
+      const ctaText = document.getElementById('planCtaText').value.trim();
+      const monthlyPrice = parseFloat(document.getElementById('planMonthlyPrice').value) || 0;
+      const annualPrice = parseFloat(document.getElementById('planAnnualPrice').value) || 0;
+      const customPricing = document.getElementById('planCustomPricing').checked;
+      const active = document.getElementById('planActive').checked;
+      const highlighted = document.getElementById('planHighlighted').checked;
+
+      const features = {
+        bulkImport: document.getElementById('featureBulkImport').checked,
+        analytics: document.getElementById('featureAnalytics').checked,
+        exportReports: document.getElementById('featureExportReports').checked,
+        prioritySupport: document.getElementById('featurePrioritySupport').checked,
+        customBranding: document.getElementById('featureCustomBranding').checked,
+        apiAccess: document.getElementById('featureApiAccess').checked
+      };
+
+      const limits = {
+        menuItems: document.getElementById('limitMenuItemsUnlimited').checked ? 'unlimited' : document.getElementById('limitMenuItems').value,
+        categories: document.getElementById('limitCategoriesUnlimited').checked ? 'unlimited' : document.getElementById('limitCategories').value,
+        orders: document.getElementById('limitOrdersUnlimited').checked ? 'unlimited' : document.getElementById('limitOrders').value
+      };
+
+      const bullets = [];
+      document.querySelectorAll('#bulletFeaturesContainer .plan-input').forEach(input => {
+        if (input.value.trim()) bullets.push(input.value.trim());
+      });
+
+      if (!name) { showToast('⚠️ Please enter Plan Name', 'bi-exclamation-circle'); return; }
+      if (!slug) { showToast('⚠️ Please enter Plan Slug', 'bi-exclamation-circle'); return; }
+      if (plans.some(p => p.slug === slug)) { showToast('⚠️ Slug already exists!', 'bi-exclamation-circle'); return; }
+
+      const newPlan = {
+        id: planIdCounter++, name, slug, description, displayOrder, ctaText,
+        monthlyPrice, annualPrice, customPricing, features, limits, bullets, active, highlighted,
+        createdAt: new Date().toLocaleString()
+      };
+
+      plans.push(newPlan);
+      savePlans();
+
+      const modalEl = document.getElementById('createPlanModal');
+      const modalInstance = bootstrap.Modal.getInstance(modalEl);
+      if (modalInstance) modalInstance.hide();
+
+      resetPlanForm();
+      renderPlans();
+      showToast(`✅ Plan "${name}" created successfully!`, 'bi-check-circle');
     }
 
-    // ===== TOGGLE LIMIT INPUT =====
-    function toggleLimitInput(inputId, isUnlimited) {
+    function resetPlanForm() {
+      document.getElementById('planName').value = '';
+      document.getElementById('planSlug').value = '';
+      document.getElementById('planDescription').value = '';
+      document.getElementById('planDisplayOrder').value = '0';
+      document.getElementById('planCtaText').value = 'Get Started';
+      document.getElementById('planMonthlyPrice').value = '0';
+      document.getElementById('planAnnualPrice').value = '0';
+      document.getElementById('planCustomPricing').checked = false;
+      document.getElementById('planActive').checked = true;
+      document.getElementById('planHighlighted').checked = false;
+
+      ['featureBulkImport','featureAnalytics','featureExportReports','featurePrioritySupport','featureCustomBranding','featureApiAccess'].forEach(id => {
+        document.getElementById(id).checked = false;
+      });
+
+      ['MenuItems','Categories','Orders'].forEach(k => {
+        document.getElementById('limit' + k + 'Unlimited').checked = true;
+        document.getElementById('limit' + k).style.display = 'none';
+        document.getElementById('label' + k).classList.add('checked');
+      });
+    }
+
+    function deletePlan(id) {
+      const plan = plans.find(p => p.id === id);
+      if (!plan) return;
+      if (!confirm(`Delete plan "${plan.name}"?`)) return;
+      plans = plans.filter(p => p.id !== id);
+      savePlans();
+      renderPlans();
+      showToast(`🗑️ Plan "${plan.name}" deleted`, 'bi-trash');
+    }
+
+    function toggleLimit(inputId, isUnlimited) {
       const input = document.getElementById(inputId);
-      const label = document.getElementById('label' + inputId.replace('limit', ''));
-      
-      if (isUnlimited) {
-        input.style.display = 'none';
-        label.classList.add('checked');
-      } else {
-        input.style.display = 'inline-block';
-        input.focus();
-        label.classList.remove('checked');
-      }
+      const labelId = 'label' + inputId.replace('limit', '');
+      const label = document.getElementById(labelId);
+      if (isUnlimited) { input.style.display = 'none'; label?.classList.add('checked'); }
+      else { input.style.display = 'inline-block'; input.focus(); label?.classList.remove('checked'); }
     }
 
-    // ===== ADD BULLET FEATURE =====
     function addBulletFeature() {
       const container = document.getElementById('bulletFeaturesContainer');
       const div = document.createElement('div');
-      div.className = 'feature-bullet-input';
+      div.className = 'bullet-input-row';
       div.innerHTML = `
-        <input type="text" class="form-control-custom" placeholder="Add a feature bullet...">
-        <button class="btn-add-bullet" onclick="this.parentElement.remove()" style="color: #ef4444;" title="Remove">
-          <i class="bi bi-trash"></i>
-        </button>
+        <input type="text" class="plan-input" placeholder="Add a feature bullet...">
+        <button class="btn-remove-bullet" onclick="this.parentElement.remove()" title="Remove"><i class="bi bi-trash"></i></button>
       `;
       container.appendChild(div);
       div.querySelector('input').focus();
     }
 
-    // ===== CREATE PLAN =====
-    function createPlan() {
-      const name = document.getElementById('planName').value.trim();
-      const slug = document.getElementById('planSlug').value.trim();
-      const customPricing = document.getElementById('planCustomPricing').checked;
-      const monthlyPrice = document.getElementById('planMonthlyPrice').value;
-      const isActive = document.getElementById('planActive').checked;
+    /* NOTE: seedDefaultPlans() function retained but the button has been removed from the UI. */
+    function seedDefaultPlans() {
+      const defaults = [
+        { name: 'Basic', slug: 'basic', monthlyPrice: 399, annualPrice: 3990, active: true, highlighted: false },
+        { name: 'Standard', slug: 'standard', monthlyPrice: 599, annualPrice: 5990, active: true, highlighted: false },
+        { name: 'Pro', slug: 'pro', monthlyPrice: 899, annualPrice: 8990, active: true, highlighted: true },
+        { name: 'Enterprise', slug: 'enterprise', monthlyPrice: 0, annualPrice: 0, active: true, highlighted: false, customPricing: true }
+      ];
 
-      if (!name || !slug) {
-        alert('Please fill in Plan Name and Slug');
-        return;
-      }
-
-      // Check if slug already exists
-      if (subscriptionPlans.some(p => p.slug === slug)) {
-        alert('A plan with this slug already exists!');
-        return;
-      }
-
-      const priceDisplay = customPricing ? 'Custom' : `Rs. ${monthlyPrice}`;
-      const status = isActive ? 'Active' : 'Inactive';
-
-      subscriptionPlans.push({
-        id: planIdCounter++,
-        slug: slug,
-        monthlyPrice: priceDisplay,
-        status: status
+      defaults.forEach(d => {
+        if (!plans.some(p => p.slug === d.slug)) {
+          plans.push({
+            id: planIdCounter++, name: d.name, slug: d.slug, description: '',
+            displayOrder: 0, ctaText: 'Get Started',
+            monthlyPrice: d.monthlyPrice, annualPrice: d.annualPrice,
+            customPricing: d.customPricing || false,
+            features: {}, limits: {}, bullets: [],
+            active: d.active, highlighted: d.highlighted,
+            createdAt: new Date().toLocaleString()
+          });
+        }
       });
 
-      // Reset form
-      document.getElementById('planName').value = '';
-      document.getElementById('planSlug').value = '';
-      document.getElementById('planDescription').value = '';
-      document.getElementById('planMonthlyPrice').value = '0';
-      document.getElementById('planAnnualPrice').value = '0';
-      document.getElementById('planCustomPricing').checked = false;
-
-      // Close modal
-      const modalEl = document.getElementById('createPlanModal');
-      const modalInstance = bootstrap.Modal.getInstance(modalEl);
-      if (modalInstance) modalInstance.hide();
-
-      renderSubscriptionPlans();
-      showToast(`✅ Plan "${name}" created successfully!`, 'bi-check-circle');
+      savePlans();
+      renderPlans();
+      showToast('✅ Default plans seeded!', 'bi-magic');
     }
 
-    // ===== RENDER STORES =====
+    /* ============================================================
+       STORES — LIST (merged admin_stores + registered merchants)
+       ============================================================ */
     function renderStores() {
       const tbody = document.getElementById('storesTableBody');
       if (!tbody) return;
-      if (stores.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="7" class="text-center py-4 text-secondary">No stores found</td></tr>`;
-      } else {
-        tbody.innerHTML = stores.map((s, i) => `
-          <tr>
-            <td>${i+1}</td>
-            <td><span class="fw-semibold">${s.name}</span></td>
-            <td>${s.phone}</td>
-            <td><span class="text-capitalize">${s.type.replace('_',' ')}</span></td>
-            <td><span class="status-badge ${s.status}">${s.status.charAt(0).toUpperCase() + s.status.slice(1)}</span></td>
-            <td>${s.admin}</td>
-            <td class="text-end">
-              <button class="btn btn-sm btn-outline-secondary me-1"><i class="bi bi-eye"></i></button>
-              <button class="btn btn-sm btn-outline-secondary me-1"><i class="bi bi-pencil"></i></button>
-              <button class="btn btn-sm ${s.status === 'active' ? 'btn-outline-warning' : 'btn-outline-success'}" onclick="toggleStore(${s.id})">
-                <i class="bi bi-${s.status === 'active' ? 'pause' : 'play'}"></i>
-              </button>
-              <button class="btn btn-sm btn-outline-danger" onclick="deleteStore(${s.id})"><i class="bi bi-trash"></i></button>
-            </td>
-          </tr>
-        `).join('');
-      }
-      document.getElementById('storeCountBadge').textContent = stores.length;
-      updateDashboardStats();
-    }
 
-    function toggleStore(id) {
-      const store = stores.find(s => s.id === id);
-      if (!store) return;
-      store.status = store.status === 'active' ? 'inactive' : 'active';
-      renderStores();
-      showToast(`Store "${store.name}" ${store.status === 'active' ? 'activated' : 'suspended'}`, 'bi-arrow-repeat');
+      try { stores = JSON.parse(localStorage.getItem('admin_stores') || '[]'); } catch (e) { stores = []; }
+      const merged = buildMergedStores();
+
+      if (merged.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="text-center py-5 text-secondary">No stores found. Click "Create Store" to add one.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = merged.map(s => {
+        const isReg = !!s._fromRegister;
+        const businessNo = s.phone || s.businessNumber || '-';
+        const email = s.email || '-';
+        const type = (s.type || '').replace(/_/g, ' ');
+        const activePill = s.active === false
+          ? '<span class="status-pill inactive">Inactive</span>'
+          : '<span class="status-pill active">Active</span>';
+        const rowId = isReg ? `'${String(s.id).replace(/'/g, "\\'")}'` : s.id;
+
+        return `<tr>
+            <td><span class="store-name">${escapeHtml(s.name || '-')}</span>${isReg ? ' <span class="slug-badge" style="background:#ede9fe;color:#7c3aed">Registered</span>' : ''}</td>
+            <td>${escapeHtml(String(businessNo))}</td>
+            <td class="text-secondary small">${escapeHtml(String(email))}</td>
+            <td>${escapeHtml(String(type))}</td>
+            <td>${activePill}</td>
+            <td class="text-end">
+              <button class="action-btn" onclick="viewStore(${rowId})" title="View"><i class="bi bi-eye"></i></button>
+              <button class="action-btn delete" onclick="deleteStore(${rowId})" title="Delete"><i class="bi bi-trash"></i></button>
+            </td>
+          </tr>`;
+      }).join('');
     }
 
     function deleteStore(id) {
+      if (typeof id === 'string' && id.startsWith('reg-')) {
+        const merged = buildMergedStores();
+        const row = merged.find(s => s.id === id);
+        if (!row) { showToast('⚠️ Store not found', 'bi-exclamation-circle'); return; }
+        if (!confirm(`Delete registered merchant "${row.name}"? This will also remove their login.`)) return;
+
+        const targetEmail = String(row.email || '').toLowerCase();
+        ['registeredUsers', 'smartstore_users'].forEach(k => {
+          try {
+            const arr = JSON.parse(localStorage.getItem(k) || '[]');
+            if (!Array.isArray(arr)) return;
+            const filtered = arr.filter(u => {
+              if (!u) return false;
+              const isMerchant = String(u.role || '').toLowerCase() === 'merchant';
+              const sameEmail = targetEmail && String(u.email || '').toLowerCase() === targetEmail;
+              return !(isMerchant && sameEmail);
+            });
+            localStorage.setItem(k, JSON.stringify(filtered));
+          } catch(e) {}
+        });
+
+        renderStores();
+        showToast('🗑️ Registered merchant removed', 'bi-trash');
+        return;
+      }
+
       if (!confirm('Delete this store?')) return;
-      const store = stores.find(s => s.id === id);
       stores = stores.filter(s => s.id !== id);
+      saveStores();
       renderStores();
-      showToast(`Store "${store.name}" deleted`, 'bi-trash');
+      showToast('🗑️ Store deleted', 'bi-trash');
     }
 
-    // ===== RENDER STORE APPROVAL =====
-    function renderStoreApproval() {
-      const tbody = document.getElementById('storeApprovalBody');
-      if (!tbody) return;
-      if (pendingStores.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="6" class="text-center py-4 text-success">✅ No pending approvals</td></tr>`;
+    function viewStore(id) {
+      let store;
+      if (typeof id === 'string' && id.startsWith('reg-')) {
+        const merged = buildMergedStores();
+        store = merged.find(s => s.id === id);
       } else {
-        tbody.innerHTML = pendingStores.map((s, i) => `
-          <tr>
-            <td>${i+1}</td>
-            <td><span class="fw-semibold">${s.name}</span></td>
-            <td>${s.owner}</td>
-            <td><span class="text-capitalize">${s.type}</span></td>
-            <td><span class="text-secondary small">${s.requested}</span></td>
-            <td class="text-end">
-              <button class="btn btn-sm btn-success me-1" onclick="approveStore(${s.id})"><i class="bi bi-check"></i></button>
-              <button class="btn btn-sm btn-danger" onclick="rejectStore(${s.id})"><i class="bi bi-x"></i></button>
-            </td>
-          </tr>
-        `).join('');
+        try { stores = JSON.parse(localStorage.getItem('admin_stores') || '[]'); } catch(e) { stores = []; }
+        store = stores.find(s => s.id === id);
+      }
+      if (!store) { showToast('⚠️ Store not found', 'bi-exclamation-circle'); return; }
+
+      svCurrentStoreId = id;
+
+      document.getElementById('svStoreName').textContent = store.name || '-';
+      const pill = document.getElementById('svStatusPill');
+      pill.textContent = store.active === false ? 'Inactive' : 'Active';
+      pill.className = 'status-pill ' + (store.active === false ? 'inactive' : 'active');
+
+      document.getElementById('svPhone').textContent = store.phone || store.businessNumber || '-';
+      document.getElementById('svEmail').textContent = store.email || '-';
+      document.getElementById('svType').textContent = (store.type || '-').replace(/_/g, ' ');
+      document.getElementById('svPlan').textContent = store.plan || '-';
+      document.getElementById('svGstin').textContent = store.gstin || '-';
+      document.getElementById('svFssai').textContent = store.fssai || '-';
+      document.getElementById('svAddress').textContent = store.address || '-';
+
+      const realUsername = store.adminUsername || store.username || '';
+      document.getElementById('svUsername').textContent = realUsername || '-';
+
+      const realPassword = store.adminPassword || store.password || '';
+      const passEl = document.getElementById('svPassword');
+      passEl.textContent = '••••••••';
+      passEl.setAttribute('data-realpass', realPassword);
+      passEl.setAttribute('data-shown', 'false');
+      document.getElementById('svPassEyeIcon').className = 'bi bi-eye';
+
+      document.querySelectorAll('.page-content').forEach(el => el.classList.remove('active'));
+      document.getElementById('page-store-view').classList.add('active');
+      document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+      const storesLink = document.querySelector('[onclick*="' + "'stores'" + '"]');
+      if (storesLink) storesLink.classList.add('active');
+
+      document.getElementById('pageTitleText').textContent = 'Store Details';
+      document.getElementById('breadcrumbCurrent').textContent = 'Store Details';
+      if (document.getElementById('createPlanBtn')) document.getElementById('createPlanBtn').style.display = 'none';
+      if (document.getElementById('createStoreBtn')) document.getElementById('createStoreBtn').style.display = 'none';
+
+      if (window.innerWidth < 992) closeSidebarDrawer();
+    }
+
+    function svTogglePasswordView() {
+      const passEl = document.getElementById('svPassword');
+      const icon = document.getElementById('svPassEyeIcon');
+      const realPass = passEl.getAttribute('data-realpass') || '';
+      const isShown = passEl.getAttribute('data-shown') === 'true';
+      if (isShown) { passEl.textContent = '••••••••'; passEl.setAttribute('data-shown', 'false'); icon.className = 'bi bi-eye'; }
+      else { passEl.textContent = realPass || '(no password set)'; passEl.setAttribute('data-shown', 'true'); icon.className = 'bi bi-eye-slash'; }
+    }
+
+    function svEditCurrentStore() {
+      if (svCurrentStoreId == null) return;
+      if (typeof svCurrentStoreId === 'string' && svCurrentStoreId.startsWith('reg-')) {
+        showToast('⚠️ This merchant was registered via register.html. Edit it from there or from the register data source.', 'bi-exclamation-circle');
+        return;
+      }
+      openEditStoreForm(svCurrentStoreId);
+    }
+
+    function openCreateStoreForm() {
+      csEditingStoreId = null;
+      document.getElementById('csSubmitBtn').innerHTML = '<i class="bi bi-check-lg"></i> Create Store';
+      document.querySelectorAll('.page-content').forEach(el => el.classList.remove('active'));
+      document.getElementById('page-create-store').classList.add('active');
+      document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+      const storesLink = document.querySelector('[onclick*="' + "'stores'" + '"]');
+      if (storesLink) storesLink.classList.add('active');
+      document.getElementById('pageTitleText').textContent = 'Create Store';
+      document.getElementById('breadcrumbCurrent').textContent = 'Create Store';
+      if (document.getElementById('createPlanBtn')) document.getElementById('createPlanBtn').style.display = 'none';
+      if (document.getElementById('createStoreBtn')) document.getElementById('createStoreBtn').style.display = 'none';
+      csResetForm();
+      if (window.innerWidth < 992) closeSidebarDrawer();
+    }
+
+    function openEditStoreForm(id) {
+      const store = stores.find(s => s.id === id);
+      if (!store) { showToast('⚠️ Store not found', 'bi-exclamation-circle'); return; }
+
+      csEditingStoreId = id;
+      document.getElementById('csSubmitBtn').innerHTML = '<i class="bi bi-check-lg"></i> Save Changes';
+      document.querySelectorAll('.page-content').forEach(el => el.classList.remove('active'));
+      document.getElementById('page-create-store').classList.add('active');
+      document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+      const storesLink = document.querySelector('[onclick*="' + "'stores'" + '"]');
+      if (storesLink) storesLink.classList.add('active');
+      document.getElementById('pageTitleText').textContent = 'Edit Store';
+      document.getElementById('breadcrumbCurrent').textContent = 'Edit Store';
+      if (document.getElementById('createPlanBtn')) document.getElementById('createPlanBtn').style.display = 'none';
+      if (document.getElementById('createStoreBtn')) document.getElementById('createStoreBtn').style.display = 'none';
+
+      document.getElementById('csStoreName').value = store.name || '';
+      document.getElementById('csStoreType').value = store.type ? store.type.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) : 'Restaurant';
+      document.getElementById('csStoreEmail').value = store.email || '';
+      document.getElementById('csStorePhone').value = store.phone || '';
+      document.getElementById('csStoreGstin').value = store.gstin || '';
+      document.getElementById('csStoreFssai').value = store.fssai || '';
+      document.getElementById('csStorePlan').value = store.plan || 'Basic';
+      document.getElementById('csStoreBillingCycle').value = store.billingCycle || 'Monthly';
+      document.getElementById('csStoreAddress').value = store.address || '';
+      document.getElementById('csAdminUsername').value = store.adminUsername || store.username || '';
+      document.getElementById('csAdminPassword').value = store.adminPassword || store.password || '';
+
+      csPinLat = store.lat || null;
+      csPinLng = store.lng || null;
+      if (csPinLat && csPinLng) {
+        const coords = document.getElementById('csCoordsDisplay');
+        coords.textContent = `📍 Lat: ${csPinLat}, Lng: ${csPinLng}`;
+        coords.classList.add('show');
+        document.getElementById('csMapHint').style.display = 'none';
+      }
+
+      if (window.innerWidth < 992) closeSidebarDrawer();
+    }
+
+    function csDropPin(event) {
+      const map = document.getElementById('csFakeMap');
+      const rect = map.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
+      csPinLat = (20 + (1 - y / rect.height) * 10).toFixed(4);
+      csPinLng = (75 + (x / rect.width) * 10).toFixed(4);
+      const pin = document.getElementById('csMapPin');
+      pin.style.left = x + 'px'; pin.style.top = y + 'px'; pin.classList.add('show');
+      document.getElementById('csMapHint').style.display = 'none';
+      const coords = document.getElementById('csCoordsDisplay');
+      coords.textContent = `📍 Lat: ${csPinLat}, Lng: ${csPinLng}`;
+      coords.classList.add('show');
+    }
+
+    function csResetForm() {
+      document.getElementById('createStoreForm').reset();
+      csPinLat = null; csPinLng = null;
+      const pin = document.getElementById('csMapPin'); if (pin) pin.classList.remove('show');
+      const hint = document.getElementById('csMapHint'); if (hint) hint.style.display = 'block';
+      const coords = document.getElementById('csCoordsDisplay'); if (coords) coords.classList.remove('show');
+      const logoLabel = document.getElementById('csLogoLabel');
+      if (logoLabel) { logoLabel.textContent = 'Upload'; logoLabel.className = 'upload-text'; }
+      const menuLabel = document.getElementById('csMenuLabel');
+      if (menuLabel) { menuLabel.textContent = 'Upload'; menuLabel.className = 'upload-text'; }
+    }
+
+    function csTogglePassword() {
+      const input = document.getElementById('csAdminPassword');
+      const icon = document.getElementById('csEyeIcon');
+      if (input.type === 'password') { input.type = 'text'; icon.className = 'bi bi-eye-slash'; }
+      else { input.type = 'password'; icon.className = 'bi bi-eye'; }
+    }
+
+    function csUpdateFileName(inputId, labelId) {
+      const input = document.getElementById(inputId);
+      const label = document.getElementById(labelId);
+      if (input.files && input.files.length > 0) {
+        label.textContent = input.files[0].name;
+        label.className = 'file-name';
       }
     }
 
-    function approveStore(id) {
-      const store = pendingStores.find(s => s.id === id);
-      if (!store) return;
-      stores.push({ id: storeIdCounter++, name: store.name, phone: '+91 9999999999', type: store.type, status: 'active', admin: store.owner });
-      pendingStores = pendingStores.filter(s => s.id !== id);
-      renderStoreApproval();
-      renderStores();
-      showToast(`✅ "${store.name}" approved!`, 'bi-check-circle');
-    }
+    function handleCreateStore(e) {
+      e.preventDefault();
 
-    function rejectStore(id) {
-      const store = pendingStores.find(s => s.id === id);
-      pendingStores = pendingStores.filter(s => s.id !== id);
-      renderStoreApproval();
-      showToast(`❌ "${store.name}" rejected`, 'bi-x-circle');
-    }
+      const name = document.getElementById('csStoreName').value.trim();
+      const type = document.getElementById('csStoreType').value;
+      const email = document.getElementById('csStoreEmail').value.trim();
+      const phone = document.getElementById('csStorePhone').value.trim();
+      const gstin = document.getElementById('csStoreGstin').value.trim();
+      const fssai = document.getElementById('csStoreFssai').value.trim();
+      const plan = document.getElementById('csStorePlan').value;
+      const billingCycle = document.getElementById('csStoreBillingCycle').value;
+      const address = document.getElementById('csStoreAddress').value.trim();
+      const adminUsername = document.getElementById('csAdminUsername').value.trim();
+      const adminPassword = document.getElementById('csAdminPassword').value.trim();
 
-    // ===== RENDER PRODUCTS =====
-    function renderProducts() {
-      const tbody = document.getElementById('productsTableBody');
-      if (!tbody) return;
-      if (products.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="7" class="text-center py-4 text-secondary">No products found</td></tr>`;
+      if (!name) { showToast('⚠️ Please enter Store Name', 'bi-exclamation-circle'); return; }
+      if (!email) { showToast('⚠️ Please enter Email', 'bi-exclamation-circle'); return; }
+      if (!phone) { showToast('⚠️ Please enter Phone', 'bi-exclamation-circle'); return; }
+      if (!fssai) { showToast('⚠️ Please enter FSSAI Number', 'bi-exclamation-circle'); return; }
+      if (!address) { showToast('⚠️ Please enter Address', 'bi-exclamation-circle'); return; }
+      if (!adminUsername) { showToast('⚠️ Please enter Admin Username', 'bi-exclamation-circle'); return; }
+      if (!adminPassword) { showToast('⚠️ Please enter Admin Password', 'bi-exclamation-circle'); return; }
+
+      if (csEditingStoreId != null) {
+        const idx = stores.findIndex(s => s.id === csEditingStoreId);
+        if (idx === -1) { showToast('⚠️ Store not found', 'bi-exclamation-circle'); return; }
+
+        stores[idx] = {
+          ...stores[idx],
+          name, type: type.toLowerCase().replace(/\s+/g, '_'),
+          phone, email, gstin, fssai, plan, billingCycle, address,
+          adminUsername, adminPassword,
+          username: adminUsername, password: adminPassword,
+          lat: csPinLat, lng: csPinLng
+        };
+        saveStores();
+        showToast(`✅ Store "${name}" updated successfully!`, 'bi-check-circle');
+
+        const editedId = csEditingStoreId;
+        csEditingStoreId = null;
+        csResetForm();
+        setTimeout(() => { viewStore(editedId); }, 400);
       } else {
-        tbody.innerHTML = products.map((p, i) => `
-          <tr>
-            <td>${i+1}</td>
-            <td><span class="fw-semibold">${p.name}</span></td>
-            <td>${p.category}</td>
-            <td>${p.price}</td>
-            <td>${p.stock}</td>
-            <td><span class="status-badge ${p.status === 'out-of-stock' ? 'out-of-stock' : 'active'}">${p.status === 'out-of-stock' ? 'Out of Stock' : 'Active'}</span></td>
-            <td class="text-end">
-              <button class="btn btn-sm btn-outline-secondary me-1"><i class="bi bi-pencil"></i></button>
-              <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
-            </td>
-          </tr>
-        `).join('');
-      }
-      document.getElementById('productCountBadge').textContent = products.length;
-    }
+        const newStore = {
+          id: storeIdCounter++,
+          name, type: type.toLowerCase().replace(/\s+/g, '_'),
+          phone, email, gstin, fssai, plan, billingCycle, address,
+          adminUsername, adminPassword,
+          username: adminUsername, password: adminPassword,
+          lat: csPinLat, lng: csPinLng,
+          active: true,
+          createdAt: new Date().toLocaleString()
+        };
 
-    // ===== RENDER PRODUCT APPROVAL =====
-    function renderProductApproval() {
-      const tbody = document.getElementById('productApprovalBody');
-      if (!tbody) return;
-      if (pendingProducts.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="6" class="text-center py-4 text-success">✅ No pending product approvals</td></tr>`;
-      } else {
-        tbody.innerHTML = pendingProducts.map((p, i) => `
-          <tr>
-            <td>${i+1}</td>
-            <td><span class="fw-semibold">${p.name}</span></td>
-            <td>${p.store}</td>
-            <td>${p.price}</td>
-            <td><span class="text-secondary small">${p.submitted}</span></td>
-            <td class="text-end">
-              <button class="btn btn-sm btn-success me-1"><i class="bi bi-check"></i></button>
-              <button class="btn btn-sm btn-danger"><i class="bi bi-x"></i></button>
-            </td>
-          </tr>
-        `).join('');
+        stores.push(newStore);
+        saveStores();
+        showToast(`✅ Store "${name}" created successfully!`, 'bi-check-circle');
+        csResetForm();
+        setTimeout(() => { showPage('stores'); renderStores(); }, 500);
       }
     }
 
-    // ===== RENDER OUT OF STOCK =====
-    function renderOutOfStock() {
-      const tbody = document.getElementById('outOfStockBody');
-      if (!tbody) return;
-      const outOfStock = products.filter(p => p.status === 'out-of-stock');
-      if (outOfStock.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="5" class="text-center py-4 text-success">✅ All products in stock</td></tr>`;
-      } else {
-        tbody.innerHTML = outOfStock.map((p, i) => `
-          <tr>
-            <td>${i+1}</td>
-            <td><span class="fw-semibold">${p.name}</span></td>
-            <td>${p.category}</td>
-            <td><span class="status-badge out-of-stock">0</span></td>
-            <td class="text-end"><button class="btn btn-sm btn-primary">Restock</button></td>
-          </tr>
-        `).join('');
+    /* Real-time sync when register.html saves a merchant */
+    window.addEventListener('storage', function(e) {
+      if (!e.key) return;
+      if (e.key === 'registeredUsers' || e.key === 'smartstore_users' || e.key === 'admin_stores') {
+        const storesPage = document.getElementById('page-stores');
+        if (storesPage && storesPage.classList.contains('active')) {
+          renderStores();
+          showToast('🔄 Stores list updated', 'bi-arrow-clockwise');
+        }
       }
-    }
+    });
 
-    // ===== UPDATE DASHBOARD =====
-    function updateDashboardStats() {
-      document.getElementById('totalStores').textContent = stores.length;
-      document.getElementById('totalProducts').textContent = products.length;
-      document.getElementById('pendingApprovals').textContent = pendingStores.length + pendingProducts.length;
-    }
-
-    // ===== ADD STORE =====
-    function addStore() {
-      const name = prompt('Enter store name:');
-      if (!name || name.trim() === '') return;
-      const phone = prompt('Enter phone:');
-      if (!phone) return;
-      const type = prompt('Enter type (grocery, electronics, fashion, etc.):');
-      if (!type) return;
-      stores.push({ id: storeIdCounter++, name: name.trim(), phone: phone.trim(), type: type.trim(), status: 'active', admin: 'New Admin' });
-      renderStores();
-      showToast(`✅ Store "${name.trim()}" added!`, 'bi-building-add');
-    }
-
-    // ===== LOGOUT =====
-    function logout() {
-      if (confirm('Logout?')) {
-        localStorage.clear();
-        window.location.href = 'login.html';
-      }
-    }
-
-    // ===== INIT =====
+    /* ============================================================
+       INIT
+       ============================================================ */
     window.addEventListener('DOMContentLoaded', function() {
-      document.getElementById('addStoreBtn')?.addEventListener('click', addStore);
+      document.getElementById('adminName').textContent = SUPER_ADMIN.name;
+      document.getElementById('adminEmail').textContent = SUPER_ADMIN.email;
+      document.getElementById('adminAvatar').textContent = SUPER_ADMIN.name.charAt(0);
+      document.getElementById('dropdownAdminName').textContent = SUPER_ADMIN.name;
+      document.getElementById('dropdownAdminEmail').textContent = SUPER_ADMIN.email;
+      document.getElementById('profilePageInfo').textContent = SUPER_ADMIN.name + ' — ' + SUPER_ADMIN.email;
+
+      const mtAvatar = document.getElementById('mtUserAvatar');
+      if (mtAvatar) mtAvatar.textContent = SUPER_ADMIN.name.charAt(0);
+
+      loadAll();
+      renderPlans();
       renderStores();
-      renderStoreApproval();
-      renderProducts();
-      renderProductApproval();
-      renderOutOfStock();
-      renderSubscriptionPlans();
-      updateDashboardStats();
-      showToast('👋 Welcome to Super Admin Panel!', 'bi-emoji-smile');
+      renderDashboardPage();
+
+      const dailyBtn = document.querySelector('#dashSalesTabs button[data-range="daily"]');
+      if (dailyBtn) {
+        dailyBtn.style.background = 'linear-gradient(135deg,#6366f1,#4f46e5)';
+        dailyBtn.style.color = '#ffffff';
+      }
+
+      showToast('👋 Welcome to SmartStore Admin!', 'bi-emoji-smile');
     });
   </script>
 </body>
