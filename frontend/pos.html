@@ -2,198 +2,518 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>POS System — SmartStore</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *{font-family:'Inter',sans-serif;box-sizing:border-box}
-:root{--brand:#4a6cf7;--bg:#eef1f6;--ink:#0f172a}
-body{background:var(--bg);min-height:100vh;padding:16px}
-.pos-header{background:#fff;border-radius:18px;padding:14px 20px;box-shadow:0 2px 10px rgba(15,23,42,.04);display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
-.pos-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px}
-.pos-card{background:#fff;border:1px solid #eef1f6;border-radius:14px;overflow:hidden;cursor:pointer;transition:.15s}
-.pos-card:hover{transform:translateY(-3px);border-color:#c7d0fb;box-shadow:0 6px 16px rgba(15,23,42,.06)}
-.pos-card.out{opacity:.4;cursor:not-allowed}
-.pos-card img{width:100%;height:105px;object-fit:cover;background:#f8fafc}
-.pos-card .pos-info{padding:8px 10px}
-.pos-name{font-weight:700;font-size:.82rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.pos-chip{border:1px solid #e2e8f0;background:#fff;border-radius:50px;padding:4px 14px;font-size:.78rem;font-weight:600;color:#475569;cursor:pointer}
-.pos-chip.on{background:var(--brand);color:#fff;border-color:var(--brand)}
-.bill-box{background:#fff;border-radius:18px;padding:20px;box-shadow:0 2px 10px rgba(15,23,42,.04);position:sticky;top:16px}
-.bill-row{display:flex;align-items:center;gap:10px;border-bottom:1px solid #f4f6fb;padding:8px 0}
-.bill-row img{width:38px;height:38px;border-radius:8px;object-fit:cover}
-.qty-btn{width:24px;height:24px;border:1px solid #cbd5e1;background:#fff;border-radius:6px;cursor:pointer;line-height:1}
-.toast-x{position:fixed;bottom:20px;right:20px;background:#10b981;color:#fff;padding:12px 24px;border-radius:10px;z-index:9999;font-weight:600}
+:root{--brand:#4a6cf7;--brand-dark:#3b5bea;--bg:#eef1f6;--ink:#0f172a;--orange:#f97316}
+body{background:var(--bg);min-height:100vh}
+.shell{padding:18px}
+.sidebar{min-height:calc(100vh - 36px);background:#fff;border-radius:24px;box-shadow:0 1px 2px rgba(15,23,42,.04),0 12px 28px rgba(15,23,42,.06);position:sticky;top:18px}
+.brand-logo{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--brand),#8b93ff);display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.05rem}
+.menu-label{font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#94a3b8;padding:0 10px;margin:18px 0 8px}
+.sidebar-link{color:#475569;text-decoration:none;padding:11px 14px;border-radius:14px;display:flex;align-items:center;gap:12px;font-size:.9rem;font-weight:600;cursor:pointer}
+.sidebar-link i{font-size:1rem;width:20px;text-align:center;color:#94a3b8}
+.sidebar-link:hover{background:#f1f4fb;color:var(--ink)}
+.sidebar-link.active{background:var(--brand);color:#fff;box-shadow:0 8px 18px rgba(74,108,247,.35)}
+.sidebar-link.active i{color:#fff}
+.logout-link{color:#94a3b8;text-decoration:none;display:flex;align-items:center;gap:10px;font-size:.85rem;font-weight:600;padding:10px 14px;border-radius:14px;cursor:pointer}
+.logout-link:hover{background:#fef2f2;color:#dc2626}
+.topbar{background:#fff;border-radius:22px;box-shadow:0 1px 2px rgba(15,23,42,.04),0 12px 28px rgba(15,23,42,.05);padding:18px 24px}
+.toast-x{position:fixed;bottom:20px;right:20px;background:#10b981;color:#fff;padding:14px 28px;border-radius:12px;z-index:9999;font-weight:600}
+
+/* POS Layout */
+#view-pos .pos2-wrap{display:grid;grid-template-columns:minmax(0,1fr) 420px;gap:18px;align-items:start}
+#view-pos .pos2-left{min-width:0}
+#view-pos .pos2-toolbar{display:flex;gap:10px;flex-wrap:wrap;justify-content:space-between;margin-bottom:14px}
+#view-pos .pos2-input{padding:10px 14px;border:1.5px solid #e5e9f2;border-radius:12px;font-size:.88rem;outline:none;background:#fff;color:#0f172a;width:100%}
+#view-pos .pos2-input:focus{border-color:var(--brand);box-shadow:0 0 0 3px rgba(74,108,247,.12)}
+#view-pos .pos2-search{flex:1 1 200px;max-width:320px;width:auto}
+#view-pos .pos2-select{flex:0 0 200px;width:200px}
+#view-pos .pos2-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
+#view-pos .pos2-card{position:relative;background:#fff;border:1px solid #e5e9f2;border-radius:14px;padding:10px;cursor:pointer;transition:.15s}
+#view-pos .pos2-card:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(15,23,42,.08);border-color:#c7d0fb}
+#view-pos .pos2-card.sel{border-color:#c7d0fb;background:#fbfcff}
+#view-pos .pos2-card.out{opacity:.5;cursor:not-allowed}
+#view-pos .pos2-card.out:hover{transform:none;box-shadow:none;border-color:#e5e9f2}
+#view-pos .pos2-img{width:100%;height:110px;border-radius:10px;background:#f1f4fb;overflow:hidden;display:flex;align-items:center;justify-content:center}
+#view-pos .pos2-img img{width:100%;height:100%;object-fit:cover}
+#view-pos .pos2-check{position:absolute;top:16px;right:16px;width:22px;height:22px;border-radius:50%;background:#1e293b;color:#fff;display:none;align-items:center;justify-content:center;font-size:.8rem}
+#view-pos .pos2-card.sel .pos2-check{display:flex}
+#view-pos .pos2-cname{font-weight:700;font-size:.85rem;color:#0f172a;margin-top:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#view-pos .pos2-ccat{font-size:.72rem;color:#94a3b8;text-transform:capitalize;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#view-pos .pos2-cprice{font-weight:800;font-size:.9rem;color:#0f172a;margin-top:2px}
+#view-pos .pos2-oos{font-size:.68rem;font-weight:700;color:#dc2626}
+#view-pos .pos2-empty{grid-column:1/-1;padding:40px 10px;text-align:center;color:#94a3b8;font-size:.88rem}
+#view-pos .pos2-right{position:sticky;top:16px;max-height:calc(100vh - 32px);overflow-y:auto;background:#fff;border-radius:20px;padding:18px 20px;box-shadow:0 1px 2px rgba(15,23,42,.04),0 10px 24px rgba(15,23,42,.05)}
+#view-pos .pos2-store{text-align:right;font-size:.8rem;font-weight:600;color:#64748b;margin-bottom:6px}
+#view-pos .pos2-head{font-weight:800;font-size:.95rem;color:#0f172a;display:flex;align-items:center;gap:8px;margin-bottom:10px}
+#view-pos .pos2-head small{font-weight:500;color:#94a3b8;font-size:.75rem}
+#view-pos .pos2-bill{margin-bottom:12px}
+#view-pos .pos2-bill-empty{padding:18px 8px;text-align:center;color:#94a3b8;font-size:.82rem}
+#view-pos .pos2-line{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #f4f6fb}
+#view-pos .pos2-line-info{flex:1;min-width:0}
+#view-pos .pos2-line-name{font-weight:700;font-size:.85rem;color:#0f172a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#view-pos .pos2-line-each{font-size:.72rem;color:#94a3b8}
+#view-pos .pos2-qty{display:flex;align-items:center;gap:8px}
+#view-pos .pos2-qty button{width:26px;height:26px;border-radius:8px;border:1px solid #e2e8f0;background:#fff;color:#334155;font-weight:700;line-height:1;cursor:pointer;padding:0}
+#view-pos .pos2-qty button.plus{background:#1e293b;color:#fff;border-color:#1e293b}
+#view-pos .pos2-qty span{min-width:18px;text-align:center;font-weight:700;font-size:.85rem}
+#view-pos .pos2-line-total{min-width:56px;text-align:right;font-weight:800;font-size:.88rem}
+#view-pos .pos2-del{border:0;background:transparent;color:#ef4444;cursor:pointer;padding:4px;font-size:.85rem}
+#view-pos .pos2-dine{margin:12px 0 10px}
+#view-pos .pos2-dine-btn{width:100%;padding:11px;border:0;border-radius:12px;background:#1e1b3a;color:#fff;font-weight:700;font-size:.85rem;cursor:default}
+#view-pos .pos2-label{display:block;font-weight:700;font-size:.8rem;color:#0f172a;margin:10px 0 6px}
+#view-pos .pos2-label small{font-weight:500;color:#94a3b8}
+#view-pos .pos2-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:6px 0;font-size:.85rem;color:#475569}
+#view-pos .pos2-row b{color:#0f172a}
+#view-pos .pos2-row.total{border-top:1px dashed #e2e8f0;margin-top:6px;padding-top:10px;font-size:1rem;font-weight:800;color:#0f172a}
+#view-pos .pos2-row.total b{font-size:1.15rem}
+#view-pos .pos2-mini{width:120px;text-align:right;padding:7px 10px}
+#view-pos .pos2-coupon{display:flex;gap:6px;align-items:center}
+#view-pos .pos2-coupon .pos2-mini{width:110px;text-align:left}
+#view-pos .pos2-check-btn{border:0;border-radius:8px;background:#64748b;color:#fff;font-weight:700;font-size:.75rem;padding:8px 12px;cursor:pointer}
+#view-pos .pos2-note{font-size:.74rem;color:#16a34a;font-weight:600;text-align:right;min-height:0}
+#view-pos .pos2-pay{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:6px}
+#view-pos .pos2-pay-btn{border:0;border-radius:12px;padding:12px;font-weight:700;font-size:.85rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px}
+#view-pos .pos2-pay-btn.cash{background:#fff1e6;color:#ea580c}
+#view-pos .pos2-pay-btn.cash.on{background:#f97316;color:#fff}
+#view-pos .pos2-pay-btn.upi{background:#e0e7ff;color:#3b5bea}
+#view-pos .pos2-pay-btn.upi.on{background:#4a6cf7;color:#fff}
+#view-pos .pos2-quick{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:8px 0}
+#view-pos .pos2-quick button{border:1px solid #e2e8f0;background:#f8fafc;border-radius:10px;padding:8px 0;font-size:.78rem;font-weight:600;color:#475569;cursor:pointer}
+#view-pos .pos2-quick button:hover{border-color:#c7d0fb;color:var(--brand)}
+#view-pos .pos2-change{border-radius:10px;padding:10px 12px;font-size:.82rem;font-weight:700;margin-bottom:8px}
+#view-pos .pos2-change.ok{background:#e8f7ee;color:#15803d}
+#view-pos .pos2-change.short{background:#fef2f2;color:#dc2626}
+#view-pos .pos2-confirm{width:100%;border:0;border-radius:12px;background:#16a34a;color:#fff;font-weight:800;font-size:.95rem;padding:14px;cursor:pointer;margin-top:4px}
+#view-pos .pos2-confirm:hover{background:#15803d}
+@media(max-width:1199.98px){
+  #view-pos .pos2-wrap{grid-template-columns:1fr}
+  #view-pos .pos2-right{position:static;max-height:none;overflow:visible}
+}
+@media(max-width:575.98px){
+  #view-pos .pos2-grid{grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px}
+  #view-pos .pos2-select,#view-pos .pos2-search{flex:1 1 100%;max-width:100%;width:100%}
+}
 </style>
 </head>
 <body>
-
-<div class="pos-header">
-  <div class="d-flex align-items-center gap-2">
-    <div style="width:34px;height:34px;background:var(--brand);color:#fff;border-radius:8px;display:flex;align-items:center;justify-content:center"><i class="bi bi-calculator"></i></div>
-    <h5 class="fw-bold mb-0">POS Terminal</h5>
-    <span class="badge bg-light text-dark border ms-2" id="posUserBadge">Staff</span>
-  </div>
-  <button class="btn btn-sm btn-outline-danger" onclick="logout()"><i class="bi bi-box-arrow-right"></i> Log out</button>
-</div>
-
-<div class="row g-3">
-  <div class="col-lg-8">
-    <div class="d-flex justify-content-between align-items-center gap-2 mb-3">
-      <input id="posSearch" class="form-control" style="max-width:280px" placeholder="Search product / SKU..." oninput="renderPos()">
-      <div id="posCats" class="d-flex gap-2 flex-wrap"></div>
+<div class="container-fluid shell"><div class="row gx-3">
+  <!-- Sidebar -->
+  <div class="col-md-3 col-lg-2 sidebar p-3 d-flex flex-column justify-content-between">
+    <div>
+      <a href="dashboard.html" class="d-flex align-items-center gap-2 text-decoration-none my-2 px-2 fw-bold fs-5" style="color:#0f172a">
+        <span class="brand-logo"><i class="bi bi-bag-check-fill"></i></span> SmartStore
+      </a>
+      <div class="menu-label">Menu</div>
+      <nav class="d-flex flex-column gap-1" id="sideNav">
+        <!-- Only POS System button is kept here -->
+        <a class="sidebar-link active"><i class="bi bi-calculator"></i> POS System</a>
+      </nav>
     </div>
-    <div id="posGrid" class="pos-grid"></div>
+    <div class="pt-3 border-top" style="border-color:#f1f4fb!important">
+      <a class="logout-link" onclick="logout()"><i class="bi bi-box-arrow-right"></i> Log out</a>
+    </div>
   </div>
 
-  <div class="col-lg-4">
-    <div class="bill-box">
-      <h5 class="fw-bold mb-3"><i class="bi bi-receipt me-2"></i>Current Bill</h5>
-      <div id="posBill" style="max-height:380px;overflow-y:auto"></div>
-      <div class="border-top pt-3 mt-3">
-        <div class="d-flex justify-content-between fw-bold fs-5 mb-3">
-          <span>Total</span>
-          <span id="posTotal">₹0</span>
+  <!-- Main Content -->
+  <div class="col-md-9 col-lg-10 ps-md-3 pe-0 py-0">
+    <div class="topbar mb-3 d-flex justify-content-between align-items-center flex-wrap gap-3">
+      <div>
+        <h4 class="fw-bold mb-1" style="color:#0f172a">POS Terminal</h4>
+        <p class="text-secondary small mb-0">Process walk-in customer sales.</p>
+      </div>
+      <button class="btn btn-sm" onclick="window.location.href='dashboard.html'" style="background:#fff;color:#475569;border:1.5px solid #eef1f6;border-radius:50px;padding:9px 18px;font-weight:700;font-size:.78rem;">
+        <i class="bi bi-arrow-left"></i> Back to Dashboard
+      </button>
+    </div>
+
+    <div id="view-pos">
+      <div class="pos2-wrap">
+        <div class="pos2-left">
+          <div class="pos2-toolbar">
+            <input id="posSearch" class="pos2-input pos2-search" placeholder="Search product..." oninput="renderPos()">
+            <select id="posCatSelect" class="pos2-input pos2-select" onchange="setPosCat(this.value)">
+              <option value="all">All Categories</option>
+            </select>
+          </div>
+          <div id="posGrid" class="pos2-grid"></div>
         </div>
-        <div class="d-flex gap-2">
-          <button class="btn btn-light flex-fill" onclick="posClear()">Clear</button>
-          <button class="btn btn-success flex-fill" onclick="posCheckout()">Complete Sale</button>
-        </div>
+
+        <aside class="pos2-right">
+          <div class="pos2-store" id="posStoreName"></div>
+          <div class="pos2-head"><i class="bi bi-cart3"></i> Order Summary <small id="posItemCount">(0 items)</small></div>
+          <div id="posBill" class="pos2-bill"></div>
+
+          <div class="pos2-dine"><button type="button" class="pos2-dine-btn" aria-pressed="true">Dine-in</button></div>
+
+          <label class="pos2-label" for="posMobile">Customer Mobile <small>(optional)</small></label>
+          <input id="posMobile" class="pos2-input" type="tel" inputmode="numeric" maxlength="10" placeholder="Enter mobile number"
+                 oninput="this.value=this.value.replace(/\D/g,'').slice(0,10)">
+
+          <div class="pos2-row" style="margin-top:8px"><span>Subtotal</span><b id="posSubtotal">₹0</b></div>
+          <div class="pos2-row">
+            <span>Discount (₹)</span>
+            <input id="posDiscount" class="pos2-input pos2-mini" type="number" min="0" placeholder="0" oninput="renderBill()">
+          </div>
+          <div class="pos2-row">
+            <span>Food Coupon Code</span>
+            <div class="pos2-coupon">
+              <input id="posCoupon" class="pos2-input pos2-mini" placeholder="SZ-XXXX" oninput="posCouponEdited()">
+              <button type="button" class="pos2-check-btn" onclick="posCheckCoupon()">Check</button>
+            </div>
+          </div>
+          <div id="posCouponNote" class="pos2-note"></div>
+          <div class="pos2-row total"><span>Total</span><b id="posTotal">₹0</b></div>
+
+          <div class="pos2-label">Choose Payment</div>
+          <div class="pos2-pay">
+            <button type="button" id="posPayCash" class="pos2-pay-btn cash on" onclick="posSetPay('cash')"><i class="bi bi-cash-stack"></i> Cash</button>
+            <button type="button" id="posPayUpi" class="pos2-pay-btn upi" onclick="posSetPay('upi')"><i class="bi bi-qr-code"></i> UPI/QR</button>
+          </div>
+
+          <div id="posCashBlock">
+            <label class="pos2-label" for="posCollected">Amount Collected</label>
+            <input id="posCollected" class="pos2-input" type="number" min="0" placeholder="Enter amount" oninput="posUpdateChange()">
+            <div class="pos2-quick">
+              <button type="button" onclick="posQuick(100)">₹100</button>
+              <button type="button" onclick="posQuick(200)">₹200</button>
+              <button type="button" onclick="posQuick(500)">₹500</button>
+              <button type="button" onclick="posQuick(1000)">₹1,000</button>
+            </div>
+            <div id="posChange" class="pos2-change" style="display:none"></div>
+          </div>
+
+          <button type="button" class="pos2-confirm" onclick="posCheckout()">Confirm Payment</button>
+        </aside>
       </div>
     </div>
   </div>
-</div>
+</div></div>
 
 <script>
-const DEFAULT_IMG = 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=200&auto=format&fit=crop&q=80';
-const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const getMe = () => { try { return JSON.parse(localStorage.getItem('user') || '{}'); } catch(e){ return {}; } };
-const getList = k => { try { return JSON.parse(localStorage.getItem(k) || '[]'); } catch(e){ return []; } };
-const setList = (k, v) => localStorage.setItem(k, JSON.stringify(v));
+const $ = (id) => document.getElementById(id);
+const money = (n) => '₹' + Number(n || 0).toLocaleString('en-IN');
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const uid = () => Math.random().toString(36).slice(2, 9);
+const nowISO = () => new Date().toISOString();
+const slugify = (s) => String(s || '').toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'smartstore';
 
-let posBill = [], posCat = 'all';
+const urlParams = new URLSearchParams(location.search);
+const storeSlug = urlParams.get('store') || urlParams.get('merchant') || '';
+const SLUG = slugify(storeSlug);
 
-function toast(msg) {
-  const old = document.querySelector('.toast-x'); if (old) old.remove();
-  const t = document.createElement('div'); t.className = 'toast-x'; t.textContent = msg;
-  document.body.appendChild(t); setTimeout(() => t.remove(), 2000);
+const FALLBACK_IMG = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(
+  '<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120"><rect width="120" height="120" fill="#eef1f6"/><text x="60" y="64" font-family="sans-serif" font-size="11" fill="#94a3b8" text-anchor="middle">No image</text></svg>'
+);
+function imgFallback(el) { el.onerror = null; el.src = FALLBACK_IMG; }
+
+function toast(msg, color = '#10b981') {
+  const t = document.createElement('div');
+  t.className = 'toast-x';
+  t.style.background = color;
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 2600);
 }
-document.addEventListener('DOMContentLoaded', () => {
-  const loggedIn = localStorage.getItem('loggedInUser');
-  const me = JSON.parse(localStorage.getItem('user') || '{}');
 
-  if (!loggedIn) {
-    location.href = 'login.html';
-    return;
+function readLS(key, fb) { try { const v = JSON.parse(localStorage.getItem(key) || 'null'); return v == null ? fb : v; } catch (e) { return fb; } }
+function writeLS(key, val) { try { localStorage.setItem(key, JSON.stringify(val)); return true; } catch (e) { return false; } }
+
+// Get products added by the merchant
+function getProducts() {
+  let list = readLS('smartstore_products_' + SLUG, []);
+  if (!Array.isArray(list) || !list.length) {
+    const global = readLS('smartstore_products', []);
+    list = Array.isArray(global) ? global.filter(p => p && slugify(p.storeSlug || '') === SLUG) : [];
   }
-
-  // Show logged in cashier username
-  const userTag = document.getElementById('posUserBadge');
-  if (userTag) userTag.textContent = me.username;
-});
-
-function logout() {
-  localStorage.removeItem('loggedInUser');
-  localStorage.removeItem('user');
-  location.href = 'login.html';
+  return list.filter(p => p && p.active !== false);
 }
-function posSetCat(c) { posCat = c; renderPos(); }
+function getCategories() {
+  return readLS('smartstore_categories_' + SLUG, {});
+}
+function getStoreName() {
+  for (const k of ['registeredUsers', 'smartstore_users']) {
+    const arr = readLS(k, []);
+    if (!Array.isArray(arr)) continue;
+    const m = arr.find(u => u && slugify(u.storeSlug) === SLUG);
+    if (m) return m.brandName || m.businessName || m.username || 'Store';
+  }
+  return 'Store';
+}
+
+function flattenCategories(tree, prefix, out) {
+  out = out || {};
+  Object.keys(tree || {}).forEach(k => {
+    const node = tree[k];
+    if (!node || typeof node !== 'object') return;
+    const label = prefix ? prefix + ' › ' + (node.name || k) : (node.name || k);
+    out[k] = label;
+    if (node.children && Object.keys(node.children).length) {
+      flattenCategories(node.children, label, out);
+    }
+  });
+  return out;
+}
+
+let posBill = [];
+let posCat = 'all';
+let _posPay = 'cash';
+let _posCoupon = null;
+
+function posCalc() {
+  const subtotal = posBill.reduce((a, b) => a + b.price * b.qty, 0);
+  const dEl = $('posDiscount');
+  let manual = dEl ? (parseFloat(dEl.value) || 0) : 0;
+  if (manual < 0) manual = 0;
+  let coupon = 0;
+  if (_posCoupon) {
+    coupon = _posCoupon.type === 'percent'
+      ? Math.round(subtotal * _posCoupon.value) / 100
+      : (Number(_posCoupon.value) || 0);
+  }
+  const discount = Math.min(subtotal, manual + coupon);
+  const total = Math.max(0, subtotal - discount);
+  return { subtotal, manual, coupon, discount, total };
+}
 
 function renderPos() {
-  const all = getList('smartstore_products');
-  const q = (document.getElementById('posSearch').value || '').toLowerCase();
-  const cats = ['all', ...new Set(all.map(p => p.category).filter(Boolean))];
+  const products = getProducts();
+  const flat = flattenCategories(getCategories(), '');
+  const cats = ['all', ...new Set(products.map(p => p.category || ''))];
+  if (cats.indexOf(posCat) === -1) posCat = 'all';
 
-  document.getElementById('posCats').innerHTML = cats.map(c =>
-    `<button class="pos-chip ${c === posCat ? 'on' : ''}" onclick="posSetCat('${esc(c)}')">${c === 'all' ? 'All' : esc(c)}</button>`
-  ).join('');
+  const sel = $('posCatSelect');
+  if (sel) {
+    sel.innerHTML = cats.map(c =>
+      `<option value="${esc(c)}">${esc(c === 'all' ? 'All Categories' : (flat[c] || c || 'Uncategorized'))}</option>`
+    ).join('');
+    sel.value = posCat;
+  }
 
-  const list = all.filter(p => (posCat === 'all' || p.category === posCat) && (p.name || '').toLowerCase().includes(q));
-  document.getElementById('posGrid').innerHTML = list.length ? list.map(p => `
-    <div class="pos-card ${p.stock <= 0 ? 'out' : ''}" onclick="posAdd(${p.id})">
-      <img src="${esc(p.image || DEFAULT_IMG)}" alt="">
-      <div class="pos-info">
-        <div class="pos-name">${esc(p.name)}</div>
-        <div class="d-flex justify-content-between align-items-center mt-1">
-          <b>₹${esc(p.price)}</b>
-          <span class="small text-secondary">Qty: ${esc(p.stock)}</span>
-        </div>
-      </div>
-    </div>`).join('') : '<p class="text-secondary p-3">No products available.</p>';
+  const nm = $('posStoreName'); if (nm) nm.textContent = getStoreName();
 
+  const q = ($('posSearch').value || '').toLowerCase();
+  const inBill = new Set(posBill.map(b => b.id));
+  const list = products.filter(p =>
+    (posCat === 'all' || (p.category || '') === posCat) &&
+    (!q || String(p.name || '').toLowerCase().includes(q))
+  );
+
+  const grid = $('posGrid');
+  if (grid) {
+    grid.innerHTML = list.map(p => {
+      const out = p.stock <= 0;
+      return `<div class="pos2-card ${out ? 'out' : ''} ${inBill.has(p.id) ? 'sel' : ''}" ${out ? '' : `onclick="addToBill('${p.id}')"`}>
+        <span class="pos2-check"><i class="bi bi-check-lg"></i></span>
+        <div class="pos2-img"><img src="${esc(p.image)}" alt="" onerror="imgFallback(this)"></div>
+        <div class="pos2-cname">${esc(p.name)}</div>
+        <div class="pos2-ccat">${esc(flat[p.category] || p.category || '')}</div>
+        <div class="pos2-cprice">${money(p.price)}</div>
+        ${out ? '<div class="pos2-oos">Out of stock</div>' : ''}
+      </div>`;
+    }).join('') || '<div class="pos2-empty">No products found.</div>';
+  }
   renderBill();
 }
 
-function posAdd(id) {
-  const p = getList('smartstore_products').find(x => x.id === id);
-  if (!p || p.stock <= 0) { toast('⚠️ Out of stock'); return; }
-  const line = posBill.find(x => x.id === id);
-  if ((line ? line.qty : 0) + 1 > p.stock) { toast('⚠️ Stock limit reached'); return; }
-  line ? line.qty++ : posBill.push({ id: p.id, name: p.name, price: p.price, image: p.image, qty: 1 });
-  renderBill();
-}
+function setPosCat(c) { posCat = c; renderPos(); }
 
-function posQty(id, delta) {
-  const line = posBill.find(x => x.id === id); if (!line) return;
-  const p = getList('smartstore_products').find(x => x.id === id);
-  if (delta > 0 && p && line.qty + 1 > p.stock) { toast('⚠️ Stock limit reached'); return; }
-  line.qty += delta;
-  if (line.qty <= 0) posBill = posBill.filter(x => x.id !== id);
-  renderBill();
+function addToBill(id) {
+  const p = getProducts().find(x => x.id === id); if (!p) return;
+  const line = posBill.find(b => b.id === id);
+  if ((line ? line.qty : 0) + 1 > p.stock) { toast('⚠️ Stock limit reached', '#ef4444'); return; }
+  if (line) line.qty++;
+  else posBill.push({ id, name: p.name, price: p.price, image: p.image, qty: 1 });
+  renderPos();
 }
-
-function posClear() { posBill = []; renderBill(); }
 
 function renderBill() {
-  document.getElementById('posBill').innerHTML = posBill.length ? posBill.map(b => `
-    <div class="bill-row">
-      <img src="${esc(b.image || DEFAULT_IMG)}" alt="">
-      <div style="flex:1;min-width:0">
-        <div class="pos-name">${esc(b.name)}</div>
-        <div class="small text-secondary">₹${esc(b.price)}</div>
+  const wrap = $('posBill'); if (!wrap) return;
+  wrap.innerHTML = posBill.length ? posBill.map(b => `
+    <div class="pos2-line">
+      <div class="pos2-line-info">
+        <div class="pos2-line-name">${esc(b.name)}</div>
+        <div class="pos2-line-each">${money(b.price)} each</div>
       </div>
-      <button class="qty-btn" onclick="posQty(${b.id},-1)">-</button>
-      <b>${b.qty}</b>
-      <button class="qty-btn" onclick="posQty(${b.id},1)">+</button>
-      <b style="width:65px;text-align:right">₹${b.price * b.qty}</b>
-    </div>`).join('') : '<p class="text-secondary text-center py-4 mb-0">No items selected.</p>';
+      <div class="pos2-qty">
+        <button type="button" onclick="changeQty('${b.id}', -1)">−</button>
+        <span>${b.qty}</span>
+        <button type="button" class="plus" onclick="changeQty('${b.id}', 1)">+</button>
+      </div>
+      <div class="pos2-line-total">${money(b.price * b.qty)}</div>
+      <button type="button" class="pos2-del" title="Remove" onclick="posRemove('${b.id}')"><i class="bi bi-trash"></i></button>
+    </div>`).join('')
+    : '<div class="pos2-bill-empty">No items selected. Tap a product to add it.</div>';
 
-  document.getElementById('posTotal').textContent = '₹' + posBill.reduce((s, b) => s + b.price * b.qty, 0);
+  const n = posBill.length;
+  const cnt = $('posItemCount'); if (cnt) cnt.textContent = '(' + n + ' item' + (n === 1 ? '' : 's') + ')';
+
+  const c = posCalc();
+  $('posSubtotal').textContent = money(c.subtotal);
+  $('posTotal').textContent = money(c.total);
+
+  const note = $('posCouponNote');
+  if (note) note.textContent = _posCoupon ? (_posCoupon.code + ' applied: −' + money(c.coupon)) : '';
+
+  posUpdateChange(c);
+}
+
+function changeQty(id, d) {
+  const line = posBill.find(b => b.id === id); if (!line) return;
+  const p = getProducts().find(x => x.id === id);
+  if (d > 0 && p && line.qty + d > p.stock) { toast('⚠️ Stock limit reached', '#ef4444'); return; }
+  line.qty += d;
+  if (line.qty <= 0) posBill = posBill.filter(b => b.id !== id);
+  renderPos();
+}
+
+function posRemove(id) {
+  posBill = posBill.filter(b => b.id !== id);
+  renderPos();
+}
+
+function posSetPay(m) {
+  _posPay = (m === 'upi') ? 'upi' : 'cash';
+  const c = $('posPayCash'), u = $('posPayUpi'), blk = $('posCashBlock');
+  if (c) c.classList.toggle('on', _posPay === 'cash');
+  if (u) u.classList.toggle('on', _posPay === 'upi');
+  if (blk) blk.style.display = _posPay === 'cash' ? '' : 'none';
+  renderBill();
+}
+
+function posQuick(n) {
+  const el = $('posCollected'); if (!el) return;
+  el.value = n;
+  posUpdateChange();
+}
+
+function posUpdateChange(c) {
+  const box = $('posChange'); if (!box) return;
+  c = c || posCalc();
+  const v = $('posCollected') ? $('posCollected').value : '';
+  if (_posPay !== 'cash' || v === '' || !posBill.length) { box.style.display = 'none'; return; }
+  const got = parseFloat(v) || 0;
+  box.style.display = '';
+  if (got >= c.total) { box.className = 'pos2-change ok';    box.textContent = 'Balance to return ' + money(got - c.total); }
+  else                { box.className = 'pos2-change short'; box.textContent = 'Short by ' + money(c.total - got); }
+}
+
+function posCouponEdited() { _posCoupon = null; renderBill(); }
+
+function posCheckCoupon() {
+  const code = ($('posCoupon').value || '').trim().toUpperCase();
+  if (!code) { toast('Enter a coupon code', '#ef4444'); return; }
+  let list = [];
+  try { list = JSON.parse(localStorage.getItem('smartstore_coupons_' + SLUG) || '[]'); } catch (e) { list = []; }
+  const found = Array.isArray(list)
+    ? list.find(x => x && String(x.code || '').trim().toUpperCase() === code && x.active !== false)
+    : null;
+  if (!found || !(Number(found.value) > 0)) {
+    _posCoupon = null; renderBill();
+    toast('Invalid coupon code', '#ef4444');
+    return;
+  }
+  _posCoupon = { code, type: found.type === 'percent' ? 'percent' : 'flat', value: Number(found.value) };
+  renderBill();
+  toast('Coupon applied');
+}
+
+function posResetForm() {
+  _posCoupon = null;
+  ['posMobile', 'posDiscount', 'posCoupon', 'posCollected'].forEach(id => { const el = $(id); if (el) el.value = ''; });
+  posSetPay('cash');
 }
 
 function posCheckout() {
-  if (!posBill.length) { toast('⚠️ Bill is empty'); return; }
-  const all = getList('smartstore_products');
+  if (!posBill.length) { alert('Bill is empty'); return; }
+
+  const c = posCalc();
+  const mobile = ($('posMobile').value || '').trim();
+  if (mobile && !/^[6-9]\d{9}$/.test(mobile)) { alert('Enter a valid 10-digit mobile number, or leave it empty.'); return; }
+
+  let collected = c.total, change = 0;
+  if (_posPay === 'cash') {
+    const raw = $('posCollected').value;
+    if (raw === '' || isNaN(parseFloat(raw))) { alert('Enter the amount collected.'); return; }
+    collected = parseFloat(raw);
+    if (collected < c.total) { alert('Amount collected is less than the total (' + money(c.total) + ').'); return; }
+    change = collected - c.total;
+  }
+
+  const total = c.total;
+  const sale = {
+    id: 'POS-' + uid(),
+    customer: mobile ? ('Walk-in (' + mobile + ')') : 'Walk-in Customer',
+    customerMobile: mobile,
+    date: nowISO(),
+    items: posBill.map(b => ({ productId: b.id, name: b.name, qty: b.qty, price: b.price, image: b.image })),
+    subtotal: c.subtotal,
+    discount: c.discount,
+    couponCode: _posCoupon ? _posCoupon.code : '',
+    total,
+    paymentMethod: _posPay === 'upi' ? 'UPI/QR' : 'Cash',
+    amountCollected: collected,
+    change: change,
+    serviceType: 'Dine-in',
+    type: 'POS',
+    status: 'completed'
+  };
+
+  // Deduct stock & update products
+  const allProducts = getProducts();
   posBill.forEach(b => {
-    const p = all.find(x => x.id === b.id);
+    const p = allProducts.find(x => x.id === b.id);
     if (p) p.stock = Math.max(0, p.stock - b.qty);
   });
-  const orders = getList('smartstore_orders');
-  const total = posBill.reduce((s, b) => s + b.price * b.qty, 0);
-  orders.push({
-    id: Date.now(),
-    items: [...posBill],
-    total,
-    status: 'Delivered',
-    paymentStatus: 'Paid',
-    customerName: 'POS Counter Sale',
-    createdAt: new Date().toLocaleString()
-  });
+  writeLS('smartstore_products_' + SLUG, allProducts);
+  
+  const globalProducts = readLS('smartstore_products', []);
+  if (Array.isArray(globalProducts)) {
+    const others = globalProducts.filter(p => p && slugify(p.storeSlug || '') !== SLUG);
+    writeLS('smartstore_products', others.concat(allProducts.map(p => Object.assign({}, p, { storeSlug: SLUG }))));
+  }
 
-  setList('smartstore_products', all);
-  setList('smartstore_orders', orders);
+  // Save Sale
+  let sales = readLS('smartstore_sales_' + SLUG, []);
+  if (!Array.isArray(sales)) sales = [];
+  sales.unshift(sale);
+  writeLS('smartstore_sales_' + SLUG, sales);
+
+  const globalSales = readLS('smartstore_sales', []);
+  if (Array.isArray(globalSales)) {
+    const others = globalSales.filter(s => s && slugify(s.storeSlug || '') !== SLUG);
+    writeLS('smartstore_sales', others.concat(sales.map(s => Object.assign({}, s, { storeSlug: SLUG }))));
+  }
+
+  writeLS('smartstore_orders_update', Date.now());
+
   posBill = [];
+  posResetForm();
   renderPos();
-  toast('✅ Sale done: ₹' + total);
+  toast('Sale completed — ' + money(total));
 }
 
 function logout() {
-  localStorage.removeItem('loggedInUser');
-  localStorage.removeItem('user');
-  location.href = 'login.html';
+  if (!confirm('Log out from SmartStore?')) return;
+  try {
+    localStorage.removeItem('smartstore_staff_session');
+    localStorage.removeItem('smartstore_current_user');
+    localStorage.removeItem('loggedInUser');
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+  } catch (e) {}
+  toast('Logged out');
+  setTimeout(() => { window.location.href = 'login.html'; }, 400);
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderPos();
+});
 </script>
 </body>
 </html>

@@ -46,6 +46,12 @@
     .page-body ul { list-style: disc; padding-left: 1.5rem; }
     .page-body ol { list-style: decimal; padding-left: 1.5rem; }
     .page-body a { color: #4f46e5; text-decoration: underline; }
+
+    /* Footer page links */
+    .footer-pages-list { list-style: none; padding: 0; margin: 8px 0 0; display: flex; flex-direction: column; gap: 6px; }
+    .footer-pages-list a { color: #adb5bd; font-size: .88rem; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
+    .footer-pages-list a:hover { color: #fff; }
+    .footer-pages-list a i { font-size: .7rem; opacity: .7; }
   </style>
 <style id="sj-styles">
 #ss-journey{--b:#2563eb;--b2:#4f46e5;--ink:#0f172a;--mut:#64748b;--line:#e3ebf8;--soft:#eef4ff;background:#f7faff;color:var(--ink);overflow-x:clip}
@@ -84,57 +90,15 @@
 .sj-stats .c{display:flex;align-items:center;gap:12px;justify-content:center;padding:6px 8px}
 .sj-stats .c i{width:42px;height:42px;border-radius:50%;background:var(--soft);color:var(--b);display:flex;align-items:center;justify-content:center;font-size:1.15rem;flex:none}
 .sj-stats b{display:block;font-size:1.05rem;line-height:1.1}.sj-stats small{color:var(--mut)}
-/* category */
-.sj-cat{padding:24px 14px;text-align:center;display:block;text-decoration:none;color:var(--ink)}
-.sj-cat .sj-tile{width:76px;height:76px;margin:0 auto 14px;font-size:2rem;color:#fff;background:linear-gradient(135deg,#60a5fa,var(--b))}
-.sj-cat h5{font-size:.98rem;font-weight:700;margin:0 0 2px}.sj-cat small{color:var(--mut)}
-/* product */
-.sj-prod{padding:14px;display:flex;flex-direction:column;position:relative}
-.sj-prod .sj-tile{height:170px;margin-bottom:14px;background:linear-gradient(135deg,#e6f0ff,#f3f6ff)}
-.sj-prod .sj-tile svg{width:62%;height:auto;transition:transform .4s}.sj-prod:hover .sj-tile svg{transform:scale(1.08) rotate(-3deg)}
-.sj-off{position:absolute;top:22px;left:22px;background:#ef4444;color:#fff;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:50px;z-index:1}
-.sj-stars{color:#f59e0b;font-size:.78rem;letter-spacing:1px}
-.sj-price{font-size:1.1rem;font-weight:800}.sj-price s{font-size:.82rem;color:#94a3b8;font-weight:500;margin-left:6px}
-/* why */
+/* why / benefit cards */
 .sj-why{padding:26px 22px}
 .sj-why .ic{width:56px;height:56px;border-radius:16px;background:var(--soft);color:var(--b);display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:14px;transition:all .3s}
 .sj-why:hover .ic{background:var(--b);color:#fff;transform:rotate(-6deg)}
 .sj-why h5{font-size:1.02rem;font-weight:700}.sj-why p{color:var(--mut);font-size:.9rem;margin:0}
-/* cart art */
-.sj-drop{opacity:0;transform:translateY(-70px)}
-.sj-in .sj-drop{animation:sjDrop .8s cubic-bezier(.3,1.3,.5,1) forwards;animation-delay:var(--dd,.4s)}
-@keyframes sjDrop{to{opacity:1;transform:none}}
-.sj-added{position:absolute;background:#fff;border-radius:14px;padding:8px 12px;font-size:.78rem;font-weight:600;box-shadow:0 12px 24px -10px rgba(15,23,42,.25);display:flex;gap:8px;align-items:center;opacity:0;transform:translateY(10px);transition:all .5s var(--dd,.8s)}
-.sj-added i{color:#16a34a}.sj-in .sj-added{opacity:1;transform:none}
-/* checkout */
+/* summary / bill */
 .sj-sum div{display:flex;justify-content:space-between;padding:6px 0;color:var(--mut);font-size:.92rem}
 .sj-sum .tot{border-top:1px solid var(--line);margin-top:6px;padding-top:12px;color:var(--ink);font-weight:800;font-size:1.1rem}
-.sj-cc{border-radius:20px;padding:22px;color:#fff;background:linear-gradient(135deg,#1e40af,#3b82f6 60%,#60a5fa);box-shadow:0 22px 36px -16px rgba(37,99,235,.55);position:relative;overflow:hidden;min-height:170px}
-.sj-cc:after{content:"";position:absolute;right:-40px;top:-40px;width:150px;height:150px;border-radius:50%;background:rgba(255,255,255,.14)}
-.sj-cc .chip{width:42px;height:30px;border-radius:7px;background:linear-gradient(135deg,#fde68a,#f59e0b)}
-.sj-pay{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:11px 14px;margin-bottom:10px;font-weight:600;font-size:.9rem;transition:all .25s}
-.sj-pay i{color:var(--b);font-size:1.15rem}.sj-pay:hover{border-color:#b9cdfa}
-.sj-pay.on{border-color:var(--b);background:#f1f6ff;box-shadow:0 0 0 3px rgba(37,99,235,.12)}
 .sj-lock{display:flex;align-items:center;gap:8px;color:#16a34a;font-size:.82rem;font-weight:600;margin-top:12px}
-/* delivery */
-.sj-road{position:relative;height:96px;margin:0 4% 6px}
-.sj-road:after{content:"";position:absolute;left:0;right:0;bottom:6px;height:6px;border-radius:6px;background:repeating-linear-gradient(90deg,#cbd5e1 0 18px,transparent 18px 30px)}
-.sj-scoot{position:absolute;bottom:10px;left:0;width:120px;transition:left 2.4s .5s cubic-bezier(.4,0,.2,1)}
-.sj-in .sj-scoot{left:calc(62% - 60px)}
-.sj-track{position:relative;display:flex;justify-content:space-between}
-.sj-track:before,.sj-track .f{content:"";position:absolute;top:21px;left:10%;right:10%;height:4px;border-radius:4px;background:#e3ebf8}
-.sj-track .f{background:linear-gradient(90deg,var(--b),var(--b2));right:auto;width:60%;transform-origin:left;transform:scaleX(0);transition:transform 2.4s .5s ease}
-.sj-in .sj-track .f{transform:scaleX(1)}
-.sj-track .s{position:relative;flex:1;text-align:center;font-size:.8rem;font-weight:600;color:var(--mut)}
-.sj-track .s i{display:flex;width:46px;height:46px;margin:0 auto 8px;border-radius:50%;background:#fff;border:2px solid var(--line);align-items:center;justify-content:center;font-size:1.1rem;position:relative;z-index:1}
-.sj-track .s.on{color:var(--ink)}.sj-track .s.on i{background:var(--b);border-color:var(--b);color:#fff}
-.sj-track .s.now i{animation:sjPulse 1.8s infinite}
-@keyframes sjPulse{0%{box-shadow:0 0 0 0 rgba(37,99,235,.45)}100%{box-shadow:0 0 0 14px rgba(37,99,235,0)}}
-/* success */
-.sj-okc{width:110px;height:110px;margin:0 auto 16px}
-.sj-okc circle,.sj-okc path{fill:none;stroke:#16a34a;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:300;stroke-dashoffset:300;transition:stroke-dashoffset 1s ease .2s}
-.sj-okc path{stroke-dasharray:60;stroke-dashoffset:60;transition-delay:.8s}
-.sj-in .sj-okc circle,.sj-in .sj-okc path{stroke-dashoffset:0}
 .sj-flow{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:22px 0}
 .sj-flow span{background:var(--soft);color:var(--b);font-weight:700;border-radius:50px;padding:8px 18px;font-size:.9rem}
 /* progress pill */
@@ -144,13 +108,27 @@
 .sj-prog .d button{width:24px;height:24px;border-radius:50%;border:0;background:rgba(255,255,255,.15);color:#fff;font-size:.68rem;font-weight:700;transition:all .3s}
 .sj-prog .d button.on{background:var(--b);transform:scale(1.15)}.sj-prog .d button.past{background:rgba(37,99,235,.55)}
 .sj-prog .l{white-space:nowrap}
-@media(max-width:575px){.sj-prog{gap:8px;padding:9px 12px}.sj-prog .d button{width:18px;height:18px;font-size:.56rem}.sj-prog .l{font-size:.72rem}.sj-track .s{font-size:.66rem}.sj-track .s i{width:38px;height:38px}.sj-track:before,.sj-track .f{top:17px}.sj-chip{font-size:.7rem;padding:7px 10px}.sj-scoot{width:84px}.sj-in .sj-scoot{left:calc(62% - 42px)}}
+@media(max-width:575px){.sj-prog{gap:8px;padding:9px 12px}.sj-prog .d button{width:18px;height:18px;font-size:.56rem}.sj-prog .l{font-size:.72rem}.sj-chip{font-size:.7rem;padding:7px 10px}}
 @media(prefers-reduced-motion:reduce){.sj-js .sj-reveal,.sj-js .sj-reveal.sj-l,.sj-js .sj-reveal.sj-r,.sj-js .sj-reveal.sj-s{transform:none}.sj-chip{animation:none}.sj-px{transform:none!important}}
-.sj-ph{position:relative;height:118px;border-radius:16px;overflow:hidden;background:linear-gradient(135deg,#60a5fa,#2563eb);display:flex;align-items:center;justify-content:center;color:#fff;font-size:2.2rem;margin-bottom:12px}
-.sj-ph img,.sj-tile img.sj-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .5s}
-.sj-card:hover .sj-ph img,.sj-card:hover .sj-tile img.sj-photo{transform:scale(1.07)}
-.sj-prod .sj-tile{position:relative;overflow:hidden}
 .sj-real{width:100%;height:auto;display:block;border-radius:24px}
+/* pages 2-6 additions */
+.sj-ck{list-style:none;padding:0;margin:0}
+.sj-ck li{display:flex;gap:10px;align-items:flex-start;padding:7px 0;color:#334155;font-size:.95rem}
+.sj-ck li i{color:#16a34a;margin-top:3px}
+.sj-num{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--b),var(--b2));color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;margin-bottom:12px}
+.sj-st{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1.5px solid var(--line);border-radius:14px;margin-bottom:10px;background:#fff;font-weight:600;font-size:.9rem;transition:all .25s}
+.sj-st i{color:var(--b);font-size:1.15rem}
+.sj-st small{margin-left:auto;color:var(--mut);font-weight:500}
+.sj-st.on{border-color:var(--b);background:#f1f6ff;box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.sj-cmp{width:100%;min-width:640px;border-collapse:separate;border-spacing:0;background:#fff}
+.sj-cmp th,.sj-cmp td{padding:16px 18px;text-align:left;border-bottom:1px solid var(--line);font-size:.92rem;vertical-align:middle}
+.sj-cmp thead th{background:var(--soft);font-weight:700}
+.sj-cmp thead th.us{background:linear-gradient(135deg,var(--b),var(--b2));color:#fff}
+.sj-cmp td.us{background:#f1f6ff;font-weight:600}
+.sj-cmp td.us i{color:#16a34a;margin-right:6px}
+.sj-cmp td.them{color:var(--mut)}
+.sj-cmp tbody tr:last-child td{border-bottom:0}
+.sj-cmpwrap{overflow-x:auto;border:1px solid var(--line);border-radius:22px;box-shadow:0 10px 26px -14px rgba(15,23,42,.12)}
 </style>
 <style id="hw-styles">
 #hw-wrap{--p1:#4f46e5;--p2:#7c3aed;--ink:#0f172a;--mut:#64748b;--line:#e6eaf5;--soft:#eef0ff;overflow-x:clip;color:var(--ink)}
@@ -170,10 +148,10 @@
 .hw-pt{display:flex;align-items:center;gap:12px;font-weight:600;padding:10px 14px;background:#fff;border:1px solid var(--line);border-radius:14px;transition:transform .25s,border-color .25s}
 .hw-pt:hover{transform:translateX(5px);border-color:#c9ccf7}
 .hw-pt i{color:#16a34a;font-size:1.2rem}
-.hw-pic{position:relative;border-radius:26px;overflow:hidden;box-shadow:0 30px 50px -22px rgba(15,23,42,.35);aspect-ratio:4/3.2;background:linear-gradient(135deg,#c7d2fe,#e0e7ff)}
-.hw-pic img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .8s}
-.hw-pic:hover img{transform:scale(1.06)}
-.hw-pic>i.fb{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:6rem;color:#fff;opacity:.85}
+.hw-pic{position:relative;border-radius:26px;overflow:hidden;box-shadow:0 30px 50px -22px rgba(15,23,42,.35);aspect-ratio:4/3.2;background:linear-gradient(90deg,#fbc94a,#fde68a);display:flex;align-items:center;justify-content:center}
+.hw-pic::before{content:"";position:absolute;height:90%;aspect-ratio:1/1;border-radius:50%;background:#fff}
+.hw-art{position:relative;z-index:1;height:84%;width:auto;max-width:94%;display:block;transition:transform .8s}
+.hw-pic:hover .hw-art{transform:scale(1.04)}
 .hw-float{position:absolute;background:#fff;border-radius:14px;padding:9px 14px;font-size:.78rem;font-weight:600;display:flex;gap:9px;align-items:center;box-shadow:0 14px 26px -10px rgba(15,23,42,.3);animation:hwF 5s ease-in-out infinite}
 .hw-float i{color:var(--p1);font-size:1.1rem}
 @keyframes hwF{50%{transform:translateY(-7px)}}
@@ -227,6 +205,84 @@
 .hw-kpis{grid-template-columns:repeat(2,1fr)}.hw-dg{grid-template-columns:1fr}.hw-plan.pop{transform:none}.hw-plan.pop:hover{transform:translateY(-6px)}.hw-toast{display:none}}
 @media(prefers-reduced-motion:reduce){.hw-js .hw-r,.hw-js .hw-r.hw-l,.hw-js .hw-r.hw-rt{transform:none}.hw-float,.hw-step:after,.hw-bell em{animation:none}}
 </style>
+<style id="ha-styles">
+/* Scroll/entrance animations for the existing Home, About and Features content */
+.ha-pre{opacity:0;will-change:opacity,transform}
+.ha-pre.ha-up{transform:translateY(26px)}
+.ha-pre.ha-down{transform:translateY(-14px)}
+.ha-pre.ha-left{transform:translateX(-40px) scale(.97)}
+.ha-pre.ha-scale{transform:translateY(18px) scale(.97)}
+.ha-pre.ha-pop{opacity:1;transform:scale(.92)}
+.ha-pre.ha-in{opacity:1;transform:none;transition:opacity .8s ease,transform .8s cubic-bezier(.2,.7,.2,1)}
+#features .feature-card .icon-circle{transition:transform .35s ease}
+#features .feature-card:hover .icon-circle{transform:translateY(-2px) scale(1.07)}
+@media(prefers-reduced-motion:reduce){
+  .ha-pre.ha-up,.ha-pre.ha-down,.ha-pre.ha-left,.ha-pre.ha-scale,.ha-pre.ha-pop{transform:none}
+  #features .feature-card:hover .icon-circle{transform:none}
+}
+</style>
+<style id="hh-styles">
+/* Home hero: right-side 3D animated visual */
+@media(min-width:992px){
+  #home .container{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);column-gap:2.5rem;align-items:center}
+  #home .container>:not(.hh-visual){grid-column:1}
+  #home .container>.badge{justify-self:center}
+  #home .container>.hh-visual{grid-column:2;grid-row:1/span 4;align-self:center;margin-top:0}
+}
+.hh-visual{margin:3rem auto 0;padding:14px;width:100%;max-width:440px;overflow-x:clip;overflow-y:visible}
+.hh-stage{position:relative;aspect-ratio:1/1;perspective:900px;--u:.9px}
+.hh-disc{position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 35% 28%,#fff,#e8f0ff 75%);box-shadow:0 30px 60px -22px rgba(0,0,0,.55),0 0 0 10px rgba(255,255,255,.07)}
+.hh-float{position:absolute;inset:0;transform-style:preserve-3d;animation:hhFloat 7s ease-in-out infinite}
+.hh-img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;filter:drop-shadow(0 18px 22px rgba(30,41,90,.28));user-select:none;-webkit-user-drag:none}
+.hh-orbit{position:absolute;width:var(--d);aspect-ratio:1/1;left:calc(var(--x) - var(--d)/2);top:calc(var(--y) - var(--d)/2);transform-style:preserve-3d;animation:var(--o) 10s ease-in-out infinite;animation-delay:var(--dl,0s)}
+.hh-tilt,.hh-spin{position:absolute;inset:0;transform-style:preserve-3d}
+.hh-tilt{transform:var(--tilt)}
+.hh-spin{animation:var(--sp) var(--t) linear infinite}
+.hh-l{position:absolute;inset:0;border-radius:50%;background:linear-gradient(135deg,#c9801a,#e9a73a);backface-visibility:visible}
+.hh-l.f{background:radial-gradient(circle at 35% 28%,#ffe08a,#f8b83f 55%,#e69a22);box-shadow:inset 0 0 0 calc(var(--u)*2.2) #e8a02e}
+.hh-l.f:after{content:"";position:absolute;inset:16%;border-radius:50%;border:calc(var(--u)*1.6) solid rgba(190,110,10,.42);box-shadow:inset 0 2px 5px rgba(255,255,255,.35)}
+@keyframes hhFloat{0%,100%{transform:translateY(0) rotateX(3deg) rotateY(-7deg) rotateZ(0)}50%{transform:translateY(-14px) rotateX(-2deg) rotateY(6deg) rotateZ(1.2deg)}}
+@keyframes hhSpinY{to{transform:rotateY(360deg)}}
+@keyframes hhSpinX{to{transform:rotateX(-360deg)}}
+@keyframes hhSpinD{to{transform:rotate3d(1,1,0,360deg)}}
+@keyframes hhOrb1{0%,100%{transform:translate(0,0)}25%{transform:translate(9px,-11px)}50%{transform:translate(15px,3px)}75%{transform:translate(4px,11px)}}
+@keyframes hhOrb2{0%,100%{transform:translate(0,0)}25%{transform:translate(-8px,9px)}50%{transform:translate(-14px,-4px)}75%{transform:translate(-3px,-12px)}}
+@keyframes hhOrb3{0%,100%{transform:translate(0,0)}25%{transform:translate(10px,6px)}50%{transform:translate(2px,14px)}75%{transform:translate(-9px,5px)}}
+/* entrance + play only while visible */
+.hh-js .hh-visual{opacity:0;transform:translateY(40px) scale(.92);transition:opacity 1s ease,transform 1.1s cubic-bezier(.2,.7,.2,1)}
+.hh-js .hh-visual.hh-on{opacity:1;transform:none}
+.hh-js .hh-orbit{opacity:0;transition:opacity 1.1s ease .7s}
+.hh-js .hh-visual.hh-on .hh-orbit{opacity:1}
+.hh-visual:not(.hh-live) .hh-float,.hh-visual:not(.hh-live) .hh-orbit,.hh-visual:not(.hh-live) .hh-spin{animation-play-state:paused}
+@media(max-width:575px){.hh-visual{max-width:340px}}
+@media(prefers-reduced-motion:reduce){.hh-js .hh-visual{transform:none}.hh-float,.hh-orbit,.hh-spin{animation:none}}
+</style>
+<style id="whatsapp-float-styles">
+  .whatsapp-float {
+    position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px;
+    background-color: #25D366; color: #fff; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; font-size: 32px;
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4); z-index: 9999;
+    transition: all 0.3s ease; text-decoration: none;
+  }
+  .whatsapp-float:hover { background-color: #128C7E; color: #fff; transform: translateY(-3px) scale(1.05); box-shadow: 0 8px 20px rgba(37, 211, 102, 0.6); }
+  .whatsapp-float i { line-height: 1; }
+  @media (max-width: 575px) { .whatsapp-float { bottom: 20px; right: 20px; width: 52px; height: 52px; font-size: 28px; } }
+</style>
+<style id="footer-social-styles">
+  .footer-social-icons { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
+  .footer-social-icons a {
+    width: 42px; height: 42px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    color: #fff !important; font-size: 1.1rem; text-decoration: none;
+    transition: transform .25s ease; box-shadow: 0 3px 10px rgba(0,0,0,.2);
+  }
+  .footer-social-icons a:hover { transform: translateY(-3px) scale(1.08); color: #fff !important; }
+  .footer-social-icons a.instagram { background: linear-gradient(135deg,#f58529,#dd2a7b,#8134af,#515bd4); }
+  .footer-social-icons a.youtube   { background: linear-gradient(135deg,#ff0000,#cc0000); }
+  .footer-social-icons a.facebook  { background: linear-gradient(135deg,#1877f2,#0a5fd9); }
+  .footer-social-icons a.whatsapp  { background: linear-gradient(135deg,#25d366,#128c7e); }
+</style>
 </head>
 <body class="bg-light">
 
@@ -256,7 +312,7 @@
 
 <main id="ss-journey">
 
-  <!-- STEP 1 · DISCOVER -->
+  <!-- PAGE 1 · DISCOVER (unchanged) -->
   <section id="sj-s1" class="sj-sec sj-hero" data-label="Discover">
     <div class="container">
       <div class="row align-items-center g-5">
@@ -268,7 +324,7 @@
             <div><i class="bi bi-patch-check"></i>Best Quality</div><div><i class="bi bi-tag"></i>Best Price</div><div><i class="bi bi-shield-lock"></i>Secure Payment</div><div><i class="bi bi-truck"></i>Fast Delivery</div>
           </div>
           <div class="d-flex flex-wrap gap-3 sj-reveal" style="--d:.36s">
-            <a href="register.html" class="sj-btn">Shop Now <i class="bi bi-arrow-right"></i></a>
+            <a href="register.html" class="sj-btn">Create store <i class="bi bi-arrow-right"></i></a>
             <a href="#sj-s4" class="sj-btn sj-ghost">Explore Products</a>
           </div>
         </div>
@@ -318,120 +374,146 @@
     </div>
   </section>
 
-
-
-  <!-- STEP 4 · WHY CHOOSE -->
-  <section id="sj-s4" class="sj-sec sj-alt" data-label="Why us">
-    <div class="container">
-      <div class="text-center mb-5">
-        <div class="sj-reveal"><span class="sj-kick"><b>2</b> Choose the Right Product</span></div>
-        <h2 class="sj-h display-6 sj-reveal" style="--d:.1s">Why shoppers choose SmartStore</h2>
-        <p class="sj-sub col-md-7 mx-auto sj-reveal" style="--d:.2s">Everything you need to buy with confidence.</p>
-      </div>
-      <div class="row g-3 g-md-4" id="sjWhy"></div>
-    </div>
-  </section>
-
-  <!-- STEP 5 · ADD TO CART -->
-  <section id="sj-s5" class="sj-sec" data-label="Cart">
+  <!-- PAGE 2 · POS SYSTEM -->
+  <section id="sj-s4" class="sj-sec sj-alt" data-label="POS System">
     <div class="container">
       <div class="row align-items-center g-5">
-        <div class="col-lg-6 order-lg-2 sj-reveal sj-r">
-          <div class="sj-stage" style="max-width:480px"><div class="sj-px" data-px=".04" data-real="images/cart.png">
-            <svg class="sj-art" viewBox="0 0 480 360" role="img" aria-label="Products being added to a shopping cart">
-              <defs><linearGradient id="cg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#dbeafe"/><stop offset="1" stop-color="#eff6ff"/></linearGradient></defs>
-              <circle cx="240" cy="180" r="165" fill="url(#cg1)"/><ellipse cx="240" cy="338" rx="190" ry="11" fill="#c7d7f5" opacity=".6"/>
-              <path d="M40 120h50l36 150h210" fill="none" stroke="#475569" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M100 150h290l-30 118H132z" fill="#e2e8f0" stroke="#64748b" stroke-width="6" stroke-linejoin="round"/><path d="M118 192h260M130 230h236M160 150l10 118M210 150v118M262 150l-6 118M314 150l-18 118" stroke="#94a3b8" stroke-width="3"/>
-              <circle cx="160" cy="304" r="18" fill="#1e293b"/><circle cx="330" cy="304" r="18" fill="#1e293b"/>
-              <g class="sj-drop" style="--dd:.4s"><rect x="150" y="96" width="76" height="60" rx="5" fill="#d9a566"/><rect x="150" y="96" width="76" height="14" fill="#c68f4e"/></g>
-              <g class="sj-drop" style="--dd:.7s"><rect x="236" y="70" width="64" height="86" rx="18" fill="#2563eb"/><rect x="246" y="112" width="44" height="30" rx="10" fill="#1d4ed8"/></g>
-              <g class="sj-drop" style="--dd:1s"><path d="M310 150c0-20 10-28 28-26l22 4c14 2 20 12 20 22z" fill="#3b82f6"/><rect x="306" y="146" width="80" height="9" rx="4" fill="#fff"/></g>
-            </svg>
-            <div class="sj-added" style="top:6%;left:0;--dd:1.1s"><i class="bi bi-check-circle-fill"></i>Headphones added</div>
-            <div class="sj-added" style="top:22%;right:-2%;--dd:1.4s"><i class="bi bi-check-circle-fill"></i>Backpack added</div>
-            <div class="sj-chip" style="bottom:8%;right:2%"><i class="bi bi-cart3"></i>3 items</div>
-          </div></div>
+        <div class="col-lg-6">
+          <div class="sj-reveal sj-l"><span class="sj-kick"><b>2</b> Point of Sale (POS) System</span></div>
+          <h2 class="sj-h display-6 mb-3 sj-reveal" style="--d:.1s">Billing &amp; Sales, All in One Place</h2>
+          <p class="sj-sub mb-4 sj-reveal" style="--d:.2s">Our POS system lets merchants bill customers quickly while products, stock, orders and payments stay connected to the same store dashboard.</p>
+          <ul class="sj-ck sj-reveal" style="--d:.3s">
+            <li><i class="bi bi-check-circle-fill"></i>Easy billing and checkout</li>
+            <li><i class="bi bi-check-circle-fill"></i>Fast sales processing</li>
+            <li><i class="bi bi-check-circle-fill"></i>Product and inventory management</li>
+            <li><i class="bi bi-check-circle-fill"></i>Stock updates and sales tracking</li>
+            <li><i class="bi bi-check-circle-fill"></i>Order and payment management</li>
+            <li><i class="bi bi-check-circle-fill"></i>Centralized sales information for store owners</li>
+          </ul>
+          <div class="sj-flow sj-reveal justify-content-start" style="--d:.4s"><span>Select Items</span><span>Bill</span><span>Take Payment</span><span>Stock Updates</span></div>
         </div>
-        <div class="col-lg-6 order-lg-1">
-          <div class="sj-reveal sj-l"><span class="sj-kick"><b>3</b> Add to Cart</span></div>
-          <h2 class="sj-h display-6 mb-3 sj-reveal" style="--d:.1s">Found What You Love?</h2>
-          <p class="sj-sub fs-5 mb-4 sj-reveal" style="--d:.2s">Add your favourites to the cart and continue shopping.</p>
-          <div class="sj-reveal" style="--d:.3s"><a href="theme-selection.html" class="sj-btn">View Cart <i class="bi bi-cart3"></i></a></div>
+        <div class="col-lg-6 sj-reveal sj-r" style="--d:.2s">
+          <div class="sj-card p-4 sj-sum">
+            <h5 class="fw-bold mb-3"><i class="bi bi-receipt-cutoff text-primary me-2"></i>Sample POS bill</h5>
+            <div><span>Item 1 × 2</span><span>₹1,998</span></div>
+            <div><span>Item 2 × 1</span><span>₹1,799</span></div>
+            <div><span>Item 3 × 1</span><span>₹999</span></div>
+            <div class="tot"><span>Total</span><span>₹4,796</span></div>
+            <div class="d-flex flex-wrap gap-2 mt-3">
+              <span class="sj-kick mb-0"><i class="bi bi-phone"></i>UPI</span>
+              <span class="sj-kick mb-0"><i class="bi bi-credit-card-2-front"></i>Card</span>
+              <span class="sj-kick mb-0"><i class="bi bi-cash-coin"></i>Cash</span>
+            </div>
+            <div class="sj-lock"><i class="bi bi-boxes"></i>Stock and sales update after every bill</div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- STEP 6 · CHECKOUT -->
-  <section id="sj-s6" class="sj-sec sj-alt" data-label="Checkout">
+  <!-- PAGE 3 · BENEFITS OF POS -->
+  <section id="sj-s5" class="sj-sec" data-label="POS Benefits">
     <div class="container">
       <div class="text-center mb-5">
-        <div class="sj-reveal"><span class="sj-kick"><b>4</b> Checkout &amp; Secure Payment</span></div>
-        <h2 class="sj-h display-6 sj-reveal" style="--d:.1s">Checkout Made Simple</h2>
-        <p class="sj-sub col-md-7 mx-auto sj-reveal" style="--d:.2s">Secure payments and a smooth checkout experience.</p>
+        <div class="sj-reveal"><span class="sj-kick"><b>3</b> Benefits of Our POS System</span></div>
+        <h2 class="sj-h display-6 sj-reveal" style="--d:.1s">Run Your Store with Less Effort</h2>
+        <p class="sj-sub col-md-7 mx-auto sj-reveal" style="--d:.2s">Simple tools that save time and keep your business organized.</p>
       </div>
-      <div class="row g-4">
-        <div class="col-lg-4 sj-reveal" style="--d:.05s"><div class="sj-card p-4">
-          <h5 class="fw-bold mb-3"><i class="bi bi-cart-check text-primary me-2"></i>Cart summary</h5>
-          <div class="d-flex align-items-center gap-3 mb-3"><div class="sj-tile" style="width:54px;height:54px;background:var(--soft);color:var(--b);font-size:1.5rem"><i class="bi bi-headphones"></i></div><div class="flex-grow-1"><strong class="d-block small">Aero Wireless Headphones</strong><small class="text-secondary">Qty 1</small></div><strong>₹3,999</strong></div>
-          <div class="d-flex align-items-center gap-3"><div class="sj-tile" style="width:54px;height:54px;background:var(--soft);color:var(--b);font-size:1.5rem"><i class="bi bi-handbag"></i></div><div class="flex-grow-1"><strong class="d-block small">Metro Everyday Backpack</strong><small class="text-secondary">Qty 1</small></div><strong>₹1,799</strong></div>
-          <hr><h6 class="fw-bold mb-2"><i class="bi bi-geo-alt text-primary me-2"></i>Delivery</h6>
-          <div class="small text-secondary">12, Gandhi Nagar, Tiruchirappalli<br>Estimated delivery in 2–3 days</div>
-        </div></div>
-        <div class="col-lg-4 sj-reveal" style="--d:.15s"><div class="sj-card p-4">
-          <h5 class="fw-bold mb-3"><i class="bi bi-credit-card text-primary me-2"></i>Secure payment</h5>
-          <div class="sj-cc mb-3"><div class="chip"></div><div class="mt-4 fw-semibold" style="letter-spacing:.18em">•••• •••• •••• 4242</div><div class="d-flex justify-content-between small mt-3 opacity-75"><span>SMARTSTORE USER</span><span>12/28</span></div></div>
-          <button class="sj-pay on" data-pay><i class="bi bi-phone"></i>UPI</button><button class="sj-pay" data-pay><i class="bi bi-credit-card-2-front"></i>Debit / Credit Card</button><button class="sj-pay mb-0" data-pay><i class="bi bi-cash-coin"></i>Cash on Delivery</button>
-          <div class="sj-lock"><i class="bi bi-shield-lock-fill"></i>256-bit encrypted payments</div>
-        </div></div>
-        <div class="col-lg-4 sj-reveal" style="--d:.25s"><div class="sj-card p-4 sj-sum">
-          <h5 class="fw-bold mb-3"><i class="bi bi-receipt text-primary me-2"></i>Order summary</h5>
-          <div><span>Subtotal (2 items)</span><span>₹5,798</span></div><div><span>Offer SMART10</span><span class="text-success">-₹580</span></div><div><span>Delivery</span><span>Free</span></div>
-          <div class="tot"><span>Total</span><span>₹5,218</span></div>
-          <a href="theme-selection.html" class="sj-btn justify-content-center w-100 mt-3">Proceed to Checkout</a>
-        </div></div>
+      <div class="row g-3 g-md-4">
+        <div class="col-md-6 col-lg-4 sj-reveal" style="--d:0s"><div class="sj-card sj-why"><div class="ic"><i class="bi bi-hand-index-thumb"></i></div><h5>Easy-to-Use Interface</h5><p>A clean layout that merchants can learn quickly, with no technical skills needed.</p></div></div>
+        <div class="col-md-6 col-lg-4 sj-reveal" style="--d:.08s"><div class="sj-card sj-why"><div class="ic"><i class="bi bi-lightning-charge"></i></div><h5>Faster Billing</h5><p>Less manual work at the counter, so customers are served quicker.</p></div></div>
+        <div class="col-md-6 col-lg-4 sj-reveal" style="--d:.16s"><div class="sj-card sj-why"><div class="ic"><i class="bi bi-boxes"></i></div><h5>Better Stock Control</h5><p>Know what is available and spot low-stock items before they run out.</p></div></div>
+        <div class="col-md-6 col-lg-4 sj-reveal" style="--d:.24s"><div class="sj-card sj-why"><div class="ic"><i class="bi bi-bag-check"></i></div><h5>Simple Order Tracking</h5><p>Follow sales and orders from one screen instead of separate records.</p></div></div>
+        <div class="col-md-6 col-lg-4 sj-reveal" style="--d:.32s"><div class="sj-card sj-why"><div class="ic"><i class="bi bi-briefcase"></i></div><h5>Improved Business Management</h5><p>Products, orders and sales stay organized, making daily decisions easier.</p></div></div>
+        <div class="col-md-6 col-lg-4 sj-reveal" style="--d:.4s"><div class="sj-card sj-why"><div class="ic"><i class="bi bi-speedometer2"></i></div><h5>Quick Access to Store Info</h5><p>Important store details are available from your dashboard whenever you need them.</p></div></div>
       </div>
     </div>
   </section>
 
-  <!-- STEP 7 · DELIVERY -->
-  <section id="sj-s7" class="sj-sec" data-label="Delivery">
+  <!-- PAGE 4 · MULTIPLE STORES -->
+  <section id="sj-s6" class="sj-sec sj-alt" data-label="Multi-Store">
     <div class="container">
-      <div class="text-center mb-4">
-        <div class="sj-reveal"><span class="sj-kick"><b>5</b> Delivery &amp; Order Tracking</span></div>
-        <h2 class="sj-h display-6 sj-reveal" style="--d:.1s">Your Order Is on Its Way</h2>
-        <p class="sj-sub col-md-7 mx-auto sj-reveal" style="--d:.2s">Track every step from our warehouse to your doorstep.</p>
-      </div>
-      <div class="sj-card p-4 p-md-5 sj-reveal sj-s" style="--d:.1s">
-        <div class="sj-road">
-          <svg class="sj-scoot" viewBox="0 0 140 100" aria-hidden="true"><rect x="8" y="14" width="56" height="42" rx="4" fill="#d9a566"/><rect x="8" y="14" width="56" height="9" fill="#c68f4e"/><path d="M52 90c-4-18 4-32 16-38l18-4c9 0 12 8 10 18l-4 14z" fill="#2563eb"/><path d="M58 50l-8-18h18" fill="none" stroke="#1e3a8a" stroke-width="5" stroke-linecap="round"/><circle cx="56" cy="82" r="14" fill="#1e293b"/><circle cx="56" cy="82" r="6" fill="#cbd5e1"/><circle cx="116" cy="82" r="14" fill="#1e293b"/><circle cx="116" cy="82" r="6" fill="#cbd5e1"/></svg>
+      <div class="row align-items-center g-5">
+        <div class="col-lg-6 order-lg-2 sj-reveal sj-r" style="--d:.15s">
+          <div class="sj-card p-4">
+            <h5 class="fw-bold mb-3"><i class="bi bi-shop-window text-primary me-2"></i>Your stores, one platform</h5>
+            <div class="sj-st on"><i class="bi bi-shop"></i>Store A<small>Active dashboard</small></div>
+            <div class="sj-st"><i class="bi bi-shop"></i>Store B<small>Separate products</small></div>
+            <div class="sj-st"><i class="bi bi-shop"></i>Store C<small>Separate orders</small></div>
+            <div class="sj-lock"><i class="bi bi-arrow-left-right"></i>Each store has its own dashboard</div>
+          </div>
         </div>
-        <div class="sj-track"><div class="f"></div>
-          <div class="s on"><i class="bi bi-check2"></i>Order Confirmed</div><div class="s on"><i class="bi bi-box-seam"></i>Packed</div><div class="s on"><i class="bi bi-truck"></i>Shipped</div><div class="s on now"><i class="bi bi-bicycle"></i>Out for Delivery</div><div class="s"><i class="bi bi-house-door"></i>Delivered</div>
+        <div class="col-lg-6 order-lg-1">
+          <div class="sj-reveal sj-l"><span class="sj-kick"><b>4</b> Multiple Stores</span></div>
+          <h2 class="sj-h display-6 mb-3 sj-reveal" style="--d:.1s">Create Multiple Stores Easily</h2>
+          <p class="sj-sub mb-4 sj-reveal" style="--d:.2s">Start more than one online store from a single platform and manage every store separately, without juggling different tools.</p>
+          <ul class="sj-ck sj-reveal" style="--d:.3s">
+            <li><i class="bi bi-check-circle-fill"></i>Create multiple stores from one platform</li>
+            <li><i class="bi bi-check-circle-fill"></i>Manage each store separately</li>
+            <li><i class="bi bi-check-circle-fill"></i>Organize products and categories for each store</li>
+            <li><i class="bi bi-check-circle-fill"></i>Manage orders, inventory and sales</li>
+            <li><i class="bi bi-check-circle-fill"></i>Access individual store dashboards</li>
+            <li><i class="bi bi-check-circle-fill"></i>Switch between stores easily, wherever supported</li>
+          </ul>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- STEP 8 · SUCCESS -->
-  <section id="sj-s8" class="sj-sec sj-alt" data-label="Success">
+  <!-- PAGE 5 · SIMPLE STORE CREATION -->
+  <section id="sj-s7" class="sj-sec" data-label="Store Setup">
     <div class="container">
-      <div class="sj-card p-4 p-md-5 text-center col-lg-9 mx-auto sj-reveal sj-s" style="background:linear-gradient(180deg,#f3f8ff,#fff)">
-        <span class="sj-kick mx-auto"><b>6</b> Order Success</span>
-        <svg class="sj-okc" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="44"/><path d="M30 52l14 14 27-30"/></svg>
-        <h2 class="sj-h display-6 mb-2">Your Shopping Journey, Simplified.</h2>
-        <div class="sj-flow"><span>Discover.</span><span>Choose.</span><span>Order.</span><span>Receive.</span></div>
-        <div class="d-flex flex-wrap justify-content-center gap-4 mb-4 text-secondary small">
-          <span><i class="bi bi-box2-heart text-primary me-1"></i>Delivered safely to your door</span>
-          <span><span class="sj-stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></span> Loved by 10K+ customers</span>
-        </div>
-        <div><a href="register.html" class="sj-btn">Continue Shopping <i class="bi bi-arrow-right"></i></a></div>
+      <div class="text-center mb-5">
+        <div class="sj-reveal"><span class="sj-kick"><b>5</b> Simple Store Creation &amp; Management</span></div>
+        <h2 class="sj-h display-6 sj-reveal" style="--d:.1s">Launch Your Store in Five Simple Steps</h2>
+        <p class="sj-sub col-md-7 mx-auto sj-reveal" style="--d:.2s">Friendly for beginners and practical for experienced business owners.</p>
+      </div>
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-5 g-3 mb-5">
+        <div class="col sj-reveal" style="--d:0s"><div class="sj-card p-4"><div class="sj-num">1</div><h5 class="fw-bold fs-6">Register</h5><p class="sj-sub small mb-0">Sign up with your business and brand details.</p></div></div>
+        <div class="col sj-reveal" style="--d:.08s"><div class="sj-card p-4"><div class="sj-num">2</div><h5 class="fw-bold fs-6">Create Store</h5><p class="sj-sub small mb-0">Set up your store with its own brand name.</p></div></div>
+        <div class="col sj-reveal" style="--d:.16s"><div class="sj-card p-4"><div class="sj-num">3</div><h5 class="fw-bold fs-6">Add Products</h5><p class="sj-sub small mb-0">Add and manage products from your dashboard.</p></div></div>
+        <div class="col sj-reveal" style="--d:.24s"><div class="sj-card p-4"><div class="sj-num">4</div><h5 class="fw-bold fs-6">Customize Theme</h5><p class="sj-sub small mb-0">Choose a storefront theme that suits your brand.</p></div></div>
+        <div class="col sj-reveal" style="--d:.32s"><div class="sj-card p-4"><div class="sj-num">5</div><h5 class="fw-bold fs-6">Start Selling</h5><p class="sj-sub small mb-0">Receive orders and manage them in one place.</p></div></div>
+      </div>
+      <div class="row g-3 g-md-4 mb-4">
+        <div class="col-md-4 sj-reveal" style="--d:0s"><div class="sj-card sj-why"><div class="ic"><i class="bi bi-window-sidebar"></i></div><h5>Centralized Management</h5><p>Control your store from a single merchant dashboard.</p></div></div>
+        <div class="col-md-4 sj-reveal" style="--d:.1s"><div class="sj-card sj-why"><div class="ic"><i class="bi bi-boxes"></i></div><h5>Orders &amp; Inventory</h5><p>View incoming orders and keep stock details organized.</p></div></div>
+        <div class="col-md-4 sj-reveal" style="--d:.2s"><div class="sj-card sj-why"><div class="ic"><i class="bi bi-emoji-smile"></i></div><h5>Beginner Friendly</h5><p>A simple experience, whether you are new to selling online or experienced.</p></div></div>
+      </div>
+      <div class="text-center d-flex flex-wrap gap-3 justify-content-center sj-reveal" style="--d:.2s">
+        <a href="register.html" class="sj-btn">Create Your Store <i class="bi bi-arrow-right"></i></a>
+        <a href="theme-selection.html" class="sj-btn sj-ghost">View Storefront Themes</a>
       </div>
     </div>
   </section>
 
-  <div class="sj-prog" id="sjProg" role="navigation" aria-label="Shopping journey progress"><div class="d"></div><span class="l"></span></div>
+  <!-- PAGE 6 · WHY CHOOSE OUR PLATFORM -->
+  <section id="sj-s8" class="sj-sec sj-alt" data-label="Why Us">
+    <div class="container">
+      <div class="text-center mb-5">
+        <div class="sj-reveal"><span class="sj-kick"><b>6</b> Why Choose Our Platform</span></div>
+        <h2 class="sj-h display-6 sj-reveal" style="--d:.1s">Why Choose Our Platform Over Other Store-Building Websites?</h2>
+        <p class="sj-sub col-md-8 mx-auto sj-reveal" style="--d:.2s">One platform for your stores, POS, products, orders and sales, built to keep the merchant workflow simple.</p>
+      </div>
+      <div class="sj-cmpwrap sj-reveal sj-s" style="--d:.1s">
+        <table class="sj-cmp">
+          <thead><tr><th>Feature</th><th class="us">Our Platform</th><th>Traditional Store-Building Platforms</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Multiple stores</strong></td><td class="us"><i class="bi bi-check-circle-fill"></i>Manage multiple stores from one dashboard</td><td class="them">May need separate setups for each store</td></tr>
+            <tr><td><strong>POS &amp; online store</strong></td><td class="us"><i class="bi bi-check-circle-fill"></i>Integrated POS and online store management</td><td class="them">POS and store may be handled in separate tools</td></tr>
+            <tr><td><strong>Products &amp; inventory</strong></td><td class="us"><i class="bi bi-check-circle-fill"></i>Centralized product and inventory management</td><td class="them">May be managed in different places</td></tr>
+            <tr><td><strong>Store creation</strong></td><td class="us"><i class="bi bi-check-circle-fill"></i>Easy store creation and management</td><td class="them">Setup can involve several steps</td></tr>
+            <tr><td><strong>Sales &amp; orders</strong></td><td class="us"><i class="bi bi-check-circle-fill"></i>Sales and orders in one place</td><td class="them">Information may be spread across tools</td></tr>
+            <tr><td><strong>Customization</strong></td><td class="us"><i class="bi bi-check-circle-fill"></i>Store-specific themes and social media links</td><td class="them">Varies by platform</td></tr>
+            <tr><td><strong>Merchant workflow</strong></td><td class="us"><i class="bi bi-check-circle-fill"></i>A simpler, all-in-one workflow</td><td class="them">May require learning multiple systems</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="text-center mt-5 sj-reveal" style="--d:.2s"><a href="register.html" class="sj-btn">Get Started <i class="bi bi-arrow-right"></i></a></div>
+    </div>
+  </section>
+
+  <div class="sj-prog" id="sjProg" role="navigation" aria-label="Page progress"><div class="d"></div><span class="l"></span></div>
 </main>
 
   <!-- HERO -->
@@ -449,6 +531,15 @@
         <a href="register.html" class="btn btn-primary-gradient btn-lg px-5">Start Shopping</a>
         <a href="#about" class="btn btn-outline-light btn-lg rounded-pill px-5 fw-medium">Explore</a>
       </div>
+    <!--hh-start--><div class="hh-visual">
+        <div class="hh-stage" id="hhStage">
+          <div class="hh-disc"></div>
+          <div class="hh-float"><img class="hh-img" alt="Phone with shopping cart and OK button" src="PASTE_YOUR_ORIGINAL_BASE64_IMAGE_SRC_HERE"></div>
+          <div class="hh-orbit hh-coin" style="--d:15.5%;--x:75%;--y:21.5%;--o:hhOrb1;--dl:-2s;--sp:hhSpinY;--t:6s;--tilt:rotateX(-20deg) rotateZ(-10deg)"></div>
+          <div class="hh-orbit hh-coin" style="--d:14%;--x:23%;--y:52%;--o:hhOrb2;--dl:-5s;--sp:hhSpinX;--t:8s;--tilt:rotateY(25deg) rotateZ(14deg)"></div>
+          <div class="hh-orbit hh-coin" style="--d:15%;--x:40%;--y:67.7%;--o:hhOrb3;--dl:-7s;--sp:hhSpinD;--t:7s;--tilt:rotateX(15deg) rotateZ(-6deg)"></div>
+        </div>
+      </div><!--hh-end-->
     </div>
   </section>
 
@@ -557,7 +648,25 @@
         </div>
         <div class="col-lg-6 hw-r hw-rt" style="--d:.15s">
           <div class="position-relative">
-            <div class="hw-pic"><i class="bi bi-bag-heart-fill fb"></i><img src="https://images.unsplash.com/photo-1556742049-0a67568d0490?auto=format&fit=crop&w=900&q=80" alt="Customer shopping online with laptop and card" loading="lazy" onerror="this.remove()"></div>
+            <div class="hw-pic"><svg class="hw-art" viewBox="0 0 420 340" role="img" aria-label="Shopping app on a phone with cart and gift box">
+              <ellipse cx="205" cy="318" rx="190" ry="8" fill="#e8b23a" opacity=".45"/>
+              <rect x="150" y="24" width="130" height="284" rx="18" fill="#111827"/><rect x="156" y="30" width="118" height="272" rx="14" fill="#fafafa"/>
+              <rect x="166" y="104" width="70" height="7" rx="3.5" fill="#e5e7eb"/><circle cx="250" cy="107" r="4" fill="#f59e0b"/><circle cx="262" cy="107" r="4" fill="#ef4444"/>
+              <rect x="162" y="118" width="62" height="64" rx="6" fill="#fdf1c4"/><path d="M178 160L188 138Q192 146 203 148L216 154Q218 159 213 159Z" fill="#e11d2e"/><path d="M178 160v8" stroke="#e11d2e" stroke-width="3"/>
+              <g stroke="#cbd5e1" stroke-width="3" stroke-linecap="round"><path d="M232 124h34M232 133h34M232 142h34M232 151h34M232 160h34M232 169h34"/></g>
+              <rect x="172" y="188" width="44" height="10" rx="5" fill="#e11d2e"/>
+              <rect x="162" y="210" width="62" height="54" rx="6" fill="#fdf1c4"/><path d="M172 248Q178 236 194 238L218 246V252H172Z" fill="#f5b72b"/>
+              <g stroke="#cbd5e1" stroke-width="3" stroke-linecap="round"><path d="M232 214h34M232 223h34M232 232h34M232 241h34M232 250h34"/></g>
+              <rect x="172" y="270" width="44" height="10" rx="5" fill="#e11d2e"/>
+              <circle cx="168" cy="126" r="13" fill="#e11d2e"/><text x="168" y="129" font-size="8" font-weight="700" fill="#fff" text-anchor="middle">30%</text>
+              <g><path d="M128 54h35v26a17.5 17.5 0 0 1-35 0z" fill="#e11d2e"/><path d="M163 54h35v26a17.5 17.5 0 0 1-35 0z" fill="#fbbf24"/><path d="M198 54h35v26a17.5 17.5 0 0 1-35 0z" fill="#e11d2e"/><path d="M233 54h35v26a17.5 17.5 0 0 1-35 0z" fill="#fbbf24"/><path d="M268 54h35v26a17.5 17.5 0 0 1-35 0z" fill="#e11d2e"/></g>
+              <g><rect x="70" y="190" width="44" height="40" fill="#d9a566"/><rect x="104" y="198" width="50" height="44" fill="#c68f4e"/><rect x="70" y="190" width="44" height="8" fill="#c18c4f"/>
+              <path d="M58 214H166L156 282H78Z" fill="none" stroke="#e11d2e" stroke-width="5" stroke-linejoin="round"/><path d="M84 214l4 68M104 214v68M124 214v68M144 214l-4 68M62 238h100M70 260h86" stroke="#e11d2e" stroke-width="3"/>
+              <path d="M160 222L180 200H196" fill="none" stroke="#e11d2e" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M72 292H152" stroke="#9ca3af" stroke-width="4" stroke-linecap="round"/><circle cx="84" cy="300" r="9" fill="#1f2937"/><circle cx="146" cy="300" r="9" fill="#1f2937"/></g>
+              <g><rect x="284" y="254" width="58" height="54" fill="#d61f2c"/><rect x="278" y="240" width="70" height="16" rx="2" fill="#e11d2e"/><rect x="308" y="240" width="10" height="68" fill="#f5b72b"/>
+              <ellipse cx="300" cy="233" rx="11" ry="8" fill="none" stroke="#f5b72b" stroke-width="4"/><ellipse cx="326" cy="233" rx="11" ry="8" fill="none" stroke="#f5b72b" stroke-width="4"/></g>
+            </svg></div>
             <div class="hw-float" style="top:8%;left:-14px"><i class="bi bi-bag-check-fill"></i>Order placed online</div>
             <div class="hw-float" style="bottom:10%;right:-10px;animation-delay:-2s"><i class="bi bi-shop"></i>Merchant store updated</div>
           </div>
@@ -653,6 +762,8 @@
         </div>
         <div class="col-md-3">
           <a href="#" id="footerPagesLink" class="footer-link fw-bold fs-6">Pages</a>
+          <!-- Individual saved page links are injected here -->
+          <ul id="footerPageLinks" class="footer-pages-list"></ul>
         </div>
         <div class="col-md-4 text-md-end">
           <h5 class="fw-bold mb-2">Contact Support</h5>
@@ -660,73 +771,193 @@
           <p class="text-white-50 mb-0"><i class="bi bi-envelope-fill me-2 text-primary"></i> support@smartstore.com</p>
         </div>
       </div>
-      <hr class="my-4 border-secondary opacity-25">
-      <p class="text-center text-white-50 mb-0 small">&copy; 2026 SmartStore. All rights reserved.</p>
-    </div>
-  </footer>
+
+      <!-- Social Media Icons (auto-loaded from Super Admin) -->
+     <div id="footerSocial" style="display:none; text-align:center; margin-top:16px;">
+  <p id="footerSocialNote" style="margin:0 0 10px;"></p>
+  <div id="footerSocialIcons" style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap;"></div>
+  <a id="footerWebsiteLink" href="#" target="_blank" rel="noopener noreferrer"
+     style="display:none; margin-top:10px; color:inherit; text-decoration:underline;"></a>
+</div>
+
+  <!-- WhatsApp Floating Icon -->
+  <a href="https://wa.me/919600891418"
+     class="whatsapp-float"
+     target="_blank"
+     rel="noopener noreferrer"
+     aria-label="Contact us on WhatsApp">
+    <i class="bi bi-whatsapp"></i>
+  </a>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- =========================================================
+       FOOTER PAGES — reads the same localStorage keys the
+       Merchant Dashboard writes:
+         - smartstore_pages_<storeSlug>   (preferred, per-store)
+         - smartstore_pages               (legacy fallback)
+       ========================================================= -->
   <script>
     document.addEventListener('DOMContentLoaded', function () {
+      var PAGES_LEGACY_KEY = 'smartstore_pages';
+
       function esc(s) {
         return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
           return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
         });
       }
-
-      document.getElementById('footerPagesLink').addEventListener('click', function (e) {
-        e.preventDefault();
-
-        var pages = [];
-        try { pages = JSON.parse(localStorage.getItem('smartstore_pages') || '[]'); } catch (err) {}
-        var list = pages.filter(function (p) { return p.status === 'Published' && p.title && p.content; });
-
-        var acc = document.getElementById('pagesAccordion');
-        if (!list.length) {
-          acc.innerHTML = '<p class="text-secondary text-center py-4 mb-0">No pages yet.</p>';
-        } else {
-          acc.innerHTML = list.map(function (p) {
-            return '<div class="border rounded-4 p-4 mb-3 bg-white">' +
-              '<h4 class="fw-bold text-dark mb-2">' + esc(p.title) + '</h4>' +
-              '<span class="badge bg-primary bg-opacity-10 text-primary fw-normal px-3 py-2 mb-3">/page/' + esc(p.slug) + '</span>' +
-              '<hr class="my-3">' +
-              '<div class="page-body">' + p.content + '</div>' +
-            '</div>';
-          }).join('');
+      function slugify(s) {
+        return String(s || '').toLowerCase().trim()
+          .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'smartstore';
+      }
+      function getStoreSlug() {
+        try {
+          var q = new URLSearchParams(location.search).get('store');
+          if (q) return slugify(q);
+          var u = JSON.parse(localStorage.getItem('smartstore_current_user') || 'null');
+          if (u) {
+            var c = u.storeSlug || u.store_slug || u.slug
+                 || u.businessName || u.brandName || u.storeName || u.name || '';
+            if (c) return slugify(c);
+          }
+        } catch (e) {}
+        return 'smartstore';
+      }
+      function readPages() {
+        var slug = getStoreSlug();
+        var keys = ['smartstore_pages_' + slug, PAGES_LEGACY_KEY];
+        for (var i = 0; i < keys.length; i++) {
+          try {
+            var raw = JSON.parse(localStorage.getItem(keys[i]) || 'null');
+            if (Array.isArray(raw)) {
+              return raw
+                .filter(function (p) { return p && typeof p === 'object' && p.slug; })
+                .map(function (p) {
+                  return {
+                    title: String(p.title || ''),
+                    slug: slugify(p.slug),
+                    content: String(p.content || ''),
+                    status: String(p.status || 'Published')
+                  };
+                });
+            }
+          } catch (e) {}
         }
+        return [];
+      }
+      function sanitizeHtml(html) {
+        var tmp = document.createElement('div');
+        tmp.innerHTML = String(html || '');
+        // Remove dangerous nodes
+        tmp.querySelectorAll('script, iframe, object, embed, style, link, meta').forEach(function (n) { n.remove(); });
+        // Strip on* handlers and javascript: URLs
+        tmp.querySelectorAll('*').forEach(function (n) {
+          Array.prototype.slice.call(n.attributes).forEach(function (attr) {
+            var name = attr.name.toLowerCase();
+            var val = String(attr.value || '');
+            if (name.indexOf('on') === 0) n.removeAttribute(attr.name);
+            if ((name === 'href' || name === 'src') && /^\s*javascript:/i.test(val)) n.removeAttribute(attr.name);
+          });
+        });
+        return tmp.innerHTML;
+      }
 
-        bootstrap.Modal.getOrCreateInstance(document.getElementById('pagesModal')).show();
+      var accordion = document.getElementById('pagesAccordion');
+      var linksWrap = document.getElementById('footerPageLinks');
+
+      function renderPageIntoModal(pages, focusSlug) {
+        if (!accordion) return;
+        var list = pages.filter(function (p) {
+          return p.status.toLowerCase() === 'published' && p.title && p.content;
+        });
+        if (!list.length) {
+          accordion.innerHTML = '<p class="text-secondary text-center py-4 mb-0">No pages yet.</p>';
+          return;
+        }
+        if (focusSlug) {
+          var one = list.filter(function (p) { return p.slug === focusSlug; });
+          if (one.length) list = one;
+        }
+        accordion.innerHTML = list.map(function (p) {
+          return '<div class="border rounded-4 p-4 mb-3 bg-white">' +
+            '<h4 class="fw-bold text-dark mb-2">' + esc(p.title) + '</h4>' +
+            '<span class="badge bg-primary bg-opacity-10 text-primary fw-normal px-3 py-2 mb-3">/page/' + esc(p.slug) + '</span>' +
+            '<hr class="my-3">' +
+            '<div class="page-body">' + sanitizeHtml(p.content) + '</div>' +
+          '</div>';
+        }).join('');
+      }
+
+      function openModal(focusSlug) {
+        var pages = readPages();
+        renderPageIntoModal(pages, focusSlug);
+        var modalEl = document.getElementById('pagesModal');
+        if (modalEl && window.bootstrap && bootstrap.Modal) {
+          bootstrap.Modal.getOrCreateInstance(modalEl).show();
+        }
+      }
+
+      // Existing "Pages" link — shows ALL published pages
+      var allLink = document.getElementById('footerPagesLink');
+      if (allLink) {
+        allLink.addEventListener('click', function (e) {
+          e.preventDefault();
+          openModal(null);
+        });
+      }
+
+      // Render individual page links in the footer
+      function renderFooterLinks() {
+        if (!linksWrap) return;
+        var pages = readPages().filter(function (p) {
+          return p.status.toLowerCase() === 'published' && p.title;
+        });
+        if (!pages.length) {
+          linksWrap.innerHTML = '';
+          return;
+        }
+        linksWrap.innerHTML = pages.map(function (p) {
+          return '<li><a href="#" data-slug="' + esc(p.slug) + '">' +
+                   '<i class="bi bi-file-earmark-text"></i>' + esc(p.title) +
+                 '</a></li>';
+        }).join('');
+      }
+      if (linksWrap) {
+        linksWrap.addEventListener('click', function (e) {
+          var a = e.target.closest('a[data-slug]');
+          if (!a) return;
+          e.preventDefault();
+          openModal(a.getAttribute('data-slug'));
+          try { history.replaceState(null, '', '?page=' + encodeURIComponent(a.getAttribute('data-slug'))); } catch (err) {}
+        });
+      }
+
+      renderFooterLinks();
+
+      // Deep link: ?page=slug — opens that page directly
+      try {
+        var deep = new URLSearchParams(location.search).get('page');
+        if (deep) openModal(slugify(deep));
+      } catch (e) {}
+
+      // Keep footer links in sync with the dashboard across tabs
+      window.addEventListener('storage', function (e) {
+        if (!e.key) return;
+        if (e.key === PAGES_LEGACY_KEY
+         || e.key === 'smartstore_pages_update'
+         || /^smartstore_pages_/.test(e.key)) {
+          renderFooterLinks();
+        }
       });
+      window.addEventListener('focus', renderFooterLinks);
     });
   </script>
+
 <script id="sj-script">
 (function () {
   var root = document.getElementById('ss-journey');
   root.classList.add('sj-js');
   var $ = function (s) { return document.querySelector(s); };
-  var STORE = 'theme-selection.html'; /* existing storefront/cart page: change if your path differs */
-  var U = 'https://images.unsplash.com/photo-';
-  var img = function (id, alt, cls) { return '<img class="' + (cls || '') + '" src="' + U + id + '?auto=format&fit=crop&w=600&q=75" alt="' + alt + '" loading="lazy" onerror="this.remove()">'; };
-  var CATS = [['Electronics','laptop','180+ items','1496181133206-80ce9b88a853'],['Fashion','handbag','240+ styles','1483985988355-763728e1935b'],['Home & Living','house-heart','320+ items','1586023492125-27b2c045efd7'],['Beauty','flower1','150+ items','1522335789203-aabd1fc54bc9'],['Accessories','smartwatch','210+ items','1572635196237-14b3f281503f'],['Grocery & Lifestyle','basket3','500+ items','1542838132-92c53300491e']];
-  var ART = {
-    h: '<svg viewBox="0 0 120 120"><path d="M26 72A34 34 0 0 1 94 72" fill="none" stroke="#1e3a8a" stroke-width="8" stroke-linecap="round"/><rect x="16" y="64" width="22" height="38" rx="11" fill="#2563eb"/><rect x="82" y="64" width="22" height="38" rx="11" fill="#2563eb"/><rect x="21" y="72" width="8" height="22" rx="4" fill="#93c5fd"/><rect x="91" y="72" width="8" height="22" rx="4" fill="#93c5fd"/></svg>',
-    w: '<svg viewBox="0 0 120 120"><rect x="46" y="6" width="28" height="108" rx="9" fill="#93c5fd"/><rect x="32" y="32" width="56" height="56" rx="16" fill="#1e3a8a"/><rect x="38" y="38" width="44" height="44" rx="12" fill="#dbeafe"/><path d="M60 50v12l8 6" fill="none" stroke="#2563eb" stroke-width="4" stroke-linecap="round"/></svg>',
-    s: '<svg viewBox="0 0 120 120"><path d="M8 80C8 62 28 64 40 52l10 6c10 4 28 2 42 12 12 4 20 8 20 18v6H8z" fill="#2563eb"/><rect x="8" y="92" width="104" height="11" rx="5.5" fill="#fff" stroke="#bfdbfe" stroke-width="2"/><path d="M44 62l6 8M54 66l6 8M64 68l6 8" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg>',
-    b: '<svg viewBox="0 0 120 120"><path d="M48 28C48 8 72 8 72 28" fill="none" stroke="#1e3a8a" stroke-width="6"/><rect x="28" y="24" width="64" height="82" rx="24" fill="#2563eb"/><rect x="40" y="64" width="40" height="30" rx="11" fill="#1d4ed8"/><rect x="50" y="42" width="20" height="8" rx="4" fill="#93c5fd"/></svg>'
-  };
-  var PRODUCTS = [['Aero Wireless Headphones','h',3999,4999,4.8,1240,'1505740420928-5e560c06d30e'],['Pulse Smart Watch','w',5999,7499,4.6,860,'1523275335684-37898b6baf30'],['Stride Running Shoes','s',2599,3299,4.7,530,'1542291026-7eec264c27ff'],['Metro Everyday Backpack','b',1799,2199,4.5,410,'1553062407-98eeb64c6a62']];
-  var WHY = [['patch-check','Quality Products','Every listing is checked for quality.'],['tag','Best Prices','Great deals and regular offers.'],['shield-lock','Secure Payments','Encrypted, trusted payment options.'],['truck','Fast Delivery','Quick dispatch, doorstep delivery.'],['arrow-repeat','Easy Returns','7-day hassle-free returns.'],['headset','Customer Support','Friendly help, 24/7.']];
-  var inr = function (n) { return '₹' + n.toLocaleString('en-IN'); };
-  var stars = function (r) { var h = ''; for (var k = 1; k <= 5; k++) h += '<i class="bi bi-star' + (r >= k ? '-fill' : r >= k - .5 ? '-half' : '') + '"></i>'; return h; };
-
-  $('#sjWhy').innerHTML = WHY.map(function (w, k) {
-    return '<div class="col-md-6 col-lg-4 sj-reveal" style="--d:' + (k * .08) + 's"><div class="sj-card sj-why"><div class="ic"><i class="bi bi-' + w[0] + '"></i></div><h5>' + w[1] + '</h5><p>' + w[2] + '</p></div></div>';
-  }).join('');
-
-  document.addEventListener('click', function (e) {
-    var p = e.target.closest('[data-pay]');
-    if (p) { document.querySelectorAll('[data-pay]').forEach(function (b) { b.classList.remove('on'); }); p.classList.add('on'); }
-  });
 
   /* scroll reveal */
   var els = root.querySelectorAll('.sj-reveal');
@@ -744,7 +975,7 @@
   /* progress pill + subtle parallax */
   var secs = [].slice.call(root.querySelectorAll('section[id^="sj-s"]')), box = $('#sjProg'), dots = box.querySelector('.d'), lab = box.querySelector('.l'), px = [].slice.call(root.querySelectorAll('.sj-px')), tick = false;
   var still = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  dots.innerHTML = secs.map(function (s, k) { return '<button data-go="' + s.id + '" aria-label="Step ' + (k + 1) + '">' + (k + 1) + '</button>'; }).join('');
+  dots.innerHTML = secs.map(function (s, k) { return '<button data-go="' + s.id + '" aria-label="Page ' + (k + 1) + '">' + (k + 1) + '</button>'; }).join('');
   dots.addEventListener('click', function (e) { var b = e.target.closest('[data-go]'); if (b) document.getElementById(b.getAttribute('data-go')).scrollIntoView({ behavior: 'smooth' }); });
   function upd() {
     tick = false; var mid = innerHeight * .5, cur = 0;
@@ -752,7 +983,7 @@
     var r = root.getBoundingClientRect();
     box.classList.toggle('show', r.top < -60 && r.bottom > innerHeight * .6);
     [].forEach.call(dots.children, function (b, k) { b.className = k === cur ? 'on' : k < cur ? 'past' : ''; });
-    lab.textContent = 'Step ' + (cur + 1) + ' of ' + secs.length + ' · ' + secs[cur].getAttribute('data-label');
+    lab.textContent = 'Page ' + (cur + 1) + ' of ' + secs.length + ' · ' + secs[cur].getAttribute('data-label');
     if (!still && innerWidth > 767) px.forEach(function (el) {
       var b = el.getBoundingClientRect();
       if (b.bottom < -100 || b.top > innerHeight + 100) return;
@@ -761,7 +992,8 @@
   }
   addEventListener('scroll', function () { if (!tick) { tick = true; requestAnimationFrame(upd); } }, { passive: true });
   addEventListener('resize', upd); upd();
-  /* optional real renders: put images/hero.png and images/cart.png next to this page and they replace the drawings automatically */
+
+  /* optional real hero render: images/hero.png replaces the drawing automatically */
   document.querySelectorAll('[data-real]').forEach(function (w) {
     var i = new Image();
     i.onload = function () { i.className = 'sj-real'; i.alt = ''; var v = w.querySelector('svg.sj-art'); if (v) v.style.display = 'none'; w.insertBefore(i, w.firstChild); };
@@ -818,6 +1050,189 @@
     }, { threshold: .12, rootMargin: '0px 0px -6% 0px' });
     els.forEach(function (el) { io.observe(el); });
   } else els.forEach(function (el) { el.classList.add('hw-in'); });
+})();
+</script>
+<script id="ha-script">
+(function () {
+  /* [selector, variant class, base delay (s), stagger step (s)] */
+  var G = [
+    ['#home .container > .badge', 'ha-down', 0, 0],
+    ['#home .container > h1', 'ha-scale', .12, 0],
+    ['#home .container > p', 'ha-up', .24, 0],
+    ['#home .container > div:not(.hh-visual)', 'ha-up', .36, 0],
+    ['#home .container .btn', 'ha-pop', .55, .1],
+    ['#about img', 'ha-left', 0, 0],
+    ['#about .col-lg-6:last-child > *', 'ha-up', .1, .12],
+    ['#features .text-center > *', 'ha-up', 0, .1],
+    ['#features .feature-card', 'ha-up', .15, .14]
+  ];
+  G.forEach(function (g) {
+    var els = [].slice.call(document.querySelectorAll(g[0]));
+    if (!els.length || !('IntersectionObserver' in window)) return;
+    els.forEach(function (e) { e.classList.add('ha-pre', g[1]); });
+    var io = new IntersectionObserver(function (en) {
+      var n = 0;
+      en.forEach(function (x) {
+        if (!x.isIntersecting) return;
+        io.unobserve(x.target);
+        var el = x.target, d = g[2] + n * g[3]; n++;
+        el.style.transitionDelay = d + 's';
+        requestAnimationFrame(function () { el.classList.add('ha-in'); });
+        setTimeout(function () {
+          el.classList.remove('ha-pre', g[1], 'ha-in');
+          el.style.transitionDelay = '';
+          if (!el.getAttribute('style')) el.removeAttribute('style');
+        }, (d + 1) * 1000 + 100);
+      });
+    }, { threshold: .15, rootMargin: '0px 0px -5% 0px' });
+    els.forEach(function (e) { io.observe(e); });
+  });
+})();
+</script>
+<script id="hh-script">
+(function () {
+  var vis = document.querySelector('#home .hh-visual'), stage = document.getElementById('hhStage');
+  if (!vis || !stage) return;
+  /* build real-looking 3D coins: a stack of discs gives the coin its thickness */
+  [].forEach.call(stage.querySelectorAll('.hh-coin'), function (c) {
+    var L = '';
+    for (var k = -4; k <= 4; k++) L += '<i class="hh-l' + (Math.abs(k) === 4 ? ' f' : '') + '" style="transform:translateZ(calc(var(--u)*' + k + '))"></i>';
+    c.innerHTML = '<div class="hh-tilt"><div class="hh-spin">' + L + '</div></div>';
+  });
+  function size() { stage.style.setProperty('--u', (stage.clientWidth * 0.002).toFixed(2) + 'px'); }
+  size(); addEventListener('resize', size);
+  document.documentElement.classList.add('hh-js');
+  document.getElementById('home').classList.add('hh-js');
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (en) {
+      en.forEach(function (x) {
+        if (x.isIntersecting) { vis.classList.add('hh-on', 'hh-live'); }
+        else vis.classList.remove('hh-live');
+      });
+    }, { threshold: .2 }).observe(vis);
+  } else vis.classList.add('hh-on', 'hh-live');
+})();
+
+(function () {
+  var SOCIAL_ICON_MAP = {
+    instagram: { icon: 'bi-instagram', label: 'Instagram' },
+    youtube:   { icon: 'bi-youtube',   label: 'YouTube' },
+    facebook:  { icon: 'bi-facebook',  label: 'Facebook' },
+    whatsapp:  { icon: 'bi-whatsapp',  label: 'WhatsApp' }
+  };
+
+  function render() {
+    var wrap = document.getElementById('footerSocialIcons');
+    if (!wrap) return;
+    var box = wrap.querySelector('.footer-social-icons');
+    if (!box) return;
+
+    var data = {};
+    try { data = JSON.parse(localStorage.getItem('smartstore_social_links') || '{}'); } catch(e) { data = {}; }
+
+    var html = '';
+    Object.keys(data).forEach(function (platform) {
+      var url = (data[platform] || '').trim();
+      if (!url || !SOCIAL_ICON_MAP[platform]) return;
+      var info = SOCIAL_ICON_MAP[platform];
+      html += '<a href="' + url + '" class="' + platform + '" target="_blank" rel="noopener noreferrer" title="' + info.label + '">' +
+              '<i class="bi ' + info.icon + '"></i></a>';
+    });
+
+    if (html) {
+      box.innerHTML = html;
+      wrap.style.display = 'block';
+    } else {
+      wrap.style.display = 'none';
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', render);
+  } else {
+    render();
+  }
+
+  window.addEventListener('storage', function(e) {
+    if (e.key === 'smartstore_social_links') render();
+  });
+  window.addEventListener('focus', render);
+})();
+
+(function () {
+  var KEY = 'superadmin_social_media';
+
+  function safeUrl(u) {
+    u = String(u || '').trim();
+    if (!u) return '';
+    if (!/^https?:\/\//i.test(u)) u = 'https://' + u;
+    try {
+      var x = new URL(u);
+      return (x.protocol === 'http:' || x.protocol === 'https:') ? x.href : '';
+    } catch (e) { return ''; }
+  }
+
+  function waUrl(v) {
+    v = String(v || '').trim();
+    if (!v) return '';
+    if (/^https?:\/\//i.test(v)) return safeUrl(v);
+    var digits = v.replace(/\D/g, '');
+    return digits.length >= 8 ? 'https://wa.me/' + digits : '';
+  }
+
+  function renderFooterSocial() {
+    var box = document.getElementById('footerSocial');
+    if (!box) return;
+
+    var data = {};
+    try { data = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) {}
+
+    var icons = [
+      { icon: 'bi-facebook',  label: 'Facebook',  url: safeUrl(data.facebook) },
+      { icon: 'bi-instagram', label: 'Instagram', url: safeUrl(data.instagram) },
+      { icon: 'bi-twitter-x', label: 'Twitter / X', url: safeUrl(data.twitter) },
+      { icon: 'bi-youtube',   label: 'YouTube',   url: safeUrl(data.youtube) },
+      { icon: 'bi-linkedin',  label: 'LinkedIn',  url: safeUrl(data.linkedin) },
+      { icon: 'bi-whatsapp',  label: 'WhatsApp',  url: waUrl(data.whatsapp) }
+    ].filter(function (i) { return i.url; });
+
+    var iconsWrap = document.getElementById('footerSocialIcons');
+    iconsWrap.innerHTML = '';
+    icons.forEach(function (i) {
+      var a = document.createElement('a');
+      a.href = i.url;
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      a.title = i.label;
+      a.setAttribute('aria-label', i.label);
+      a.style.cssText = 'color:inherit; font-size:1.4rem;';
+      var ic = document.createElement('i');
+      ic.className = 'bi ' + i.icon;
+      a.appendChild(ic);
+      iconsWrap.appendChild(a);
+    });
+
+    var note = document.getElementById('footerSocialNote');
+    note.textContent = (data.footerNote || '').trim();
+    note.style.display = note.textContent ? '' : 'none';
+
+    var site = safeUrl(data.website);
+    var siteLink = document.getElementById('footerWebsiteLink');
+    if (site) {
+      siteLink.href = site;
+      siteLink.textContent = site.replace(/^https?:\/\//i, '').replace(/\/$/, '');
+      siteLink.style.display = 'inline-block';
+    } else {
+      siteLink.style.display = 'none';
+    }
+
+    box.style.display = (icons.length || note.textContent || site) ? 'block' : 'none';
+  }
+
+  document.addEventListener('DOMContentLoaded', renderFooterSocial);
+  window.addEventListener('storage', function (e) {
+    if (e.key === KEY) renderFooterSocial();
+  });
 })();
 </script>
 </body>

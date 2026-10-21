@@ -41,13 +41,13 @@ body{background:linear-gradient(135deg,#eef1f6 0%,#e0e7ff 100%);min-height:100vh
 
   <div class="err" id="errBox"></div>
 
-  <form id="loginForm" onsubmit="handleLogin(event)" autocomplete="off">
+  <form id="loginForm" onsubmit="handleLogin(event)" autocomplete="off" novalidate>
     <label class="field-label">Username or Email</label>
-    <input type="text" class="field" id="loginUser" placeholder="Enter username or email" required autofocus>
+    <input type="text" class="field" id="loginUser" placeholder="Enter username or email" autocomplete="username" autofocus>
 
     <label class="field-label">Password</label>
     <div class="pwd-wrap">
-      <input type="password" class="field" id="loginPass" placeholder="Enter password" required>
+      <input type="password" class="field" id="loginPass" placeholder="Enter password" autocomplete="current-password">
       <i class="bi bi-eye pwd-toggle" id="pwdToggle" onclick="togglePwd()"></i>
     </div>
 
@@ -73,6 +73,10 @@ const readLS  = (k, fb) => { try { const v = JSON.parse(localStorage.getItem(k) 
 const writeLS = (k, v)  => { try { localStorage.setItem(k, JSON.stringify(v)); return true; } catch (e) { return false; } };
 const rmLS    = (k)     => { try { localStorage.removeItem(k); } catch (e) {} };
 
+function normalizeRole(r) {
+  return String(r || '').toLowerCase().replace(/\s+/g, ' ').trim();
+}
+
 function showErr(msg) { const e = $('errBox'); e.textContent = msg; e.classList.add('show'); }
 function hideErr()    { $('errBox').classList.remove('show'); }
 function togglePwd() {
@@ -83,7 +87,7 @@ function togglePwd() {
 }
 
 /* ============================================================
-   SAFE REDIRECT — handles iframe + sandbox environments
+   SAFE REDIRECT
    ============================================================ */
 function safeRedirect(url) {
   const btn = $('loginBtn');
@@ -105,7 +109,6 @@ function safeRedirect(url) {
       try { window.location.replace(url); } catch (e2) {}
     }
 
-    // If still here after 900ms → redirect was blocked by sandbox
     setTimeout(() => {
       if (document.visibilityState === 'visible' && !document.hidden) {
         const errBox = $('errBox');
@@ -113,7 +116,7 @@ function safeRedirect(url) {
           errBox.innerHTML =
             '⚠️ Redirect blocked by preview sandbox.<br>' +
             '<a href="' + url + '" style="color:#dc2626;text-decoration:underline;font-weight:700">' +
-            '→ Click here to open Dashboard manually</a>';
+            '→ Click here to open the page manually</a>';
           errBox.classList.add('show');
         }
         if (btn) {
@@ -126,9 +129,7 @@ function safeRedirect(url) {
 }
 
 /* ============================================================
-   🔐 SUPER ADMIN CREDENTIALS
-   ------------------------------------------------------------
-   These must match the SUPER_ADMIN const inside superadmin.html.
+   SUPER ADMIN
    ============================================================ */
 const SUPER_ADMIN = {
   username: 'superadmin',
@@ -138,7 +139,7 @@ const SUPER_ADMIN = {
 };
 
 /* ============================================================
-   AUTHENTICATION — MERCHANT
+   AUTH — MERCHANT
    ============================================================ */
 function findMerchant(username, password) {
   const uLower = String(username).toLowerCase();
@@ -151,7 +152,7 @@ function findMerchant(username, password) {
       const uName  = String(u.username || '').toLowerCase();
       const uEmail = String(u.email    || '').toLowerCase();
       const matchesUser = (uName === uLower) || (uEmail === uLower);
-      const matchesPass = (u.password === password);
+      const matchesPass = (u.password === password) || (u.passwordHash && u.passwordHash === password);
       return matchesUser && matchesPass;
     });
     if (found) return found;
@@ -160,30 +161,31 @@ function findMerchant(username, password) {
 }
 
 /* ============================================================
-   AUTHENTICATION — STAFF / SALES MAN
+   AUTH — STAFF
    ============================================================ */
 function findStaff(username, password) {
   const uLower = String(username).toLowerCase();
   const list = readLS('smartstore_staff', []);
+  console.log('[Login] Staff pool size:', Array.isArray(list) ? list.length : 0);
   if (!Array.isArray(list)) return null;
-  return list.find(s =>
-    String(s.username || '').toLowerCase() === uLower &&
-    s.password === password
-  ) || null;
+  const found = list.find(s => {
+    if (!s || typeof s !== 'object') return false;
+    const nameMatch = String(s.username || '').toLowerCase() === uLower;
+    if (!nameMatch) return false;
+    const passMatch =
+      (s.password && s.password === password) ||
+      (s.passwordHash && s.passwordHash === password);
+    return !!passMatch;
+  }) || null;
+  console.log('[Login] Staff lookup for', username, '→', found ? ('found, role=' + found.role) : 'NOT FOUND');
+  return found;
 }
 
 /* ============================================================
    LOGIN — SUPER ADMIN
-   ------------------------------------------------------------
-   Saves the exact keys that superadmin.html's guard checks:
-     - loggedInUser  = SUPER_ADMIN.username
-     - role          = 'superadmin'
-     - user          = { username, role, name, email }
-   Then redirects to superadmin.html
    ============================================================ */
 function loginAsSuperAdmin() {
   rmLS('smartstore_staff_session');
-
   localStorage.setItem('loggedInUser', SUPER_ADMIN.username);
   localStorage.setItem('role', 'superadmin');
   writeLS('user', {
@@ -193,7 +195,6 @@ function loginAsSuperAdmin() {
     email:    SUPER_ADMIN.email
   });
   localStorage.setItem('token', 'mock-superadmin-token-' + Date.now());
-
   safeRedirect('superadmin.html');
 }
 
@@ -205,13 +206,10 @@ function loginAsMerchant(merchant) {
   if (!usernameForUrl) { showErr('Merchant account is missing a username.'); return; }
 
   rmLS('smartstore_staff_session');
-
   writeLS('user', merchant);
   writeLS('smartstore_current_user', merchant);
   localStorage.setItem('loggedInUser', usernameForUrl);
   localStorage.setItem('token', merchant.token || ('mock-merchant-token-' + Date.now()));
-
-  // Clear any leftover superadmin role so dashboard guard doesn't misfire
   localStorage.removeItem('role');
 
   safeRedirect('dashboard.html?merchant=' + encodeURIComponent(usernameForUrl));
@@ -219,9 +217,12 @@ function loginAsMerchant(merchant) {
 
 /* ============================================================
    LOGIN — STAFF
+   Sales Man → pos.html
+   Manager   → merchant.html
    ============================================================ */
 function loginAsStaff(staff) {
   const role = staff.role || 'Sales Man';
+  const roleKey = normalizeRole(role);
 
   let brandName = '';
   for (const k of ['registeredUsers', 'smartstore_users']) {
@@ -255,58 +256,60 @@ function loginAsStaff(staff) {
   localStorage.setItem('loggedInUser', staff.username);
   localStorage.setItem('token', 'mock-staff-token-' + Date.now());
   rmLS('smartstore_current_user');
-
-  // Clear any leftover superadmin role
   localStorage.removeItem('role');
 
-  safeRedirect('dashboard.html?merchant=' + encodeURIComponent(staff.username));
+  let target = 'pos.html';
+  if (roleKey === 'manager')         target = 'merchant.html';
+  else if (roleKey === 'sales man')  target = 'pos.html';
+
+  console.log('[Login] Staff role =', role, '→ target =', target);
+  safeRedirect(target);
 }
 
 /* ============================================================
    MAIN LOGIN HANDLER
-   ------------------------------------------------------------
-   PRIORITY 1: Super Admin  (superadmin / admin123)  → superadmin.html
-   PRIORITY 2: Staff with explicit non-merchant role → dashboard.html
-   PRIORITY 3: Merchant                              → dashboard.html
-   PRIORITY 4: Staff with role = Merchant Dashboard  → dashboard.html
    ============================================================ */
 function handleLogin(e) {
   e.preventDefault();
   hideErr();
 
   const username = $('loginUser').value.trim();
-  const password = $('loginPass').value;
+  const password = $('loginPass').value.trim();
+
+  console.log('[Login] Attempting login for:', username);
 
   if (!username || !password) { showErr('Please enter username and password.'); return; }
 
-  /* ---------- PRIORITY 1: SUPER ADMIN ---------- */
+  /* PRIORITY 1: SUPER ADMIN */
   if (username === SUPER_ADMIN.username && password === SUPER_ADMIN.password) {
-    console.log('✅ Super Admin credentials detected → superadmin.html');
+    console.log('✅ Super Admin credentials detected');
     loginAsSuperAdmin();
     return;
   }
 
-  /* ---------- PRIORITY 2: Staff with explicit non-merchant role ---------- */
+  /* PRIORITY 2: Staff (Sales Man / Manager) */
   const staff = findStaff(username, password);
   if (staff) {
-    const role = String(staff.role || '').toLowerCase().trim();
-    if (role === 'sales man' || role === 'manager') {
+    const roleKey = normalizeRole(staff.role);
+    console.log('[Login] Staff matched — roleKey =', roleKey);
+    if (roleKey === 'sales man' || roleKey === 'manager') {
       loginAsStaff(staff);
       return;
     }
   }
 
-  /* ---------- PRIORITY 3: Merchant ---------- */
+  /* PRIORITY 3: Merchant */
   const merchant = findMerchant(username, password);
   if (merchant) { loginAsMerchant(merchant); return; }
 
-  /* ---------- PRIORITY 4: Staff with role = Merchant Dashboard ---------- */
+  /* PRIORITY 4: Any other staff role */
   if (staff) { loginAsStaff(staff); return; }
 
-  /* ---------- None matched → invalid credentials ---------- */
+  /* None matched */
+  console.warn('[Login] No match for', username);
   showErr('Invalid username or password.');
-  $('loginPass').value = '';
   $('loginPass').focus();
+  $('loginPass').select();
 }
 </script>
 </body>

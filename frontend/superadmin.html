@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Super Admin — SmartStore</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+ <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
@@ -291,7 +291,7 @@
     }
     .fake-map::before {
       content: ''; position: absolute; inset: 0;
-      background-image: 
+      background-image:
         linear-gradient(rgba(99, 102, 241, 0.08) 1px, transparent 1px),
         linear-gradient(90deg, rgba(99, 102, 241, 0.08) 1px, transparent 1px);
       background-size: 30px 30px;
@@ -585,6 +585,132 @@
     .dash-activity-text { flex: 1; min-width: 0; color: #334155; }
     .dash-activity-time { font-size: 0.72rem; color: #94a3b8; white-space: nowrap; }
 
+    /* ============ SOCIAL MEDIA PAGE STYLES ============ */
+    .social-media-form-card {
+      background: #ffffff;
+      border-radius: 14px;
+      border: 1px solid #e2e8f0;
+      padding: 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+    .social-media-form-head {
+      margin-bottom: 28px;
+    }
+    .social-media-form-head h2 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin: 0 0 6px 0;
+    }
+    .social-media-form-head p {
+      font-size: 0.88rem;
+      color: #64748b;
+      margin: 0;
+    }
+    .sm-section-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #64748b;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #f1f5f9;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .sm-section-title i {
+      font-size: 1rem;
+      color: #6366f1;
+    }
+    .sm-input-group {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .sm-input-group .sm-platform-icon {
+      position: absolute;
+      left: 14px;
+      font-size: 1.1rem;
+      color: #6366f1;
+      pointer-events: none;
+    }
+    .sm-input-group .form-control-custom {
+      padding-left: 42px;
+    }
+    .sm-field-help {
+      font-size: 0.75rem;
+      color: #94a3b8;
+      margin-top: 6px;
+      display: block;
+    }
+    .sm-form-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid #f1f5f9;
+      flex-wrap: wrap;
+    }
+    .sm-preview-card {
+      background: linear-gradient(135deg, #f5f3ff 0%, #eef2ff 100%);
+      border: 1.5px dashed #c7d2fe;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .sm-preview-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #4f46e5;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .sm-preview-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .sm-preview-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #334155;
+      text-decoration: none;
+      transition: all 0.15s ease;
+      max-width: 100%;
+      overflow: hidden;
+    }
+    .sm-preview-chip:hover {
+      border-color: #818cf8;
+      color: #4f46e5;
+      background: #eef2ff;
+    }
+    .sm-preview-chip i { color: #6366f1; }
+    .sm-preview-chip span {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 180px;
+    }
+    .sm-empty-hint {
+      font-size: 0.8rem;
+      color: #94a3b8;
+      font-style: italic;
+    }
+
     @media (max-width: 991.98px) {
       .sidebar {
         position: fixed;
@@ -620,6 +746,7 @@
       .toast-custom { min-width: 0; width: 100%; }
       .dash-kpi-grid { grid-template-columns: repeat(2, 1fr); }
       .dash-mini-grid { grid-template-columns: repeat(2, 1fr); }
+      .social-media-form-card { padding: 20px 18px; }
     }
 
     @media (max-width: 768px) {
@@ -632,6 +759,9 @@
       .plan-modal-body { padding: 18px 20px; max-height: 82vh; }
       .plan-modal-header h5 { font-size: 1.15rem; }
       .credentials-box { padding: 14px 16px; }
+      .social-media-form-head h2 { font-size: 1.25rem; }
+      .sm-form-actions { flex-direction: column-reverse; }
+      .sm-form-actions button { width: 100%; justify-content: center; }
     }
 
     @media (max-width: 576px) {
@@ -644,6 +774,248 @@
       .btn-primary-purple,
       .btn-outline-purple,
       .btn-back-purple { font-size: 0.82rem; padding: 10px 16px; }
+    }
+  </style>
+
+  <!-- =========================================================
+       MOBILE RESPONSIVENESS ENHANCEMENTS (additive only)
+       ========================================================= -->
+  <style id="mobile-responsiveness-enhancements">
+    /* --- Notched / safe-area support --- */
+    @supports (padding: env(safe-area-inset-left)) {
+      body { padding-left: env(safe-area-inset-left); padding-right: env(safe-area-inset-right); }
+      .mobile-topbar { padding-top: calc(12px + env(safe-area-inset-top)); }
+      .sidebar { padding-bottom: env(safe-area-inset-bottom); }
+      .toast-container { top: calc(20px + env(safe-area-inset-top)); }
+    }
+
+    /* --- iOS input-zoom prevention --- */
+    @media (max-width: 767.98px) {
+      .form-control-custom,
+      .plan-input,
+      .limit-input-group input[type="number"],
+      .pagination-bar select,
+      input[type="text"], input[type="email"], input[type="tel"],
+      input[type="url"], input[type="number"], input[type="password"],
+      textarea, select {
+        font-size: 16px !important;
+      }
+    }
+
+    /* --- Touch-friendly tap targets --- */
+    @media (hover: none) and (pointer: coarse) {
+      .sidebar-link { min-height: 46px; }
+      .dropdown-menu-item { min-height: 46px; }
+      .action-btn { min-width: 40px; min-height: 40px; }
+      .btn-primary-purple,
+      .btn-outline-purple,
+      .btn-back-purple { min-height: 44px; }
+      .btn-submit-plan { min-height: 50px; }
+      .hamburger { min-width: 44px; min-height: 44px; }
+      .pagination-bar .page-btns button { min-width: 40px; min-height: 40px; }
+      .cred-toggle-btn { min-width: 36px; min-height: 36px; }
+      .btn-add-bullet,
+      .btn-remove-bullet { min-width: 44px; min-height: 44px; }
+      .plan-check { min-height: 40px; }
+      .file-upload-wrapper { min-height: 46px; }
+      .sm-preview-chip { min-height: 38px; }
+    }
+
+    /* --- Disable sticky hover on touch --- */
+    @media (hover: none) {
+      .btn-primary-purple:hover { transform: none; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25); }
+      .btn-submit-plan:hover { transform: none; box-shadow: none; }
+      .dash-kpi-card:hover { transform: none; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
+      .sm-preview-chip:hover { border-color: #e2e8f0; color: #334155; background: #ffffff; }
+      .action-btn:hover { background: transparent; color: #64748b; }
+      .sidebar-link:hover { background: transparent; color: #cbd5e1; }
+      .sidebar-profile:hover { background: transparent; }
+      .dropdown-menu-item:hover { background: transparent; color: #334155; }
+      .btn-outline-purple:hover { background: #ffffff; border-color: #c7d2fe; }
+      .btn-back-purple:hover { background: #ffffff; border-color: #e2e8f0; }
+      .file-upload-wrapper:hover { border-color: #e2e8f0; }
+      .btn-add-bullet:hover { background: white; border-color: #c7d2fe; }
+      .btn-remove-bullet:hover { background: white; }
+    }
+
+    /* --- Tablet breakpoint --- */
+    @media (min-width: 641px) and (max-width: 1024px) {
+      .dash-kpi-grid { grid-template-columns: repeat(3, 1fr); gap: 14px; }
+      .dash-mini-grid { grid-template-columns: repeat(3, 1fr); }
+      .form-card { padding: 24px 22px; }
+      .social-media-form-card { padding: 24px 22px; }
+      .main-content { padding: 22px 20px 36px; }
+    }
+
+    /* --- Extra small phones (≤ 480px) --- */
+    @media (max-width: 480px) {
+      .mobile-topbar { padding: 10px 12px; }
+      .mobile-topbar .mt-brand { font-size: 0.98rem; }
+      .mobile-topbar .mt-user { width: 32px; height: 32px; font-size: 0.82rem; }
+
+      .main-content { padding: 14px 12px 24px; }
+      .breadcrumb-bar { font-size: 0.75rem; gap: 6px; margin-bottom: 16px; }
+      .breadcrumb-bar .bc-icon { width: 28px; height: 28px; }
+      .page-header-bar h1 { font-size: 1.15rem; }
+      .page-header-bar { margin-bottom: 18px; }
+
+      .btn-primary-purple,
+      .btn-outline-purple,
+      .btn-back-purple {
+        font-size: 0.78rem;
+        padding: 10px 14px;
+        border-radius: 8px;
+      }
+      .page-header-bar #headerActions { gap: 8px; }
+      .page-header-bar #headerActions .btn-primary-purple { flex: 1 1 100%; }
+
+      .dash-kpi-card { padding: 14px; gap: 10px; border-radius: 12px; }
+      .dash-kpi-icon { width: 42px; height: 42px; font-size: 1.15rem; border-radius: 11px; }
+      .dash-kpi-label { font-size: 0.65rem; }
+      .dash-kpi-value { font-size: 1.25rem; }
+
+      .dash-section { padding: 16px 14px; border-radius: 12px; }
+      .dash-section-head h5 { font-size: 0.95rem; }
+      .dash-mini { padding: 12px; border-radius: 10px; }
+      .dash-mini-label { font-size: 0.62rem; }
+      .dash-mini-value { font-size: 1rem; }
+      .dash-chart-wrap { height: 220px; }
+
+      .dash-activity-item { padding: 8px 10px; gap: 10px; font-size: 0.8rem; }
+      .dash-activity-dot { width: 28px; height: 28px; font-size: 0.8rem; border-radius: 8px; }
+      .dash-activity-time { font-size: 0.65rem; }
+
+      .stores-table thead th { padding: 12px 14px; font-size: 0.7rem; }
+      .stores-table tbody td { padding: 14px 14px; font-size: 0.82rem; }
+      .stores-table { min-width: 560px; }
+      .status-pill { padding: 4px 12px; font-size: 0.72rem; }
+      .slug-badge { padding: 3px 10px; font-size: 0.75rem; }
+
+      .pagination-bar { padding: 12px 14px; gap: 10px; }
+      .pagination-bar .rows-label { font-size: 0.78rem; }
+      .pagination-bar .page-info { font-size: 0.78rem; }
+      .pagination-bar .page-btns button { width: 32px; height: 32px; }
+
+      .form-card { padding: 16px 14px; border-radius: 12px; }
+      .form-label-custom { font-size: 0.78rem; margin-bottom: 6px; }
+      .form-control-custom { padding: 10px 12px; border-radius: 8px; }
+      textarea.form-control-custom { min-height: 76px; }
+
+      .plan-modal-header { padding: 14px 16px 12px; }
+      .plan-modal-header h5 { font-size: 1.05rem; }
+      .plan-modal-body { padding: 14px 16px; max-height: 84vh; }
+      .plan-section-title { font-size: 0.68rem; margin-top: 18px; }
+      .plan-label { font-size: 0.78rem; }
+      .plan-input { padding: 9px 12px; border-radius: 8px; }
+      .plan-check { font-size: 0.82rem; padding: 5px 0; }
+      .limit-row label { font-size: 0.82rem; }
+      .bullet-input-row .plan-input { font-size: 0.85rem; }
+
+      .credentials-box { padding: 12px 14px; border-radius: 10px; }
+      .credentials-box .cred-title { font-size: 0.72rem; margin-bottom: 8px; }
+      .credentials-box .cred-label { font-size: 0.78rem; }
+      .credentials-box .cred-value { font-size: 0.82rem; }
+
+      .social-media-form-card { padding: 16px 14px; border-radius: 12px; }
+      .social-media-form-head h2 { font-size: 1.1rem; }
+      .social-media-form-head p { font-size: 0.8rem; }
+      .sm-section-title { font-size: 0.68rem; }
+      .sm-preview-card { padding: 14px; border-radius: 10px; }
+      .sm-preview-chip { padding: 6px 12px; font-size: 0.75rem; }
+      .sm-preview-chip span { max-width: 140px; }
+      .sm-field-help { font-size: 0.7rem; }
+      .sm-input-group .sm-platform-icon { left: 12px; font-size: 1rem; }
+      .sm-input-group .form-control-custom { padding-left: 38px; }
+
+      .fake-map { height: 160px; }
+      .fake-map .map-hint { font-size: 0.82rem; }
+      .fake-map .map-pin { width: 26px; height: 26px; }
+
+      .file-upload-wrapper { padding: 10px 12px; border-radius: 8px; }
+      .file-upload-wrapper .upload-text { font-size: 0.82rem; }
+      .file-upload-wrapper .file-name { font-size: 0.78rem; }
+
+      .sidebar { width: 260px; max-width: 86vw; }
+      .sidebar-brand { padding: 20px 20px 16px; font-size: 1.2rem; }
+      .sidebar-brand .brand-icon { font-size: 1.4rem; }
+      .sidebar-section { padding: 16px 20px 6px; }
+      .sidebar-link { padding: 10px 20px; font-size: 0.85rem; }
+      .sidebar-profile-wrap { padding: 12px; }
+      .profile-avatar { width: 36px; height: 36px; font-size: 0.9rem; }
+      .profile-info .name { font-size: 0.82rem; }
+      .profile-info .email { font-size: 0.68rem; }
+
+      .toast-custom { padding: 12px 16px; font-size: 0.82rem; border-radius: 10px; }
+    }
+
+    /* --- Very small phones (≤ 380px) --- */
+    @media (max-width: 380px) {
+      .mobile-topbar { padding: 8px 10px; gap: 8px; }
+      .mobile-topbar .mt-brand { font-size: 0.9rem; gap: 6px; }
+      .mobile-topbar .hamburger { width: 36px; height: 36px; font-size: 1.1rem; }
+      .mobile-topbar .mt-user { width: 30px; height: 30px; font-size: 0.78rem; }
+
+      .main-content { padding: 12px 10px 22px; }
+      .page-header-bar h1 { font-size: 1.05rem; }
+      .breadcrumb-bar { font-size: 0.7rem; }
+
+      .dash-kpi-icon { width: 38px; height: 38px; font-size: 1rem; }
+      .dash-kpi-value { font-size: 1.15rem; }
+
+      .stores-table thead th { padding: 10px 12px; font-size: 0.66rem; }
+      .stores-table tbody td { padding: 12px 12px; font-size: 0.78rem; }
+
+      .form-card { padding: 14px 12px; }
+      .plan-modal-body { padding: 12px 14px; }
+
+      .social-media-form-head h2 { font-size: 1rem; }
+      .sm-preview-chip span { max-width: 100px; }
+    }
+
+    /* --- Narrow column stacking for forms inside Create Store --- */
+    @media (max-width: 575.98px) {
+      .form-card .row.g-3 > [class*="col-"] { width: 100%; flex: 0 0 100%; max-width: 100%; }
+      .d-flex.justify-content-between.gap-2.mt-4.flex-wrap > .d-flex { width: 100%; }
+      .d-flex.justify-content-between.gap-2.mt-4.flex-wrap > .d-flex > button { flex: 1; }
+    }
+
+    /* --- Modal dialog side margins on small screens --- */
+    @media (max-width: 575.98px) {
+      .modal-dialog { margin: 8px; }
+      .modal-content.plan-modal-content { border-radius: 14px; }
+    }
+
+    /* --- Prevent overscroll from behind modals/drawers --- */
+    .sidebar,
+    .plan-modal-body { overscroll-behavior: contain; }
+
+    /* --- Nicer horizontal scrollbars --- */
+    .table-scroll-wrap { scrollbar-width: thin; }
+    .table-scroll-wrap::-webkit-scrollbar { height: 6px; }
+    .table-scroll-wrap::-webkit-scrollbar-track { background: transparent; }
+    .table-scroll-wrap::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 6px; }
+
+    /* --- Reduced motion support --- */
+    @media (prefers-reduced-motion: reduce) {
+      .sidebar { transition: none; }
+      .dash-kpi-card,
+      .btn-primary-purple,
+      .btn-submit-plan,
+      .sidebar-link,
+      .profile-chevron,
+      .profile-dropdown-menu,
+      .toast-custom,
+      .sm-preview-chip { transition: none !important; }
+    }
+
+    /* --- Landscape phones --- */
+    @media (max-height: 500px) and (orientation: landscape) {
+      .dash-chart-wrap { height: 200px; }
+      .fake-map { height: 140px; }
+      .sidebar-brand { padding: 14px 18px 10px; }
+      .sidebar-link { padding: 8px 18px; }
+      .toast-container { top: calc(10px + env(safe-area-inset-top)); }
+      .toast-custom { padding: 8px 14px; font-size: 0.78rem; }
     }
   </style>
 </head>
@@ -681,6 +1053,7 @@
           <a class="sidebar-link" onclick="showPage('dashboard')"><i class="bi bi-grid-1x2"></i> Dashboard</a>
           <a class="sidebar-link" onclick="showPage('stores')"><i class="bi bi-shop"></i> Stores</a>
           <a class="sidebar-link active" onclick="showPage('plans')"><i class="bi bi-credit-card"></i> Plans</a>
+          <a class="sidebar-link" onclick="showPage('social-media')"><i class="bi bi-share-fill"></i> Social Media</a>
 
           <div class="sidebar-profile-wrap">
             <div class="profile-dropdown-menu" id="profileDropdownMenu">
@@ -712,7 +1085,7 @@
       </div>
 
       <div class="col-md-9 col-lg-10 main-content">
-        
+
         <div class="breadcrumb-bar">
           <div class="bc-icon"><i class="bi bi-box"></i></div>
           <span>Admin</span>
@@ -960,7 +1333,7 @@
         <div id="page-create-store" class="page-content">
           <div class="form-card">
             <form id="createStoreForm" onsubmit="handleCreateStore(event)">
-              
+
               <div class="row g-3 mb-3">
                 <div class="col-md-6">
                   <label class="form-label-custom">Store Name <span class="required">*</span></label>
@@ -1157,6 +1530,111 @@
           </div>
         </div>
 
+        <!-- ===================== SOCIAL MEDIA PAGE ===================== -->
+        <div id="page-social-media" class="page-content">
+          <div class="social-media-form-card">
+            <div class="social-media-form-head">
+              <h2><i class="bi bi-share-fill me-2" style="color:#6366f1;"></i>Social Media Links</h2>
+              <p>Configure your store's social media profiles. These links will appear on the storefront footer.</p>
+            </div>
+
+            <div class="sm-preview-card">
+              <div class="sm-preview-title">
+                <i class="bi bi-eye-fill"></i> Live Preview
+              </div>
+              <div class="sm-preview-links" id="smPreviewLinks">
+                <span class="sm-empty-hint">No social links added yet. Fill in the fields below.</span>
+              </div>
+            </div>
+
+            <form id="socialMediaForm" onsubmit="saveSocialMedia(event)">
+              <div class="sm-section-title">
+                <i class="bi bi-globe2"></i> Website
+              </div>
+              <div class="row g-3 mb-4">
+                <div class="col-md-6">
+                  <label class="form-label-custom">Website URL</label>
+                  <div class="sm-input-group">
+                    <i class="bi bi-globe sm-platform-icon"></i>
+                    <input type="url" class="form-control-custom" id="smWebsite" placeholder="https://yourstore.com">
+                  </div>
+                  <span class="sm-field-help">Official store website</span>
+                </div>
+              </div>
+
+              <div class="sm-section-title">
+                <i class="bi bi-share-fill"></i> Social Platforms
+              </div>
+              <div class="row g-3 mb-4">
+                <div class="col-md-6">
+                  <label class="form-label-custom">Facebook</label>
+                  <div class="sm-input-group">
+                    <i class="bi bi-facebook sm-platform-icon" style="color:#1877f2;"></i>
+                    <input type="url" class="form-control-custom" id="smFacebook" placeholder="https://facebook.com/yourpage">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label-custom">Instagram</label>
+                  <div class="sm-input-group">
+                    <i class="bi bi-instagram sm-platform-icon" style="color:#e4405f;"></i>
+                    <input type="url" class="form-control-custom" id="smInstagram" placeholder="https://instagram.com/yourhandle">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label-custom">Twitter / X</label>
+                  <div class="sm-input-group">
+                    <i class="bi bi-twitter-x sm-platform-icon" style="color:#000000;"></i>
+                    <input type="url" class="form-control-custom" id="smTwitter" placeholder="https://twitter.com/yourhandle">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label-custom">YouTube</label>
+                  <div class="sm-input-group">
+                    <i class="bi bi-youtube sm-platform-icon" style="color:#ff0000;"></i>
+                    <input type="url" class="form-control-custom" id="smYoutube" placeholder="https://youtube.com/@yourchannel">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label-custom">LinkedIn</label>
+                  <div class="sm-input-group">
+                    <i class="bi bi-linkedin sm-platform-icon" style="color:#0a66c2;"></i>
+                    <input type="url" class="form-control-custom" id="smLinkedin" placeholder="https://linkedin.com/company/yourcompany">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label-custom">WhatsApp</label>
+                  <div class="sm-input-group">
+                    <i class="bi bi-whatsapp sm-platform-icon" style="color:#25d366;"></i>
+                    <input type="text" class="form-control-custom" id="smWhatsapp" placeholder="+91 98765 43210">
+                  </div>
+                  <span class="sm-field-help">Include country code, e.g. +91</span>
+                </div>
+              </div>
+
+              <div class="sm-section-title">
+                <i class="bi bi-chat-quote-fill"></i> Footer Message
+              </div>
+              <div class="row g-3 mb-4">
+                <div class="col-12">
+                  <label class="form-label-custom">Footer Note</label>
+                  <textarea class="form-control-custom" id="smFooterNote" rows="3" placeholder="e.g. Follow us on social media for latest updates and offers!"></textarea>
+                  <span class="sm-field-help">This text will be displayed near the social icons in the store footer.</span>
+                </div>
+              </div>
+
+              <div class="sm-form-actions">
+                <button type="button" class="btn-outline-purple" onclick="resetSocialMediaForm()">
+                  <i class="bi bi-arrow-clockwise"></i> Reset
+                </button>
+                <button type="submit" class="btn-primary-purple" id="smSubmitBtn">
+                  <i class="bi bi-check-lg"></i> Save Social Media
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <!-- ===================== END SOCIAL MEDIA PAGE ===================== -->
+
         <div id="page-profile" class="page-content">
           <div class="stores-card p-5">
             <h3>My Profile</h3>
@@ -1324,9 +1802,6 @@
     let dashSalesRange = 'daily';
     let dashSalesChartInstance = null;
 
-    /* ============================================================
-       REGISTER → SUPER ADMIN STORES SYNC
-       ============================================================ */
     function safeParse(key, fallback) {
       try { const v = JSON.parse(localStorage.getItem(key) || 'null'); return v == null ? fallback : v; }
       catch(e) { return fallback; }
@@ -1488,6 +1963,7 @@
 
       const titles = {
         'dashboard': 'Dashboard', 'stores': 'Stores', 'plans': 'Plans',
+        'social-media': 'Social Media',
         'profile': 'My Profile', 'settings': 'Settings',
         'create-store': 'Create Store', 'store-view': 'Store Details'
       };
@@ -1511,9 +1987,127 @@
       if (page === 'stores') renderStores();
       if (page === 'plans') renderPlans();
       if (page === 'dashboard') renderDashboardPage();
+      if (page === 'social-media') renderSocialMediaPage();
 
       if (window.innerWidth < 992) closeSidebarDrawer();
     }
+
+    /* ============================================================
+       SOCIAL MEDIA PAGE
+       ============================================================ */
+    const SOCIAL_MEDIA_KEY = 'superadmin_social_media';
+
+    function getSocialMediaData() {
+      try {
+        const raw = localStorage.getItem(SOCIAL_MEDIA_KEY);
+        if (!raw) return {};
+        const parsed = JSON.parse(raw);
+        return (parsed && typeof parsed === 'object') ? parsed : {};
+      } catch(e) { return {}; }
+    }
+
+    function saveSocialMediaData(data) {
+      try { localStorage.setItem(SOCIAL_MEDIA_KEY, JSON.stringify(data)); return true; }
+      catch(e) { return false; }
+    }
+
+    function renderSocialMediaPage() {
+      const data = getSocialMediaData();
+      document.getElementById('smWebsite').value = data.website || '';
+      document.getElementById('smFacebook').value = data.facebook || '';
+      document.getElementById('smInstagram').value = data.instagram || '';
+      document.getElementById('smTwitter').value = data.twitter || '';
+      document.getElementById('smYoutube').value = data.youtube || '';
+      document.getElementById('smLinkedin').value = data.linkedin || '';
+      document.getElementById('smWhatsapp').value = data.whatsapp || '';
+      document.getElementById('smFooterNote').value = data.footerNote || '';
+      renderSocialMediaPreview();
+    }
+
+    function renderSocialMediaPreview() {
+      const container = document.getElementById('smPreviewLinks');
+      if (!container) return;
+
+      const data = {
+        website: document.getElementById('smWebsite').value.trim(),
+        facebook: document.getElementById('smFacebook').value.trim(),
+        instagram: document.getElementById('smInstagram').value.trim(),
+        twitter: document.getElementById('smTwitter').value.trim(),
+        youtube: document.getElementById('smYoutube').value.trim(),
+        linkedin: document.getElementById('smLinkedin').value.trim(),
+        whatsapp: document.getElementById('smWhatsapp').value.trim()
+      };
+
+      const items = [];
+      if (data.website) items.push({ icon: 'bi-globe', label: 'Website', url: data.website });
+      if (data.facebook) items.push({ icon: 'bi-facebook', label: 'Facebook', url: data.facebook });
+      if (data.instagram) items.push({ icon: 'bi-instagram', label: 'Instagram', url: data.instagram });
+      if (data.twitter) items.push({ icon: 'bi-twitter-x', label: 'Twitter/X', url: data.twitter });
+      if (data.youtube) items.push({ icon: 'bi-youtube', label: 'YouTube', url: data.youtube });
+      if (data.linkedin) items.push({ icon: 'bi-linkedin', label: 'LinkedIn', url: data.linkedin });
+      if (data.whatsapp) items.push({ icon: 'bi-whatsapp', label: data.whatsapp, url: 'https://wa.me/' + data.whatsapp.replace(/[^0-9]/g, '') });
+
+      if (!items.length) {
+        container.innerHTML = '<span class="sm-empty-hint">No social links added yet. Fill in the fields below.</span>';
+        return;
+      }
+
+      container.innerHTML = items.map(it => {
+        const safeUrl = escapeHtml(it.url);
+        return `<a class="sm-preview-chip" href="${safeUrl}" target="_blank" rel="noopener noreferrer">
+          <i class="bi ${it.icon}"></i>
+          <span>${escapeHtml(it.label)}</span>
+        </a>`;
+      }).join('');
+    }
+
+    function resetSocialMediaForm() {
+      if (!confirm('Reset all social media fields? Unsaved changes will be lost.')) return;
+      document.getElementById('socialMediaForm').reset();
+      renderSocialMediaPreview();
+      showToast('🔄 Form reset', 'bi-arrow-clockwise');
+    }
+
+    function saveSocialMedia(event) {
+      if (event) event.preventDefault();
+
+      const data = {
+        website:   document.getElementById('smWebsite').value.trim(),
+        facebook:  document.getElementById('smFacebook').value.trim(),
+        instagram: document.getElementById('smInstagram').value.trim(),
+        twitter:   document.getElementById('smTwitter').value.trim(),
+        youtube:   document.getElementById('smYoutube').value.trim(),
+        linkedin:  document.getElementById('smLinkedin').value.trim(),
+        whatsapp:  document.getElementById('smWhatsapp').value.trim(),
+        footerNote: document.getElementById('smFooterNote').value.trim(),
+        updatedAt: new Date().toLocaleString()
+      };
+
+      const urlFields = ['website','facebook','instagram','twitter','youtube','linkedin'];
+      for (const f of urlFields) {
+        if (data[f] && !/^https?:\/\/.+/i.test(data[f])) {
+          showToast(`⚠️ ${f.charAt(0).toUpperCase() + f.slice(1)} URL must start with http:// or https://`, 'bi-exclamation-circle');
+          return;
+        }
+      }
+
+      if (data.whatsapp && !/^[+0-9 ()-]{6,}$/.test(data.whatsapp)) {
+        showToast('⚠️ WhatsApp number looks invalid. Include country code, e.g. +91 98765 43210', 'bi-exclamation-circle');
+        return;
+      }
+
+      const ok = saveSocialMediaData(data);
+      if (!ok) { showToast('❌ Could not save. Storage error.', 'bi-x-circle'); return; }
+
+      renderSocialMediaPreview();
+      showToast('✅ Social media links saved successfully!', 'bi-check-circle');
+    }
+
+    document.addEventListener('input', function(e) {
+      if (e.target && e.target.id && e.target.id.indexOf('sm') === 0) {
+        renderSocialMediaPreview();
+      }
+    });
 
     /* ============================================================
        DASHBOARD CONTENT
@@ -2043,7 +2637,6 @@
       div.querySelector('input').focus();
     }
 
-    /* NOTE: seedDefaultPlans() function retained but the button has been removed from the UI. */
     function seedDefaultPlans() {
       const defaults = [
         { name: 'Basic', slug: 'basic', monthlyPrice: 399, annualPrice: 3990, active: true, highlighted: false },
@@ -2072,7 +2665,7 @@
     }
 
     /* ============================================================
-       STORES — LIST (merged admin_stores + registered merchants)
+       STORES — LIST
        ============================================================ */
     function renderStores() {
       const tbody = document.getElementById('storesTableBody');
@@ -2373,7 +2966,6 @@
       }
     }
 
-    /* Real-time sync when register.html saves a merchant */
     window.addEventListener('storage', function(e) {
       if (!e.key) return;
       if (e.key === 'registeredUsers' || e.key === 'smartstore_users' || e.key === 'admin_stores') {
@@ -2385,9 +2977,6 @@
       }
     });
 
-    /* ============================================================
-       INIT
-       ============================================================ */
     window.addEventListener('DOMContentLoaded', function() {
       document.getElementById('adminName').textContent = SUPER_ADMIN.name;
       document.getElementById('adminEmail').textContent = SUPER_ADMIN.email;
