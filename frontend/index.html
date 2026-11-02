@@ -7,10 +7,11 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
   <style>
     * { font-family: 'Inter', sans-serif; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-    section { padding: 90px 0; }
+    section { padding: 90px 0; scroll-margin-top: 85px; }
 
     /* Navbar */
     .glass-nav { background: rgba(15,23,42,.88); backdrop-filter: blur(14px); border-bottom: 1px solid rgba(255,255,255,.08); }
@@ -21,9 +22,6 @@
     .btn-login-nav:hover { background: rgba(255,255,255,.12); color: #fff; }
     .btn-primary-gradient { background: linear-gradient(135deg,#4f46e5,#7c3aed); border: none; color: #fff; border-radius: 50px; padding: 10px 28px; font-weight: 600; box-shadow: 0 4px 15px rgba(79,70,229,.35); transition: all .3s ease; text-decoration: none; }
     .btn-primary-gradient:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(79,70,229,.5); color: #fff; }
-
-    /* Hero */
-    .hero-bg { background: linear-gradient(145deg,rgba(11,17,32,.85),rgba(26,38,57,.92)), url('https://images.unsplash.com/photo-1556742049-0a67568d0490?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat; padding: 160px 0 120px; color: #fff; }
 
     /* Cards + images */
     .img-soft-rounded { border-radius: 24px; box-shadow: 0 20px 40px -12px rgba(0,0,0,.18); }
@@ -52,12 +50,55 @@
     .footer-pages-list a { color: #adb5bd; font-size: .88rem; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
     .footer-pages-list a:hover { color: #fff; }
     .footer-pages-list a i { font-size: .7rem; opacity: .7; }
+
+    /* Branch mgmt + Why Us */
+    .branch-panel { background: #f8f9fa; border-radius: 16px; padding: 24px; border: 1px solid #e9ecef; }
+    .branch-box { background: #fff; border: 1px solid #e9ecef; border-radius: 12px; padding: 16px; transition: all 0.3s; }
+    .branch-box:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.05); border-color: #cbd5e1; }
+    .inventory-box { background: #fff; border: 1px solid #cbd5e1; }
+    .branch-connector { text-align: center; padding: 10px 0; margin: 0 auto; width: 2px; background: #cbd5e1; position: relative; height: 30px; }
+    .branch-connector i { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #f8f9fa; padding: 4px; font-size: 1.2rem; }
+    .why-badge { background:#fff; border-radius:14px; padding:10px 16px; font-weight:600; box-shadow:0 8px 24px rgba(0,0,0,0.08); display:flex; gap:10px; align-items:center; position:absolute; font-size:0.85rem; }
+
+    /* Contact Form */
+    .contact-card { background: #fff; border-radius: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.05); padding: 40px; border: 1px solid #f1f5f9; }
+    .contact-input { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 12px 16px 12px 45px; width: 100%; font-size: 0.95rem; transition: border-color 0.3s; }
+    .contact-input:focus { border-color: #4f46e5; outline: none; box-shadow: 0 0 0 3px rgba(79,70,229,0.1); }
+    .input-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: #94a3b8; font-size: 1.1rem; }
+    .contact-btn { background: linear-gradient(135deg,#4f46e5,#7c3aed); color: #fff; border: none; border-radius: 12px; padding: 15px; font-weight: 600; width: 100%; font-size: 1.1rem; display: flex; justify-content: center; align-items: center; gap: 8px; transition: 0.3s; }
+    .contact-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(79,70,229,0.3); color: #fff;}
+
+    /* ============================================================
+       NEW: SMARTSTORE BANNER SECTION (above navbar)
+       ============================================================ */
+    #smartstoreBannerSection { position: relative; width: 100%; overflow: hidden; background: #0f172a; }
+    #smartstoreBannerSection .ssb-viewport { position: relative; width: 100%; overflow: hidden; }
+    #smartstoreBannerSection .ssb-track { display: flex; transition: transform .55s cubic-bezier(.2,.7,.2,1); }
+    #smartstoreBannerSection .ssb-slide { position: relative; min-width: 100%; flex: 0 0 100%; }
+    #smartstoreBannerSection .ssb-slide img { width: 100%; height: auto; max-height: 460px; object-fit: cover; display: block; }
+    #smartstoreBannerSection .ssb-overlay { position: absolute; left: 0; right: 0; bottom: 0; padding: 24px 32px; background: linear-gradient(to top, rgba(0,0,0,.72), rgba(0,0,0,0)); color: #fff; pointer-events: none; }
+    #smartstoreBannerSection .ssb-discount { display: inline-block; background: #f97316; color: #fff; font-weight: 700; font-size: 13px; padding: 4px 12px; border-radius: 20px; margin-bottom: 8px; }
+    #smartstoreBannerSection .ssb-title { font-size: 28px; font-weight: 800; line-height: 1.2; margin-bottom: 4px; }
+    #smartstoreBannerSection .ssb-sub { font-size: 15px; opacity: .92; margin-bottom: 4px; }
+    #smartstoreBannerSection .ssb-text { font-size: 14px; opacity: .85; }
+    #smartstoreBannerSection .ssb-dots { position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%); display: flex; gap: 8px; z-index: 2; }
+    #smartstoreBannerSection .ssb-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,.5); border: 0; padding: 0; cursor: pointer; transition: transform .2s; }
+    #smartstoreBannerSection .ssb-dot.active { background: #fff; transform: scale(1.25); }
+    @media (max-width: 768px) {
+      #smartstoreBannerSection .ssb-slide img { max-height: 220px; }
+      #smartstoreBannerSection .ssb-overlay { padding: 14px 16px; }
+      #smartstoreBannerSection .ssb-title { font-size: 18px; }
+      #smartstoreBannerSection .ssb-sub { font-size: 12px; }
+      #smartstoreBannerSection .ssb-text { font-size: 11px; }
+      #smartstoreBannerSection .ssb-discount { font-size: 11px; padding: 3px 9px; }
+    }
   </style>
+
 <style id="sj-styles">
 #ss-journey{--b:#2563eb;--b2:#4f46e5;--ink:#0f172a;--mut:#64748b;--line:#e3ebf8;--soft:#eef4ff;background:#f7faff;color:var(--ink);overflow-x:clip}
 #ss-journey *{font-family:'Inter',sans-serif}
 #ss-journey section.sj-sec{padding:84px 0;position:relative}
-#ss-journey section.sj-hero{padding:130px 0 70px;background:radial-gradient(900px 420px at 85% 10%,#dbe8ff,transparent 62%),#fff}
+#ss-journey section.sj-hero{padding:100px 0 70px;background:radial-gradient(900px 420px at 85% 10%,#dbe8ff,transparent 62%),#fff}
 #ss-journey section.sj-alt{background:#fff}
 .sj-kick{display:inline-flex;align-items:center;gap:8px;font-size:.74rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--b);background:var(--soft);padding:7px 14px;border-radius:50px;margin-bottom:16px}
 .sj-kick b{background:var(--b);color:#fff;border-radius:50px;padding:1px 8px}
@@ -68,7 +109,6 @@
 .sj-btn.sj-ghost{background:#fff;color:var(--ink);border:1px solid var(--line);box-shadow:none}
 .sj-btn.sj-ghost:hover{border-color:#b9cdfa;color:var(--b)}
 .sj-btn.sm{padding:9px 16px;font-size:.84rem}
-/* reveal (hidden only while JS is active) */
 .sj-js .sj-reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0s);will-change:opacity,transform}
 .sj-js .sj-reveal.sj-l{transform:translateX(-32px)}.sj-js .sj-reveal.sj-r{transform:translateX(32px)}.sj-js .sj-reveal.sj-s{transform:scale(.94)}
 .sj-js .sj-reveal.sj-in{opacity:1;transform:none}.sj-js .sj-reveal.sj-done{will-change:auto}
@@ -78,7 +118,6 @@
 .sj-card:hover .sj-tile{transform:scale(1.05)}
 .sj-art{width:100%;height:auto;display:block}
 .sj-px{will-change:transform}
-/* hero */
 .sj-stage{position:relative;max-width:560px;margin:0 auto}
 .sj-chip{position:absolute;background:#fff;border-radius:16px;padding:9px 14px;font-size:.8rem;font-weight:600;box-shadow:0 14px 28px -10px rgba(15,23,42,.25);display:flex;align-items:center;gap:10px;animation:sjFloat 5s ease-in-out infinite}
 .sj-chip i{color:var(--b);font-size:1.15rem}
@@ -90,18 +129,15 @@
 .sj-stats .c{display:flex;align-items:center;gap:12px;justify-content:center;padding:6px 8px}
 .sj-stats .c i{width:42px;height:42px;border-radius:50%;background:var(--soft);color:var(--b);display:flex;align-items:center;justify-content:center;font-size:1.15rem;flex:none}
 .sj-stats b{display:block;font-size:1.05rem;line-height:1.1}.sj-stats small{color:var(--mut)}
-/* why / benefit cards */
 .sj-why{padding:26px 22px}
 .sj-why .ic{width:56px;height:56px;border-radius:16px;background:var(--soft);color:var(--b);display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:14px;transition:all .3s}
 .sj-why:hover .ic{background:var(--b);color:#fff;transform:rotate(-6deg)}
 .sj-why h5{font-size:1.02rem;font-weight:700}.sj-why p{color:var(--mut);font-size:.9rem;margin:0}
-/* summary / bill */
 .sj-sum div{display:flex;justify-content:space-between;padding:6px 0;color:var(--mut);font-size:.92rem}
 .sj-sum .tot{border-top:1px solid var(--line);margin-top:6px;padding-top:12px;color:var(--ink);font-weight:800;font-size:1.1rem}
 .sj-lock{display:flex;align-items:center;gap:8px;color:#16a34a;font-size:.82rem;font-weight:600;margin-top:12px}
 .sj-flow{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:22px 0}
 .sj-flow span{background:var(--soft);color:var(--b);font-weight:700;border-radius:50px;padding:8px 18px;font-size:.9rem}
-/* progress pill */
 .sj-prog{position:fixed;left:50%;bottom:18px;z-index:1030;transform:translate(-50%,24px);opacity:0;pointer-events:none;transition:all .4s;background:rgba(15,23,42,.92);backdrop-filter:blur(10px);color:#fff;border-radius:50px;padding:10px 18px;display:flex;align-items:center;gap:14px;font-size:.8rem;font-weight:600;max-width:calc(100vw - 20px)}
 .sj-prog.show{opacity:1;transform:translate(-50%,0);pointer-events:auto}
 .sj-prog .d{display:flex;gap:5px}
@@ -111,7 +147,6 @@
 @media(max-width:575px){.sj-prog{gap:8px;padding:9px 12px}.sj-prog .d button{width:18px;height:18px;font-size:.56rem}.sj-prog .l{font-size:.72rem}.sj-chip{font-size:.7rem;padding:7px 10px}}
 @media(prefers-reduced-motion:reduce){.sj-js .sj-reveal,.sj-js .sj-reveal.sj-l,.sj-js .sj-reveal.sj-r,.sj-js .sj-reveal.sj-s{transform:none}.sj-chip{animation:none}.sj-px{transform:none!important}}
 .sj-real{width:100%;height:auto;display:block;border-radius:24px}
-/* pages 2-6 additions */
 .sj-ck{list-style:none;padding:0;margin:0}
 .sj-ck li{display:flex;gap:10px;align-items:flex-start;padding:7px 0;color:#334155;font-size:.95rem}
 .sj-ck li i{color:#16a34a;margin-top:3px}
@@ -129,6 +164,12 @@
 .sj-cmp td.them{color:var(--mut)}
 .sj-cmp tbody tr:last-child td{border-bottom:0}
 .sj-cmpwrap{overflow-x:auto;border:1px solid var(--line);border-radius:22px;box-shadow:0 10px 26px -14px rgba(15,23,42,.12)}
+    /* CONTACT-US alignment fix */
+    #contact-us .row { align-items: stretch; }
+    #contact-us .col-lg-6:first-child { display: flex; flex-direction: column; justify-content: space-between; }
+    #contact-us .col-lg-6:last-child { display: flex; align-items: center; }
+    #contact-us .contact-card { width: 100%; margin: 0; }
+    #contact-us .contact-img { margin-top: auto; }
 </style>
 <style id="hw-styles">
 #hw-wrap{--p1:#4f46e5;--p2:#7c3aed;--ink:#0f172a;--mut:#64748b;--line:#e6eaf5;--soft:#eef0ff;overflow-x:clip;color:var(--ink)}
@@ -144,7 +185,6 @@
 .hw-card:hover{transform:translateY(-6px);box-shadow:0 22px 38px -18px rgba(79,70,229,.3);border-color:#c9ccf7}
 .hw-ic{width:48px;height:48px;border-radius:14px;background:var(--soft);color:var(--p1);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex:none;transition:all .3s}
 .hw-card:hover .hw-ic{background:linear-gradient(135deg,var(--p1),var(--p2));color:#fff}
-/* section 1 */
 .hw-pt{display:flex;align-items:center;gap:12px;font-weight:600;padding:10px 14px;background:#fff;border:1px solid var(--line);border-radius:14px;transition:transform .25s,border-color .25s}
 .hw-pt:hover{transform:translateX(5px);border-color:#c9ccf7}
 .hw-pt i{color:#16a34a;font-size:1.2rem}
@@ -155,7 +195,6 @@
 .hw-float{position:absolute;background:#fff;border-radius:14px;padding:9px 14px;font-size:.78rem;font-weight:600;display:flex;gap:9px;align-items:center;box-shadow:0 14px 26px -10px rgba(15,23,42,.3);animation:hwF 5s ease-in-out infinite}
 .hw-float i{color:var(--p1);font-size:1.1rem}
 @keyframes hwF{50%{transform:translateY(-7px)}}
-/* flow */
 .hw-flow{display:grid;grid-template-columns:repeat(4,1fr);gap:46px 38px;counter-reset:s}
 .hw-step{position:relative;padding:22px 18px 20px;text-align:center;counter-increment:s}
 .hw-step .hw-ic{margin:0 auto 12px}
@@ -165,7 +204,6 @@
 .hw-step:nth-child(4n):after{content:"\F128";right:auto;left:50%;top:auto;bottom:-38px;margin:0 0 0 -10px;animation:none}
 .hw-step:last-child:after{display:none}
 @keyframes hwA{50%{transform:translateX(5px)}}
-/* dashboard */
 .hw-dash{background:#fff;border:1px solid var(--line);border-radius:24px;box-shadow:0 30px 50px -24px rgba(15,23,42,.35);padding:16px;position:relative}
 .hw-dtop{display:flex;align-items:center;gap:10px;margin-bottom:14px;font-size:.85rem}
 .hw-dtop .dots i{display:inline-block;width:9px;height:9px;border-radius:50%;background:#e2e8f0;margin-right:5px}.hw-dtop .dots i:first-child{background:#fca5a5}.hw-dtop .dots i:nth-child(2){background:#fde68a}.hw-dtop .dots i:nth-child(3){background:#86efac}
@@ -185,7 +223,6 @@
 .hw-toast{position:absolute;right:-14px;top:62px;background:#0f172a;color:#fff;font-size:.72rem;padding:9px 13px;border-radius:12px;display:flex;gap:8px;align-items:center;box-shadow:0 14px 26px -10px rgba(15,23,42,.5);opacity:0;transform:translateX(18px);transition:all .6s 1.2s}
 .hw-in .hw-toast{opacity:1;transform:none}.hw-toast i{color:#4ade80}
 .hw-fc{padding:18px;display:flex;gap:14px;align-items:flex-start;height:100%}.hw-fc h6{font-weight:700;margin:0 0 3px}.hw-fc p{margin:0;font-size:.85rem;color:var(--mut)}
-/* plans */
 .hw-plan{padding:32px 26px;height:100%;display:flex;flex-direction:column;position:relative}
 .hw-plan.pop{border:2px solid var(--p1);box-shadow:0 30px 50px -22px rgba(79,70,229,.45);transform:scale(1.03)}
 .hw-plan.pop:hover{transform:scale(1.03) translateY(-6px)}
@@ -194,7 +231,6 @@
 .hw-plan ul{list-style:none;padding:0;margin:18px 0 24px;flex:1}.hw-plan li{display:flex;gap:10px;padding:6px 0;font-size:.92rem;color:#334155}.hw-plan li i{color:#16a34a}
 .hw-plan .btn{border-radius:50px;font-weight:600;padding:11px 20px}
 .hw-outline{border:1.5px solid var(--p1);color:var(--p1);background:#fff}.hw-outline:hover{background:var(--p1);color:#fff}
-/* responsive */
 @media(max-width:991px){.hw-flow{grid-template-columns:repeat(2,1fr)}.hw-step:nth-child(4n):after{content:"\F138";right:-30px;left:auto;top:50%;bottom:auto;margin-top:-12px;animation:hwA 1.8s ease-in-out infinite}.hw-step:nth-child(2n):after{content:"\F128";right:auto;left:50%;top:auto;bottom:-38px;margin:0 0 0 -10px;animation:none}.hw-toast{right:6px}}
 @media(max-width:575px){
 .hw-flow{grid-template-columns:1fr;gap:18px;padding-left:34px;position:relative}
@@ -206,7 +242,6 @@
 @media(prefers-reduced-motion:reduce){.hw-js .hw-r,.hw-js .hw-r.hw-l,.hw-js .hw-r.hw-rt{transform:none}.hw-float,.hw-step:after,.hw-bell em{animation:none}}
 </style>
 <style id="ha-styles">
-/* Scroll/entrance animations for the existing Home, About and Features content */
 .ha-pre{opacity:0;will-change:opacity,transform}
 .ha-pre.ha-up{transform:translateY(26px)}
 .ha-pre.ha-down{transform:translateY(-14px)}
@@ -222,7 +257,6 @@
 }
 </style>
 <style id="hh-styles">
-/* Home hero: right-side 3D animated visual */
 @media(min-width:992px){
   #home .container{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);column-gap:2.5rem;align-items:center}
   #home .container>:not(.hh-visual){grid-column:1}
@@ -248,7 +282,6 @@
 @keyframes hhOrb1{0%,100%{transform:translate(0,0)}25%{transform:translate(9px,-11px)}50%{transform:translate(15px,3px)}75%{transform:translate(4px,11px)}}
 @keyframes hhOrb2{0%,100%{transform:translate(0,0)}25%{transform:translate(-8px,9px)}50%{transform:translate(-14px,-4px)}75%{transform:translate(-3px,-12px)}}
 @keyframes hhOrb3{0%,100%{transform:translate(0,0)}25%{transform:translate(10px,6px)}50%{transform:translate(2px,14px)}75%{transform:translate(-9px,5px)}}
-/* entrance + play only while visible */
 .hh-js .hh-visual{opacity:0;transform:translateY(40px) scale(.92);transition:opacity 1s ease,transform 1.1s cubic-bezier(.2,.7,.2,1)}
 .hh-js .hh-visual.hh-on{opacity:1;transform:none}
 .hh-js .hh-orbit{opacity:0;transition:opacity 1.1s ease .7s}
@@ -283,14 +316,43 @@
   .footer-social-icons a.facebook  { background: linear-gradient(135deg,#1877f2,#0a5fd9); }
   .footer-social-icons a.whatsapp  { background: linear-gradient(135deg,#25d366,#128c7e); }
 </style>
+<<<<<<< HEAD
   <style id="pricing-scroll">#hw-plans{scroll-margin-top:84px}</style>
+=======
+<style id="pricing-scroll">#hw-plans{scroll-margin-top:84px}</style>
+<style id="img-fix">
+.sj-hc{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px 18px;height:100%;box-shadow:0 8px 22px -14px rgba(15,23,42,.18)}
+.sj-hc i{color:var(--b);font-size:1.4rem;display:block;margin-bottom:10px}
+.sj-hc h6{font-weight:700;font-size:1rem;margin:0 0 4px;color:var(--ink)}
+.sj-hc p{color:var(--mut);font-size:.88rem;margin:0}
+.sj-wc{display:flex;align-items:center;gap:16px;padding:18px 20px}
+.sj-wc .ic{width:54px;height:54px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex:none}
+.sj-wc h5{font-size:1rem;font-weight:700;margin:0 0 2px}
+.sj-wc p{margin:0;color:var(--mut);font-size:.88rem}
+@media(min-width:992px){
+  #contact-us{padding-bottom:0}
+  #contact-us .row>.col-lg-6:first-child{align-self:stretch;display:flex;flex-direction:column}
+  #contact-us .contact-img{margin-top:auto}
+  #contact-us .contact-card{margin-bottom:70px}
+}
+.contact-img img{display:block;width:100%;max-width:560px;height:auto}
+</style>
+>>>>>>> 16814f1 (Initial e-commerce project upload)
 </head>
 <body class="bg-light">
 
-  <!-- NAVBAR -->
-  <nav class="navbar navbar-expand-lg fixed-top glass-nav py-3">
+  <!-- ============================================================
+       SMARTSTORE BANNER — ABOVE NAVBAR
+       Fetches active banners for the current merchant from localStorage
+       (keys: smartstore_banners_<slug>, smartstore_banners).
+       Hidden entirely if no banners — no empty space.
+       ============================================================ -->
+  <div id="smartstoreBannerSection" style="display:none;"></div>
+
+  <!-- NAVBAR — sticky (was fixed-top) so the banner above it works -->
+  <nav class="navbar navbar-expand-lg sticky-top glass-nav py-3">
     <div class="container">
-      <a class="navbar-brand text-white fs-4 d-flex align-items-center gap-2" href="#home">
+      <a class="navbar-brand text-white fs-4 d-flex align-items-center gap-2" href="#sj-s1">
         <i class="bi bi-bag-check-fill text-primary"></i> SmartStore
       </a>
       <button class="navbar-toggler border-0 text-white shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navContent">
@@ -298,7 +360,11 @@
       </button>
       <div class="collapse navbar-collapse" id="navContent">
         <ul class="navbar-nav mx-auto text-center gap-lg-2 my-3 my-lg-0">
+<<<<<<< HEAD
         <li class="nav-item"><a class="nav-link px-3 active" href="#sj-s1">Home</a></li>
+=======
+          <li class="nav-item"><a class="nav-link px-3 active" href="#sj-s1">Home</a></li>
+>>>>>>> 16814f1 (Initial e-commerce project upload)
           <li class="nav-item"><a class="nav-link px-3" href="#features">Features</a></li>
           <li class="nav-item"><a class="nav-link px-3" href="#why-us">Why Choose Us</a></li>
           <li class="nav-item"><a class="nav-link px-3" href="#hw-plans">Pricing</a></li>
@@ -314,20 +380,23 @@
 
 <main id="ss-journey">
 
-  <!-- PAGE 1 · DISCOVER (unchanged) -->
+  <!-- PAGE 1 -->
   <section id="sj-s1" class="sj-sec sj-hero" data-label="Discover">
     <div class="container">
       <div class="row align-items-center g-5">
         <div class="col-lg-6">
           <div class="sj-reveal sj-l"><span class="sj-kick"><b>1</b> Your online shopping destination</span></div>
-          <h1 class="sj-h display-4 mb-3 sj-reveal" style="--d:.1s">Shop More.<br><span style="color:var(--b)">Discover More.</span></h1>
-          <p class="sj-sub fs-5 mb-4 sj-reveal" style="--d:.2s">Find the best products, great deals and fast delivery right at your doorstep, all in one place.</p>
-          <div class="sj-mini mb-4 sj-reveal" style="--d:.28s">
-            <div><i class="bi bi-patch-check"></i>Best Quality</div><div><i class="bi bi-tag"></i>Best Price</div><div><i class="bi bi-shield-lock"></i>Secure Payment</div><div><i class="bi bi-truck"></i>Fast Delivery</div>
+          <h1 class="sj-h display-4 mb-3 sj-reveal" style="--d:.1s">Turn Your Business into a <br><span style="color:var(--b)">Powerful Online Store.</span></h1>
+          <p class="sj-sub fs-5 mb-4 sj-reveal" style="--d:.2s">Create your own online store, manage products and inventory, accept orders, and handle in-store billing with one powerful platform built to grow your business.</p>
+          <div class="d-flex flex-wrap gap-3 mb-4 sj-reveal" style="--d:.28s">
+            <a href="register.html" class="sj-btn">Start Your Store <i class="bi bi-arrow-right"></i></a>
+            <a href="#features" class="sj-btn sj-ghost">Explore Features</a>
           </div>
-          <div class="d-flex flex-wrap gap-3 sj-reveal" style="--d:.36s">
-            <a href="register.html" class="sj-btn">Create store <i class="bi bi-arrow-right"></i></a>
-            <a href="#sj-s4" class="sj-btn sj-ghost">Explore Products</a>
+          <div class="row g-3 sj-reveal" style="--d:.36s">
+            <div class="col-6"><div class="sj-hc"><i class="bi bi-display"></i><h6>Online Store Builder</h6><p>Launch your own branded online store.</p></div></div>
+            <div class="col-6"><div class="sj-hc"><i class="bi bi-cart2"></i><h6>Smart POS Billing</h6><p>Manage walk-in sales and checkout.</p></div></div>
+            <div class="col-6"><div class="sj-hc"><i class="bi bi-box"></i><h6>Unified Inventory</h6><p>Keep online and offline stock in sync.</p></div></div>
+            <div class="col-6"><div class="sj-hc"><i class="bi bi-bar-chart-line"></i><h6>Business Insights</h6><p>Track sales, orders, and performance.</p></div></div>
           </div>
         </div>
         <div class="col-lg-6 sj-reveal sj-r" style="--d:.2s">
@@ -337,7 +406,6 @@
               <filter id="hsh" x="-20%" y="-20%" width="145%" height="150%"><feDropShadow dx="0" dy="12" stdDeviation="9" flood-color="#1e3a8a" flood-opacity=".3"/></filter><linearGradient id="hg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3b82f6"/><stop offset="1" stop-color="#1d4ed8"/></linearGradient></defs>
               <circle cx="300" cy="215" r="190" fill="url(#hg1)"/>
               <ellipse cx="290" cy="440" rx="250" ry="14" fill="#c7d7f5" opacity=".6"/>
-              <!-- phone -->
               <rect x="215" y="24" width="170" height="350" rx="28" fill="#0f2a5c" filter="url(#hsh)"/><rect x="223" y="32" width="154" height="334" rx="22" fill="#fff"/>
               <rect x="262" y="38" width="76" height="9" rx="5" fill="#0f2a5c"/>
               <rect x="234" y="62" width="70" height="10" rx="5" fill="#cbd5e1"/><circle cx="360" cy="67" r="7" fill="#bfdbfe"/>
@@ -347,17 +415,13 @@
               <rect x="234" y="234" width="62" height="64" rx="12" fill="#f1f5f9"/><rect x="304" y="234" width="64" height="64" rx="12" fill="#f1f5f9"/>
               <circle cx="265" cy="262" r="14" fill="#1e3a8a"/><rect x="326" y="252" width="22" height="26" rx="8" fill="#2563eb"/>
               <rect x="234" y="312" width="134" height="40" rx="12" fill="#2563eb"/><rect x="262" y="328" width="78" height="8" rx="4" fill="#fff" opacity=".85"/>
-              <!-- pin -->
               <path d="M455 70c-24 0-42 18-42 41 0 30 42 71 42 71s42-41 42-71c0-23-18-41-42-41z" fill="#2563eb"/><circle cx="455" cy="110" r="14" fill="#fff"/>
-              <!-- cart -->
               <g filter="url(#hsh)"><path d="M30 230h38l30 130h128" fill="none" stroke="#475569" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
               <path d="M78 262h160l-22 92H100z" fill="#e2e8f0" stroke="#64748b" stroke-width="5" stroke-linejoin="round"/><path d="M92 300h134M104 330h110M126 262l8 92M160 262v92M194 262l-8 92" stroke="#94a3b8" stroke-width="3"/>
               <circle cx="116" cy="386" r="14" fill="#1e293b"/><circle cx="206" cy="386" r="14" fill="#1e293b"/>
               <rect x="96" y="214" width="62" height="50" rx="4" fill="#d9a566"/><rect x="96" y="214" width="62" height="12" fill="#c68f4e"/><rect x="152" y="186" width="58" height="76" rx="4" fill="#e0b27a"/><rect x="152" y="186" width="58" height="12" fill="#c68f4e"/>
               <path d="M104 214c4-34 40-46 64-34l-6 24z" fill="#2563eb"/><rect x="104" y="204" width="30" height="8" rx="4" fill="#fff"/></g>
-              <!-- bag -->
               <g filter="url(#hsh)"><path d="M222 316c0-22 38-22 38 0" fill="none" stroke="#1d4ed8" stroke-width="6"/><rect x="200" y="312" width="82" height="108" rx="10" fill="url(#hg2)"/><circle cx="241" cy="366" r="20" fill="#fff" opacity=".95"/><path d="M231 360h4l5 12h12l4-9h-21" fill="none" stroke="#2563eb" stroke-width="3" stroke-linecap="round"/></g>
-              <!-- scooter -->
               <g filter="url(#hsh)"><rect x="430" y="270" width="92" height="70" rx="5" fill="#d9a566"/><rect x="430" y="270" width="92" height="14" fill="#c68f4e"/><rect x="452" y="296" width="48" height="10" rx="3" fill="#fff" opacity=".8"/>
               <path d="M392 392c-6-30 6-52 26-62l30-6c14 0 20 14 16 30l-6 22z" fill="#2563eb"/><path d="M398 324l-14-28h30" fill="none" stroke="#1e3a8a" stroke-width="7" stroke-linecap="round"/><path d="M418 330l20 10" stroke="#1e3a8a" stroke-width="6"/>
               <circle cx="406" cy="408" r="28" fill="#1e293b"/><circle cx="406" cy="408" r="12" fill="#cbd5e1"/><circle cx="506" cy="408" r="28" fill="#1e293b"/><circle cx="506" cy="408" r="12" fill="#cbd5e1"/><rect x="420" y="384" width="78" height="14" rx="7" fill="#1d4ed8"/></g>
@@ -376,7 +440,7 @@
     </div>
   </section>
 
-  <!-- PAGE 2 · POS SYSTEM -->
+  <!-- PAGE 2 · POS -->
   <section id="sj-s4" class="sj-sec sj-alt" data-label="POS System">
     <div class="container">
       <div class="row align-items-center g-5">
@@ -413,7 +477,7 @@
     </div>
   </section>
 
-  <!-- PAGE 3 · BENEFITS OF POS -->
+  <!-- PAGE 3 · POS Benefits -->
   <section id="sj-s5" class="sj-sec" data-label="POS Benefits">
     <div class="container">
       <div class="text-center mb-5">
@@ -432,37 +496,46 @@
     </div>
   </section>
 
-  <!-- PAGE 4 · MULTIPLE STORES -->
-  <section id="sj-s6" class="sj-sec sj-alt" data-label="Multi-Store">
+  <!-- PAGE 4 · Branch Mgmt -->
+  <section id="sj-s6" class="sj-sec sj-alt" data-label="Branch Management">
     <div class="container">
       <div class="row align-items-center g-5">
-        <div class="col-lg-6 order-lg-2 sj-reveal sj-r" style="--d:.15s">
-          <div class="sj-card p-4">
-            <h5 class="fw-bold mb-3"><i class="bi bi-shop-window text-primary me-2"></i>Your stores, one platform</h5>
-            <div class="sj-st on"><i class="bi bi-shop"></i>Store A<small>Active dashboard</small></div>
-            <div class="sj-st"><i class="bi bi-shop"></i>Store B<small>Separate products</small></div>
-            <div class="sj-st"><i class="bi bi-shop"></i>Store C<small>Separate orders</small></div>
-            <div class="sj-lock"><i class="bi bi-arrow-left-right"></i>Each store has its own dashboard</div>
+        <div class="col-lg-5 order-lg-2 sj-reveal sj-r" style="--d:.15s">
+          <div class="branch-panel shadow-sm">
+            <h5 class="d-flex align-items-center gap-2 mb-4 fw-bold"><i class="bi bi-grid-1x2 text-primary"></i> One Platform. Every Branch.</h5>
+            <div class="branch-box inventory-box text-center mb-0">
+                <i class="bi bi-box-seam text-primary fs-3 mb-2 d-block"></i>
+                <h6 class="fw-bold mb-1">Unified Inventory</h6>
+                <small class="text-secondary">Shared stock management</small>
+            </div>
+            <div class="branch-connector"><i class="bi bi-arrow-down-up text-primary"></i></div>
+            <div class="row g-3">
+                <div class="col-6"><div class="branch-box h-100"><i class="bi bi-display text-primary fs-5 mb-2 d-block"></i><h6 class="fw-bold mb-1">POS</h6><small class="text-secondary">In-store sales</small></div></div>
+                <div class="col-6"><div class="branch-box h-100"><i class="bi bi-cart text-primary fs-5 mb-2 d-block"></i><h6 class="fw-bold mb-1">Online Store</h6><small class="text-secondary">Online orders</small></div></div>
+                <div class="col-6"><div class="branch-box h-100"><i class="bi bi-shop text-primary fs-5 mb-2 d-block"></i><h6 class="fw-bold mb-1">Branch A</h6><small class="text-secondary">Assigned manager</small></div></div>
+                <div class="col-6"><div class="branch-box h-100"><i class="bi bi-shop text-primary fs-5 mb-2 d-block"></i><h6 class="fw-bold mb-1">Branch B</h6><small class="text-secondary">Assigned manager</small></div></div>
+            </div>
+            <div class="mt-4 text-success small fw-bold d-flex align-items-center gap-2"><i class="bi bi-check-circle-fill"></i> Centralized stock with branch-level access</div>
           </div>
         </div>
-        <div class="col-lg-6 order-lg-1">
-          <div class="sj-reveal sj-l"><span class="sj-kick"><b>4</b> Multiple Stores</span></div>
-          <h2 class="sj-h display-6 mb-3 sj-reveal" style="--d:.1s">Create Multiple Stores Easily</h2>
-          <p class="sj-sub mb-4 sj-reveal" style="--d:.2s">Start more than one online store from a single platform and manage every store separately, without juggling different tools.</p>
+        <div class="col-lg-7 order-lg-1">
+          <div class="sj-reveal sj-l"><span class="sj-kick"><b>4</b> BRANCH MANAGEMENT</span></div>
+          <h2 class="sj-h display-6 mb-3 sj-reveal" style="--d:.1s">Manage Every Branch from One Platform</h2>
+          <p class="sj-sub mb-4 sj-reveal" style="--d:.2s">Connect your POS and online store with a single inventory system. Give your team access to manage different branches while keeping products, stock, orders, and sales organized in one platform.</p>
           <ul class="sj-ck sj-reveal" style="--d:.3s">
-            <li><i class="bi bi-check-circle-fill"></i>Create multiple stores from one platform</li>
-            <li><i class="bi bi-check-circle-fill"></i>Manage each store separately</li>
-            <li><i class="bi bi-check-circle-fill"></i>Organize products and categories for each store</li>
-            <li><i class="bi bi-check-circle-fill"></i>Manage orders, inventory and sales</li>
-            <li><i class="bi bi-check-circle-fill"></i>Access individual store dashboards</li>
-            <li><i class="bi bi-check-circle-fill"></i>Switch between stores easily, wherever supported</li>
+            <li><i class="bi bi-check-circle-fill"></i>Manage multiple branches with individual user access</li>
+            <li><i class="bi bi-check-circle-fill"></i>Connect your POS and online store seamlessly</li>
+            <li><i class="bi bi-check-circle-fill"></i>Maintain a single, unified inventory across channels</li>
+            <li><i class="bi bi-check-circle-fill"></i>Track branch-wise stock, orders, and sales</li>
+            <li><i class="bi bi-check-circle-fill"></i>Give branch managers access to their assigned locations</li>
+            <li><i class="bi bi-check-circle-fill"></i>Avoid overselling with synchronized inventory updates</li>
           </ul>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- PAGE 5 · SIMPLE STORE CREATION -->
+  <!-- PAGE 5 · Store Setup -->
   <section id="sj-s7" class="sj-sec" data-label="Store Setup">
     <div class="container">
       <div class="text-center mb-5">
@@ -489,8 +562,12 @@
     </div>
   </section>
 
+<<<<<<< HEAD
   <!-- PAGE 6 · WHY CHOOSE OUR PLATFORM -->
    <!-- PAGE 6 · WHY CHOOSE OUR PLATFORM -->
+=======
+  <!-- PAGE 6 · Why Us (FIXED malformed img) -->
+>>>>>>> 16814f1 (Initial e-commerce project upload)
   <section id="sj-s8" class="sj-sec sj-alt" data-label="Why Us">
     <div class="container">
       <div class="text-center mb-5">
@@ -498,7 +575,11 @@
         <h2 class="sj-h display-6 sj-reveal" style="--d:.1s">Why Choose Our Platform Over Other Store-Building Websites?</h2>
         <p class="sj-sub col-md-8 mx-auto sj-reveal" style="--d:.2s">One platform for your stores, POS, products, orders and sales, built to keep the merchant workflow simple.</p>
       </div>
+<<<<<<< HEAD
       <div class="row g-4 align-items-stretch">
+=======
+      <div class="row g-4 align-items-center">
+>>>>>>> 16814f1 (Initial e-commerce project upload)
         <div class="col-lg-7">
           <div class="row g-3">
             <div class="col-md-6 sj-reveal"><div class="sj-card sj-wc"><div class="ic" style="background:#e8f0ff;color:#2563eb"><i class="bi bi-shop"></i></div><div><h5>Multiple stores</h5><p>Manage multiple stores from one dashboard.</p></div></div></div>
@@ -510,8 +591,18 @@
             <div class="col-12 sj-reveal" style="--d:.36s"><div class="sj-card sj-wc"><div class="ic" style="background:#e8f0ff;color:#2563eb"><i class="bi bi-diagram-3"></i></div><div><h5>Merchant workflow</h5><p>A simpler, all-in-one workflow.</p></div></div></div>
           </div>
         </div>
+<<<<<<< HEAD
         <div class="col-lg-5 sj-reveal sj-r" style="--d:.15s">
           <img src="images/why-platform.jpg" alt="Stores, POS, inventory, online store, orders and team access in one platform" class="sj-real" style="height:100%;object-fit:cover">
+=======
+        <!-- FIXED: single, valid img tag -->
+        <div class="col-lg-5 sj-reveal sj-r text-center" style="--d:.15s">
+          <img src="/images/page6-reference.png"
+               alt="Platform Overview"
+               class="img-fluid rounded-4 shadow-sm"
+               style="width:100%; height:auto; object-fit:contain; display:block;"
+               onerror="this.src='https://placehold.co/600x500/f8f9fa/2563eb?text=Insert+Page+6+Image+Here'">
+>>>>>>> 16814f1 (Initial e-commerce project upload)
         </div>
       </div>
     </div>
@@ -519,57 +610,6 @@
 
   <div class="sj-prog" id="sjProg" role="navigation" aria-label="Page progress"><div class="d"></div><span class="l"></span></div>
 </main>
-
-  <!-- HERO -->
-  <section id="home" class="hero-bg text-center">
-    <div class="container">
-      <span class="badge bg-primary bg-opacity-25 text-white px-4 py-2 rounded-pill mb-4 fw-semibold">
-        <i class="bi bi-tag me-1"></i> Next-Gen E-Commerce
-      </span>
-      <h1 class="display-3 fw-bold mb-4">Curated for You.<br>Zero Clutter.</h1>
-      <p class="text-white-50 fs-5 mb-5 col-lg-8 mx-auto lh-base">
-        Instantly access products that match your chosen category, right after secure login.
-        Personalized shopping, simplified.
-      </p>
-      <div class="d-flex justify-content-center gap-3 flex-wrap">
-        <a href="register.html" class="btn btn-primary-gradient btn-lg px-5">Start Shopping</a>
-        <a href="#about" class="btn btn-outline-light btn-lg rounded-pill px-5 fw-medium">Explore</a>
-      </div>
-    <!--hh-start--><div class="hh-visual">
-        <div class="hh-stage" id="hhStage">
-          <div class="hh-disc"></div>
-          <div class="hh-float"><img class="hh-img" alt="Phone with shopping cart and OK button" src="PASTE_YOUR_ORIGINAL_BASE64_IMAGE_SRC_HERE"></div>
-          <div class="hh-orbit hh-coin" style="--d:15.5%;--x:75%;--y:21.5%;--o:hhOrb1;--dl:-2s;--sp:hhSpinY;--t:6s;--tilt:rotateX(-20deg) rotateZ(-10deg)"></div>
-          <div class="hh-orbit hh-coin" style="--d:14%;--x:23%;--y:52%;--o:hhOrb2;--dl:-5s;--sp:hhSpinX;--t:8s;--tilt:rotateY(25deg) rotateZ(14deg)"></div>
-          <div class="hh-orbit hh-coin" style="--d:15%;--x:40%;--y:67.7%;--o:hhOrb3;--dl:-7s;--sp:hhSpinD;--t:7s;--tilt:rotateX(15deg) rotateZ(-6deg)"></div>
-        </div>
-      </div><!--hh-end-->
-    </div>
-  </section>
-
-  <!-- ABOUT -->
-  <section id="about" class="bg-white">
-    <div class="container">
-      <div class="row align-items-center g-5">
-        <div class="col-lg-6">
-          <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?auto=format&fit=crop&w=800&q=80"
-               alt="Online shopping interface" class="img-fluid img-soft-rounded">
-        </div>
-        <div class="col-lg-6">
-          <h6 class="text-primary fw-bold text-uppercase mb-2"><i class="bi bi-info-circle me-1"></i> About</h6>
-          <h2 class="fw-bold display-6 mb-4 text-dark">Smart Filtering,<br>Instant Results</h2>
-          <p class="text-secondary fs-6 lh-lg">
-            SmartStore binds your preferred product categories directly to your dashboard during registration.
-            No more endless scrolling. See what matters, right when you log in.
-          </p>
-          <div class="mt-4 d-flex flex-wrap gap-3 align-items-center">
-            <span class="badge bg-primary bg-opacity-10 text-primary px-4 py-2 rounded-pill fw-normal"><i class="bi bi-check-circle-fill me-1"></i> Personalized feed</span>
-            <span class="badge bg-primary bg-opacity-10 text-primary px-4 py-2 rounded-pill fw-normal"><i class="bi bi-lightning-fill me-1"></i> Zero latency</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- FEATURES -->
   <section id="features" class="bg-light">
@@ -604,12 +644,18 @@
     </div>
   </section>
 
+<<<<<<< HEAD
   <!-- WHY CHOOSE US -->
   <!-- WHY CHOOSE US -->
+=======
+  <!-- WHY US (FIXED: single image + 3 why-badges properly structured) -->
+>>>>>>> 16814f1 (Initial e-commerce project upload)
   <section id="why-us" style="background:linear-gradient(120deg,#f6f5ff,#eef4ff)">
     <div class="container">
       <div class="row align-items-center g-5">
+        <img src="/images/contact-illustration.jpg" alt="Laptop showing an online store with shopping bags" class="w-100 h-auto">
         <div class="col-lg-6">
+<<<<<<< HEAD
           <span class="up-kick"><i class="bi bi-star-fill"></i> Why SmartStore</span>
           <h2 class="up-h mb-3">Speed, Security &amp;<br><span class="up-grad">Simplicity</span></h2>
           <p class="up-sub mb-4">A modern shopping experience designed to be fast, secure and effortless — so you can focus on what you love, not the hassles.</p>
@@ -623,12 +669,51 @@
         </div>
         <div class="col-lg-6">
           <img src="images/why-smartstore.jpg" alt="SmartStore shopping app on a phone with cart" class="up-img">
+=======
+          <span class="badge mb-3" style="background:#e8f0ff; color:#4f46e5; padding:8px 16px; border-radius:20px; font-weight:600; font-size:0.85rem;"><i class="bi bi-star-fill me-1"></i> WHY SMARTSTORE</span>
+          <h2 class="fw-bold mb-3" style="font-size: 3.5rem; letter-spacing:-0.03em;">Speed, Security &<br><span style="color:#4f46e5">Simplicity</span></h2>
+          <p class="text-secondary fs-5 mb-5 lh-lg">A modern shopping experience designed to be fast, secure and effortless — so you can focus on what you love, not the hassles.</p>
+          <div class="d-flex align-items-start gap-3 mb-4">
+            <div class="p-2 rounded-3" style="background:#dcfce7;color:#16a34a"><i class="bi bi-lightning-charge-fill fs-4"></i></div>
+            <div><h5 class="fw-bold mb-1">Ad-free, Distraction-free Shopping</h5><p class="text-secondary mb-0">Clean and simple interface to focus on products you love.</p></div>
+          </div>
+          <div class="d-flex align-items-start gap-3 mb-4">
+            <div class="p-2 rounded-3" style="background:#dbeafe;color:#2563eb"><i class="bi bi-shield-check fs-4"></i></div>
+            <div><h5 class="fw-bold mb-1">Secure & Hassle-free Checkout</h5><p class="text-secondary mb-0">Your data and payments are always protected.</p></div>
+          </div>
+          <div class="d-flex align-items-start gap-3 mb-5">
+            <div class="p-2 rounded-3" style="background:#ede9fe;color:#6d28d9"><i class="bi bi-person fs-4"></i></div>
+            <div><h5 class="fw-bold mb-1">Fast Login, Always in Sync</h5><p class="text-secondary mb-0">Sign in once and enjoy your preferences across all devices.</p></div>
+          </div>
+          <div class="mt-4 d-flex align-items-center flex-wrap gap-3 position-relative">
+            <a href="register.html" class="btn text-white btn-lg px-5 shadow" style="background: linear-gradient(135deg,#4f46e5,#7c3aed); border-radius: 50px; font-weight: 600;">Join Now <i class="bi bi-arrow-right ms-1"></i></a>
+            <span class="text-secondary fst-italic ms-3 position-absolute" style="bottom: -30px; left: 10px; font-size: 0.9rem;"><i class="bi bi-arrow-return-left"></i> Start shopping in seconds!</span>
+          </div>
+        </div>
+               <div class="col-lg-6 position-relative">
+          <img src="images/why-smart.jpg"
+               alt="SmartStore app preview"
+               class="img-fluid"
+                            style="border-radius:20px; box-shadow:0 20px 40px rgba(0,0,0,0.08); width:100%; max-width:560px; height:auto; display:block;"
+               onerror="this.src='https://placehold.co/600x500/eef4ff/4f46e5?text=Insert+4th+Image+Here'">
+          <div class="why-badge" style="top: 15%; right: -20px;">
+            <div class="p-2 rounded-circle" style="background:#dcfce7;color:#16a34a"><i class="bi bi-lightning-charge-fill"></i></div>
+            <div><strong>Lightning Fast</strong><br><small class="text-secondary">Browse & shop<br>without delays</small></div>
+          </div>
+          <div class="why-badge" style="top: 40%; left: -30px;">
+            <div class="p-2 rounded-circle" style="background:#dbeafe;color:#2563eb"><i class="bi bi-shield-lock-fill"></i></div>
+            <div><strong>100% Secure</strong><br><small class="text-secondary">Safe payments<br>and data privacy</small></div>
+          </div>
+          <div class="why-badge" style="top: 65%; right: -20px;">
+            <div class="p-2 rounded-circle" style="background:#f3e8ff;color:#7e22ce"><i class="bi bi-person-hearts"></i></div>
+            <div><strong>Personalized<br>Experience</strong><br><small class="text-secondary">Tailored for you<br>every time</small></div>
+          </div>
+>>>>>>> 16814f1 (Initial e-commerce project upload)
         </div>
       </div>
     </div>
   </section>
 <div id="hw-wrap">
-
   <!-- 1. HOW OUR ECOMMERCE WORKS -->
   <section id="hw-how" class="hw-alt">
     <div class="container">
@@ -735,7 +820,7 @@
   </section>
 </div>
 
-  <!-- PAGES MODAL (opens from footer "Pages") -->
+  <!-- PAGES MODAL -->
   <div class="modal fade" id="pagesModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-scrollable">
       <div class="modal-content" style="border-radius:16px;">
@@ -743,13 +828,12 @@
           <h5 class="modal-title fw-bold"><i class="bi bi-file-earmark-text me-2"></i>Pages</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body">
-          <div id="pagesAccordion"></div>
-        </div>
+        <div class="modal-body"><div id="pagesAccordion"></div></div>
       </div>
     </div>
   </div>
 
+<<<<<<< HEAD
     <!-- CONTACT US -->
   <section id="contact-us" style="background:linear-gradient(120deg,#f6f5ff,#eef4ff)">
     <div class="container">
@@ -787,6 +871,106 @@
               <div class="col-sm-4"><a class="up-dir" href="tel:+919876543210"><span class="up-ico" style="background:#dbeafe;color:#2563eb"><i class="bi bi-telephone-fill"></i></span><span><small>Call Us</small><b>+91 98765 43210</b><small>Mon - Sat, 9AM - 6PM</small></span></a></div>
               <div class="col-sm-4"><a class="up-dir" href="https://wa.me/919600891418" target="_blank" rel="noopener noreferrer"><span class="up-ico" style="background:#dcfce7;color:#16a34a"><i class="bi bi-whatsapp"></i></span><span><small>WhatsApp</small><b>Chat with Us</b><small>Quick Support</small></span></a></div>
               <div class="col-sm-4"><a class="up-dir" href="mailto:support@smartstore.com"><span class="up-ico" style="background:#fee2e2;color:#dc2626"><i class="bi bi-envelope-fill"></i></span><span><small>Email Us</small><b>support@smartstore.com</b><small>We reply within 24 hours</small></span></a></div>
+=======
+  <!-- CONTACT US (FIXED: closed first col-lg-6 properly) -->
+  <section id="contact-us" style="background:linear-gradient(120deg,#f6f5ff,#eef4ff)">
+    <div class="container">
+      <div class="row g-5 align-items-center">
+        <div class="col-lg-6">
+          <span class="up-kick" style="background:#ede9fe; color:#4f46e5; padding:8px 16px; border-radius:20px; font-weight:600; font-size:0.85rem;"><i class="bi bi-chat-dots-fill me-1"></i> CONTACT US</span>
+          <h2 class="fw-bold mb-3 mt-3" style="font-size: 3.2rem; letter-spacing:-0.03em;">Let’s Build Your<br><span style="color:#4f46e5">Online Store Together</span></h2>
+          <p class="text-secondary fs-5 mb-5 lh-lg">Have questions about our e-commerce store builder? We’re here to help! Get in touch and our team will assist you with the best solution for your business.</p>
+          <div class="d-flex align-items-center gap-3 mb-4">
+            <div class="p-3 rounded-4" style="background:#dcfce7;color:#16a34a; font-size:1.3rem;"><i class="bi bi-chat-dots-fill"></i></div>
+            <div><h5 class="fw-bold mb-1">Quick Support</h5><p class="text-secondary mb-0">Get fast and helpful responses</p></div>
+          </div>
+          <div class="d-flex align-items-center gap-3 mb-4">
+            <div class="p-3 rounded-4" style="background:#ede9fe;color:#6d28d9; font-size:1.3rem;"><i class="bi bi-shop"></i></div>
+            <div><h5 class="fw-bold mb-1">Business Consultation</h5><p class="text-secondary mb-0">Find the right plan for your needs</p></div>
+          </div>
+          <div class="d-flex align-items-center gap-3 mb-5">
+            <div class="p-3 rounded-4" style="background:#dbeafe;color:#2563eb; font-size:1.3rem;"><i class="bi bi-gear-fill"></i></div>
+            <div><h5 class="fw-bold mb-1">Setup Assistance</h5><p class="text-secondary mb-0">We’ll help you get started easily</p></div>
+          </div>
+          <div class="contact-img">
+            <img src="/images/contact-illustration.jpg" alt="Laptop showing an online store with shopping bags">
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="contact-card">
+            <img src="/images/contact-illustration.jpg" alt="Laptop showing an online store with shopping bags" class="w-100 h-auto">
+            <div class="d-flex gap-3 align-items-center mb-4">
+              <div class="p-3 rounded-4" style="background:#ede9fe;color:#6d28d9; font-size:1.5rem;"><i class="bi bi-envelope"></i></div>
+              <div>
+                <small style="color:#6d5bd0;text-transform:uppercase;letter-spacing:.06em; font-weight:600;">Send us a message</small>
+                <h4 class="fw-bold mb-0">We’d Love to Hear From You</h4>
+                <small class="text-secondary">Fill out the form and we’ll get back to you shortly.</small>
+              </div>
+            </div>
+            <form id="upContactForm" novalidate>
+              <div class="row g-3">
+                <div class="col-md-6 position-relative">
+                  <i class="bi bi-person input-icon"></i>
+                  <input type="text" name="name" class="contact-input" placeholder="Your Name *" autocomplete="name" required>
+                </div>
+                <div class="col-md-6 position-relative">
+                  <i class="bi bi-envelope input-icon"></i>
+                  <input type="email" name="email" class="contact-input" placeholder="Email Address *" autocomplete="email" required>
+                </div>
+                <div class="col-md-6 position-relative">
+                  <i class="bi bi-telephone input-icon"></i>
+                  <input type="tel" name="phone" class="contact-input" placeholder="Phone Number *" autocomplete="tel" required>
+                </div>
+                <div class="col-md-6 position-relative">
+                  <i class="bi bi-building input-icon"></i>
+                  <input type="text" name="business" class="contact-input" placeholder="Business Name" autocomplete="organization">
+                </div>
+                <div class="col-12 position-relative">
+                  <i class="bi bi-grid input-icon"></i>
+                  <select name="interest" class="contact-input" style="appearance: none;" required>
+                    <option value="">What are you interested in? *</option>
+                    <option>Online Store Setup</option>
+                    <option>POS Billing</option>
+                    <option>Multiple Branches</option>
+                    <option>Pricing &amp; Plans</option>
+                    <option>Other</option>
+                  </select>
+                  <i class="bi bi-chevron-down position-absolute" style="right: 16px; top: 50%; transform: translateY(-50%); color: #94a3b8; pointer-events: none;"></i>
+                </div>
+                <div class="col-12 position-relative">
+                  <i class="bi bi-chat input-icon" style="top: 20px;"></i>
+                  <textarea name="message" class="contact-input" placeholder="Your Message *" rows="4" style="resize: none;" required></textarea>
+                </div>
+                <div class="col-12 mt-4">
+                  <button type="submit" class="contact-btn"><i class="bi bi-send-fill"></i> Send Message</button>
+                </div>
+              </div>
+              <div id="upStatus" class="mt-3 text-center" role="status" aria-live="polite"></div>
+            </form>
+            <div class="text-center text-secondary my-4 position-relative">
+              <hr class="w-100 position-absolute" style="top: 50%; z-index: 0; margin:0;">
+              <span class="bg-white px-3 position-relative" style="z-index: 1;">OR REACH US DIRECTLY</span>
+            </div>
+            <div class="row g-3">
+              <div class="col-md-4 text-center text-md-start">
+                <a class="text-decoration-none text-dark d-flex align-items-center gap-2" href="tel:+919876543210">
+                  <div class="p-2 rounded-circle" style="background:#dbeafe;color:#2563eb;"><i class="bi bi-telephone-fill"></i></div>
+                  <div><small class="text-secondary d-block">Call Us</small><strong>+91 98765 43210</strong></div>
+                </a>
+              </div>
+              <div class="col-md-4 text-center text-md-start">
+                <a class="text-decoration-none text-dark d-flex align-items-center gap-2" href="https://wa.me/919600891418" target="_blank">
+                  <div class="p-2 rounded-circle" style="background:#dcfce7;color:#16a34a;"><i class="bi bi-whatsapp"></i></div>
+                  <div><small class="text-secondary d-block">WhatsApp</small><strong>Chat with Us</strong></div>
+                </a>
+              </div>
+              <div class="col-md-4 text-center text-md-start">
+                <a class="text-decoration-none text-dark d-flex align-items-center gap-2" href="mailto:support@smartstore.com">
+                  <div class="p-2 rounded-circle" style="background:#fee2e2;color:#dc2626;"><i class="bi bi-envelope-fill"></i></div>
+                  <div><small class="text-secondary d-block">Email Us</small><strong>info@yourstore.com</strong></div>
+                </a>
+              </div>
+>>>>>>> 16814f1 (Initial e-commerce project upload)
             </div>
           </div>
         </div>
@@ -800,11 +984,14 @@
       <div class="row g-4">
         <div class="col-md-5">
           <h4 class="fw-bold mb-2"><i class="bi bi-bag-check-fill text-primary me-2"></i>SmartStore</h4>
+<<<<<<< HEAD
         <p class="text-white-50 mb-0">SmartStore helps businesses sell online and in-store with one powerful platform. Manage your products, inventory, orders, POS billing, and multiple branches seamlessly—all from one place. Simplify operations, serve customers better, and grow your business with confidence.</p>
+=======
+          <p class="text-white-50 mb-0">SmartStore helps businesses sell online and in-store with one powerful platform. Manage your products, inventory, orders, POS billing, and multiple branches seamlessly—all from one place. Simplify operations, serve customers better, and grow your business with confidence.</p>
+>>>>>>> 16814f1 (Initial e-commerce project upload)
         </div>
         <div class="col-md-3">
           <a href="#" id="footerPagesLink" class="footer-link fw-bold fs-6">Pages</a>
-          <!-- Individual saved page links are injected here -->
           <ul id="footerPageLinks" class="footer-pages-list"></ul>
         </div>
         <div class="col-md-4 text-md-end">
@@ -813,319 +1000,376 @@
           <p class="text-white-50 mb-0"><i class="bi bi-envelope-fill me-2 text-primary"></i> support@smartstore.com</p>
         </div>
       </div>
+      <div id="footerSocial" style="display:none; text-align:center; margin-top:16px;">
+        <p id="footerSocialNote" style="margin:0 0 10px;"></p>
+        <div id="footerSocialIcons" style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap;"></div>
+        <a id="footerWebsiteLink" href="#" target="_blank" rel="noopener noreferrer" style="display:none; margin-top:10px; color:inherit; text-decoration:underline;"></a>
+      </div>
+    </div>
+  </footer>
 
-      <!-- Social Media Icons (auto-loaded from Super Admin) -->
-     <div id="footerSocial" style="display:none; text-align:center; margin-top:16px;">
-  <p id="footerSocialNote" style="margin:0 0 10px;"></p>
-  <div id="footerSocialIcons" style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap;"></div>
-  <a id="footerWebsiteLink" href="#" target="_blank" rel="noopener noreferrer"
-     style="display:none; margin-top:10px; color:inherit; text-decoration:underline;"></a>
-</div>
-
-  <!-- WhatsApp Floating Icon -->
-  <a href="https://wa.me/919600891418"
-     class="whatsapp-float"
-     target="_blank"
-     rel="noopener noreferrer"
-     aria-label="Contact us on WhatsApp">
+  <!-- WhatsApp Float -->
+  <a href="https://wa.me/919600891418" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Contact us on WhatsApp">
     <i class="bi bi-whatsapp"></i>
   </a>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-  <!-- =========================================================
-       FOOTER PAGES — reads the same localStorage keys the
-       Merchant Dashboard writes:
-         - smartstore_pages_<storeSlug>   (preferred, per-store)
-         - smartstore_pages               (legacy fallback)
-       ========================================================= -->
+  <!-- ============================================================
+       SMARTSTORE BANNER SCRIPT
+       Reads from localStorage (smartstore_banners_<slug> or
+       smartstore_banners filtered by storeSlug).
+       ============================================================ -->
+  <script id="smartstore-banner-script">
+  (function(){
+    function slugify(s){return String(s||'').toLowerCase().trim().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');}
+    function resolveSlug(){
+      try{
+        var p=new URLSearchParams(location.search||'');
+        var v=p.get('merchant')||p.get('store')||p.get('storeSlug')||p.get('slug');
+        if(v)return slugify(v);
+      }catch(e){}
+      try{
+        var u=JSON.parse(localStorage.getItem('smartstore_current_user')||'null');
+        if(u){var c=u.storeSlug||u.store_slug||u.slug||u.businessName||u.brandName||u.storeName||u.name||'';if(c)return slugify(c);}
+      }catch(e){}
+      try{
+        var s=JSON.parse(localStorage.getItem('smartstore_staff_session')||'null');
+        if(s){var cs=s.storeSlug||s.store_slug||s.merchantSlug||s.merchant_slug||'';if(cs)return slugify(cs);}
+      }catch(e){}
+      try{
+        var arr=JSON.parse(localStorage.getItem('registeredUsers')||'[]');
+        if(Array.isArray(arr)){
+          var set={};
+          arr.forEach(function(u){if(!u)return;var s2=slugify(u.storeSlug||u.slug||u.businessName||u.storeName||u.name||'');if(s2)set[s2]=1;});
+          var keys=Object.keys(set);
+          if(keys.length===1)return keys[0];
+        }
+      }catch(e){}
+      return '';
+    }
+    function loadBanners(slug){
+      if(!slug)return [];
+      var arr=null;
+      try{arr=JSON.parse(localStorage.getItem('smartstore_banners_'+slug)||'null');}catch(e){}
+      if(!Array.isArray(arr)){
+        try{
+          var all=JSON.parse(localStorage.getItem('smartstore_banners')||'[]');
+          arr=Array.isArray(all)?all.filter(function(b){return b&&slugify(b.storeSlug||'')===slug;}):[];
+        }catch(e){arr=[];}
+      }
+      return (arr||[]).filter(function(b){return b&&(b.img||b.image)&&String(b.status||'active')!=='inactive';});
+    }
+    function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+    var cur=0,cnt=0,timer=null;
+    function go(i){
+      if(!cnt)return;
+      cur=((i%cnt)+cnt)%cnt;
+      var track=document.querySelector('#smartstoreBannerSection .ssb-track');
+      if(track)track.style.transform='translateX(-'+(cur*100)+'%)';
+      document.querySelectorAll('#smartstoreBannerSection .ssb-dot').forEach(function(d,idx){d.classList.toggle('active',idx===cur);});
+    }
+    function startAuto(){stopAuto();if(cnt<2)return;timer=setInterval(function(){go(cur+1);},5000);}
+    function stopAuto(){if(timer){clearInterval(timer);timer=null;}}
+    function render(){
+      var sec=document.getElementById('smartstoreBannerSection');
+      if(!sec)return;
+      var slug=resolveSlug();
+      var banners=loadBanners(slug);
+      if(!banners.length){sec.style.display='none';sec.innerHTML='';return;}
+      sec.style.display='';
+      var slides=banners.map(function(b){
+        var src=b.img||b.image||'';
+        var hasOverlay=b.discount||b.title||b.sub||b.bannerText;
+        var ov=hasOverlay?'<div class="ssb-overlay">'+(b.discount?'<div class="ssb-discount">'+esc(b.discount)+'</div>':'')+(b.title?'<div class="ssb-title">'+esc(b.title)+'</div>':'')+(b.sub?'<div class="ssb-sub">'+esc(b.sub)+'</div>':'')+(b.bannerText?'<div class="ssb-text">'+esc(b.bannerText)+'</div>':'')+'</div>':'';
+        return '<div class="ssb-slide"><img src="'+esc(src)+'" alt="'+esc(b.title||'Banner')+'" loading="lazy" onerror="this.style.display=\'none\'">'+ov+'</div>';
+      }).join('');
+      var dots=banners.length>1?'<div class="ssb-dots">'+banners.map(function(_,i){return '<button class="ssb-dot'+(i===0?' active':'')+'" data-i="'+i+'" aria-label="Banner '+(i+1)+'"></button>';}).join('')+'</div>':'';
+      sec.innerHTML='<div class="ssb-viewport"><div class="ssb-track">'+slides+'</div>'+dots+'</div>';
+      cnt=banners.length;cur=0;
+      document.querySelectorAll('#smartstoreBannerSection .ssb-dot').forEach(function(btn){
+        btn.addEventListener('click',function(){go(parseInt(btn.dataset.i,10)||0);startAuto();});
+      });
+      startAuto();
+      sec.addEventListener('mouseenter',stopAuto);
+      sec.addEventListener('mouseleave',startAuto);
+    }
+    if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',render);}else{render();}
+    window.addEventListener('storage',function(e){if(e.key&&(e.key.indexOf('smartstore_banners')===0||e.key==='smartstore_theme_update')){render();}});
+    window.addEventListener('focus',render);
+  })();
+  </script>
+
+  <!-- Pages Modal logic (unchanged) -->
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       var PAGES_LEGACY_KEY = 'smartstore_pages';
-
-      function esc(s) {
-        return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
-          return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
-        });
-      }
-      function slugify(s) {
-        return String(s || '').toLowerCase().trim()
-          .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'smartstore';
-      }
-      function getStoreSlug() {
-        try {
-          var q = new URLSearchParams(location.search).get('store');
-          if (q) return slugify(q);
-          var u = JSON.parse(localStorage.getItem('smartstore_current_user') || 'null');
-          if (u) {
-            var c = u.storeSlug || u.store_slug || u.slug
-                 || u.businessName || u.brandName || u.storeName || u.name || '';
-            if (c) return slugify(c);
-          }
-        } catch (e) {}
-        return 'smartstore';
-      }
-      function readPages() {
-        var slug = getStoreSlug();
-        var keys = ['smartstore_pages_' + slug, PAGES_LEGACY_KEY];
-        for (var i = 0; i < keys.length; i++) {
-          try {
-            var raw = JSON.parse(localStorage.getItem(keys[i]) || 'null');
-            if (Array.isArray(raw)) {
-              return raw
-                .filter(function (p) { return p && typeof p === 'object' && p.slug; })
-                .map(function (p) {
-                  return {
-                    title: String(p.title || ''),
-                    slug: slugify(p.slug),
-                    content: String(p.content || ''),
-                    status: String(p.status || 'Published')
-                  };
-                });
-            }
-          } catch (e) {}
-        }
-        return [];
-      }
-      function sanitizeHtml(html) {
-        var tmp = document.createElement('div');
-        tmp.innerHTML = String(html || '');
-        // Remove dangerous nodes
-        tmp.querySelectorAll('script, iframe, object, embed, style, link, meta').forEach(function (n) { n.remove(); });
-        // Strip on* handlers and javascript: URLs
-        tmp.querySelectorAll('*').forEach(function (n) {
-          Array.prototype.slice.call(n.attributes).forEach(function (attr) {
-            var name = attr.name.toLowerCase();
-            var val = String(attr.value || '');
-            if (name.indexOf('on') === 0) n.removeAttribute(attr.name);
-            if ((name === 'href' || name === 'src') && /^\s*javascript:/i.test(val)) n.removeAttribute(attr.name);
-          });
-        });
-        return tmp.innerHTML;
-      }
-
-      var accordion = document.getElementById('pagesAccordion');
-      var linksWrap = document.getElementById('footerPageLinks');
-
-      function renderPageIntoModal(pages, focusSlug) {
-        if (!accordion) return;
-        var list = pages.filter(function (p) {
-          return p.status.toLowerCase() === 'published' && p.title && p.content;
-        });
-        if (!list.length) {
-          accordion.innerHTML = '<p class="text-secondary text-center py-4 mb-0">No pages yet.</p>';
-          return;
-        }
-        if (focusSlug) {
-          var one = list.filter(function (p) { return p.slug === focusSlug; });
-          if (one.length) list = one;
-        }
-        accordion.innerHTML = list.map(function (p) {
-          return '<div class="border rounded-4 p-4 mb-3 bg-white">' +
-            '<h4 class="fw-bold text-dark mb-2">' + esc(p.title) + '</h4>' +
-            '<span class="badge bg-primary bg-opacity-10 text-primary fw-normal px-3 py-2 mb-3">/page/' + esc(p.slug) + '</span>' +
-            '<hr class="my-3">' +
-            '<div class="page-body">' + sanitizeHtml(p.content) + '</div>' +
-          '</div>';
-        }).join('');
-      }
-
-      function openModal(focusSlug) {
-        var pages = readPages();
-        renderPageIntoModal(pages, focusSlug);
-        var modalEl = document.getElementById('pagesModal');
-        if (modalEl && window.bootstrap && bootstrap.Modal) {
-          bootstrap.Modal.getOrCreateInstance(modalEl).show();
-        }
-      }
-
-      // Existing "Pages" link — shows ALL published pages
-      var allLink = document.getElementById('footerPagesLink');
-      if (allLink) {
-        allLink.addEventListener('click', function (e) {
-          e.preventDefault();
-          openModal(null);
-        });
-      }
-
-      // Render individual page links in the footer
-      function renderFooterLinks() {
-        if (!linksWrap) return;
-        var pages = readPages().filter(function (p) {
-          return p.status.toLowerCase() === 'published' && p.title;
-        });
-        if (!pages.length) {
-          linksWrap.innerHTML = '';
-          return;
-        }
-        linksWrap.innerHTML = pages.map(function (p) {
-          return '<li><a href="#" data-slug="' + esc(p.slug) + '">' +
-                   '<i class="bi bi-file-earmark-text"></i>' + esc(p.title) +
-                 '</a></li>';
-        }).join('');
-      }
-      if (linksWrap) {
-        linksWrap.addEventListener('click', function (e) {
-          var a = e.target.closest('a[data-slug]');
-          if (!a) return;
-          e.preventDefault();
-          openModal(a.getAttribute('data-slug'));
-          try { history.replaceState(null, '', '?page=' + encodeURIComponent(a.getAttribute('data-slug'))); } catch (err) {}
-        });
-      }
-
-      renderFooterLinks();
-
-      // Deep link: ?page=slug — opens that page directly
-      try {
-        var deep = new URLSearchParams(location.search).get('page');
-        if (deep) openModal(slugify(deep));
-      } catch (e) {}
-
-      // Keep footer links in sync with the dashboard across tabs
-      window.addEventListener('storage', function (e) {
-        if (!e.key) return;
-        if (e.key === PAGES_LEGACY_KEY
-         || e.key === 'smartstore_pages_update'
-         || /^smartstore_pages_/.test(e.key)) {
-          renderFooterLinks();
-        }
-      });
-      window.addEventListener('focus', renderFooterLinks);
+      function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+      function slugify(s) { return String(s || '').toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'smartstore'; }
+      function getStoreSlug() { try { var q = new URLSearchParams(location.search).get('store'); if (q) return slugify(q); var u = JSON.parse(localStorage.getItem('smartstore_current_user') || 'null'); if (u) { var c = u.storeSlug || u.store_slug || u.slug || u.businessName || u.brandName || u.storeName || u.name || ''; if (c) return slugify(c); } } catch (e) {} return 'smartstore'; }
+      function readPages() { var slug = getStoreSlug(); var keys = ['smartstore_pages_' + slug, PAGES_LEGACY_KEY]; for (var i = 0; i < keys.length; i++) { try { var raw = JSON.parse(localStorage.getItem(keys[i]) || 'null'); if (Array.isArray(raw)) { return raw.filter(function (p) { return p && typeof p === 'object' && p.slug; }).map(function (p) { return { title: String(p.title || ''), slug: slugify(p.slug), content: String(p.content || ''), status: String(p.status || 'Published') }; }); } } catch (e) {} } return []; }
+      function sanitizeHtml(html) { var tmp = document.createElement('div'); tmp.innerHTML = String(html || ''); tmp.querySelectorAll('script, iframe, object, embed, style, link, meta').forEach(function (n) { n.remove(); }); tmp.querySelectorAll('*').forEach(function (n) { Array.prototype.slice.call(n.attributes).forEach(function (attr) { var name = attr.name.toLowerCase(); var val = String(attr.value || ''); if (name.indexOf('on') === 0) n.removeAttribute(attr.name); if ((name === 'href' || name === 'src') && /^\s*javascript:/i.test(val)) n.removeAttribute(attr.name); }); }); return tmp.innerHTML; }
+      var accordion = document.getElementById('pagesAccordion'); var linksWrap = document.getElementById('footerPageLinks');
+      function renderPageIntoModal(pages, focusSlug) { if (!accordion) return; var list = pages.filter(function (p) { return p.status.toLowerCase() === 'published' && p.title && p.content; }); if (!list.length) { accordion.innerHTML = '<p class="text-secondary text-center py-4 mb-0">No pages yet.</p>'; return; } if (focusSlug) { var one = list.filter(function (p) { return p.slug === focusSlug; }); if (one.length) list = one; } accordion.innerHTML = list.map(function (p) { return '<div class="border rounded-4 p-4 mb-3 bg-white"><h4 class="fw-bold text-dark mb-2">' + esc(p.title) + '</h4><span class="badge bg-primary bg-opacity-10 text-primary fw-normal px-3 py-2 mb-3">/page/' + esc(p.slug) + '</span><hr class="my-3"><div class="page-body">' + sanitizeHtml(p.content) + '</div></div>'; }).join(''); }
+      function openModal(focusSlug) { var pages = readPages(); renderPageIntoModal(pages, focusSlug); var modalEl = document.getElementById('pagesModal'); if (modalEl && window.bootstrap && bootstrap.Modal) { bootstrap.Modal.getOrCreateInstance(modalEl).show(); } }
+      var allLink = document.getElementById('footerPagesLink'); if (allLink) { allLink.addEventListener('click', function (e) { e.preventDefault(); openModal(null); }); }
+      function renderFooterLinks() { if (!linksWrap) return; var pages = readPages().filter(function (p) { return p.status.toLowerCase() === 'published' && p.title; }); if (!pages.length) { linksWrap.innerHTML = ''; return; } linksWrap.innerHTML = pages.map(function (p) { return '<li><a href="#" data-slug="' + esc(p.slug) + '"><i class="bi bi-file-earmark-text"></i>' + esc(p.title) + '</a></li>'; }).join(''); }
+      if (linksWrap) { linksWrap.addEventListener('click', function (e) { var a = e.target.closest('a[data-slug]'); if (!a) return; e.preventDefault(); openModal(a.getAttribute('data-slug')); try { history.replaceState(null, '', '?page=' + encodeURIComponent(a.getAttribute('data-slug'))); } catch (err) {} }); }
+      renderFooterLinks(); try { var deep = new URLSearchParams(location.search).get('page'); if (deep) openModal(slugify(deep)); } catch (e) {}
+      window.addEventListener('storage', function (e) { if (!e.key) return; if (e.key === PAGES_LEGACY_KEY || e.key === 'smartstore_pages_update' || /^smartstore_pages_/.test(e.key)) { renderFooterLinks(); } }); window.addEventListener('focus', renderFooterLinks);
     });
   </script>
+  <script id="sj-script">
+    (function () { var root = document.getElementById('ss-journey'); root.classList.add('sj-js'); var $ = function (s) { return document.querySelector(s); }; var els = root.querySelectorAll('.sj-reveal'); if ('IntersectionObserver' in window) { var io = new IntersectionObserver(function (en) { en.forEach(function (x) { if (!x.isIntersecting) return; x.target.classList.add('sj-in'); io.unobserve(x.target); setTimeout(function () { x.target.classList.add('sj-done'); }, 1600); }); }, { threshold: .12, rootMargin: '0px 0px -6% 0px' }); els.forEach(function (el) { io.observe(el); }); } else els.forEach(function (el) { el.classList.add('sj-in'); }); var secs = [].slice.call(root.querySelectorAll('section[id^="sj-s"]')), box = $('#sjProg'), dots = box.querySelector('.d'), lab = box.querySelector('.l'), px = [].slice.call(root.querySelectorAll('.sj-px')), tick = false; var still = matchMedia('(prefers-reduced-motion: reduce)').matches; dots.innerHTML = secs.map(function (s, k) { return '<button data-go="' + s.id + '" aria-label="Page ' + (k + 1) + '">' + (k + 1) + '</button>'; }).join(''); dots.addEventListener('click', function (e) { var b = e.target.closest('[data-go]'); if (b) document.getElementById(b.getAttribute('data-go')).scrollIntoView({ behavior: 'smooth' }); }); function upd() { tick = false; var mid = innerHeight * .5, cur = 0; secs.forEach(function (s, k) { if (s.getBoundingClientRect().top < mid) cur = k; }); var r = root.getBoundingClientRect(); box.classList.toggle('show', r.top < -60 && r.bottom > innerHeight * .6); [].forEach.call(dots.children, function (b, k) { b.className = k === cur ? 'on' : k < cur ? 'past' : ''; }); lab.textContent = 'Page ' + (cur + 1) + ' of ' + secs.length + ' · ' + secs[cur].getAttribute('data-label'); if (!still && innerWidth > 767) px.forEach(function (el) { var b = el.getBoundingClientRect(); if (b.bottom < -100 || b.top > innerHeight + 100) return; el.style.transform = 'translateY(' + ((b.top + b.height / 2 - innerHeight / 2) * -parseFloat(el.getAttribute('data-px'))).toFixed(1) + 'px)'; }); } addEventListener('scroll', function () { if (!tick) { tick = true; requestAnimationFrame(upd); } }, { passive: true }); addEventListener('resize', upd); upd(); document.querySelectorAll('[data-real]').forEach(function (w) { var i = new Image(); i.onload = function () { i.className = 'sj-real'; i.alt = ''; var v = w.querySelector('svg.sj-art'); if (v) v.style.display = 'none'; w.insertBefore(i, w.firstChild); }; i.src = w.getAttribute('data-real'); }); })();
+  </script>
 
-<script id="sj-script">
-(function () {
-  var root = document.getElementById('ss-journey');
-  root.classList.add('sj-js');
-  var $ = function (s) { return document.querySelector(s); };
+  <script id="hw-script">
+    (function () {
+      var wrap = document.getElementById('hw-wrap');
+      wrap.classList.add('hw-js');
 
-  /* scroll reveal */
-  var els = root.querySelectorAll('.sj-reveal');
-  if ('IntersectionObserver' in window) {
-    var io = new IntersectionObserver(function (en) {
-      en.forEach(function (x) {
-        if (!x.isIntersecting) return;
-        x.target.classList.add('sj-in'); io.unobserve(x.target);
-        setTimeout(function () { x.target.classList.add('sj-done'); }, 1600);
+      var FLOW = [['shop', 'Customer Visits Store', 'Opens the online store on any device.'], ['grid', 'Browse Products', 'Explore products, categories and offers.'], ['hand-index-thumb', 'Select Product', 'Pick the item that fits your need.'], ['cart-plus', 'Add to Cart', 'Select quantity and add products to your cart.'], ['person-lock', 'Login / Register', 'Sign in or create an account securely.'], ['card-checklist', 'Checkout', 'Enter delivery details and confirm your order.'], ['credit-card', 'Online Payment', 'Complete the order using secure online payment.'], ['patch-check', 'Order Confirmed', 'Instant confirmation sent to the customer.'], ['bell', 'Merchant Receives Order', 'The merchant is notified in real time.'], ['gear', 'Order Processing', 'Merchant receives and processes the order.'], ['box-seam', 'Packing & Shipping', 'The order is packed and handed to delivery.'], ['house-heart', 'Customer Receives Order', 'Track the order until it reaches the customer.']];
+      var FEAT = [['bag-check', 'Real-Time Orders', 'View new online orders instantly.'], ['boxes', 'Live Inventory', 'Know your available stock at any time.'], ['graph-up-arrow', 'Sales Tracking', 'Monitor sales and business performance.'], ['people', 'Customer Management', 'Manage customer information and orders.']];
+
+      document.getElementById('hwFlow').innerHTML = FLOW.map(function (s, k) {
+        return '<div class="hw-step hw-card hw-r" style="--d:' + ((k % 4) * .08) + 's"><div class="hw-ic"><i class="bi bi-' + s[0] + '"></i></div><div><h6>' + s[1] + '</h6><p>' + s[2] + '</p></div></div>';
+      }).join('');
+      document.getElementById('hwFeat').innerHTML = FEAT.map(function (f, k) {
+        return '<div class="col-sm-6 hw-r" style="--d:' + (.3 + k * .08) + 's"><div class="hw-card hw-fc"><div class="hw-ic"><i class="bi bi-' + f[0] + '"></i></div><div><h6>' + f[1] + '</h6><p>' + f[2] + '</p></div></div></div>';
+      }).join('');
+
+      var PLANS_KEY = 'admin_plans';
+      var lastPlansRaw = null;
+
+      function loadAdminPlans() {
+        try {
+          var raw = localStorage.getItem(PLANS_KEY);
+          if (raw === null) return [];
+          var parsed = JSON.parse(raw);
+          if (!Array.isArray(parsed)) return [];
+          return parsed.filter(function (p) { return p && p.active === true; }).sort(function (a, b) {
+            var da = Number(a.displayOrder) || 0;
+            var db = Number(b.displayOrder) || 0;
+            if (da !== db) return da - db;
+            return (Number(a.id) || 0) - (Number(b.id) || 0);
+          });
+        } catch (e) { console.error('[SmartStore] Failed to read plans:', e); return null; }
+      }
+      function escHtml(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+      function fmtINR(n) { var num = Number(n); if (!isFinite(num) || num < 0) num = 0; return '₹' + num.toLocaleString('en-IN'); }
+
+      function buildPlanCardHtml(p, k) {
+        var name = (p.name && String(p.name).trim()) || 'Plan';
+        var desc = (p.description && String(p.description).trim()) || '';
+        var ctaText = (p.ctaText && String(p.ctaText).trim()) || 'Get Started';
+        var slug = (p.slug && String(p.slug).trim()) || ('plan-' + (p.id || k + 1));
+        var link = 'register.html?plan=' + encodeURIComponent(slug) + '&planId=' + encodeURIComponent(p.id || '');
+        var priceHtml;
+        if (p.customPricing) { priceHtml = '<div class="hw-price">Custom</div>'; }
+        else {
+          priceHtml = '<div class="hw-price">' + fmtINR(p.monthlyPrice) + ' <small>/ month</small></div>';
+          if (Number(p.annualPrice) > 0) priceHtml += '<div class="text-secondary small mb-2">or ' + fmtINR(p.annualPrice) + ' / year</div>';
+        }
+        var items = [];
+        if (Array.isArray(p.bullets)) { p.bullets.forEach(function (b) { var t = String(b || '').trim(); if (t) items.push(t); }); }
+        if (p.limits && typeof p.limits === 'object') {
+          var limitLabels = { menuItems: 'menu items', categories: 'categories', orders: 'orders/month' };
+          Object.keys(limitLabels).forEach(function (key) {
+            var val = p.limits[key];
+            if (val === undefined || val === null || val === '') return;
+            if (val === 'unlimited') items.push('Unlimited ' + limitLabels[key]);
+            else { var n = Number(val); if (isFinite(n) && n > 0) items.push('Up to ' + n + ' ' + limitLabels[key]); }
+          });
+        }
+        var listHtml = items.length
+          ? '<ul>' + items.map(function (x) { return '<li><i class="bi bi-check-circle-fill"></i>' + escHtml(x) + '</li>'; }).join('') + '</ul>'
+          : '<ul><li class="text-secondary" style="font-style:italic;font-size:.85rem"><i class="bi bi-info-circle"></i>Contact us for full details</li></ul>';
+        return '<div class="col-md-6 col-lg-4 hw-r" style="--d:' + (k * .12) + 's">' +
+          '<div class="hw-card hw-plan' + (p.highlighted ? ' pop' : '') + '">' +
+            (p.highlighted ? '<span class="hw-badge">Most Popular</span>' : '') +
+            '<h4 class="fw-bold mb-1">' + escHtml(name) + '</h4>' +
+            '<p class="text-secondary small mb-3">' + escHtml(desc) + '</p>' +
+            priceHtml + listHtml +
+            '<a href="' + link + '" class="btn ' + (p.highlighted ? 'btn-primary-gradient' : 'hw-outline') + ' w-100">' + escHtml(ctaText) + '</a>' +
+          '</div></div>';
+      }
+
+      function observeReveal(elements) {
+        var arr = Array.prototype.slice.call(elements);
+        if (!arr.length) return;
+        if (!('IntersectionObserver' in window)) { arr.forEach(function (el) { el.classList.add('hw-in'); }); return; }
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (x) { if (x.isIntersecting) { x.target.classList.add('hw-in'); io.unobserve(x.target); } });
+        }, { threshold: .12, rootMargin: '0px 0px -6% 0px' });
+        arr.forEach(function (el) { io.observe(el); });
+      }
+
+      function renderAdminPlans(force) {
+        var container = document.getElementById('hwPlans');
+        if (!container) return;
+        var raw;
+        try { raw = localStorage.getItem(PLANS_KEY); } catch (e) { raw = null; }
+        if (!force && raw === lastPlansRaw && lastPlansRaw !== null) return;
+        lastPlansRaw = raw;
+        var plans = loadAdminPlans();
+        if (plans === null) {
+          container.innerHTML = '<div class="col-12 text-center py-5"><div class="hw-card p-5" style="max-width:560px;margin:0 auto"><i class="bi bi-exclamation-triangle" style="font-size:2.5rem;color:#f59e0b;display:block;margin-bottom:12px"></i><h5 class="fw-bold mb-2">Unable to load plans</h5><p class="text-secondary mb-0">Please refresh the page or try again later.</p></div></div>';
+          return;
+        }
+        if (!plans.length) {
+          container.innerHTML = '<div class="col-12 text-center py-5"><div class="hw-card p-5" style="max-width:560px;margin:0 auto"><i class="bi bi-inbox" style="font-size:2.5rem;color:#94a3b8;display:block;margin-bottom:12px"></i><h5 class="fw-bold mb-2">No plans available yet</h5><p class="text-secondary mb-0">Subscription plans will appear here once the Super Admin creates them.</p></div></div>';
+          return;
+        }
+        container.innerHTML = plans.map(buildPlanCardHtml).join('');
+        observeReveal(container.querySelectorAll('.hw-r'));
+      }
+
+      renderAdminPlans(true);
+
+      var allReveals = wrap.querySelectorAll('.hw-r');
+      var planContainer = document.getElementById('hwPlans');
+      var nonPlanReveals = Array.prototype.filter.call(allReveals, function (el) { return !planContainer.contains(el); });
+      observeReveal(nonPlanReveals);
+
+      window.addEventListener('storage', function (e) { if (e.key === PLANS_KEY) renderAdminPlans(true); });
+      window.addEventListener('focus', function () { renderAdminPlans(false); });
+      window.addEventListener('smartstore:plansUpdated', function () { renderAdminPlans(true); });
+    })();
+  </script>
+
+  <script id="ha-script">
+    (function () { var G = [['#features .text-center > *', 'ha-up', 0, .1],['#features .feature-card', 'ha-up', .15, .14]]; G.forEach(function (g) { var els = [].slice.call(document.querySelectorAll(g[0])); if (!els.length || !('IntersectionObserver' in window)) return; els.forEach(function (e) { e.classList.add('ha-pre', g[1]); }); var io = new IntersectionObserver(function (en) { var n = 0; en.forEach(function (x) { if (!x.isIntersecting) return; io.unobserve(x.target); var el = x.target, d = g[2] + n * g[3]; n++; el.style.transitionDelay = d + 's'; requestAnimationFrame(function () { el.classList.add('ha-in'); }); setTimeout(function () { el.classList.remove('ha-pre', g[1], 'ha-in'); el.style.transitionDelay = ''; if (!el.getAttribute('style')) el.removeAttribute('style'); }, (d + 1) * 1000 + 100); }); }, { threshold: .15, rootMargin: '0px 0px -5% 0px' }); els.forEach(function (e) { io.observe(e); }); }); })();
+  </script>
+
+  <script id="hh-script">
+    /* Footer social — unified key resolution */
+    (function () {
+      function renderFooter() {
+        var wrap = document.getElementById('footerSocialIcons');
+        var box = document.getElementById('footerSocial');
+        if (!wrap || !box) return;
+
+        /* Try merchant-specific first, then legacy */
+        var slug = '';
+        try {
+          var p = new URLSearchParams(location.search || '');
+          slug = (p.get('merchant') || p.get('store') || p.get('storeSlug') || p.get('slug') || '').toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+        } catch (e) {}
+        if (!slug) {
+          try {
+            var u = JSON.parse(localStorage.getItem('smartstore_current_user') || 'null');
+            if (u) slug = String(u.storeSlug || u.store_slug || u.slug || u.businessName || u.brandName || u.storeName || u.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+          } catch (e) {}
+        }
+        var data = {};
+        try { data = JSON.parse(localStorage.getItem('smartstore_social_links_' + slug) || 'null') || JSON.parse(localStorage.getItem('smartstore_social_links') || '{}'); } catch (e) { data = {}; }
+        var SOCIAL_ICON_MAP = { instagram: 'bi-instagram', youtube: 'bi-youtube', facebook: 'bi-facebook', whatsapp: 'bi-whatsapp' };
+        var html = '';
+        Object.keys(SOCIAL_ICON_MAP).forEach(function (platform) {
+          var url = (data[platform] || '').trim();
+          if (!url) return;
+          if (!/^https?:\/\//i.test(url)) url = 'https://' + url.replace(/^\/+/, '');
+          html += '<a href="' + url + '" class="' + platform + '" target="_blank" rel="noopener noreferrer" title="' + platform + '"><i class="bi ' + SOCIAL_ICON_MAP[platform] + '"></i></a>';
+        });
+        wrap.innerHTML = html;
+        box.style.display = html ? 'block' : 'none';
+      }
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', renderFooter);
+      else renderFooter();
+      window.addEventListener('storage', function (e) {
+        if (e.key && e.key.indexOf('smartstore_social_links') === 0) renderFooter();
       });
-    }, { threshold: .12, rootMargin: '0px 0px -6% 0px' });
-    els.forEach(function (el) { io.observe(el); });
-  } else els.forEach(function (el) { el.classList.add('sj-in'); });
+      window.addEventListener('focus', renderFooter);
+    })();
+    /* Super admin social block */
+    (function () {
+      var KEY = 'superadmin_social_media';
+      function safeUrl(u) { u = String(u || '').trim(); if (!u) return ''; if (!/^https?:\/\//i.test(u)) u = 'https://' + u; try { var x = new URL(u); return (x.protocol === 'http:' || x.protocol === 'https:') ? x.href : ''; } catch (e) { return ''; } }
+      function waUrl(v) { v = String(v || '').trim(); if (!v) return ''; if (/^https?:\/\//i.test(v)) return safeUrl(v); var d = v.replace(/\D/g, ''); return d.length >= 8 ? 'https://wa.me/' + d : ''; }
+      function renderFooterSocial() {
+        var box = document.getElementById('footerSocial'); if (!box) return;
+        var data = {}; try { data = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) {}
+        var icons = [
+          { icon: 'bi-facebook', label: 'Facebook', url: safeUrl(data.facebook) },
+          { icon: 'bi-instagram', label: 'Instagram', url: safeUrl(data.instagram) },
+          { icon: 'bi-twitter-x', label: 'Twitter / X', url: safeUrl(data.twitter) },
+          { icon: 'bi-youtube', label: 'YouTube', url: safeUrl(data.youtube) },
+          { icon: 'bi-linkedin', label: 'LinkedIn', url: safeUrl(data.linkedin) },
+          { icon: 'bi-whatsapp', label: 'WhatsApp', url: waUrl(data.whatsapp) }
+        ].filter(function (i) { return i.url; });
+        var iconsWrap = document.getElementById('footerSocialIcons'); if (!iconsWrap) return;
+        iconsWrap.innerHTML = '';
+        icons.forEach(function (i) {
+          var a = document.createElement('a');
+          a.href = i.url; a.target = '_blank'; a.rel = 'noopener noreferrer';
+          a.title = i.label; a.setAttribute('aria-label', i.label);
+          a.style.cssText = 'color:inherit; font-size:1.4rem;';
+          var ic = document.createElement('i'); ic.className = 'bi ' + i.icon;
+          a.appendChild(ic); iconsWrap.appendChild(a);
+        });
+        var note = document.getElementById('footerSocialNote');
+        note.textContent = (data.footerNote || '').trim();
+        note.style.display = note.textContent ? '' : 'none';
+        var site = safeUrl(data.website);
+        var siteLink = document.getElementById('footerWebsiteLink');
+        if (site) { siteLink.href = site; siteLink.textContent = site.replace(/^https?:\/\//i, '').replace(/\/$/, ''); siteLink.style.display = 'inline-block'; }
+        else siteLink.style.display = 'none';
+        box.style.display = (icons.length || note.textContent || site) ? 'block' : 'none';
+      }
+      document.addEventListener('DOMContentLoaded', renderFooterSocial);
+      window.addEventListener('storage', function (e) { if (e.key === KEY) renderFooterSocial(); });
+    })();
+  </script>
 
-  /* progress pill + subtle parallax */
-  var secs = [].slice.call(root.querySelectorAll('section[id^="sj-s"]')), box = $('#sjProg'), dots = box.querySelector('.d'), lab = box.querySelector('.l'), px = [].slice.call(root.querySelectorAll('.sj-px')), tick = false;
-  var still = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  dots.innerHTML = secs.map(function (s, k) { return '<button data-go="' + s.id + '" aria-label="Page ' + (k + 1) + '">' + (k + 1) + '</button>'; }).join('');
-  dots.addEventListener('click', function (e) { var b = e.target.closest('[data-go]'); if (b) document.getElementById(b.getAttribute('data-go')).scrollIntoView({ behavior: 'smooth' }); });
-  function upd() {
-    tick = false; var mid = innerHeight * .5, cur = 0;
-    secs.forEach(function (s, k) { if (s.getBoundingClientRect().top < mid) cur = k; });
-    var r = root.getBoundingClientRect();
-    box.classList.toggle('show', r.top < -60 && r.bottom > innerHeight * .6);
-    [].forEach.call(dots.children, function (b, k) { b.className = k === cur ? 'on' : k < cur ? 'past' : ''; });
-    lab.textContent = 'Page ' + (cur + 1) + ' of ' + secs.length + ' · ' + secs[cur].getAttribute('data-label');
-    if (!still && innerWidth > 767) px.forEach(function (el) {
-      var b = el.getBoundingClientRect();
-      if (b.bottom < -100 || b.top > innerHeight + 100) return;
-      el.style.transform = 'translateY(' + ((b.top + b.height / 2 - innerHeight / 2) * -parseFloat(el.getAttribute('data-px'))).toFixed(1) + 'px)';
-    });
-  }
-  addEventListener('scroll', function () { if (!tick) { tick = true; requestAnimationFrame(upd); } }, { passive: true });
-  addEventListener('resize', upd); upd();
+    <script id="up-contact-script">
+    (function () {
+      var f = document.getElementById('upContactForm');
+      if (!f) return;
 
-  /* optional real hero render: images/hero.png replaces the drawing automatically */
-  document.querySelectorAll('[data-real]').forEach(function (w) {
-    var i = new Image();
-    i.onload = function () { i.className = 'sj-real'; i.alt = ''; var v = w.querySelector('svg.sj-art'); if (v) v.style.display = 'none'; w.insertBefore(i, w.firstChild); };
-    i.src = w.getAttribute('data-real');
-  });
-})();
-</script>
-<script id="hw-script">
-(function () {
-  var wrap = document.getElementById('hw-wrap');
-  wrap.classList.add('hw-js');
-  /* ===== EDIT HERE: plan prices, names, features and button links ===== */
-  var PLANS = [
-    { name: 'Starter', tag: 'For small businesses starting online.', price: '₹499', btn: 'Get Started', link: 'register.html',
-      feat: ['Product Management', 'Basic Store', 'Order Management', 'Basic Dashboard', 'Customer Management'] },
-    { name: 'Business', tag: 'For growing businesses.', price: '₹999', btn: 'Choose Business', link: 'register.html', popular: true,
-      feat: ['Everything in Starter', 'Advanced Dashboard', 'Inventory Management', 'Online Orders', 'Sales Reports', 'Customer Management', 'Store Customization'] },
-    { name: 'Professional', tag: 'For growing and established businesses.', price: '₹1,999', btn: 'Choose Professional', link: 'register.html',
-      feat: ['Everything in Business', 'Advanced Reports', 'Advanced Inventory', 'Multiple Staff Accounts', 'Role-Based Access', 'Advanced Store Management', 'Priority Support'] }
-  ];
-  var FLOW = [
-    ['shop', 'Customer Visits Store', 'Opens the online store on any device.'],
-    ['grid', 'Browse Products', 'Explore products, categories and offers.'],
-    ['hand-index-thumb', 'Select Product', 'Pick the item that fits your need.'],
-    ['cart-plus', 'Add to Cart', 'Select quantity and add products to your cart.'],
-    ['person-lock', 'Login / Register', 'Sign in or create an account securely.'],
-    ['card-checklist', 'Checkout', 'Enter delivery details and confirm your order.'],
-    ['credit-card', 'Online Payment', 'Complete the order using secure online payment.'],
-    ['patch-check', 'Order Confirmed', 'Instant confirmation sent to the customer.'],
-    ['bell', 'Merchant Receives Order', 'The merchant is notified in real time.'],
-    ['gear', 'Order Processing', 'Merchant receives and processes the order.'],
-    ['box-seam', 'Packing & Shipping', 'The order is packed and handed to delivery.'],
-    ['house-heart', 'Customer Receives Order', 'Track the order until it reaches the customer.']
-  ];
-  var FEAT = [['bag-check', 'Real-Time Orders', 'View new online orders instantly.'], ['boxes', 'Live Inventory', 'Know your available stock at any time.'], ['graph-up-arrow', 'Sales Tracking', 'Monitor sales and business performance.'], ['people', 'Customer Management', 'Manage customer information and orders.']];
+      var WHATSAPP_NUMBER = '919600891418'; // +91 9600891418 → without '+' and spaces
+      var st = document.getElementById('upStatus');
 
-  document.getElementById('hwFlow').innerHTML = FLOW.map(function (s, k) {
-    return '<div class="hw-step hw-card hw-r" style="--d:' + ((k % 4) * .08) + 's"><div class="hw-ic"><i class="bi bi-' + s[0] + '"></i></div><div><h6>' + s[1] + '</h6><p>' + s[2] + '</p></div></div>';
-  }).join('');
-  document.getElementById('hwFeat').innerHTML = FEAT.map(function (f, k) {
-    return '<div class="col-sm-6 hw-r" style="--d:' + (.3 + k * .08) + 's"><div class="hw-card hw-fc"><div class="hw-ic"><i class="bi bi-' + f[0] + '"></i></div><div><h6>' + f[1] + '</h6><p>' + f[2] + '</p></div></div></div>';
-  }).join('');
-  document.getElementById('hwPlans').innerHTML = PLANS.map(function (p, k) {
-    return '<div class="col-md-6 col-lg-4 hw-r" style="--d:' + (k * .12) + 's"><div class="hw-card hw-plan' + (p.popular ? ' pop' : '') + '">' + (p.popular ? '<span class="hw-badge">Most Popular</span>' : '') +
-      '<h4 class="fw-bold mb-1">' + p.name + '</h4><p class="text-secondary small mb-3">' + p.tag + '</p><div class="hw-price">' + p.price + ' <small>/ month</small></div><ul>' +
-      p.feat.map(function (x) { return '<li><i class="bi bi-check-circle-fill"></i>' + x + '</li>'; }).join('') + '</ul>' +
-      '<a href="' + p.link + '" class="btn ' + (p.popular ? 'btn-primary-gradient' : 'hw-outline') + ' w-100">' + p.btn + '</a></div></div>';
-  }).join('');
+      function say(t, ok) {
+        st.textContent = t;
+        st.className = 'mt-3 text-center text-' + (ok ? 'success' : 'danger');
+      }
 
-  var els = wrap.querySelectorAll('.hw-r');
-  if ('IntersectionObserver' in window) {
-    var io = new IntersectionObserver(function (en) {
-      en.forEach(function (x) { if (x.isIntersecting) { x.target.classList.add('hw-in'); io.unobserve(x.target); } });
-    }, { threshold: .12, rootMargin: '0px 0px -6% 0px' });
-    els.forEach(function (el) { io.observe(el); });
-  } else els.forEach(function (el) { el.classList.add('hw-in'); });
-})();
-</script>
-<script id="ha-script">
-(function () {
-  /* [selector, variant class, base delay (s), stagger step (s)] */
-  var G = [
-    ['#home .container > .badge', 'ha-down', 0, 0],
-    ['#home .container > h1', 'ha-scale', .12, 0],
-    ['#home .container > p', 'ha-up', .24, 0],
-    ['#home .container > div:not(.hh-visual)', 'ha-up', .36, 0],
-    ['#home .container .btn', 'ha-pop', .55, .1],
-    ['#about img', 'ha-left', 0, 0],
-    ['#about .col-lg-6:last-child > *', 'ha-up', .1, .12],
-    ['#features .text-center > *', 'ha-up', 0, .1],
-    ['#features .feature-card', 'ha-up', .15, .14]
-  ];
-  G.forEach(function (g) {
-    var els = [].slice.call(document.querySelectorAll(g[0]));
-    if (!els.length || !('IntersectionObserver' in window)) return;
-    els.forEach(function (e) { e.classList.add('ha-pre', g[1]); });
-    var io = new IntersectionObserver(function (en) {
-      var n = 0;
-      en.forEach(function (x) {
-        if (!x.isIntersecting) return;
-        io.unobserve(x.target);
-        var el = x.target, d = g[2] + n * g[3]; n++;
-        el.style.transitionDelay = d + 's';
-        requestAnimationFrame(function () { el.classList.add('ha-in'); });
-        setTimeout(function () {
-          el.classList.remove('ha-pre', g[1], 'ha-in');
-          el.style.transitionDelay = '';
-          if (!el.getAttribute('style')) el.removeAttribute('style');
-        }, (d + 1) * 1000 + 100);
+      f.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        var fd = new FormData(f);
+        var d = {};
+        ['name', 'email', 'phone', 'business', 'interest', 'message'].forEach(function (k) {
+          d[k] = String(fd.get(k) || '').trim();
+        });
+
+        /* ---- Required field validation ---- */
+        if (!d.name || !d.email || !d.phone || !d.interest || !d.message) {
+          return say('Please fill in all required fields.');
+        }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(d.email)) {
+          return say('Enter a valid email address.');
+        }
+        if (!/^\+?[0-9][0-9\s-]{6,17}$/.test(d.phone)) {
+          return say('Enter a valid phone number.');
+        }
+
+        /* ---- WhatsApp message in required format ---- */
+        var text =
+          'Name: ' + d.name + '\n' +
+          'Email: ' + d.email + '\n' +
+          'Phone: ' + d.phone + '\n' +
+          'Business Requirement: ' + d.interest + '\n' +
+          'Message: ' + d.message;
+
+        var url = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(text);
+
+        /* Opens WhatsApp App on mobile / WhatsApp Web on desktop */
+        window.open(url, '_blank', 'noopener,noreferrer');
+
+        say('Opening WhatsApp with your details. Press Send there to deliver.', true);
       });
+<<<<<<< HEAD
     }, { threshold: .15, rootMargin: '0px 0px -5% 0px' });
     els.forEach(function (e) { io.observe(e); });
   });
@@ -1302,5 +1546,9 @@
   });
 })();
 </script>
+=======
+    })();
+  </script>
+>>>>>>> 16814f1 (Initial e-commerce project upload)
 </body>
 </html>
