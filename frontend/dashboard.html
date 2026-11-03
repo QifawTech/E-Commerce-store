@@ -1374,7 +1374,10 @@ body{background:var(--bg);min-height:100vh}
           </div>
           <div class="col-md-6">
             <label class="field-label">SKU / Barcode</label>
-            <input class="field" id="apSku" placeholder="Leave empty to auto-generate">
+            <div class="d-flex gap-2">
+              <input class="field" id="apSku" placeholder="Auto-generated">
+              <button type="button" class="btn-ghost" title="Generate new barcode" onclick="fillAutoBarcode(true)" style="white-space:nowrap"><i class="bi bi-arrow-repeat"></i></button>
+            </div>
           </div>
           <div class="col-md-3">
             <label class="field-label">HSN</label>
@@ -2787,12 +2790,29 @@ function updateApImageUI() {
 function removeApImage() { apImageData = null; updateApImageUI(); }
 function resetAddSingleImage() { apImageData = null; updateApImageUI(); }
 
+function generateUniqueBarcode() {
+  const used = new Set((state.products || []).map(p => String(p.sku || '').toLowerCase()));
+  let code = '';
+  do {
+    let digits = '890'; // prefix
+    while (digits.length < 12) digits += Math.floor(Math.random() * 10);
+    let sum = 0;
+    for (let i = 0; i < 12; i++) sum += Number(digits[i]) * (i % 2 === 0 ? 1 : 3);
+    code = digits + ((10 - (sum % 10)) % 10); // EAN-13 check digit
+  } while (used.has(code.toLowerCase()));
+  return code;
+}
+function fillAutoBarcode(force) {
+  const el = $('apSku'); if (!el) return;
+  if (force || !el.value.trim()) el.value = generateUniqueBarcode();
+}
+
 function saveProduct() {
   const name = $('apName').value.trim();
   const price = parseFloat($('apPrice').value) || 0;
   const stock = parseInt($('apStock').value) || 0;
   const category = $('apCategory').value;
-  const sku = $('apSku').value.trim() || ('SKU-' + (1000 + state.products.length + 1));
+  const sku = $('apSku').value.trim() || generateUniqueBarcode();
   const hsn = ($('apHsn') ? $('apHsn').value.trim() : '');
   const gstRate = ($('apGstRate') ? Number($('apGstRate').value) : 0) || 0;
   const image = apImageData || IMG(sku);
@@ -3884,7 +3904,7 @@ document.addEventListener('DOMContentLoaded', () => {
   migrateBannerDataUrls();
   
   const socialView = $('view-social'); if (socialView) { socialView.addEventListener('input', markSocialDirty); socialView.addEventListener('change', markSocialDirty); }
-  const addProductModalEl = $('addProductModal'); if (addProductModalEl) { addProductModalEl.addEventListener('show.bs.modal', () => { refreshCategoryDropdown(); resetAddSingleImage(); }); }
+  const addProductModalEl = $('addProductModal'); if (addProductModalEl) { addProductModalEl.addEventListener('show.bs.modal', () => { refreshCategoryDropdown(); resetAddSingleImage(); fillAutoBarcode(true); }); }
   const addExpenseModalEl = $('addExpenseModal'); if (addExpenseModalEl) { addExpenseModalEl.addEventListener('show.bs.modal', () => { if ($('exDate')) $('exDate').value = new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0,10); }); }
   updateApImageUI();
   const today = new Date(); const first = new Date(today.getFullYear(), today.getMonth(), 1);
