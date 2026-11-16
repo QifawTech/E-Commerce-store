@@ -3419,8 +3419,7 @@ function showOrderSuccess(order) {
         <div class="r" style="border-top:1px dashed var(--line); margin-top:4px; padding-top:4px;"><span>Total Paid / Payable</span><span>${money(order.totalAmount)}</span></div>
         <div class="r"><span>Payment Method</span><span>${escapeHtml(order.paymentMethod)}</span></div>
         <div class="r"><span>Payment Status</span><span>${escapeHtml(order.paymentStatus)}</span></div>
-        <div class="r"><span>Order Status</span><span style="color:#ea580c; font-weight:bold;">${escapeHtml(order.orderStatus)}</span></div>
-        <div class="r"><span>Delivery Address</span><span>${escapeHtml(order.deliveryAddress)}</span></div>
+        <div class="r"><span>Order Status</span><span style="color:#ea580c; font-weight:bold;">Order Placed – Awaiting Merchant Approval</span></div>        <div class="r"><span>Delivery Address</span><span>${escapeHtml(order.deliveryAddress)}</span></div>
         <div class="r"><span>Order Date</span><span>${escapeHtml(order.orderDate)}</span></div>
       </div>
     </div>`;

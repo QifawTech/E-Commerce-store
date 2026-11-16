@@ -334,6 +334,306 @@
 }
 .contact-img img{display:block;width:100%;max-width:560px;height:auto}
 </style>
+<style id="responsive-fix">
+/* ---------- Global safety ---------- */
+img, svg, video { max-width: 100%; }
+@media (max-width: 991.98px) {
+  body { overflow-x: clip; }
+
+  /* Navbar / hamburger */
+  .glass-nav .navbar-collapse { padding: 12px 0 8px; }
+  .glass-nav .navbar-nav .nav-link { padding: .65rem 1rem; }
+  .glass-nav .navbar-toggler { padding: .25rem .5rem; }
+  .glass-nav .navbar-toggler:focus { box-shadow: none; }
+
+  /* Section spacing */
+  section { padding: 64px 0; }
+  #ss-journey section.sj-sec { padding: 64px 0; }
+  #ss-journey section.sj-hero { padding: 56px 0 48px; }
+  #hw-wrap section { padding: 64px 0; }
+
+  /* Big inline headings */
+  #why-us h2 { font-size: 2.4rem !important; }
+  #contact-us h2 { font-size: 2.3rem !important; }
+
+  /* Why Us floating badges: stop overflowing, stack under image */
+  #why-us .col-lg-6.position-relative { display: flex; flex-direction: column; gap: 12px; }
+  #why-us .why-badge {
+    position: static !important;
+    width: 100%;
+  }
+  #why-us .mt-4 > span.position-absolute {
+    position: static !important;
+    margin-left: 0 !important;
+  }
+
+  /* Contact */
+  #contact-us .col-lg-6:first-child,
+  #contact-us .col-lg-6:last-child { display: block; }
+  #contact-us .contact-img { margin-top: 0; }
+  #contact-us .contact-card { padding: 28px 22px; }
+  #contact-us strong { word-break: break-word; }
+
+  /* Footer */
+  footer .text-md-end { text-align: left !important; }
+}
+
+/* ---------- Tablet (<=767px) ---------- */
+@media (max-width: 767.98px) {
+  section { padding: 56px 0; }
+  #ss-journey section.sj-sec { padding: 56px 0; }
+  #hw-wrap section { padding: 56px 0; }
+
+  #ss-journey .display-4 { font-size: 2.2rem; }
+  #ss-journey .display-6,
+  #hw-wrap .display-6,
+  #features .display-6 { font-size: 1.7rem; }
+  #hw-wrap .fs-2 { font-size: 1.5rem !important; }
+
+  #why-us h2 { font-size: 2rem !important; }
+  #contact-us h2 { font-size: 2rem !important; }
+  #why-us .fs-5, #contact-us .fs-5, #ss-journey .sj-sub.fs-5 { font-size: 1rem !important; }
+
+  .sj-stats { margin-top: 32px; }
+  .sj-stage { max-width: 100%; }
+  .sj-chip { font-size: .72rem; padding: 7px 10px; }
+  .hw-float { font-size: .7rem; padding: 7px 10px; }
+  .hw-float[style*="left"] { left: 6px !important; }
+  .hw-float[style*="right"] { right: 6px !important; }
+
+  .feature-card { padding: 1.5rem 1.2rem; }
+  .branch-panel { padding: 16px; }
+  .hw-plan { padding: 26px 20px; }
+  .modal-dialog { margin: .75rem; }
+}
+
+/* ---------- Mobile (<=575px) ---------- */
+@media (max-width: 575.98px) {
+  .container { padding-left: 16px; padding-right: 16px; }
+
+  /* Buttons full width and easy to tap */
+  #ss-journey .sj-btn { width: 100%; justify-content: center; padding: 12px 20px; }
+  #why-us .btn-lg { width: 100%; padding: .7rem 1.5rem !important; }
+  .contact-btn { font-size: 1rem; padding: 13px; }
+  .contact-input { font-size: 16px; } /* stops iOS zoom on focus */
+
+  #ss-journey .display-4 { font-size: 1.9rem; }
+  #ss-journey .display-6,
+  #hw-wrap .display-6,
+  #features .display-6 { font-size: 1.5rem; }
+  #why-us h2 { font-size: 1.7rem !important; }
+  #contact-us h2 { font-size: 1.7rem !important; }
+
+  .sj-kick, .hw-kick { font-size: .68rem; padding: 6px 12px; }
+  .sj-stats { padding: 12px 6px; }
+  .sj-stats .c { justify-content: flex-start; padding: 6px; }
+  .sj-card.sj-why, .sj-why { padding: 20px 18px; }
+  .sj-flow span { font-size: .8rem; padding: 6px 12px; }
+  .sj-wc { padding: 14px; }
+  .sj-wc .ic { width: 46px; height: 46px; font-size: 1.25rem; }
+
+  /* Progress pill: wrap instead of overflowing */
+  .sj-prog { flex-wrap: wrap; justify-content: center; border-radius: 20px; width: calc(100vw - 20px); }
+  .sj-prog .l { white-space: normal; text-align: center; }
+
+  /* Dashboard preview */
+  .hw-dash { padding: 12px; }
+  .hw-inv { font-size: .64rem; }
+
+  .contact-card { padding: 22px 16px !important; }
+  #contact-us .contact-card .d-flex.gap-3.align-items-center { align-items: flex-start !important; }
+
+  .whatsapp-float { bottom: 16px; right: 14px; }
+  footer .row > [class*="col-"] { text-align: left; }
+}
+
+/* ---------- Very small (<=374px, e.g. 320px) ---------- */
+@media (max-width: 374.98px) {
+  #ss-journey .display-4 { font-size: 1.65rem; }
+  #why-us h2, #contact-us h2 { font-size: 1.5rem !important; }
+  .navbar-brand { font-size: 1.15rem !important; }
+  .sj-hc { padding: 12px; }
+  .sj-hc h6 { font-size: .92rem; }
+  .sj-hc p { font-size: .8rem; }
+  .hw-kpis { grid-template-columns: 1fr 1fr; gap: 6px; }
+  .hw-price { font-size: 2rem; }
+  .btn-login-nav, .glass-nav .btn-primary-gradient { padding: 8px 18px; }
+}
+
+/* ---------- Laptop (<=1199px) ---------- */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  #why-us h2 { font-size: 3rem !important; }
+  #contact-us h2 { font-size: 2.8rem !important; }
+}
+</style>
+<style id="mobile-navbar-compact">
+@media (max-width: 991.98px) {
+
+  /* Top bar: logo left, hamburger right, slimmer height */
+  .glass-nav.navbar {
+    padding-top: .55rem !important;
+    padding-bottom: .55rem !important;
+  }
+  .glass-nav .navbar-brand { font-size: 1.2rem !important; margin-right: 0; }
+  .glass-nav .navbar-toggler { padding: .15rem .35rem; margin-left: auto; }
+  .glass-nav .navbar-toggler:focus { box-shadow: none; }
+  .glass-nav .navbar-toggler .bi { font-size: 1.7rem !important; line-height: 1; }
+
+  /* Expanded menu: compact, scrolls inside itself if screen is very short */
+  .glass-nav .navbar-collapse {
+    padding: 6px 0 4px;
+    margin-top: 6px;
+    border-top: 1px solid rgba(255,255,255,.08);
+    max-height: calc(100vh - 70px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  /* Menu items: tight and consistent */
+  .glass-nav .navbar-nav {
+    margin: 0 !important;
+    gap: 0 !important;
+  }
+  .glass-nav .navbar-nav .nav-link {
+    padding: .5rem 1rem;
+    font-size: .95rem;
+    line-height: 1.3;
+  }
+  .glass-nav .navbar-nav .nav-item + .nav-item .nav-link {
+    border-top: 1px solid rgba(255,255,255,.05);
+  }
+
+  /* Login + Register side by side */
+  .glass-nav .navbar-collapse > .d-flex {
+    flex-wrap: nowrap;
+    gap: .6rem !important;
+    padding: 8px 4px 6px;
+    justify-content: center;
+  }
+  .glass-nav .btn-login-nav,
+  .glass-nav .btn-primary-gradient {
+    flex: 1 1 0;
+    max-width: 170px;
+    padding: 7px 14px;
+    font-size: .9rem;
+    text-align: center;
+    white-space: nowrap;
+  }
+}
+
+/* Small phones (320px - 374px) */
+@media (max-width: 374.98px) {
+  .glass-nav .navbar-brand { font-size: 1.05rem !important; }
+  .glass-nav .navbar-nav .nav-link { padding: .45rem .8rem; font-size: .9rem; }
+  .glass-nav .btn-login-nav,
+  .glass-nav .btn-primary-gradient { padding: 6px 10px; font-size: .85rem; }
+}
+</style>
+<style id="mobile-navbar-fix">
+/* Mobile + tablet only (desktop navbar untouched) */
+@media (max-width: 991.98px) {
+
+  /* Logo left, hamburger right, same vertical centre */
+  .navbar.glass-nav > .container {
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .navbar.glass-nav .navbar-brand {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    line-height: 1.2;
+  }
+  .navbar.glass-nav .navbar-toggler {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    margin: 0 0 0 auto;
+  }
+  .navbar.glass-nav .navbar-toggler .bi {
+    display: block;
+    line-height: 1;
+  }
+
+  /* Expanded panel */
+  .navbar.glass-nav .navbar-collapse {
+    width: 100%;
+    flex-basis: 100%;
+    margin-top: 8px;
+    padding: 4px 0 12px;
+    max-height: calc(100vh - 70px);
+    max-height: calc(100dvh - 70px);
+  }
+
+  /* Menu items: equal height, equal spacing, same alignment */
+  .navbar.glass-nav .navbar-nav {
+    width: 100%;
+    margin: 0 !important;
+    padding: 0;
+    gap: 0 !important;
+  }
+  .navbar.glass-nav .navbar-nav .nav-item {
+    width: 100%;
+  }
+  .navbar.glass-nav .navbar-nav .nav-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin: 0;
+    font-size: .95rem;
+    line-height: 1.2;
+    text-align: center;
+  }
+
+  /* Login + Register: side by side, equal width & height */
+  .navbar.glass-nav .navbar-collapse > .d-flex {
+    width: 100%;
+    max-width: 360px;
+    margin: 0 auto;
+    padding: 14px 4px 0;
+    gap: .75rem !important;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: stretch !important;
+  }
+  .navbar.glass-nav .btn-login-nav,
+  .navbar.glass-nav .btn-primary-gradient {
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: none;
+    height: 42px;
+    margin: 0;
+    padding: 0 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    font-size: .9rem;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+  }
+}
+
+/* Small phones (320px – 374px) */
+@media (max-width: 374.98px) {
+  .navbar.glass-nav .navbar-nav .nav-link { min-height: 40px; font-size: .9rem; }
+  .navbar.glass-nav .navbar-collapse > .d-flex { gap: .5rem !important; padding-top: 12px; }
+  .navbar.glass-nav .btn-login-nav,
+  .navbar.glass-nav .btn-primary-gradient { height: 40px; padding: 0 8px; font-size: .85rem; }
+}
+@media (max-width: 991.98px) {
+  .navbar.glass-nav .btn-login-nav { border-color: rgba(255,255,255,.45); }
+}
+</style>
 </head>
 <body class="bg-light">
 
@@ -358,7 +658,7 @@
         <ul class="navbar-nav mx-auto text-center gap-lg-2 my-3 my-lg-0">
           <li class="nav-item"><a class="nav-link px-3 active" href="#sj-s1">Home</a></li>
           <li class="nav-item"><a class="nav-link px-3" href="#features">Features</a></li>
-          <li class="nav-item"><a class="nav-link px-3" href="#why-us">Why Choose Us</a></li>
+     <li class="nav-item"><a class="nav-link px-3" href="#sj-s8">Why Choose Us</a></li>
           <li class="nav-item"><a class="nav-link px-3" href="#hw-plans">Pricing</a></li>
           <li class="nav-item"><a class="nav-link px-3" href="#contact-us">Contact Us</a></li>
         </ul>
@@ -513,7 +813,7 @@
         <div class="col-lg-7 order-lg-1">
           <div class="sj-reveal sj-l"><span class="sj-kick"><b>4</b> BRANCH MANAGEMENT</span></div>
           <h2 class="sj-h display-6 mb-3 sj-reveal" style="--d:.1s">Manage Every Branch from One Platform</h2>
-          <p class="sj-sub mb-4 sj-reveal" style="--d:.2s">Connect your POS and online store with a single inventory system. Give your team access to manage different branches while keeping products, stock, orders, and sales organized in one platform.</p>
+          <p class="sj-sub mb-4 sj-reveal" style="--d:.2s">Connect your POS and online store with one inventory system. Manage multiple branches, stock, orders, and sales easily..</p>
           <ul class="sj-ck sj-reveal" style="--d:.3s">
             <li><i class="bi bi-check-circle-fill"></i>Manage multiple branches with individual user access</li>
             <li><i class="bi bi-check-circle-fill"></i>Connect your POS and online store seamlessly</li>
@@ -811,8 +1111,64 @@
             <div class="p-3 rounded-4" style="background:#dbeafe;color:#2563eb; font-size:1.3rem;"><i class="bi bi-gear-fill"></i></div>
             <div><h5 class="fw-bold mb-1">Setup Assistance</h5><p class="text-secondary mb-0">We’ll help you get started easily</p></div>
           </div>
+
+
+          <!-- Contact left: extra content (fills empty space) -->
+<div class="row g-3 mb-4">
+  <div class="col-4">
+    <div class="text-center p-3 rounded-4 h-100" style="background:#fff;border:1px solid #e6eaf5;box-shadow:0 8px 22px -14px rgba(15,23,42,.18);">
+      <i class="bi bi-clock-history d-block mb-1" style="color:#4f46e5;font-size:1.4rem;"></i>
+      <strong class="d-block" style="font-size:1rem;">24 hrs</strong>
+      <small class="text-secondary">Reply time</small>
+    </div>
+  </div>
+  <div class="col-4">
+    <div class="text-center p-3 rounded-4 h-100" style="background:#fff;border:1px solid #e6eaf5;box-shadow:0 8px 22px -14px rgba(15,23,42,.18);">
+      <i class="bi bi-headset d-block mb-1" style="color:#16a34a;font-size:1.4rem;"></i>
+      <strong class="d-block" style="font-size:1rem;">24/7</strong>
+      <small class="text-secondary">Support</small>
+    </div>
+  </div>
+  <div class="col-4">
+    <div class="text-center p-3 rounded-4 h-100" style="background:#fff;border:1px solid #e6eaf5;box-shadow:0 8px 22px -14px rgba(15,23,42,.18);">
+      <i class="bi bi-rocket-takeoff d-block mb-1" style="color:#ea580c;font-size:1.4rem;"></i>
+      <strong class="d-block" style="font-size:1rem;">Easy</strong>
+      <small class="text-secondary">Store setup</small>
+    </div>
+  </div>
+</div>
+
+<div class="p-4 rounded-4 mb-4" style="background:#fff;border:1px solid #e6eaf5;box-shadow:0 8px 22px -14px rgba(15,23,42,.18);">
+  <h6 class="fw-bold mb-3"><i class="bi bi-question-circle-fill me-2" style="color:#4f46e5;"></i>Frequently Asked Questions</h6>
+  <div class="d-flex gap-2 mb-3">
+    <i class="bi bi-check-circle-fill" style="color:#16a34a;margin-top:3px;"></i>
+    <div><strong class="d-block" style="font-size:.92rem;">Can I run POS billing and my online store together?</strong>
+    <small class="text-secondary">Yes. Both share one inventory, so stock stays in sync.</small></div>
+  </div>
+  <div class="d-flex gap-2 mb-3">
+    <i class="bi bi-check-circle-fill" style="color:#16a34a;margin-top:3px;"></i>
+    <div><strong class="d-block" style="font-size:.92rem;">Can I manage more than one branch?</strong>
+    <small class="text-secondary">Yes. Add branches and give each manager their own access.</small></div>
+  </div>
+  <div class="d-flex gap-2">
+    <i class="bi bi-check-circle-fill" style="color:#16a34a;margin-top:3px;"></i>
+    <div><strong class="d-block" style="font-size:.92rem;">Which plan is right for my business?</strong>
+    <small class="text-secondary">Tell us your needs in the form and we will suggest the best plan.</small></div>
+  </div>
+</div>
+
+<div class="d-flex align-items-center gap-3 p-3 rounded-4 mb-4" style="background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;">
+  <i class="bi bi-whatsapp" style="font-size:1.8rem;"></i>
+  <div>
+    <strong class="d-block">Prefer a quick chat?</strong>
+    <small style="opacity:.9;">Message us on WhatsApp and we will reply shortly.</small>
+  </div>
+  <a href="https://wa.me/919600891418" target="_blank" rel="noopener noreferrer" class="btn btn-light btn-sm ms-auto fw-semibold" style="border-radius:50px;white-space:nowrap;">Chat Now</a>
+</div>
+<!-- /Contact left: extra content -->
           <div class="contact-img">
-            <img src="images/contact-illustration.jpg" alt="Laptop showing an online store with shopping bags">
+
+            <!-- <img src="images/contact-illustration.jpg" alt="Laptop showing an online store with shopping bags"> -->
           </div>
         </div>
         <div class="col-lg-6">
@@ -886,7 +1242,7 @@
               <div class="col-md-4 text-center text-md-start">
                 <a class="text-decoration-none text-dark d-flex align-items-center gap-2" href="mailto:support@smartstore.com">
                   <div class="p-2 rounded-circle" style="background:#fee2e2;color:#dc2626;"><i class="bi bi-envelope-fill"></i></div>
-                  <div><small class="text-secondary d-block">Email Us</small><strong>info@yourstore.com</strong></div>
+                  <div><small class="text-secondary d-block">Email Us</small><strong>yourstore.com</strong></div>
                 </a>
               </div>
             </div>
@@ -1285,5 +1641,22 @@
       });
     })();
   </script>
+  
+
+
+  <script id="mobile-nav-autoclose">
+document.addEventListener('DOMContentLoaded', function () {
+  var menu = document.getElementById('navContent');
+  if (!menu || !window.bootstrap) return;
+
+  menu.querySelectorAll('a').forEach(function (link) {
+    link.addEventListener('click', function () {
+      if (menu.classList.contains('show')) {
+        bootstrap.Collapse.getOrCreateInstance(menu).hide();
+      }
+    });
+  });
+});
+</script>
 </body>
 </html>

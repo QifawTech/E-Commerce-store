@@ -411,7 +411,260 @@ body{background:var(--bg);min-height:100vh}
   body.printing-receipt #printableReceipt,body.printing-receipt #printableReceipt *{visibility:visible!important}
   body.printing-receipt #printableReceipt{position:absolute!important;left:50%!important;top:0!important;transform:translateX(-50%)!important;width:300px!important;padding:0!important;margin:0!important;border:none!important;box-shadow:none!important;background:#fff!important}
 }
+
+/* ===== Products page: equal-size action buttons ===== */
+#view-products .d-flex.gap-2.flex-wrap.align-items-center > button {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  width: 190px !important;
+  height: 42px !important;
+  min-width: 190px !important;
+  padding: 0 14px !important;
+  margin: 0 !important;
+  border-radius: 10px !important;
+  font-size: .82rem !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  box-sizing: border-box !important;
+  flex: 0 0 190px !important;
+}
+#view-products .d-flex.gap-2.flex-wrap.align-items-center > button i {
+  margin: 0 !important;
+  line-height: 1 !important;
+}
+@media (max-width: 575.98px) {
+  #view-products .d-flex.gap-2.flex-wrap.align-items-center > button {
+    width: 100% !important;
+    min-width: 0 !important;
+    flex: 1 1 100% !important;
+  }
+}
+
+
+/* ===== Mobile: sidebar on the LEFT (vertical), content on the RIGHT ===== */
+@media (max-width: 767.98px) {
+
+  /* sticky works only if the page isn't a scroll container: use clip instead of hidden */
+  html, body { overflow-x: clip !important; max-width: 100%; }
+
+  /* sidebar + content side by side */
+  .shell > .row {
+    flex-wrap: nowrap !important;
+    align-items: flex-start;
+  }
+
+  /* LEFT: sidebar */
+  .shell > .row > .sidebar {
+    flex: 0 0 clamp(124px, 36vw, 150px) !important;
+    width: clamp(124px, 36vw, 150px) !important;
+    max-width: clamp(124px, 36vw, 150px) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    position: sticky !important;
+    top: 8px;
+    height: calc(100vh - 16px);
+    height: calc(100dvh - 16px);
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 10px 8px !important;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 18px;
+  }
+  .shell > .row > .sidebar > div:first-child { width: 100%; }
+  .shell > .row > .sidebar .menu-label { display: block; }
+  .shell > .row > .sidebar a.fs-5 { font-size: .95rem !important; margin: 0 0 6px 0 !important; }
+
+  /* vertical menu */
+  .shell > .row > .sidebar #sideNav {
+    flex-direction: column !important;
+    flex-wrap: nowrap !important;
+    overflow: visible;
+    gap: 4px !important;
+    margin: 0;
+    padding: 0;
+  }
+  .shell > .row > .sidebar #sideNav .sidebar-link {
+    flex: 0 0 auto;
+    width: 100%;
+    padding: 9px 10px;
+    font-size: .76rem;
+    line-height: 1.25;
+    gap: 8px;
+    border-radius: 12px;
+    white-space: normal;
+  }
+  .shell > .row > .sidebar #sideNav .sidebar-link i { font-size: .95rem; width: 18px; flex-shrink: 0; }
+  .shell > .row > .sidebar #sideNav .sidebar-link .badge-count { display: inline-block; font-size: .6rem; padding: 1px 6px; }
+
+  /* logout back to normal sidebar style */
+  .shell > .row > .sidebar .pt-3.border-top {
+    border-top: 1px solid #f1f4fb !important;
+    padding-top: 10px !important;
+    margin-top: 10px;
+  }
+  .shell > .row > .sidebar .logout-link {
+    justify-content: flex-start;
+    padding: 9px 10px;
+    font-size: .76rem;
+    border-radius: 12px;
+    background: transparent;
+    color: #94a3b8;
+  }
+
+  /* RIGHT: content takes the remaining width */
+  .shell > .row > div:not(.sidebar) {
+    flex: 1 1 0 !important;
+    width: auto !important;
+    max-width: none !important;
+    min-width: 0;
+    padding-left: 8px !important;
+  }
+  .shell > .row > div:not(.sidebar) .table-responsive { max-width: 100%; }
+  .shell > .row > div:not(.sidebar) img { max-width: 100%; }
+}
+
+/* ===== Mobile: sidebar = slide-in drawer (closes after a menu click) ===== */
+#sbToggle { display: none; }
+#sbOverlay { display: none; }
+
+@media (max-width: 767.98px) {
+
+  /* hamburger inside the top bar */
+  #sbToggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px; height: 40px;
+    flex: 0 0 auto;
+    border: 0;
+    border-radius: 12px;
+    background: #eef1f6;
+    color: #0f172a;
+    font-size: 1.4rem;
+    cursor: pointer;
+  }
+  .topbar { justify-content: flex-start !important; gap: 10px !important; }
+  .topbar > div:first-of-type { flex: 1 1 0; min-width: 0; }
+  .topbar .visit-store-btn { margin-left: auto; }
+
+  /* sidebar becomes a fixed drawer */
+  .shell > .row > .sidebar {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    bottom: 0 !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    width: min(250px, 80vw) !important;
+    max-width: min(250px, 80vw) !important;
+    flex: none !important;
+    margin: 0 !important;
+    border-radius: 0 20px 20px 0 !important;
+    padding: 14px 12px !important;
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 1045;
+    transform: translateX(-105%);
+    transition: transform .28s ease;
+    box-shadow: none;
+  }
+  body.sb-open .shell > .row > .sidebar {
+    transform: translateX(0);
+    box-shadow: 0 0 40px rgba(15, 23, 42, .35);
+  }
+
+  /* content uses the full width */
+  .shell > .row > div:not(.sidebar) {
+    flex: 0 0 100% !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding-left: 0 !important;
+  }
+
+  /* dark overlay behind the open drawer */
+  #sbOverlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, .45);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .25s ease;
+    z-index: 1040;
+  }
+  body.sb-open #sbOverlay { opacity: 1; pointer-events: auto; }
+  body.sb-open { overflow: hidden; }
+}
+
+/* ===== Products page: all 5 action buttons = identical look ===== */
+#view-products .d-flex.gap-2.flex-wrap.align-items-center > button,
+#view-products .d-flex.gap-2.flex-wrap.align-items-center > button:hover,
+#view-products .d-flex.gap-2.flex-wrap.align-items-center > button:focus,
+#view-products .d-flex.gap-2.flex-wrap.align-items-center > button:active {
+  background: #4a6cf7 !important;
+  background-image: none !important;
+  color: #ffffff !important;
+  border: 1.5px solid #4a6cf7 !important;
+  border-radius: 10px !important;
+  box-shadow: none !important;
+  width: 190px !important;
+  min-width: 190px !important;
+  height: 42px !important;
+  padding: 0 14px !important;
+  margin: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  font-size: .82rem !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  flex: 0 0 190px !important;
+}
+
+/* icons: same color, aligned, no extra margin */
+#view-products .d-flex.gap-2.flex-wrap.align-items-center > button i,
+#view-products .d-flex.gap-2.flex-wrap.align-items-center > button .bi {
+  color: #ffffff !important;
+  margin: 0 !important;
+  font-size: 1rem !important;
+  line-height: 1 !important;
+}
+
+/* hover: same subtle effect for all five */
+#view-products .d-flex.gap-2.flex-wrap.align-items-center > button:hover {
+  background: #3b5bea !important;
+  border-color: #3b5bea !important;
+}
+
+/* mobile: full width stacked */
+@media (max-width: 575.98px) {
+  #view-products .d-flex.gap-2.flex-wrap.align-items-center > button {
+    width: 100% !important;
+    min-width: 0 !important;
+    flex: 1 1 100% !important;
+  }
+}
+
+
+/* ===== Online Orders: Accept / Reject ===== */
+.ord-actions{display:flex;gap:6px;justify-content:flex-end;flex-wrap:wrap}
+.ord-btn{border:1.5px solid;border-radius:8px;padding:5px 12px;font-size:.78rem;font-weight:700;cursor:pointer;background:#fff;display:inline-flex;align-items:center;gap:4px}
+.ord-accept{color:#16a34a;border-color:#16a34a}
+.ord-accept:hover{background:#16a34a;color:#fff}
+.ord-reject{color:#dc2626;border-color:#dc2626}
+.ord-reject:hover{background:#dc2626;color:#fff}
+.report-status-badge.orderconfirmed{background:#dcfce7;color:#166534}
+.report-status-badge.outofstock{background:#fee2e2;color:#991b1b}
 </style>
+
 <link href="account-settings.css" rel="stylesheet">
 </head>
 <body>
@@ -1173,7 +1426,7 @@ body{background:var(--bg);min-height:100vh}
       </div>
 
       <div id="reportSection-sales" class="d-none">
-        <div class="report-section-card"><h5 class="fw-bold mb-3"><i class="bi bi-receipt me-2"></i>Sales Report</h5><div class="table-responsive"><table class="tbl"><thead><tr><th>Order ID</th><th>Date</th><th>Customer Type</th><th>Contact</th><th>Items</th><th>Amount</th><th>Payment</th><th>Status</th></tr></thead><tbody id="rptSalesReportBody"></tbody></table></div><div class="mt-3" id="rptSalesReportTotals"></div></div>
+        <div class="report-section-card"><h5 class="fw-bold mb-3"><i class="bi bi-receipt me-2"></i>Sales Report</h5><div class="table-responsive"><table class="tbl"><thead><tr><th>Order ID</th><th>Date</th><th>Contact</th><th>Items</th><th>Amount</th><th>Payment</th><th>Status</th></tr></thead><tbody id="rptSalesReportBody"></tbody></table></div><div class="mt-3" id="rptSalesReportTotals"></div></div>
       </div>
       <div id="reportSection-inventory" class="d-none">
         <div class="report-section-card"><h5 class="fw-bold mb-3"><i class="bi bi-boxes me-2"></i>Inventory Report</h5><div class="table-responsive"><table class="tbl"><thead><tr><th>Product</th><th>SKU / Barcode</th><th>Category</th><th>Price</th><th>Stock</th><th>Value</th><th>Status</th></tr></thead><tbody id="rptInventoryReportBody"></tbody></table></div><div class="mt-3" id="rptInventoryReportTotals"></div></div>
@@ -1215,12 +1468,7 @@ body{background:var(--bg);min-height:100vh}
           <div class="pos2-store" id="posStoreName"></div>
           <div class="pos2-head"><i class="bi bi-cart3"></i> Order Summary <small id="posItemCount">(0 items)</small></div>
           <div id="posBill" class="pos2-bill"></div>
-          <label class="pos2-label" for="posCustomerType">Customer Type</label>
-          <select id="posCustomerType" class="pos2-input">
-            <option value="Walk-in">Walk-in Customer</option>
-            <option value="Regular">Regular Customer</option>
-            <option value="Wholesale">Wholesale Customer</option>
-          </select>
+        
           <label class="pos2-label" for="posMobile">Contact Number <small>(optional)</small></label>
           <input id="posMobile" class="pos2-input" type="tel" inputmode="numeric" maxlength="10" placeholder="Enter mobile number" oninput="this.value=this.value.replace(/\D/g,'').slice(0,10)">
           <div class="pos2-row" style="margin-top:8px"><span>Subtotal</span><b id="posSubtotal">₹0</b></div>
@@ -1258,7 +1506,8 @@ body{background:var(--bg);min-height:100vh}
         <div class="d-flex justify-content-between mb-3"><h3 class="fs-5 fw-bold mb-0">Sales List</h3><span class="text-secondary small">Total: <span id="salesCount">0</span> sales</span></div>
         <div class="table-responsive">
           <table class="tbl">
-            <thead><tr><th>#</th><th>Order ID</th><th>Customer Type</th><th>Contact</th><th>Items</th><th>Amount</th><th>Status</th><th>Date &amp; Time</th></tr></thead>
+
+<thead><tr><th>#</th><th>Order ID</th><th>Contact</th><th>Items</th><th>Amount</th><th>Status</th><th>Date &amp; Time</th></tr></thead>
             <tbody id="salesBody"></tbody>
           </table>
         </div>
@@ -2132,6 +2381,12 @@ function openStorefront() {
 }
 function visitStore() { openStorefront(); }
 
+function custLabel(tx) {
+  if (tx.customerName) return tx.customerName;
+  const c = String(tx.customer || '');
+  if (/walk-?in|regular|wholesale/i.test(c)) return tx.customerMobile || tx.customerPhone || '-';
+  return c || tx.customerMobile || '-';
+}
 function renderDashboard() {
   loadCustomers();
   const totalSales = state.sales.reduce((a, s) => a + (s.total || 0), 0);
@@ -2329,7 +2584,6 @@ window.setReportType = function(type, el) {
   if (type === 'expense') renderExpenseReportSection();
   if (type === 'gst') renderGSTReportSection();
 };
-
 function renderSalesReportSection() {
   const body = $('rptSalesReportBody'); if (!body) return;
   const filtered = getFilteredReportData();
@@ -2338,15 +2592,14 @@ function renderSalesReportSection() {
   body.innerHTML = sorted.length ? sorted.map(tx => {
     const id = tx.id || tx.orderId || '-';
     const date = new Date(tx.date || tx.orderDateISO || tx.createdAt || tx.orderDate).toLocaleDateString('en-IN');
-    const type = tx.customerType || (tx._type === 'POS' ? 'Walk-in' : 'Online');
     const contact = tx.customerMobile || tx.customerPhone || '-';
     const itemsCount = (tx.items || []).reduce((a, it) => a + (Number(it.qty) || 0), 0);
     const amt = Number(tx.total || tx.totalAmount || tx.amount) || 0;
     const pay = tx.paymentMethod || 'Cash';
     const st = tx.orderStatus || tx.status || 'Completed';
     const stClass = String(st).toLowerCase().replace(/[^a-z]/g, '');
-    return `<tr><td><b>${esc(id)}</b></td><td>${date}</td><td>${esc(type)}</td><td>${esc(contact)}</td><td>${itemsCount}</td><td><b>${money(amt)}</b></td><td>${esc(pay)}</td><td><span class="report-status-badge ${stClass}">${esc(st)}</span></td></tr>`;
-  }).join('') : '<tr><td colspan="8" class="text-center text-secondary py-4">No sales in this period</td></tr>';
+    return `<tr><td><b>${esc(id)}</b></td><td>${date}</td><td>${esc(contact)}</td><td>${itemsCount}</td><td><b>${money(amt)}</b></td><td>${esc(pay)}</td><td><span class="report-status-badge ${stClass}">${esc(st)}</span></td></tr>`;
+  }).join('') : '<tr><td colspan="7" class="text-center text-secondary py-4">No sales in this period</td></tr>';
   const totals = sorted.reduce((acc, tx) => { acc.amount += Number(tx.total || tx.totalAmount || tx.amount) || 0; acc.items += (tx.items || []).reduce((a, it) => a + (Number(it.qty) || 0), 0); return acc; }, { amount: 0, items: 0 });
   if ($('rptSalesReportTotals')) $('rptSalesReportTotals').innerHTML = `<div class="report-payment-grid"><div class="report-payment-stat"><h6>Total Sales</h6><div class="val green">${money(totals.amount)}</div></div><div class="report-payment-stat"><h6>Total Transactions</h6><div class="val">${sorted.length}</div></div><div class="report-payment-stat"><h6>Items Sold</h6><div class="val">${totals.items}</div></div></div>`;
 }
@@ -2524,7 +2777,7 @@ window.exportReportsPDF = function() {
       return `<tr>
         <td style="${tdStyle}">${esc(tx.id || tx.orderId)}</td>
         <td style="${tdStyle}">${date}</td>
-        <td style="${tdStyle}">${esc(typeStr)}</td>
+       <td style="${tdStyle}">${esc(typeStr)}</td>
         <td style="${tdStyle}">${esc(tx.customerName || tx.customer || 'Walk-in')}</td>
         <td style="${tdStyle}">${itemsCount}</td>
         <td style="${tdStyle}">${money(amt)}</td>
@@ -2541,7 +2794,7 @@ window.exportReportsPDF = function() {
       </div>
       <table style="${tableStyle}">
         <thead><tr>
-          <th style="${thStyle}">Order ID</th><th style="${thStyle}">Date</th><th style="${thStyle}">Type</th><th style="${thStyle}">Customer</th><th style="${thStyle}">Items</th><th style="${thStyle}">Amount</th><th style="${thStyle}">Payment</th><th style="${thStyle}">Status</th>
+          <th style="${thStyle}">Order ID</th><th style="${thStyle}">Date</th><td style="${tdStyle}">${esc(typeStr)}</td><th style="${thStyle}">Customer</th><th style="${thStyle}">Items</th><th style="${thStyle}">Amount</th><th style="${thStyle}">Payment</th><th style="${thStyle}">Status</th>
         </tr></thead>
         <tbody>${rows}</tbody>
       </table>`;
@@ -2778,7 +3031,7 @@ function handleApImageSelect(e) {
   const file = e.target.files && e.target.files[0]; if (!file) return;
   const allowed = ['image/jpeg','image/jpg','image/png','image/webp'];
   if (!allowed.includes((file.type || '').toLowerCase())) { alert('Unsupported file format.'); e.target.value = ''; return; }
-  readImageAsDataUrl(file).then(u => { apImageData = u; updateApImageUI(); }).catch(() => { alert('Failed to read image.'); });
+  readImageAsDataUrl(file, 400, 0.6).then(u => { apImageData = u; updateApImageUI(); }).catch(() => { alert('Failed to read image.'); });
   e.target.value = '';
 }
 function updateApImageUI() {
@@ -2842,7 +3095,9 @@ function triggerGenImageLink() {
 }
 function showGenLinkEmpty() { const result = $('genLinkResult'), empty = $('genLinkEmpty'), success = $('genLinkSuccess'); if (!result || !empty || !success) return; result.classList.remove('d-none'); empty.classList.remove('d-none'); success.classList.add('d-none'); }
 function showGenLinkSuccess(url) { const result = $('genLinkResult'), empty = $('genLinkEmpty'), success = $('genLinkSuccess'); const img = $('genLinkPreview'), input = $('genLinkUrl'), note = $('genLinkNote'); if (!result || !empty || !success || !img || !input) return; result.classList.remove('d-none'); empty.classList.add('d-none'); success.classList.remove('d-none'); img.src = url; input.value = url; }
-function readImageAsDataUrl(file) {
+function readImageAsDataUrl(file, maxSize, quality) {
+  maxSize = maxSize || 1000;
+  quality = quality || 0.75;
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onerror = () => reject(reader.error || new Error('Could not read file'));
@@ -2853,7 +3108,7 @@ function readImageAsDataUrl(file) {
       const im = new Image();
       im.onload = () => { 
         try { 
-          const max = 1000;
+          const max = maxSize;
           let w = im.naturalWidth || im.width, h = im.naturalHeight || im.height; 
           if (!w || !h) { resolve(dataUrl); return; } 
           if (w > max || h > max) { 
@@ -2867,7 +3122,7 @@ function readImageAsDataUrl(file) {
           ctx.fillStyle = '#ffffff'; 
           ctx.fillRect(0, 0, w, h); 
           ctx.drawImage(im, 0, 0, w, h); 
-          const out = canvas.toDataURL('image/jpeg', 0.75);
+          const out = canvas.toDataURL('image/jpeg', quality);
           resolve(out && out.length < dataUrl.length ? out : dataUrl); 
         } catch (err) { resolve(dataUrl); } 
       };
@@ -2983,7 +3238,12 @@ async function handleExcelImport(e) {
       const image = item.image && String(item.image).trim() ? String(item.image).trim() : IMG(item.name);
       added.push({ id: 'P' + uid(), name: item.name, category: item.category || '', price: item.price || 0, stock: item.stock || 0, sku, hsn: item.hsn || '', gstRate: item.gstRate || 0, image, storeSlug: slug, createdAt: nowISO() });
     }
-    if (!added.length) { alert('No new products were imported.'); return; }
+      if (!added.length) { alert('No new products were imported.'); return; }
+    for (const a of added) {
+      if (/^data:image\//i.test(a.image || '')) {
+        try { a.image = await saveProductImage(a.id, a.image); } catch (err) { console.warn('[Import] image kept inline', a.id, err); }
+      }
+    }
     state.products.push(...added);
     persistStoreData();
     renderProducts(); renderDashboard(); renderInventory();
@@ -3508,26 +3768,31 @@ function renderOrders() {
   const body = $('orderBody'); if (!body) return;
   const q = ($('orderSearch').value || '').toLowerCase();
   const list = (state.orders || []).filter(o => !q || String(o.orderId || o.id || '').toLowerCase().includes(q));
-  
+
   const tabsWrap = $('orderStatusTabs');
   if (tabsWrap && tabsWrap.children.length === 0) {
-    const statuses = ['all', 'Pending', 'Processing', 'Shipped', 'Delivered', 'Cancelled'];
+    const statuses = ['all', 'Pending', 'Processing', 'Shipped', 'Delivered', 'Completed', 'Cancelled'];
     tabsWrap.innerHTML = statuses.map(st => `<div class="acc-tab ${st === state.orderStatus ? 'active' : ''}" onclick="filterOrderStatus('${st}', this)">${st === 'all' ? 'All' : st}</div>`).join('');
   }
-  
+
   const filtered = list.filter(o => {
     if (state.orderStatus === 'all') return true;
-    const mappedSt = getMappedOrderStatus(o).toLowerCase();
-    return mappedSt === state.orderStatus.toLowerCase();
+    return getMappedOrderStatus(o).toLowerCase() === state.orderStatus.toLowerCase();
   });
-  
+
   body.innerHTML = filtered.length ? filtered.map(o => {
     const itemsHtml = (o.items || []).map(it => `${esc(it.name)} × ${it.qty}`).join('<br>');
     const st = getMappedOrderStatus(o);
     const stClass = st.toLowerCase().replace(/[^a-z]/g, '');
     const oid = esc(o.orderId || o.id || '');
     const total = Number(o.totalAmount || o.total || o.amount) || 0;
-    
+
+    // Accept / Reject only while the order is Pending
+    const decideBtns = st.toLowerCase() === 'pending'
+      ? `<button class="ord-btn ord-accept" onclick="decideOrder('${oid}','accept')"><i class="bi bi-check-lg"></i> Accept</button>
+         <button class="ord-btn ord-reject" onclick="decideOrder('${oid}','reject')"><i class="bi bi-x-lg"></i> Reject</button>`
+      : '';
+
     return `<tr>
       <td><b>${oid}</b></td>
       <td>${esc(o.customerName || o.customer || 'Walk-in')}<br><small class="text-secondary">${esc(o.customerPhone || o.phone || '')}</small></td>
@@ -3535,11 +3800,43 @@ function renderOrders() {
       <td>${itemsHtml}</td>
       <td><b>${money(total)}</b></td>
       <td>Online<br><small class="text-secondary">${esc(o.paymentMethod || '')}</small></td>
-      <td><span class="report-status-badge ${stClass}">${st}</span></td>
-      <td style="text-align:right"><button class="btn btn-sm btn-outline-primary" onclick="openOrderDetails('${oid}')"><i class="bi bi-eye"></i> View</button></td>
+      <td><span class="report-status-badge ${stClass}">${esc(st)}</span></td>
+      <td style="text-align:right">
+        <div class="ord-actions">
+          ${decideBtns}
+          <button class="btn btn-sm btn-outline-primary" onclick="openOrderDetails('${oid}')"><i class="bi bi-eye"></i> View</button>
+        </div>
+      </td>
     </tr>`;
   }).join('') : '<tr><td colspan="8" class="text-center text-secondary py-4">No orders yet</td></tr>';
   $('orderCount').textContent = filtered.length;
+}
+
+function decideOrder(orderId, action) {
+  const o = state.orders.find(x => String(x.orderId || x.id) === String(orderId));
+  if (!o) { toast('Order not found', '#ef4444'); return; }
+  if (String(getMappedOrderStatus(o)).toLowerCase() !== 'pending') { toast('This order is already updated', '#ef4444'); renderOrders(); return; }   // duplicate guard
+  const accept = action === 'accept';
+  const newStatus = accept ? 'Order Confirmed' : 'Out of Stock';
+  if (!confirm((accept ? 'Accept' : 'Reject') + ' order ' + orderId + '?\n\nStatus will change to "' + newStatus + '".')) return;
+
+  const now = nowISO();
+  const ref = x => x && String(x.orderId || x.id) === String(orderId);
+  const apply = x => { x.orderStatus = newStatus; x.status = newStatus; x.updatedAt = now; };
+
+  apply(o);
+  /* write to per-store key and global pool (same keys the theme reads) */
+  try {
+    const sk = ordersStorageKey();
+    const list = JSON.parse(localStorage.getItem(sk) || '[]');
+    if (Array.isArray(list)) { list.forEach(x => { if (ref(x)) apply(x); }); localStorage.setItem(sk, JSON.stringify(list)); }
+    const all = JSON.parse(localStorage.getItem('smartstore_orders') || '[]');
+    if (Array.isArray(all)) { all.forEach(x => { if (ref(x)) apply(x); }); localStorage.setItem('smartstore_orders', JSON.stringify(all)); }
+    localStorage.setItem('smartstore_orders_update', String(Date.now()));
+  } catch (e) { toast('Could not save status (storage full)', '#ef4444'); return; }
+
+  renderOrders(); renderDashboard(); renderReports();
+  toast(accept ? 'Order Confirmed' : 'Marked Out of Stock', accept ? '#10b981' : '#ef4444');
 }
 function filterOrderStatus(st, el) { state.orderStatus = st; document.querySelectorAll('#orderStatusTabs .acc-tab').forEach(t => t.classList.remove('active')); if (el) el.classList.add('active'); renderOrders(); }
 
@@ -3561,7 +3858,7 @@ window.openOrderDetails = function(orderId) {
   }).join('');
 
   const subtotal = Number(o.subtotal || o.items?.reduce((a,b)=>a+(Number(b.price||0)*Number(b.qty||0)),0)) || 0;
-  const discount = Number(o.discount || o.discountAmount || 0);
+ const discount = Number(o.discount || o.discountAmount || o.couponDiscount || 0);
   const couponCode = o.couponCode ? ` (${esc(o.couponCode)})` : '';
   const shipping = Number(o.shipping || o.shippingCharge || 0);
   const gst = Number(o.gst || o.gstAmount || o.tax || 0);
@@ -3632,8 +3929,8 @@ function renderSales() {
     const stClass = st.toLowerCase().replace(/[^a-z]/g, '');
     const cType = s.customerType || (s.customer && s.customer.includes('Walk-in') ? 'Walk-in' : 'Walk-in');
     const cContact = s.customerMobile || '-';
-    return `<tr><td>${i + 1}</td><td><b>${esc(s.id)}</b></td><td>${esc(cType)}</td><td>${esc(cContact)}</td><td>${itemsHtml}</td><td><b>${money(s.total)}</b></td><td><span class="report-status-badge ${stClass}">${st}</span></td><td>${esc(s.date ? new Date(s.date).toLocaleString() : '')}</td></tr>`;
-  }).join('') : '<tr><td colspan="8" class="text-center text-secondary py-4">No sales yet</td></tr>';
+    return `<tr><td>${i + 1}</td><td><b>${esc(s.id)}</b></td><td>${esc(cContact)}</td><td>${itemsHtml}</td><td><b>${money(s.total)}</b></td><td><span class="report-status-badge ${stClass}">${st}</span></td><td>${esc(s.date ? new Date(s.date).toLocaleString() : '')}</td></tr>`;
+  }).join('') : '<tr><td colspan="7" class="text-center text-secondary py-4">No sales yet</td></tr>';
 }
 
 let _posPay = 'cash';
@@ -3746,8 +4043,7 @@ function showPosReceipt(sale) {
     <div style="text-align:center;margin-bottom:20px;"><h3 style="margin:0;font-family:sans-serif;font-weight:800;">${esc(state.store.name)}</h3><div style="font-size:12px;color:#666;">Payment Successful</div></div>
     <div style="font-size:12px;margin-bottom:12px;border-bottom:1px dashed #ccc;padding-bottom:12px;">
       <div style="display:flex;justify-content:space-between;"><span>Order ID:</span> <span>${esc(sale.id)}</span></div>
-      <div style="display:flex;justify-content:space-between;"><span>Date:</span> <span>${new Date(sale.date).toLocaleString()}</span></div>
-      <div style="display:flex;justify-content:space-between;"><span>Type:</span> <span>${esc(sale.customerType || 'Walk-in')}</span></div>
+      
       <div style="display:flex;justify-content:space-between;"><span>Contact:</span> <span>${esc(sale.customerMobile || '-')}</span></div>
     </div>
     <div style="margin-bottom:12px;border-bottom:1px dashed #ccc;padding-bottom:12px;">${itemsHtml}</div>
@@ -3900,8 +4196,9 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('#sideNav .sidebar-link').forEach(a => { a.addEventListener('click', (e) => { e.preventDefault(); switchTab(a.dataset.tab, a); }); });
   fillAccount();
   renderDashboard(); renderProducts(); renderUsers(); renderStaff(); renderPurchases(); renderOrders(); renderSales(); renderBanners(); renderPages(); renderInventory(); initBarcodeView(); renderCategoryView(); renderSocial(); renderExpenses(); renderReports();
-  renderCharges();
+   renderCharges();
   migrateBannerDataUrls();
+  compressExistingProductImages();
   
   const socialView = $('view-social'); if (socialView) { socialView.addEventListener('input', markSocialDirty); socialView.addEventListener('change', markSocialDirty); }
   const addProductModalEl = $('addProductModal'); if (addProductModalEl) { addProductModalEl.addEventListener('show.bs.modal', () => { refreshCategoryDropdown(); resetAddSingleImage(); fillAutoBarcode(true); }); }
@@ -3953,6 +4250,188 @@ document.addEventListener('DOMContentLoaded', () => {
     if (['Paid', 'Pending'].indexOf(status) === -1) return fail('Select a payment status', 'efmStatus');
     say('Expense details are valid. Saving is not connected yet.');
   });
+})();
+
+
+</script>
+
+<script id="sidebar-drawer">
+(function () {
+  var topbar = document.querySelector('.topbar');
+  var sidebar = document.querySelector('.sidebar');
+  if (!topbar || !sidebar) return;
+
+  var btn = document.createElement('button');
+  btn.id = 'sbToggle';
+  btn.type = 'button';
+  btn.setAttribute('aria-label', 'Open menu');
+  btn.innerHTML = '<i class="bi bi-list"></i>';
+  topbar.insertBefore(btn, topbar.firstChild);
+
+  var overlay = document.createElement('div');
+  overlay.id = 'sbOverlay';
+  document.body.appendChild(overlay);
+
+  function setOpen(open) { document.body.classList.toggle('sb-open', open); }
+
+  btn.addEventListener('click', function () { setOpen(!document.body.classList.contains('sb-open')); });
+  overlay.addEventListener('click', function () { setOpen(false); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setOpen(false); });
+
+  /* close after any menu click (existing navigation still runs first) */
+  sidebar.addEventListener('click', function (e) {
+    if (e.target.closest('.sidebar-link') || e.target.closest('.logout-link')) setOpen(false);
+  });
+
+  window.addEventListener('resize', function () { if (window.innerWidth >= 768) setOpen(false); });
+})();
+</script>
+
+<script id="storage-fix">
+(function () {
+  var MAX_SIDE = 1000, QUALITY = 0.82;
+  var BLANK = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+
+  function usedMB() {
+    try { var n = 0; for (var i = 0; i < localStorage.length; i++) { var k = localStorage.key(i); n += (k.length + (localStorage.getItem(k) || '').length) * 2; } return (n / 1048576).toFixed(1); }
+    catch (e) { return '?'; }
+  }
+
+  /* ---- resize + compress (dataURL / File / Blob -> JPEG Blob) ---- */
+  function loadImg(src) {
+    return new Promise(function (res, rej) { var im = new Image(); im.onload = function () { res(im); }; im.onerror = function () { rej(new Error('decode failed')); }; im.src = src; });
+  }
+  window.imageToBlob = async function (src, maxSide, quality) {
+    var url = src, made = false;
+    if (typeof src !== 'string') { url = URL.createObjectURL(src); made = true; }
+    try {
+      var im = await loadImg(url);
+      var w = im.naturalWidth || im.width, h = im.naturalHeight || im.height;
+      if (!w || !h) throw new Error('empty image');
+      var s = Math.min(1, (maxSide || MAX_SIDE) / Math.max(w, h));
+      var cw = Math.round(w * s), ch = Math.round(h * s);
+      var c = document.createElement('canvas'); c.width = cw; c.height = ch;
+      var ctx = c.getContext('2d'); ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, cw, ch); ctx.drawImage(im, 0, 0, cw, ch);
+      return await new Promise(function (res, rej) { c.toBlob(function (b) { b ? res(b) : rej(new Error('toBlob failed')); }, 'image/jpeg', quality || QUALITY); });
+    } finally { if (made) URL.revokeObjectURL(url); }
+  };
+
+  /* ---- save to IndexedDB (same DB the banners use) and verify ---- */
+  window.saveProductImage = async function (productId, src) {
+    var blob = await imageToBlob(src);
+    var key = 'prod-' + productId;
+    await bannerDbPut(key, blob);
+    var back = await bannerDbGet(key);
+    if (!back || !back.size) throw new Error('verify failed');
+    return 'idb:' + key;
+  };
+
+  /* ---- idb: refs in any <img> are resolved automatically ---- */
+  function fixImg(img) {
+    var src = img.getAttribute('src');
+    if (!src || src.indexOf('idb:') !== 0) return;
+    img.setAttribute('data-idb', src);
+    img.setAttribute('src', BLANK);
+    bannerImageUrl(src).then(function (u) {
+      if (img.getAttribute('data-idb') !== src) return;
+      img.setAttribute('src', u || FALLBACK_IMG);
+    });
+  }
+  new MutationObserver(function (muts) {
+    muts.forEach(function (m) {
+      if (m.type === 'attributes') { if (m.target.tagName === 'IMG') fixImg(m.target); }
+      else m.addedNodes.forEach(function (n) {
+        if (n.nodeType !== 1) return;
+        if (n.tagName === 'IMG') fixImg(n);
+        else if (n.querySelectorAll) n.querySelectorAll('img[src^="idb:"]').forEach(fixImg);
+      });
+    });
+  }).observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ['src'] });
+  document.querySelectorAll('img[src^="idb:"]').forEach(fixImg);
+
+  /* ---- Add Product: keep original file for a single, clean compression ---- */
+  window.handleApImageSelect = function (e) {
+    var file = e.target.files && e.target.files[0]; if (!file) return;
+    var allowed = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+    if (!allowed.indexOf((file.type || '').toLowerCase()) < 0 && allowed.indexOf((file.type || '').toLowerCase()) === -1) { alert('Unsupported file format.'); e.target.value = ''; return; }
+    window.__apFile = file;
+    readImageAsDataUrl(file, 400, 0.6).then(function (u) { apImageData = u; updateApImageUI(); }).catch(function () { alert('Failed to read image.'); });
+    e.target.value = '';
+  };
+
+  var _savingProduct = false;
+  window.saveProduct = async function () {
+    if (_savingProduct) return;
+    var name = $('apName').value.trim();
+    var price = parseFloat($('apPrice').value) || 0;
+    var stock = parseInt($('apStock').value) || 0;
+    var category = $('apCategory').value;
+    var sku = $('apSku').value.trim() || generateUniqueBarcode();
+    var hsn = $('apHsn') ? $('apHsn').value.trim() : '';
+    var gstRate = ($('apGstRate') ? Number($('apGstRate').value) : 0) || 0;
+    var slug = getCurrentStoreSlug();
+    if (!name) { alert('Please enter a product name'); return; }
+    if (!category) { alert('Please select a category.'); return; }
+    var dup = state.products.find(function (p) { return String(p.sku || '').toLowerCase() === sku.toLowerCase(); });
+    if (dup) { alert('This SKU/Barcode "' + sku + '" is already used by: ' + dup.name + '\n\nPlease enter a different one.'); return; }
+
+    _savingProduct = true;
+    var id = 'P' + uid();
+    var image = IMG(sku);
+    try {
+      if (apImageData) {
+        try { image = await saveProductImage(id, window.__apFile || apImageData); }
+        catch (e) {
+          console.warn('[Product] IndexedDB save failed, using small inline image', e);
+          image = apImageData;   /* 400px compressed fallback */
+          if (e && e.name === 'QuotaExceededError') alert('Device storage is almost full, so the image was kept in small size.');
+        }
+      }
+      state.products.push({ id: id, name: name, category: category, price: price, stock: stock, sku: sku, hsn: hsn, gstRate: gstRate, image: image, storeSlug: slug, createdAt: nowISO() });
+      if (!persistStoreData()) {
+        state.products.pop();
+        if (isBannerIdbRef(image)) bannerDbDelete(image.slice(4));
+        alert('Product could not be saved: browser storage is nearly full (about ' + usedMB() + ' MB used).\n\nNothing was deleted.\nReload this page once so old images move to safe storage automatically, then try again.');
+        return;
+      }
+      $('apName').value = ''; $('apPrice').value = ''; $('apStock').value = ''; $('apSku').value = '';
+      if ($('apHsn')) $('apHsn').value = ''; if ($('apGstRate')) $('apGstRate').value = '0';
+      window.__apFile = null;
+      resetAddSingleImage();
+      var modal = bootstrap.Modal.getInstance($('addProductModal')); if (modal) modal.hide();
+      renderProducts(); renderDashboard(); renderInventory(); toast('Product added');
+    } finally { _savingProduct = false; }
+  };
+
+  window.deleteProduct = function (id) {
+    if (!confirm('Delete this product?')) return;
+    var p = productById(id);
+    var ref = p ? String(p.image || '') : '';
+    state.products = state.products.filter(function (x) { return x.id !== id; });
+    persistStoreData();
+    if (isBannerIdbRef(ref)) { delete _bannerUrlCache[ref]; bannerDbDelete(ref.slice(4)); }
+    renderProducts(); renderDashboard(); toast('Product deleted');
+  };
+
+  /* ---- safe migration of existing Base64 product images ---- */
+  window.compressExistingProductImages = async function () {
+    try {
+      var list = (state.products || []).filter(function (p) { return p && typeof p.image === 'string' && /^data:image\//i.test(p.image); });
+      if (!list.length) return;
+      var changed = 0;
+      for (var i = 0; i < list.length; i++) {
+        var p = list[i];
+        try { p.image = await saveProductImage(p.id, p.image); changed++; }   /* old value kept if this fails */
+        catch (e) { console.warn('[Migrate] skipped', p.id, e); }
+      }
+      if (!changed) return;
+      if (persistStoreData()) {
+        renderProducts(); renderInventory();
+        var pos = $('view-pos'); if (pos && !pos.classList.contains('d-none')) renderPos();
+        toast(changed + ' product image(s) moved to safe storage');
+      } else { console.warn('[Migrate] could not write slimmer data; originals untouched, will retry next load'); }
+    } catch (e) { console.warn('[Migrate] failed', e); }
+  };
 })();
 </script>
 </body>
